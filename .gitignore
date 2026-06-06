@@ -1,2 +1,31 @@
-# cache and other artifacts produced by Lean's Lake build tool
+# =============================================================================
+# Lean / Lake — generated locally, do not commit
+# =============================================================================
+# After `lake update`, `.lake/` holds Mathlib and other dependencies (~7 GB)
+# plus compiled `.olean` files. Everyone runs `lake update` + `lake build` locally.
+
 .lake/
+/lake-packages/
+build/
+
+# Compiled artifacts (normally under .lake/, listed here if they appear elsewhere)
+*.olean
+*.ilean
+*.c
+*.o
+
+# =============================================================================
+# Editor / OS noise
+# =============================================================================
+
+.DS_Store
+*~
+
+# =============================================================================
+# Python (optional PDF script — no venv required)
+# =============================================================================
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/
