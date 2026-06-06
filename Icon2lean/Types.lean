@@ -6,19 +6,20 @@ namespace Icon2lean
 
 open Polynomial
 
-/-- Unsigned base-`B` digit list (report §2.2.1). -/
+/-- Unsigned base-`B` digit list (report §2.2.1 `base_b`). -/
 structure BaseB (B : Nat) where
   digits : List Nat
   h_digits : ∀ d ∈ digits, d < B
   h_base : 1 < B
 
-def base8_one : BaseB 8 := {
-  digits := [1]
+/-- Report §2.2.2 example: `baseB(10, [5, 3, 3, 5])`. -/
+def base10_5335 : BaseB 10 := {
+  digits := [5, 3, 3, 5]
   h_digits := by decide
   h_base := by decide
 }
 
-/-- Truncated power series: polynomial plus truncation degree (report §2.3.4). -/
+/-- Truncated power series (report §2.3.4 `tpower`). -/
 structure TPower (R : Type*) [CommRing R] where
   poly : Polynomial R
   N : Nat

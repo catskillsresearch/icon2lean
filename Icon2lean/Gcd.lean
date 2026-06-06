@@ -18,7 +18,7 @@ theorem euclidInt_bezout (A B : Int) :
 def modularInverse (a m : Int) : Option Int :=
   let g := Int.gcd m a
   if g = 1 then
-    some ((Int.gcdB m a / (g : Int)) % m)
+    some (Int.emod (Int.gcdB m a / (g : Int)) m)
   else
     none
 

@@ -110,11 +110,13 @@ Build completed successfully (1476 jobs).
 lake env lean Icon2lean/Tests.lean
 ```
 
-Or open `Icon2lean/Tests.lean` in the Lean editor and use “Go to definition” / `#eval` on:
+Or open `Icon2lean/Tests.lean` — all §3.1 report examples are checked with `native_decide`:
 
-- `cra2 6 7 3 9` → `some 48`  
-- `cra [...]` → `some 868`  
-- `modularInverse 30 197` → `some 46`  
+- `EUCLID(84, 54)` → `(6, 2, -3)`
+- `CRA1(7, 1432, 5317)` → `4762`; `CRA1(863, 880, 2151)` → `173`; `CRA1(589, 509, 817)` → no solution
+- `CRA2(6, 7, 3, 9)` → `48`
+- `CRA([[1,3],[3,5],[0,7],[10,11]])` → `868`
+- `DIOPHANTINE` particular solutions `(1,-2)`, `(13,163)`, `(-11,6)`
 
 ### 6. Day-to-day commands
 
@@ -168,7 +170,7 @@ No Poetry or virtualenv is required unless you add Python dependencies later.
 |-------------|-----------|------------------|
 | GCD, EUCLID, INVERSE | `Icon2lean/Gcd.lean` | `gcdInt`, `euclidInt`, `modularInverse` |
 | CRA1, CRA2, CRA | `Icon2lean/Congruence.lean` | `cra1`, `cra2`, `cra` |
-| DIOPHANTINE | `Icon2lean/Diophantine.lean` | `solveDiophantine` |
+| DIOPHANTINE | `Icon2lean/Diophantine.lean` | `diophantine` |
 | PREM, MOD_RS, E_PRS, S_PRS | `Icon2lean/Polynomial.lean` | `prem`, `modRS`, `ePRS`, `sPRS` |
 | NIA | `Icon2lean/Interpolation.lean` | `newtonInterpolation` |
 | FFT, FFI | `Icon2lean/Fft.lean` | `fftCoeffs`, `ffi` |
