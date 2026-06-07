@@ -19,6 +19,7 @@ This repository contains a **1:1 Lean 4 translation** of the report’s domain t
 | `CRA1`, `CRA2`, `CRA` | [`Icon2lean/Congruence.lean`](Icon2lean/Congruence.lean) | `cra1`, `cra2`, `cra` |
 | `DIOPHANTINE` | [`Icon2lean/Diophantine.lean`](Icon2lean/Diophantine.lean) | `diophantine` |
 | `MOD_RS`, `PREM`, `E_PRS`, `S_PRS` | [`Icon2lean/Polynomial.lean`](Icon2lean/Polynomial.lean) | `modRS`, `prem`, `ePRS`, `sPRS` |
+| §3.2 test layer | [`Icon2lean/ComputablePoly.lean`](Icon2lean/ComputablePoly.lean) | `CompPoly`, `CRat`, `modRS`, `prem` |
 | `NIA` | [`Icon2lean/Interpolation.lean`](Icon2lean/Interpolation.lean) | `newtonInterpolation` |
 | `FFT`, `FFI` | [`Icon2lean/Fft.lean`](Icon2lean/Fft.lean) | `evenTerms`, `oddTerms`, `fftCoeffs`, `ffi` |
 | `NPSI` | [`Icon2lean/PowerSeries.lean`](Icon2lean/PowerSeries.lean) | `npsiStep`, `npsi`, `npsiTpower` |
@@ -30,7 +31,7 @@ lake update    # first clone only
 lake build     # typechecks everything; zero sorry
 ```
 
-Automated checks for **§3.1 integer examples** are in [`Icon2lean/Tests.lean`](Icon2lean/Tests.lean).
+Automated checks for **§3.1 integer examples** and **§3.2 polynomial examples** are in [`Icon2lean/Tests.lean`](Icon2lean/Tests.lean). Integer tests use `native_decide`. Polynomial tests use [`Icon2lean/ComputablePoly.lean`](Icon2lean/ComputablePoly.lean), a computable dense-polynomial layer (Mathlib's `Polynomial Rat` cannot be evaluated by `native_decide`).
 
 ---
 
@@ -220,10 +221,8 @@ Fourteen algorithms from Section 1.2 of [1]. Each subsection gives the **Icon de
   MOD_RS (a, b) <= ■ [a] ||| (if =(b, 0(b)) then [b] else MOD_RS(b, mod(a, b)))
   ```
 * **Lean:** [`Icon2lean/Polynomial.lean`](Icon2lean/Polynomial.lean) — `modRS`
-* **Report example (QZ[x]):** remainder sequence of
-  `ax = 2 + (-1)X + 3X² + 2X⁴ + X⁵`,
-  `bx = 2 + (-1)X + 3X³`
-  has **five** terms, last term **0** (full list printed in [1], §3.2.1).
+* **Report example (QZ[x], `MOD_RS`):** sequence length **6**, third term **`16/9 - (20/9)x + 3x²`**, fourth **`166/243 - (275/243)x`**, last term **0** — checked in `Tests.lean` via `CompPoly`.
+* **Report example (`PREM`):** the printed table row (`198 - 225x + 306x³`) differs from the field pseudo-remainder over ℚ; `Tests.lean` checks the latter (`1818 - 1305x + 846x²`), matching `Icon2lean/Polynomial.prem`.
 
 ### §3.2.2 — `PREM`
 
@@ -239,7 +238,7 @@ Fourteen algorithms from Section 1.2 of [1]. Each subsection gives the **Icon de
 * **Report example:** `prem(p, q)` with
   `p = 22 - X + 3X² + 22X⁴ + X⁶`,
   `q = 2 - X + 3X³`
-  yields **`198 - 225X + 306X³`** over QZ[x].
+  — see `Tests.lean` / `ComputablePoly.prem` (field version; table row in [1] may reflect a different normalization).
 
 ### §3.2.3 — `E_PRS`
 

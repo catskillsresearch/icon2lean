@@ -110,13 +110,13 @@ Build completed successfully (1476 jobs).
 lake env lean Icon2lean/Tests.lean
 ```
 
-Or open `Icon2lean/Tests.lean` — all §3.1 report examples are checked with `native_decide`:
+Or open `Icon2lean/Tests.lean` — all §3.1 report examples are checked with `native_decide`, and §3.2 polynomial examples via `ComputablePoly`:
 
 - `EUCLID(84, 54)` → `(6, 2, -3)`
-- `CRA1(7, 1432, 5317)` → `4762`; `CRA1(863, 880, 2151)` → `173`; `CRA1(589, 509, 817)` → no solution
-- `CRA2(6, 7, 3, 9)` → `48`
-- `CRA([[1,3],[3,5],[0,7],[10,11]])` → `868`
+- `CRA1` / `CRA2` / `CRA` examples from the report
 - `DIOPHANTINE` particular solutions `(1,-2)`, `(13,163)`, `(-11,6)`
+- `MOD_RS` on the report's QZ[x] inputs (length 6, intermediate terms, final 0)
+- `PREM` field remainder (`1818 - 1305x + 846x²`)
 
 ### 6. Day-to-day commands
 
