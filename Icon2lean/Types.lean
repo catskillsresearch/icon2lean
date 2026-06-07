@@ -1,3 +1,9 @@
+/-
+Copyright (c) 2026 Catskills Research Company. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Lars Warren Ericson, Catskills Research Company
+-/
+
 import Mathlib.Data.List.Basic
 import Mathlib.Algebra.Polynomial.Basic
 import Mathlib.Algebra.Polynomial.Div
