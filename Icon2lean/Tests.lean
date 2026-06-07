@@ -36,6 +36,10 @@ example : cra1 589 509 817 = none := by native_decide
 example : cra2 6 7 3 9 = some 48 := by native_decide
 example : cra [(1, 3), (3, 5), (0, 7), (10, 11)] = some 868 := by native_decide
 
+/-- Report §3.1.3 polynomial CRA: `u(x) = 183 + 238x` (coefficients via `CRA` on `a`, `b` lists). -/
+example : cra [(1, 3), (0, 7), (2, 4), (3, 5)] = some 238 := by native_decide
+example : cra [(0, 3), (1, 7), (3, 4), (3, 5)] = some 183 := by native_decide
+
 end Congruence
 
 section Diophantine
@@ -65,8 +69,11 @@ def c275_243 : CRat := CRat.normalize { num := -275, den := 243 }
 
 def modRsSeq : List CompPoly := modRS modRsAx modRsBx
 
-example : modRsSeq.length = 6 := by native_decide
+/-- Paper printout lists five polynomials, ending in `0`. -/
+example : modRsSeq.length = 5 := by native_decide
 
+example : modRsSeq[0]! = modRsAx := by native_decide
+example : modRsSeq[1]! = modRsBx := by native_decide
 example : modRsSeq.getLast!.isZero := by native_decide
 
 example : getCoeff modRsSeq[2]! 0 = c16_9 := by native_decide
@@ -75,18 +82,20 @@ example : getCoeff modRsSeq[2]! 2 = CRat.ofInt 3 := by native_decide
 example : getCoeff modRsSeq[3]! 0 = c166_243 := by native_decide
 example : getCoeff modRsSeq[3]! 1 = c275_243 := by native_decide
 
-/-- Report §3.2.2 `PREM` inputs. Field pseudo-remainder (matches `Icon2lean.Polynomial.prem`). -/
-def premP : CompPoly := ofInts [22, -1, 3, 0, 22, 0, 1]
+/-- Report §3.2.2 `PREM`: `p = 2 - x + 3x² + 2x⁴ + x⁶`, `q = 2 - x + 3x³`. -/
+def premP : CompPoly := ofInts [2, -1, 3, 0, 2, 0, 1]
 def premQ : CompPoly := ofInts [2, -1, 0, 3]
 
-example : getCoeff (prem premP premQ) 0 = CRat.ofInt 1818 := by native_decide
-example : getCoeff (prem premP premQ) 1 = CRat.ofInt (-1305) := by native_decide
-example : getCoeff (prem premP premQ) 2 = CRat.ofInt 846 := by native_decide
+example : getCoeff (prem premP premQ) 0 = CRat.ofInt 198 := by native_decide
+example : getCoeff (prem premP premQ) 1 = CRat.ofInt (-225) := by native_decide
+example : getCoeff (prem premP premQ) 2 = CRat.ofInt 306 := by native_decide
 
 -- Click any `#eval` below — Infoview shows the computed report value.
 #eval euclidInt 84 54
 #eval cra2 6 7 3 9
 #eval cra [(1, 3), (3, 5), (0, 7), (10, 11)]
+#eval cra [(1, 3), (0, 7), (2, 4), (3, 5)]
+#eval cra [(0, 3), (1, 7), (3, 4), (3, 5)]
 #eval diophantine 84 54 (-24) |>.map (fun s => (s.x0, s.y0))
 #eval modRsSeq.length
 #eval (getCoeff modRsSeq[2]! 0, getCoeff modRsSeq[2]! 1, getCoeff modRsSeq[2]! 2)

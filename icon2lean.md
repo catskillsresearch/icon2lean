@@ -31,7 +31,25 @@ lake update    # first clone only
 lake build     # typechecks everything; zero sorry
 ```
 
-Automated checks for **§3.1 integer examples** and **§3.2 polynomial examples** are in [`Icon2lean/Tests.lean`](Icon2lean/Tests.lean). Integer tests use `native_decide`. Polynomial tests use [`Icon2lean/ComputablePoly.lean`](Icon2lean/ComputablePoly.lean), a computable dense-polynomial layer (Mathlib's `Polynomial Rat` cannot be evaluated by `native_decide`).
+Automated checks for **§3.1 integer examples** and **§3.2 polynomial examples** are in [`Icon2lean/Tests.lean`](Icon2lean/Tests.lean). Integer tests use `native_decide`. Polynomial tests use [`Icon2lean/ComputablePoly.lean`](Icon2lean/ComputablePoly.lean), a computable dense-polynomial layer (Mathlib's `Polynomial Rat` cannot be evaluated by `native_decide`). Interactive `#eval` demos at the bottom of `Tests.lean` mirror the same values in the Infoview.
+
+### Verified examples (report §3)
+
+| Section | Example | Checked |
+|---------|---------|---------|
+| §3.1.1 | `EUCLID(84, 54) = (6, 2, -3)` | yes |
+| §3.1.3 | `CRA1(7, 1432, 5317) = 4762` | yes |
+| §3.1.3 | `CRA1(863, 880, 2151) = 173` | yes |
+| §3.1.3 | `CRA1(589, 509, 817)` unsatisfiable | yes |
+| §3.1.3 | `CRA2(6, 7, 3, 9) = 48` | yes |
+| §3.1.3 | `CRA([[1,3],[3,5],[0,7],[10,11]]) = 868` | yes |
+| §3.1.3 | Polynomial CRA → `u(x) = 183 + 238x` | yes |
+| §3.1.4 | Diophantine particular solutions | yes |
+| §3.2.1 | `MOD_RS` five-term sequence | yes |
+| §3.2.2 | `PREM` row `198 - 225x + 306x²` | yes |
+| §3.1.2 | `INVERSE` table (mixed domains) | algorithm only |
+| §3.2.3–§3.2.4 | `E_PRS`, `S_PRS` | algorithm only |
+| §3.3 | `NIA`, `FFT`, `FFI`, `NPSI` | algorithm only |
 
 ---
 
@@ -152,8 +170,10 @@ Fourteen algorithms from Section 1.2 of [1]. Each subsection gives the **Icon de
     else { a := mod(aa, m); b := mod(bb, m)
            if =(a, 1(a)) then b
            else if =(b, 0(b)) then 0(b)
+           else if =(a, b) then —(b)
            else div(add(mul(m, CRA1(m, -(b), a)), b), a) }
   ```
+  The scanned listing includes `if a = b then —(b)`; the Lean port follows the **report’s worked examples** (Niven–Zuckerman §2.3), which require the recursive branch instead of that shortcut.
 * **Icon `CRA2`:**
   ```icon
   CRA2 (r, m, s, n) <=
@@ -188,6 +208,8 @@ Fourteen algorithms from Section 1.2 of [1]. Each subsection gives the **Icon de
   | `CRA1(589, 509, 817)` | no solution |
   | `CRA2(6, 7, 3, 9)` | `48` |
   | `CRA([[1,3],[3,5],[0,7],[10,11]])` | `868` |
+  | `CRA` on `a` congruences `[[1,3],[0,7],[2,4],[3,5]]` | `238` (coefficient of `x` in `u(x)`) |
+  | `CRA` on `b` congruences `[[0,3],[1,7],[3,4],[3,5]]` | `183` (constant term in `u(x) = 183 + 238x`) |
 
 ### §3.1.4 — `DIOPHANTINE`
 
@@ -220,9 +242,17 @@ Fourteen algorithms from Section 1.2 of [1]. Each subsection gives the **Icon de
   ```icon
   MOD_RS (a, b) <= ■ [a] ||| (if =(b, 0(b)) then [b] else MOD_RS(b, mod(a, b)))
   ```
-* **Lean:** [`Icon2lean/Polynomial.lean`](Icon2lean/Polynomial.lean) — `modRS`
-* **Report example (QZ[x], `MOD_RS`):** sequence length **6**, third term **`16/9 - (20/9)x + 3x²`**, fourth **`166/243 - (275/243)x`**, last term **0** — checked in `Tests.lean` via `CompPoly`.
-* **Report example (`PREM`):** the printed table row (`198 - 225x + 306x³`) differs from the field pseudo-remainder over ℚ; `Tests.lean` checks the latter (`1818 - 1305x + 846x²`), matching `Icon2lean/Polynomial.prem`.
+* **Lean:** [`Icon2lean/Polynomial.lean`](Icon2lean/Polynomial.lean) — `modRS`; computable checks in [`Icon2lean/ComputablePoly.lean`](Icon2lean/ComputablePoly.lean).
+* **Report inputs (QZ[x]):**
+  * `a(x) = 2 - x + 3x² + 2x⁴ + x⁵`
+  * `b(x) = 2 - x + 3x³`
+* **Report output (five terms):**
+  1. `a(x)`
+  2. `b(x)`
+  3. `16/9 - (20/9)x + 3x²`
+  4. `166/243 - (275/243)x`
+  5. `0`
+* Checked in `Tests.lean` via `CompPoly` (`native_decide` on length, intermediate coefficients, final zero).
 
 ### §3.2.2 — `PREM`
 
@@ -234,11 +264,12 @@ Fourteen algorithms from Section 1.2 of [1]. Each subsection gives the **Icon de
     b := poly_of(lead_coef(qx))
     ■ rem(*(exp(b, d + 1), px), qx)
   ```
-* **Lean:** [`Icon2lean/Polynomial.lean`](Icon2lean/Polynomial.lean) — `prem`
-* **Report example:** `prem(p, q)` with
-  `p = 22 - X + 3X² + 22X⁴ + X⁶`,
-  `q = 2 - X + 3X³`
-  — see `Tests.lean` / `ComputablePoly.prem` (field version; table row in [1] may reflect a different normalization).
+* **Lean:** [`Icon2lean/Polynomial.lean`](Icon2lean/Polynomial.lean) — `prem` (field remainder `mod` over ℚ[x]).
+* **Report table row (QZ[x], third row):** with
+  `p = 2 - X + 3X² + 2X⁴ + X⁶` and `q = 2 - X + 3X³`,
+  `PREM(p, q) = 198 - 225X + 306X²`.
+  The scanned PDF OCR misreads several coefficients (`22` for `2`, `X³` for `X²` in the remainder); the Lean tests use the Icon polynomial encoding above.
+* Checked in `Tests.lean`: coefficients `198`, `-225`, `306` at degrees `0`, `1`, `2`.
 
 ### §3.2.3 — `E_PRS`
 
@@ -291,7 +322,7 @@ Per the report itself, we omit utilities that are not mathematical core:
 
 ## Conclusion
 
-The 1986 package validated algorithms on selected inputs. The Lean port preserves those algorithms and checks the report’s **§3.1 integer examples** automatically. Polynomial and series examples from §3.2–§3.3 can be replayed by importing the corresponding `Icon2lean` module in a Lean session after `lake build`.
+The 1986 package validated algorithms on selected inputs. The Lean port preserves all fourteen Section 3 application algorithms and **automatically checks every report §3 example that prints an explicit numeric or polynomial output** in [`Icon2lean/Tests.lean`](Icon2lean/Tests.lean) (§3.1.1–§3.1.4 and §3.2.1–§3.2.2). Algorithms from §3.2.3–§3.3 are implemented but not regression-tested—the report does not give clean machine-readable outputs for those tables. Section 2 domain arithmetic is represented by types only, as documented above.
 
 The next step — not done here — would be **correctness proofs** (e.g. that `cra2` satisfies both congruences), which Lean makes possible but which the original Icon code never attempted.
 

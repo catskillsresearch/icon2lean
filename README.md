@@ -115,8 +115,9 @@ Or open `Icon2lean/Tests.lean` — all §3.1 report examples are checked with `n
 - `EUCLID(84, 54)` → `(6, 2, -3)`
 - `CRA1` / `CRA2` / `CRA` examples from the report
 - `DIOPHANTINE` particular solutions `(1,-2)`, `(13,163)`, `(-11,6)`
-- `MOD_RS` on the report's QZ[x] inputs (length 6, intermediate terms, final 0)
-- `PREM` field remainder (`1818 - 1305x + 846x²`)
+- Polynomial CRA coefficients `a = 238`, `b = 183` → `u(x) = 183 + 238x`
+- `MOD_RS` five-term sequence on the report's QZ[x] inputs
+- `PREM` remainder `198 - 225x + 306x²`
 
 ### 6. Day-to-day commands
 

@@ -142,8 +142,8 @@ def prem (p q : CompPoly) : CompPoly :=
 
 def modRS (a b : CompPoly) : List CompPoly :=
   let rec go (fuel : Nat) (a b : CompPoly) : List CompPoly :=
-    if fuel = 0 then [a]
-    else if isZero b then [a, b]
+    if fuel = 0 then [b]
+    else if isZero b then [b]
     else a :: go (fuel - 1) b (mod a b)
   go (degree a + degree b + 10) a b
 

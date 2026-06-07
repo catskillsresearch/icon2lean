@@ -23,9 +23,9 @@ noncomputable def prem [Field R] [DecidableEq R] (p q : Polynomial R) : Polynomi
 
 private noncomputable def modRS.go [Field R] [DecidableEq R] :
     Nat → Polynomial R → Polynomial R → List (Polynomial R)
-  | 0, a, _ => [a]
+  | 0, _, b => [b]
   | fuel + 1, a, b =>
-    if b = 0 then [a]
+    if b = 0 then [b]
     else a :: modRS.go fuel b (a % b)
 
 /-- MOD-based polynomial remainder sequence (report §3.2.1 `MOD_RS`). -/
@@ -34,9 +34,9 @@ noncomputable def modRS [Field R] [DecidableEq R] (a b : Polynomial R) : List (P
 
 private noncomputable def ePRS.go [Field R] [DecidableEq R] :
     Nat → Polynomial R → Polynomial R → List (Polynomial R)
-  | 0, a, _ => [a]
+  | 0, _, b => [b]
   | fuel + 1, a, b =>
-    if b = 0 then [a]
+    if b = 0 then [b]
     else a :: ePRS.go fuel b (prem a b)
 
 /-- PREM-based PRS (report §3.2.3 `E_PRS`). -/
