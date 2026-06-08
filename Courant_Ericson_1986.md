@@ -5,7 +5,6 @@
 **Report:** NYU Computer Science Technical Report #232  
 **Date:** August 1986
 
-> Transcription of the 1986 technical report from PDF. Icon listings use the report's *fancy notation* (see Section 1.3): e.g. `©` for division, `®` for addition, `F (a,b) <= code ■` for procedure definitions, and `))` for `return`. Some OCR artifacts from the scanned source may remain.
 
 ## Abstract
 
@@ -21,74 +20,156 @@ For the purpose of understanding the algebraic algorithms over the Euclidean dom
 
 John Lipson’s book. Elements of Algebra and Algebraic Computing, presents a number of interesting symbolic algebraic algorithms, in a style which seems implementable. The only non-trivial implementation detail for the algorithms pfesepted by Lipson is that they assume div and mod operations which are defined on every. Euclidean domain (and, by implication, representations and definitions of these operations for every Euclidean domain). For example, consider his presentation of the FFT algorithm (p. 298);
 
-```icon
-procedure FFT(?/,a(x),(«),A);
-if N = 1
-then
-{ Basis. } Ao := o q
-else
-begin
-{ Binary split. }
-{ Recursive calls. }
-{ Combine. }
-```
+<div class="math-left">
 
-for k := 0 until zi - 1 do
+$$
+\begin{array}{l}
+\textbf{procedure } \text{FFT}(N, a(x), \omega, A); \\
+\textbf{if } N = 1 \\
+\textbf{then} \\
+\quad \{ \text{Basis.} \} \ A_0 := a_0 \\
+\textbf{else} \\
+\textbf{begin} \\
+\quad \{ \text{Binary split.} \} \\
+\quad\quad n := N/2 \\
+\quad\quad b(x) := \sum_{i=0}^{n-1} a_{2i} x^i \\
+\quad\quad c(x) := \sum_{i=0}^{n-1} a_{2i+1} x^i \\
+\quad \{ \text{Recursive calls.} \} \\
+\quad\quad \text{FFT}(n, b(x), \omega^2, B) \\
+\quad\quad \text{FFT}(n, c(x), \omega^2, C) \\
+\quad \{ \text{Combine.} \} \\
+\quad\quad \textbf{for } k := 0 \textbf{ until } n - 1 \textbf{ do} \\
+\textbf{begin} \\
+\quad\quad\quad A_k := B_k + \omega^k \otimes C_k \\
+\quad\quad\quad A_{k+n} := B_k - \omega^k \otimes C_k \\
+\quad\quad \textbf{end} \\
+\textbf{end}
+\end{array}
+$$
 
-```icon
-begin
-Afc ;= Bjq + (ji^^Ck',
-Bk - (li’^'SlCk',
-end
-end
-```
+</div>
 
-The purpose of the package of routines described in this paper is to allow an ICON user to implement an algorithm such as FFT, at about the same level of description as above. By comparison, see Section 3.3.2, which contains our ICON version of the same procedure. In order to support a high level of description, it must be possible to describe the implementation of particular Euclidean domains, and to describe algorithms which apply generically to all Euclidean domain instances. We do this by deciding which functions are expected of all Euclidean domain implementations (say, div, mod, + and -), and then implementing a "dispatch" version of each of these. The "dispatch" div function inspects the type of its argument (say, integer, polynomial, quotient domain element or modular domain element), and then calls the associated div function in the domain implementation (say divjnteger, dlv_poly, dlv_Q or dlv_mod). The ability to test the run-time environment is a feature of ICON. Given a string, say "X", and an integer corresponding to a number of formal parameters, say 3, proc("X', 3) will return a procedure (a first-class value in ICON, assignable to variables) if the identifier X is globally to a procedure which is defined to take 3 arguments. Otherwise proc fails. To test for the procedure Oz, we evaluate procC'times" || "_Z", 2), and in general, for some string value X which corresponds to a procedure name, Y a domain name, and i a number of formal parameters, we evaluate proc(X || Y, i), where || is the ICON string concatenation operator. For example, here is the code for the "generic" division operation:
+The purpose of the package of routines described in this paper is to allow an ICON user to implement an algorithm such as FFT, at about the same level of description as above. By comparison, see Section 3.3.2, which contains our ICON version of the same procedure. 
 
-```icon
-© (a, b) 4= ft proc("div_"|ltype(a), 2)(a, b) ■
-```
+In order to support a high level of description, it must be possible to describe the implementation of particular Euclidean domains, and to describe algorithms which apply generically to all Euclidean domain instances. We do this by deciding which functions are expected of all Euclidean domain implementations (say, div, mod, + and -), and then implementing a "dispatch" version of each of these. The "dispatch" div function inspects the type of its argument (say, integer, polynomial, quotient domain element or modular domain element), and then calls the associated div function in the domain implementation (say divjnteger, dlv_poly, dlv_Q or dlv_mod). 
 
-Every implementation of a Euclidean domain must supply certain required procedures. (This notion of "must" corresponds to the idea of a "category" in Scratchpad II.) Optional procedures may be supplied by the domain implementation, but are synthesized if not supplied. The following table lists required, optional and synthesized procedures. Operator abs BASIC PROCEDURES FOR COMPUTING WITH DOMAINS Type Required Optional Synthesized Constant mod ■ i'3C ^r. nohRns'v / normalize exp Predicates unit Commands print pr, prs For a typical domain implementation, which serves as a model for other domain implementations, see for example Section 2.3.1, which describes our implementation of Quotient domains. A typical application is our implementation of Lipson’s algorithm (p. 264) for Newton Interpolation, seen in Section 3.3.3. 1,2. A summary of package facilities for Euclidean domains The domains supported are as follows: EUCLIDEAN DOMAIN CONSTRUCTIONS Primitive domains integer baseg Machine word integers Arbitrary precision unsigned base B integers Signed infinite precision integers Domain constructors 2 modulo poly . tpower Quotient domain Modular domain Polynomial domain Truncated power series domain The following are the representations in ICON we have adopted for objects in the Euclidean domains we support: Domain representation integer integer bases
+The ability to test the run-time environment is a feature of ICON. Given a string, say "X", and an integer corresponding to a number of formal parameters, say 3, proc("X', 3) will return a procedure (a first-class value in ICON, assignable to variables) if the identifier X is globally to a procedure which is defined to take 3 arguments. Otherwise proc fails. To test for the procedure $\otimes_Z$, we evaluate procC'times" || "_Z", 2), and in general, for some string value X which corresponds to a procedure name, Y a domain name, and i a number of formal parameters, we evaluate proc(X || "_" Y, i), where || is the ICON string concatenation operator. For example, here is the code for the "generic" division operation:
 
-```icon
-record base_b (base, digits)
-record Z (sign, mantissa)
-record Q (dividend, divisor)
-modulo
-record modulo (Item, modulus)
-poly
-record poly (terms)
-record term (coef. power)
-tpower
-record tpower (poly, N)
-```
+<div class="math-left">
 
-We have implemented the following application algorithms, which may be applied to objects from any Euclidean domain (unless otherwise noted): Application Algorithms ; y,________________ GCD greatest common divisor Jaxm- EUCLID extended GCD MOD_ES polynomial remainder sequence for GCD PREM E_PRS integral domain remainder polynomial remainder sequence for PRl^^ INVERSE inverse of x mod y NIA Newton interpolation algorithm CRA2, CRA Chinese remainder algorithm, for. 2 or more. - - linear congruences EFT Fast Fourier Transform FFI Fast Fourier Interpolation NPSI Newton power series inversion for truncated power series The system as described is comprised of about 2000 lines of commented ICON code. Supposing that the code defined in the following sections is stored in a file, say euclid, then it may be executed in ICON by adding the statement link euclid to the application program, and then running the ICON translator. The author will gladly supply this code (as is) to any interested user. Mail to ARPA:ericson@nyu or UUCP:{floyd,ihnp4}!cmcl2!csdl!ericson for more information, or via U.S. Mail (with a 600 ft mag tape) to the address listed at the beginning of this report. (The offer last until the author gets sick of making tapes.)
+$$
+\def\odiv{\mathbin{⨸}}
+\odiv(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div\_"}\,\|\|\,\text{type}(a), 2)(a, b) \ \blacksquare
+$$
+
+</div>
+
+Every implementation of a Euclidean domain must supply certain required procedures. (This notion of "must" corresponds to the idea of a "category" in Scratchpad II.) Optional procedures may be supplied by the domain implementation, but are synthesized if not supplied. The following table lists required, optional and synthesized procedures. 
+
+<p align="center"><strong>BASIC PROCEDURES FOR COMPUTING WITH DOMAINS</strong></p>
+
+| *Type* | *Required* | *Optional* | *Synthesized* |
+|:--|:-:|:-:|:-:|
+| Constant | 0<br>1 | | |
+| Operator | abs<br>$\oplus$<br>$-$<br>$\otimes$<br>$\odiv$ | mod<br>rem<br>normalize | $\ominus$<br>exp |
+| Predicates | =<br>$<0$<br>unit<br>$=0$ | $<$ | $|$ |
+| Commands | | print | pr<br>prs |
+
+For a typical domain implementation, which serves as a model for other domain implementations, see for example Section 2.3.1, which describes our implementation of Quotient domains. 
+
+A typical application is our implementation of Lipson’s algorithm (p. 264) for Newton Interpolation, seen in Section 3.3.3. 
+
+## 1.2 A summary of package facilities for Euclidean domains
+
+The domains supported are as follows:
+
+<p align="center"><strong>EUCLIDEAN DOMAIN CONSTRUCTIONS</strong></p>
+
+| | | |
+|:--|:--|:--|
+| **Primitive domains** | *integer* | Machine word integers |
+| | *base*<sub>B</sub> | Arbitrary precision unsigned base B integers |
+| | $\mathcal{Z}$ | Signed infinite precision integers |
+| **Domain constructors** | $\mathcal{Q}$ | Quotient domain |
+| | *modulo* | Modular domain |
+| | *poly* | Polynomial domain |
+| | *tpower* | Truncated power series domain |
+
+The following are the representations in ICON we have adopted for objects in the Euclidean domains we support:
+
+<p align="center"><strong>Domain representation</strong></p>
+
+| | |
+|:--|:--|
+| *integer* | `integer` |
+| *base*<sub>B</sub> | `record base_b (base, digits)` |
+| *Z* | `record Z (sign, mantissa)` |
+| *Q* | `record Q (dividend, divisor)` |
+| *modulo* | `record modulo (item, modulus)` |
+| *poly* | `record poly (terms)` |
+| | `record term (coef, power)` |
+| *tpower* | `record tpower (poly, N)` |
+
+We have implemented the following application algorithms, which may be applied to objects from any Euclidean domain (unless otherwise noted):
+
+<p align="center"><strong>Application Algorithms</strong></p>
+
+| | |
+|:--|:--|
+| *GCD* | greatest common divisor |
+| *EUCLID* | extended GCD |
+| *MOD_RS* | polynomial remainder sequence for GCD |
+| *PREM* | integral domain remainder |
+| *E_PRS* | polynomial remainder sequence for PREM |
+| *INVERSE* | inverse of $x \pmod y$ |
+| *NIA* | Newton interpolation algorithm |
+| *CRA2, CRA* | Chinese remainder algorithm for 2 or more<br>linear congruences |
+| *FFT* | Fast Fourier Transform |
+| *FFI* | Fast Fourier Interpolation |
+| *NPSI* | Newton power series inversion for truncated power series |
+
+The system as described is comprised of about 2000 lines of commented ICON code. Supposing that the code defined in the following sections is stored in a file, say euclid, then it may be executed in ICON by adding the statement link euclid to the application program, and then running the ICON translator. The author will gladly supply this code (as is) to any interested user. Mail to ARPA:ericson@nyu or UUCP:{floyd,ihnp4}!cmcl2!csdl!ericson for more information, or via U.S. Mail (with a 600 ft mag tape) to the address listed at the beginning of this report. (The offer last until the author gets sick of making tapes.)
 
 
 ### 1.3. Our typographical conventions for displaying ICON code
 
-We have dressed up and compressed the syntax of ICON, to give the algorithms i presented a more compact, functional appearance. Icon variables (simple names for single items, and procedure names) may appear as 1 subscripted quantities. This is purely formal, not actual, subscripting. Also, some | operator symbols are defined which would not be legal identifiers in ICON (because the i characters don’t exist in ASCII). Rather than spelling them out, in this report we use the symbol we would have liked to use. The following are some examples of the original code j and the fancier notation. Note that underscore ("_") is not a meta-character, but an 1 ordinary character that may appear in identifiers in ICON. Original ICON Fancy Notation 0 ne_base_B bases delta_l_m inus_1 ptus_poly ®poly For procedure definitions, instead of the obvious
+We have dressed up and compressed the syntax of ICON, to give the algorithms presented a more compact, functional appearance. 
+
+Icon variables (simple names for single items, and procedure names) may appear as subscripted quantities. This is purely formal, not actual, subscripting. Also, some operator symbols are defined which would not be legal identifiers in ICON (because the characters don’t exist in ASCII). Rather than spelling them out, in this report we use the symbol we would have liked to use. The following are some examples of the original code and the fancier notation. Note that underscore ("_") is not a meta-character, but an ordinary character that may appear in identifiers in ICON. 
+
+| **Original ICON** | **Fancy Notation** |
+|:--|:--|
+| `one_base_B` | $1_{base_B}$ |
+| `delta_i_minus_1` | $\delta_{i-1}$ |
+| `plus_poly` | $\oplus_{poly}$ |
+
+For procedure definitions, instead of the obvious
 
 ```icon
 procedure F (a, b. c)
-code
+  code
 end
 ```
 
 we use the logical-looking
 
-```icon
-F (a, b, c) 4= code ■
-```
+$$
+\text{F}(a, b, c) \Leftarrow \text{code} \ \blacksquare
+$$
 
-For return x we use ))• x, and for return we use 1^. Instead of fall we use ±. All other ICON reserved words are bold-faced.
+For `return x` we use $\Uparrow x$, and for `return` we use $\Uparrow$. Instead of `fail` we use $\bot$. All other ICON reserved words are bold-faced.
 
 
 ### 1.4. Afterthoughts
 
-This code is no longer under development, and seems to be primarily of educational value. In the future, code such as this will be supplanted by far more capable systems such as Scratchpad H, as they become widely available and inexpensive. As an exercise, the author believes that the code addresses some of the essential software organization issues in computer algebra system design; If the code is to be applied in an educational setting, it would be well to stress to students several other important areas (these areas could form the basis of semester projects to extend the package): • Algorithm design. For example, efficient polynomial'gr^&^test common divisor, which has seen many attempts to reduce its complexity. Zippel’s notes [Zippe86a] contain a good discussion of this problem. --------- • Multivariate polynomials. This code does not" supply any of the several multivariate polynomial representations. • Explainability. Algorithmic (as opposed to "deductive") systems do not explain themselves. An ideal system would supply a proof its conclusion. • Numeric-Symbolic Interface. The results of some computations, for example, polynomial root-finding[Yap86a], are best expressed as numeric approximation intervals, even though they are defining "symbolic" quantities. More work needs to be done to automate the relationship between approximate versus exact computations.
+This code is no longer under development, and seems to be primarily of educational value. In the future, code such as this will be supplanted by far more capable systems such as Scratchpad H, as they become widely available and inexpensive. 
+
+As an exercise, the author believes that the code addresses some of the essential software organization issues in computer algebra system design; if the code is to be applied in an educational setting, it would be well to stress to students several other important areas (these areas could form the basis of semester projects to extend the package):
+
+* **Algorithm design.** For example, efficient polynomial greatest common divisor, which has seen many attempts to reduce its complexity. Zippel’s notes [Zippe86a] contain a good discussion of this problem.
+* **Multivariate polynomials.** This code does not supply any of the several multivariate polynomial representations.
+* **Explainability.** Algorithmic (as opposed to "deductive") systems do not explain themselves. An ideal system would supply a proof its conclusion.
+* **Numeric-Symbolic Interface.** The results of some computations, for example, polynomial root-finding [Yap86a], are best expressed as numeric approximation intervals, even though they are defining "symbolic" quantities. More work needs to be done to automate the relationship between approximate versus exact computations.
 
 
 ## 2. Euclidean domains: representation and basic arithmetic
@@ -96,125 +177,277 @@ This code is no longer under development, and seems to be primarily of education
 
 ### 2.1. Generic arithmetic for Euclidean domains
 
-Lipson’s book, p. 203, contains a significant proviso; We assume that our (Algol-like) language allows for the manipulation of values from an arbitrary Euclidean domain D with degree function d. In particular we assume that our language provides a Division Algorithm in the form of two operations “div” and “mod” which return, respectively, a preferred quotient and remainder in accordance with the Division Property of a Euclidean domain... The purpose of this package is to partially implement this proviso. The package implements several primitive domains and domain constructors,-which^ are classes of domains composed from other domains. When a procedure like © or mod is applied to an object which is an instance of a Euclidean domain, the type of the object is determined by inspection. This is either the primitive type, in the case of an instance of a primitive domain, or the type of the “outermost” constructor, in the case of an instance of a composite domain. In the case of required and optional procedures, the run-time environment is then tested to determine whether the domain implementation supplies an operation of this type. If the name of the domain is D, and the procedure name is P, then the run-time environment is tested for a procedure named Pd - For example, © applied to a quotient will look up the procedure ®q. Required procedures must be defined by the domain implementation, otherwise the operation fails. Implementation-optional procedures will synthesize their values if a more domain-specific implementation does not exist. Constants. A consequence of the existence of a variety of Euclidean domain instances is that there are a variety of structural representatioaSi^or-O-and L In a given computation, the 0 or 1 used- must be of the type of the domain instance. Hence to obtain the correct 0, we evaluate a 0 function which, given an object of the domain instance, returns the 0 of that domain, and similarly for 1.
+Lipson’s book, p. 203, contains a significant proviso:
 
-```icon
-0 (a) <= I) proc("z0ro_"|[type(a),1 )(a) ■
-([■ proc("one_"||typ0(a),1 )(a) ■
-```
+> We assume that our (Algol-like) language allows for the manipulation of values from an arbitrary Euclidean domain *D* with degree function *d*. In particular we assume that our language provides a *Division Algorithm* in the form of two operations “div” and $mod$ which return, respectively, a preferred quotient and remainder in accordance with the Division Property of a Euclidean domain...
 
-Operators. The following procedures define the basic arithmetic operations for domains. As noted in Table 1, every domain must supply Abs, ®, ® and ©. mod, rem and normalize are optional, and © and exp are synthesized. •JI!.
+ The purpose of this package is to partially implement this proviso. The package implements several primitive domains and *domain constructors*,which are classes of domains composed from other domains. 
+ 
+ When a procedure like $\odiv$ or $mod$ is applied to an object which is an instance of a Euclidean domain, the type of the object is determined by inspection. This is either the primitive type, in the case of an instance of a primitive domain, or the type of the “outermost” constructor, in the case of an instance of a composite domain. In the case of required and optional procedures, the run-time environment is then tested to determine whether the domain implementation supplies an operation of this type. If the name of the domain is $D$, and the procedure name is $P$, then the run-time environment is tested for a procedure named $P_D$. For example, $\odiv$ applied to a quotient will look up the procedure $\odiv_Q$. Required procedures must be defined by the domain implementation, otherwise the operation fails. Implementation-optional procedures will synthesize their values if a more domain-specific implementation does not exist. 
+ 
+**Constants.**
+ 
+ A consequence of the existence of a variety of Euclidean domain instances is that there are a variety of structural representations for 0 and 1. In a given computation, the 0 or 1 used must be of the type of the domain instance. Hence to obtain the correct 0, we evaluate a 0 function which, given an object of the domain instance, returns the 0 of that domain, and similarly for 1.
 
-```icon
-Abs (a) <= ff proc("Abs_"||typ0(a),1)(a) ■
-©(a, b)<= proc("plus_"|ltype(a). 2)(a, b) ■
-\ri. 3 zp j j
-© (a, b) <= il-©(a. -(b)) ■
-'.anjo mo*';
-— (x) .<= -ft-procC'm lnus_"||typa(x), 2)(x) ■
-proc{"tlm es_"||type(a), 2)(a, b) ■
-© (a. b) <= -fl proc("dlv_"||type(a), 2)(a, b) ■
-mod (a. b) <=
-if (x := proc("m od_"||type(a), 2)(a, b)) then -ff x
-if <(b. 0(b)) then -fj-moJla, —(b))
-normalize(
-then ©(a, ©(b, ©(©( — (a), b). 1(a))))
-else ©(a, — (®(b, ©(a. b)))))
-```
+<div class="math-left">
 
-Example. The polynomials in the domain of quotients of machine-word integers are denoted within ICON by the record-constructor expressions and variable assignments ax := poly([term(^(-2.1), 0), term (<2(1,1), 3)])
+$$
+\begin{array}{l}
+\mathbf{0}(a) \Leftarrow \Uparrow \text{proc}(\text{"zero\_"}\,\|\,\text{type}(a), 1)(a) \ \blacksquare \\
+\mathbf{1}(a) \Leftarrow \Uparrow \text{proc}(\text{"one\_"}\,\|\,\text{type}(a), 1)(a) \ \blacksquare
+\end{array}
+$$
 
-```icon
-bx := poly([term (2(-3,1), 0), term (2(2,1), 2)])
-nr a printing control structure, causes expressions to be printed out in a pleasing fashion.
-```
+</div>
 
-The ICON expression pr{ax. " mod bx. ■' - modfax. ixH will print the following result: (-2)q + 1q’X*3 mod (-3)q + 2q’X 2 = (•2)q + (3/2)q X Similarly, given c(x) = (3/2)x —2, represented as ex := polydterm(^(-2.1). 0), term(2(3.2), 1)1) The result of evaluating pr{bx, " mod ”, ex, " = ", mod(bx. ex)} is (-3)q + 2q’X"2 mod + (3/2)q’X = (5/9)q
+**Operators.**
 
-```icon
-rem (a, b) 4=
--ft-(If (x ;= proc("rem_"lltype{a), 2)(a. b)) then X
-else ©(a, ®(©(a, b), b)))
-```
+The following procedures define the basic arithmetic operations for domains. As noted in Table 1, every domain must supply Abs, $\oplus$, $-$, $\otimes$ and $\odiv$. $mod$, rem and normalize are optional, and $\ominus$ and exp are synthesized.
 
-Example. The polynomials in the domain of quotients of machine-word integers are denoted with ICON by ax := po ly ([term (<2(5, 1). 0). term(fi(-2. 1). 1). term(2(1. 1). 2)l) The result of evaluating pr{ax, " rem ", bx, " = ", remCax, bx)} is 5q + (-2)q*X + 1q*X*2 rem 2q = Oq Similarly, given the equations over the integral domain of polynomials over machine integers denoted by
+<div class="math-left">
 
-```icon
-ax := po ly ([term (8, 0), term(-9, 1), term(6. 2)])
-bx := poly_of(3),
-```
+$$
+\begin{array}{l}
+\text{Abs}(a) \Leftarrow \Uparrow \text{proc}(\text{"Abs\_"}\,\|\|\,\text{type}(a), 1)(a) \ \blacksquare \\
+\oplus(a, b) \Leftarrow \Uparrow \text{proc}(\text{"plus\_"}\,\|\|\,\text{type}(a), 2)(a, b) \ \blacksquare \\
+\ominus(a, b) \Leftarrow \Uparrow \oplus(a, -(b)) \ \blacksquare \\
+- (x) \Leftarrow \Uparrow \text{proc}(\text{"minus\_"}\,\|\|\,\text{type}(x), 2)(x) \ \blacksquare \\
+\otimes(a, b) \Leftarrow \Uparrow \text{proc}(\text{"times\_"}\,\|\|\,\text{type}(a), 2)(a, b) \ \blacksquare \\
+\odiv(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div\_"}\,\|\|\,\text{type}(a), 2)(a, b) \ \blacksquare \\
+\text{mod}(a, b) \Leftarrow \\
+\quad \textbf{if } (x := \text{proc}(\text{"mod\_"}\,\|\|\,\text{type}(a), 2)(a, b)) \textbf{ then } \Uparrow x \\
+\quad \textbf{if } <(b, \mathbf{0}(b)) \textbf{ then } \Uparrow \text{mod}(a, -(b)) \\
+\quad \Uparrow \text{normalize}( \\
+\quad\quad \textbf{if } <(a, \mathbf{0}(a)) \\
+\quad\quad \textbf{then } \oplus(a, \otimes(b, \oplus(\ominus(-(a), b), \mathbf{1}(a)))) \\
+\quad\quad \textbf{else } \oplus(a, -(\otimes(b, \odiv(a, b)))) \\
+\quad ) \ \blacksquare
+\end{array}
+$$
 
-the result of evaluating pr(ax, " rem ", bx, " = ", rem(ax, bx)} is 8 + (-QyX + 6*X*2 rem 3 = 2 normalize returns a preferred normal form of a value for a given domain. For example, for quotients, it would be the quotient such that the dividend and divisor have no common non-unit factors. For a modular domain, it would be the least positive element of the equivalence class of the value.
+</div>
 
-```icon
-normalize (a) <=
-if (x := proc("norm allze_"||type(a), 1 )(a)) then x
-fl a
-exp is the Russian Peasants algorithm for exponentiation. Our version Is transliterated
+**Example.** The polynomials
+
+$$
+\begin{array}{c}
+a(x) = x^3 - 2 \\
+b(x) = 2x^2 - 3
+\end{array}
+$$
+
+in the domain of quotients of machine-word integers are denoted within ICON by the record-constructor expressions and variable assignments
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+\textit{ax} := \text{poly}([\text{term}(\mathcal{Q}(-2,1), 0), \text{term}(\mathcal{Q}(1,1), 3)]) \\
+\textit{bx} := \text{poly}([\text{term}(\mathcal{Q}(-3,1), 0), \text{term}(\mathcal{Q}(2,1), 2)])
+\end{array}
+$$
+
+</div>
+
+*pr*, a printing control structure, causes expressions to be printed out in a pleasing fashion. The ICON expression `pr{ax, " mod ", bx, " = ", mod(ax, bx)}` will print the following result:
+
+$$
+(-2)q + 1q \cdot X^3 \bmod (-3)q + 2q \cdot X^2 = (-2)q + \tfrac{3}{2}q \cdot X
+$$
+
+Similarly, given $c(x)=\tfrac{3}{2}x - 2$, represented as
+
+<div class="math-left">
+
+$$
+\textit{cx} := \text{poly}([\text{term}(\mathcal{Q}(-2,1), 0), \text{term}(\mathcal{Q}(3,2), 1)])
+$$
+
+</div>
+
+The result of evaluating `pr{bx, " mod ", cx, " = ", mod(bx, cx)}` is
+
+$$
+(-3)q + 2q \cdot X^2 \bmod (-2)q + \tfrac{3}{2}q \cdot X = \tfrac{5}{9}q
+$$
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+\text{rem}(a, b) \Leftarrow \\
+\quad \Uparrow (\textbf{if } (x := \text{proc}(\text{"rem\_"}\,\|\|\,\text{type}(a), 2)(a, b)) \textbf{ then } x \\
+\quad\quad \textbf{else } \ominus(a, \otimes(\odiv(a, b), b))) \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+**Example.** The polynomials
+
+$$
+\begin{array}{c}
+a(x) = 5 - 2x + x^2 \\
+b(x) = 2
+\end{array}
+$$
+
+in the domain of quotients of machine-word integers are denoted with ICON by
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+\textit{ax} := \text{poly}([\text{term}(\mathcal{Q}(5,1), 0), \text{term}(\mathcal{Q}(-2,1), 1), \text{term}(\mathcal{Q}(1,1), 2)]) \\
+\textit{bx} := \text{poly\_of}(\mathcal{Q}(2,1))
+\end{array}
+$$
+
+</div>
+
+The result of evaluating `pr{ax, " rem ", bx, " = ", rem(ax, bx)}` is
+
+$$
+5q + (-2)q \cdot X + 1q \cdot X^2 \mathbin{\text{rem}} 2q = 0q
+$$
+
+Similarly, given the equations over the integral domain of polynomials over machine integers denoted by
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+\textit{ax} := \text{poly}([\text{term}(8, 0), \text{term}(-9, 1), \text{term}(6, 2)]) \\
+\textit{bx} := \text{poly\_of}(3)
+\end{array}
+$$
+
+</div>
+
+The result of evaluating `pr{ax, " rem ", bx, " = ", rem(ax, bx)}` is
+
+$$
+8 + (-9)X + 6X^2 \mathbin{\text{rem}} 3 = 2
+$$
+
+*normalize* returns a preferred normal form of a value for a given domain. For example, for quotients, it would be the quotient such that the dividend and divisor have no common non-unit factors. For a modular domain, it would be the least positive element of the equivalence class of the value.
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+\text{normalize}(a) \Leftarrow \\
+\quad \textbf{if } (x := \text{proc}(\text{"normalize\_"}\,\|\,\text{type}(a), 1)(a)) \textbf{ then } \Uparrow x \\
+\quad \Uparrow a \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+*exp* is the Russian Peasants algorithm for exponentiation. Our version Is transliterated
 from R.B.K. Dewar’s SETL implementation of arithmetic for the NYU Ada/Ed system
 [Dewar81a,Kruch83a].
-exp (X, p) <=
-ifp = 1then-fyx
-else { result := l(x)
-u ;= copy(x): v := p
-running := u
-whlie V ”= 0 do
-{ If V % 2 = 1 then result := (gfresult. running)
-running := ®(runnlng. running)
-•(y resu It
-```
+<div class="math-left">
 
-Predicates. All of the predicates defined below except | are required to be defined by a domain instance implementation if they are to be used. However, this is not a minimal set: for example, is_zero could be defined in terms of =. 1 is really not a basic predicate, but since it may be defined in a general way, we include it here.
+$$
+\begin{array}{l}
+\text{exp}(x, p) \Leftarrow \\
+\quad \textbf{if } p = 1 \textbf{ then } \Uparrow x \\
+\quad \textbf{else } \{ \text{result} := \mathbf{1}(x) \\
+\quad\quad u := \text{copy}(x); \ v := p \\
+\quad\quad \text{running} := u \\
+\quad\quad \textbf{while } v \mathrel{\sim=} 0 \textbf{ do} \\
+\quad\quad \{ \textbf{if } v \mathbin{\%} 2 = 1 \textbf{ then result} := \otimes(\text{result}, \text{running}) \\
+\quad\quad\quad \text{running} := \otimes(\text{running}, \text{running}) \\
+\quad\quad\quad v := v / 2 \} \\
+\quad\quad \Uparrow \text{result} \} \ \blacksquare
+\end{array}
+$$
 
-```icon
-= (a, b) -(y proc("equal_"lltype(a),2)(a, b) ■
-< (a, b) <= -fy ({proc("l8ss_"lltypa(a),2)(a, b)) ] <0(©(a, b))) ■
-<0 (x) <= yy proc("negatlve_"||type(x),1 )(x) ■
-unit M <= iy proc("unlt_"lltype(x),1 ){x) ■
-= 0 (x) <= yy proc("is_zero_"||type(x),1 )(x) ■
-```
+</div>
 
-a |c (a divides c) if c is a multiple of a, that is, if rem(c,a) — Q.
+**Predicates.**
 
-```icon
-I (a, c) <= yy =0(rem(c, a)) ■
-```
+All of the predicates defined below except | are required to be defined by a domain instance implementation if they are to be used. However, this is not a minimal set: for example, *is_zero* could be defined in terms of =. | is really not a basic predicate, but since it may be defined in a general way, we include it here.
 
-Commands. Every domain instance D implementation should define a preferred method of printing values in the domain, print^. On top of this, we supply printing control structures pr and prs. pr takes a list of arguments enclosed in braces, and prints them, using the printing
+<div class="math-left">
 
-```icon
-procedure appropriate for the type of each argument, followed by a carriage return, prs is
-```
+$$
+\begin{array}{l}
+= (a, b) \Leftarrow \Uparrow \text{proc}(\text{"equal\_"}\,\|\,\text{type}(a), 2)(a, b) \ \blacksquare \\
+< (a, b) \Leftarrow \Uparrow ((\text{proc}(\text{"less\_"}\,\|\,\text{type}(a), 2)(a, b)) \mathrel{|} <0(\ominus(a, b))) \ \blacksquare \\
+<0 (x) \Leftarrow \Uparrow \text{proc}(\text{"negative\_"}\,\|\,\text{type}(x), 1)(x) \ \blacksquare \\
+\mathit{unit}\,(x) \Leftarrow \Uparrow \text{proc}(\text{"unit\_"}\,\|\,\text{type}(x), 1)(x) \ \blacksquare \\
+=0 (x) \Leftarrow \Uparrow \text{proc}(\text{"is\_zero\_"}\,\|\,\text{type}(x), 1)(x) \ \blacksquare
+\end{array}
+$$
 
-the same, omitting the carriage return. prs and pr are defined using the user-defined control operation features of ICON 5.10. [Grisw85a,Grisw83a] When pr or prs is called with a sequence of expressions in braces, the expressions are passed as unactivated co-expressions, which “are then activated with the ICON @ operator.
+</div>
 
-```icon
-prs (x) <= every y := !x do prlnt(@y) ■
-(every y := !x do print(@y))
-w rlte()
-print (x) <=
-If type(x) = = "list"
-then { w rltes("[")
-```
+$a \mid c$ (a divides c) if c is a multiple of a, that is, if $\text{rem}(c, a) = 0$.
 
-every y := !x[1:*x] do { prlnt(y): wrlte(", ") } prlnt(x[*x]): w rltes("]") }
+<div class="math-left">
 
-```icon
-else if pp := proc("print_"||type(x), 1) then pp(x)
-else if type(x) == "string" then writes(x)
-else w rites(lm agex(x))
-'Euclidean domains: representation and basic arithmetic
-```
+$$
+{|} (a, c) \Leftarrow \Uparrow =0(\text{rem}(c, a)) \ \blacksquare
+$$
+
+</div>
+
+**Commands.**
+
+Every domain instance $D$ implementation should define a preferred method of printing values in the domain, $print_D$. On top of this, we supply printing control structures *pr* and *prs*. *pr* takes a list of arguments enclosed in braces, and prints them, using the printing procedure appropriate for the type of each argument, followed by a carriage return. *prs* is the same, omitting the carriage return.
+
+*prs* and *pr* are defined using the user-defined control operation features of ICON 5.10. [Grisw85a, Grisw83a] When *pr* or *prs* is called with a sequence of expressions in braces, the expressions are passed as unactivated co-expressions, which are then activated with the ICON @ operator.
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+\text{prs}\,(x) \Leftarrow \text{every } y := \texttt{!x} \textbf{ do } \text{print}(\texttt{@y}) \ \blacksquare \\
+\\
+\text{pr}\,(x) \Leftarrow \\
+\quad (\text{every } y := \texttt{!x} \textbf{ do } \text{print}(\texttt{@y})) \\
+\quad \text{write}() \ \blacksquare \\
+\\
+\text{print}\,(x) \Leftarrow \\
+\quad \textbf{if } \text{type}(x) \mathrel{==} \text{"list"} \\
+\quad \textbf{then } \{ \text{writes}(\text{"["}) \\
+\quad\quad \text{every } y := \texttt{!x}[1:\texttt{*x}] \textbf{ do } \{ \text{print}(y); \text{ writes}(\text{", "}) \} \\
+\quad\quad \text{print}(x[\texttt{*x}]); \text{ writes}(\text{"]"}) \} \\
+\quad \textbf{else if } pp := \text{proc}(\text{"print\_"}\,\|\|\,\text{type}(x), 1) \textbf{ then } pp(x) \\
+\quad \textbf{else if } \text{type}(x) \mathrel{==} \text{"string"} \textbf{ then writes}(x) \\
+\quad \textbf{else writes}(\text{image}(x)) \ \blacksquare
+\end{array}
+$$
+
+</div>
 
 
 ### 2.2. Primitive domains
 
-The primitive domains are those which are not constructed from other domains, or which are best thought of as undecomposable. We have three such domains available: • Arbitrary-precision arbitrary-base integers. • Arbitrary-precision base 10 integers. • Ordinary machine integers. The latter are best unused: ICON does not notify the user of integer multiplication overflow, and overflow can occur very easily in the applications we deal with. For example, subresultant polynomial remainder sequences with cofficients in the 10000 range involve intermediate calculations in the 10000^ range.
+The primitive domains are those which are not constructed from other domains, or which are best thought of as undecomposable. We have three such domains available: 
+
+* Arbitrary-precision arbitrary-base integers.
+* Arbitrary-precision base 10 integers.
+* Ordinary machine integers. 
+
+The latter are best unused: ICON does not notify the user of integer multiplication overflow, and overflow can occur very easily in the applications we deal with. For example, subresultant polynomial remainder sequences with cofficients in the 10000 range involve intermediate calculations in the 10000^ range.
 
 
 #### 2.2.1. Abitrary base, infinite precision non-negative integer
 
-arithmetic Base B Arithmetic Facilities Data structures base-a', set base Constants Ofcajeg , IhaxeB , ^base^ Operators > ©hajeg > ^base"^ » ^^base'Q > Predicates ^baseyst base^ Commands printbase-a Data structures. base is a number B such that 1 is less than the maximum machine word integer. Then digits is a list of machine word integers less than base and greater than 0. Width is the printing width of digits of the base, in terms of decimal digits.
+<p align="center"><strong>Base B Arithmetic Facilities</strong></p>
+
+| | |
+|:--|:--|
+| **Data structures** | $base_{\mathbf{B}}$; $set_{base}$ |
+| **Constants** | $0_{base_{\mathbf{B}}}$, $1_{base_{\mathbf{B}}}$, $k_{base_{\mathbf{B}}}$ |
+| **Operators** | $\oplus_{base_{\mathbf{B}}}$, $\ominus_{base_{\mathbf{B}}}$, $\otimes_{base_{\mathbf{B}}}$, $\odiv_{base_{\mathbf{B}}}$, $normalize_{base_{\mathbf{B}}}$ |
+| **Predicates** | $<_{base_{\mathbf{B}}}$, $=_{base_{\mathbf{B}}}$ |
+| **Commands** | $print_{base_{\mathbf{B}}}$ |
+
+**Data structures.** base is a number $B$ such that 1 is less than the maximum machine word integer. Then digits is a list of machine word integers less than base and greater than 0. Width is the printing width of digits of the base, in terms of decimal digits.
 
 ```icon
 record base-a (base, digits)
@@ -239,7 +472,7 @@ The base S addition algorithm is that of Lipson, p. 199. For input it takes a, b
 
 ```icon
 B := a.base
-Z?ajeB(B , ©dig,-Mfa.digits,b.digits,B))
+Z?ajeB(B , \odivdig,-Mfa.digits,b.digits,B))
 ®digiti (ad. hd, B)
 if m < n then {a := (llst(n-m,0) |||ad); b := bd }
 else if m > n then { a := ad; b := list(m-n,0) ||| bd }
@@ -291,11 +524,11 @@ Example. The result of evaluating
 
 ```icon
 X := hajeB(10, 11,0.0.5,6,3]): y := baseBCiO, [5,3,3,5])
-pr{x, " - ", y, " = ", ©fca,eB(X-y)}
+pr{x, " - ", y, " = ", \odivfca,eB(X-y)}
 X := Z><3jeB(10,[2,1,21): y := baseB('\0, [9,9])
 pr{x, " ■ ", y. " = ", ebase^f-^' y)}
 y := base-Bi'^O, [1.9,9])
-pr{x,".", y," = ", ©,,,,^(x,y)}
+pr{x,".", y," = ", \odiv,,,,^(x,y)}
 100563 #10#-5335 #10# = 95228 #10#
 2 1 2 #10 # ■ 9 9 #10 # = 1 1 3
 2 1 2#10#-1 99 #10# = 1 3 #10#
@@ -331,7 +564,7 @@ Example. The result of evaluating X := A:z,a„B(28107324); y := kbase^^T ‘ kb
 
 ```icon
 b.diglts, a.base))) ■
-©digit* (a, b, B) <=
+\odivdigit* (a, b, B) <=
 If the divisor is 0, then fail.
 If (*b = 1) & {b[1l = 0) then { prf’ERROR: divide by 0 In base^”}\ ±}
 If a is shorter than b, return 0.
@@ -392,7 +625,7 @@ Example. The result of evaluating every xy := IHIO. 1], 14.2], (27. 9], 142.2], 
 ```icon
 [212, 99], [115668, 75625]]
 do { X
-pr{x, ” / ".y.” = ", ©iojeaCx. y)} }
+pr{x, ” / ".y.” = ", \odiviojeaCx. y)} }
 1 0 #10# / 1 #10# = 1 0 #10#
 1 8 8 1 7 5 #10# / 3 2 5 #10# =
 1 8 8 1 7 5 #10# / 5 7 9 #10# =
@@ -435,7 +668,7 @@ rest (x) <= If *x < 2 then H else -(y x(2:*x + l] ■
 
 #### 2.2.2. Arbitrary precision integer Euclidean domain Z
 
-Integer Arithmetic Facilities Data structures Constants Oz. Iz. kz Operators ©z. modz, absz, degz, normalizez Predicates “z. *^z. unitz, ^Oz. ““Oz Commands printz Data structures. sign is 1 or —1. mantissa is a base Base integer, where the Base is set by kz.
+Integer Arithmetic Facilities Data structures Constants Oz. Iz. kz Operators \odivz. modz, absz, degz, normalizez Predicates “z. *^z. unitz, ^Oz. ““Oz Commands printz Data structures. sign is 1 or —1. mantissa is a base Base integer, where the Base is set by kz.
 
 ```icon
 record Z (sign, mantissa)
@@ -454,7 +687,7 @@ Initial
 hajeaCBase. tf{gitr_oy(abs(x), Base)))
 ```
 
-Operators. If <02(a) & >02(b) then ®z (b. a) ■ft normaZizez( It =02(a) then b • Ise if =0z(b) then a • Ise if (>02(a) & >Oz(b)) 1 (<02(a) & <02(b)) then Z(a.slgn, b.mantissa, Base)) else { # a > 0 and b < 0, so... It *^^eB(^**^*'^tlssa, b.mantissa) then Z(-1, @j,aje,(b.mantissa, a.mantissa, Base)) else Z(1, ©fcajeB^*'"’antlssa, b.mantissa, Base)) - Example. The result of evaluating X := ^z(1): y := kzi-999} pr{x. " + ", y, " = ", ®z(x, y)}
+Operators. If <02(a) & >02(b) then ®z (b. a) ■ft normaZizez( It =02(a) then b • Ise if =0z(b) then a • Ise if (>02(a) & >Oz(b)) 1 (<02(a) & <02(b)) then Z(a.slgn, b.mantissa, Base)) else { # a > 0 and b < 0, so... It *^^eB(^**^*'^tlssa, b.mantissa) then Z(-1, @j,aje,(b.mantissa, a.mantissa, Base)) else Z(1, \odivfcajeB^*'"’antlssa, b.mantissa, Base)) - Example. The result of evaluating X := ^z(1): y := kzi-999} pr{x. " + ", y, " = ", ®z(x, y)}
 
 ```icon
 “Z (x) •<= ■fyziorzna/zz«z(^("X'*l9’’-x.mantlssa)) ■
@@ -466,17 +699,17 @@ Example. The result of evaluating X := Jtz(212); 'i := kz{-9^} >0 srf'Y .ajqsmsS
 (a, b) <= -fl-norwui/zzezCZfa.slgn’b.sIgn, 0j,aj^j(a.mantissa, b.mantissa))) ■
 ```
 
-Example. The result of evaluating pr{x, ” * y. " - ®z(x.y)} pr{x, • • y. " - ", ®z(x,y)} 28107324Z * 75625Z = 2125616377500Z 7478Z * (-4625Z) = (-34585750Z) -(I-norzna2zzez(Z(a.sign/b.sign,©ha,eg(a.mantissa,b.mantissa,Base))) Example. The result of evaluating Eaclidean domains: representation and basic arithmetic every xy := 1(110, I], (121903, 5335], (115668, 75625]]
+Example. The result of evaluating pr{x, ” * y. " - ®z(x.y)} pr{x, • • y. " - ", ®z(x,y)} 28107324Z * 75625Z = 2125616377500Z 7478Z * (-4625Z) = (-34585750Z) -(I-norzna2zzez(Z(a.sign/b.sign,\odivha,eg(a.mantissa,b.mantissa,Base))) Example. The result of evaluating Eaclidean domains: representation and basic arithmetic every xy := 1(110, I], (121903, 5335], (115668, 75625]]
 
 ```icon
-do { X := jt2(xy(l]): 'i A:2(xy(2]): pr{x, " / y, ** = ", ©z(x. y)}}
+do { X := jt2(xy(l]): 'i A:2(xy(2]): pr{x, " / y, ** = ", \odivz(x. y)}}
 lOz / 1z = lOz
 modz (a. b)
 IKlf <z('’’
 modz{>^. —z(b))
 else If <z(&,
-then ©2(a- ~z(®z(b. ®z(“z(lz(a))« ©z(a< b)))))
-else ®2(a- “z(®z(b- ©z(a> b)))))
+then \odiv2(a- ~z(®z(b. ®z(“z(lz(a))« \odivz(a< b)))))
+else ®2(a- “z(®z(b- \odivz(a> b)))))
 i i )
 ```
 
@@ -534,7 +767,7 @@ Eoclidean domains: representation and basic arithmetic
 
 #### 2.2.3. Small integers Euclidean domain
 
-We provide the following machine integer arithmetic facilities; Machine Integer Arithmetic Facilities Constants ^mttgerr ^integer Operators ©, integer^ Ointeger* circleslashinteger» ^^ftlintegert ftiodinugert ^^Sintegert ^^^integer Predicates integerintegert integer Commands print Steger Constants. We provide constants 0 and 1, as follows: ^integer (x) <= Operators. integer (x) ^integer
+We provide the following machine integer arithmetic facilities; Machine Integer Arithmetic Facilities Constants ^mttgerr ^integer Operators $\odiv$, integer^ Ointeger* circleslashinteger» ^^ftlintegert ftiodinugert ^^Sintegert ^^^integer Predicates integerintegert integer Commands print Steger Constants. We provide constants 0 and 1, as follows: ^integer (x) <= Operators. integer (x) ^integer
 
 ```icon
 -jy a * b ■
@@ -590,15 +823,15 @@ Operators.
 ```icon
 Then
 where x=pq'®p'q, y=qq’'.
-©fl (a, b)
+\odivfl (a, b)
 local zz, top
-top := ©(®(a.dividend, b.divisor), ®(b.dlvidend, a.divisor))
+top := \odiv(®(a.dividend, b.divisor), ®(b.dlvidend, a.divisor))
 zz := 0(a.dividend)
 Yt (If “(top, zz} then Q{zz, l(a.dividend))
 else zionna/izej2(<2(top, ®(a.dlvisor, b.divisor))))
 — Q (x) ‘ft j2(“(x.dividend), x.divisor) ■
 (»t b) 4= ■fl'noz7na/izC2(fi(®(a.dividend, b.dividend), ®(a.divisor, b.divisor))) ■
-©fl (a, b)
+\odivfl (a, b)
 local zz
 zz 0(b.dividend)
 If =(b.dividend, zz) then pr{"ERROR: divide by 0 In j2"}
@@ -615,8 +848,8 @@ sign is in the dividend. Let g=GCD(x,y). Then normalize=
 normalizeQ (x) 4=
 local g, top, bottom
 g := GCD(x.dividend, x.divisor)
-top := ©(x.dividend, g)
-bottom := ©(x.divisor, g)
+top := \odiv(x.dividend, g)
+bottom := \odiv(x.divisor, g)
 ■fy (If <0(bottom) then j2(-(top), -(bottom))
 else 5(top, bottom))
 Eaclidean domains: representation and basic arithmetic
@@ -646,7 +879,7 @@ x.divlsor, ")q"}
 
 #### 2.3.2. Modular Euclidean domain D/(x)
 
-Modular Domain Arithmetic Facilities Data structures modulo Constants Operators Predicates Commands modulo ■> ^modulo © modulo, ~ modulo t ^modulot ® modulo t tlOrmalizejnofiuio, degmod^ig ~modulot H^itmodulot ^^modulo print„odulo Data structures. Enclideaa domains: representation and basic arithmetic An item from a modular domain, say Z5. is specified by the item in the “base” domain, plus the modulus.
+Modular Domain Arithmetic Facilities Data structures modulo Constants Operators Predicates Commands modulo ■> ^modulo $\odiv$ modulo, ~ modulo t ^modulot ® modulo t tlOrmalizejnofiuio, degmod^ig ~modulot H^itmodulot ^^modulo print„odulo Data structures. Enclideaa domains: representation and basic arithmetic An item from a modular domain, say Z5. is specified by the item in the “base” domain, plus the modulus.
 
 ```icon
 record modulo (item, modulus)
@@ -660,7 +893,7 @@ Imodulo (»)
 it modulo (l(a.itom). a.modulus) ■
 ```
 
-Operators. (a. b) ^tnorma/ize.„^„to(modulo(®(a.ltem. b.ltem). a.modulus)) ■ — moduloM"^ ■ft ^module b) <= ^normn/ize^„to(modulo(®(a.ltem. b.ltem). a.modulus)) ■ ©^uu> (a. b) ^t^o^^a^ze„«,„z.(modulo{®(a.item. IN VERS E(b.ltem .b.modulus)). a.modulu normalize^ul. W <= Itmodulo (mod(x.ltem. x.modulus). x.modulus) ■
+Operators. (a. b) ^tnorma/ize.„^„to(modulo(®(a.ltem. b.ltem). a.modulus)) ■ — moduloM"^ ■ft ^module b) <= ^normn/ize^„to(modulo(®(a.ltem. b.ltem). a.modulus)) ■ $\odiv$^uu> (a. b) ^t^o^^a^ze„«,„z.(modulo{®(a.item. IN VERS E(b.ltem .b.modulus)). a.modulu normalize^ul. W <= Itmodulo ($mod$(x.ltem. x.modulus). x.modulus) ■
 
 ```icon
 deg„u>dulaM^ -ft mod (x.ltem. x.modulus) ■
@@ -672,7 +905,7 @@ Predicates.
 “mfldMio (a. b) <= -ft =(mod(a.ltem, a.modulus), mod(b.ltem, b.modulus)) ■
 ```
 
-unitn^ulo <= it -(mod(a.ltem. a.modulus). 1) ■ Nothing is negative in a modular domain.
+unitn^ulo <= it -($mod$(a.ltem. a.modulus). 1) ■ Nothing is negative in a modular domain.
 
 ```icon
 ^^modulo ia) -L ■
@@ -738,7 +971,7 @@ b-terms)
 T := []: z := O(a.termslll.coef)
 ^y^ty t ;= ITerms do It not =(t.coef, z) then T |lj;= [t]
 ■(y (If *T > 0 then poly(T) else 0(a))
-©fermj (*• b)
+\odivfermj (*• b)
 Enclidean domains: represenUtlon and basic arithmetic
 ```
 
@@ -821,35 +1054,35 @@ r := copy(a)
 quotient := Opofy(r)
 repeat { m := rfegpo/y(r)
 then 'I} quotient
-else { q := poly([term(©(ZeaJco</<f)7eac?coe/b)).m-n)])
+else { q := poly([term(\odiv(ZeaJco</<f)7eac?coe/b)).m-n)])
 Enciidean domains: representation and basic arithmetic
 If m = 0
-then -ft-©poiyCquotient, q)
+then -ft-\odivpoiyCquotient, q)
 • Ise { subtrand := ~pofy(®pofy(q. b))
-r := ©po/y(r. subtrand)
-- quotient := ©po/y(quotlont, q)
+r := \odivpo/y(r. subtrand)
+- quotient := \odivpo/y(quotlont, q)
 ```
 
 Example. The result of evaluating
 
 ```icon
 ax := poly_of(1): bx := poly_of(3)
-prpintegers: ", ax, "T, bx, " = ", ©poj^(ax, bx)}
+prpintegers: ", ax, "T, bx, " = ", \odivpoj^(ax, bx)}
 poly(Iterm(fi(5,9), 0)])
 poly(Iterm(i2(-2,1), 0), term(^2(3,2), 1)])
 fx := poly ([term (j2(A:2(5),^2(9)), 0)])
 gx poly([term(j2(^21'2).^2O))’ tef'”(fi(^7(3).^2(2)), 1)1)
 pr{"fi:
-(", ax, ") ! (", bx, ") = ", ©pofy{»^. bx)}
+(", ax, ") ! (", bx, ") = ", \odivpofy{»^. bx)}
 pr{"QZ:
 ```
 
-C. gx. ") ! (", fx, ") - ", ©poiyig^. fx)}
+C. gx. ") ! (", fx, ") - ", \odivpoiyig^. fx)}
 
 ```icon
 ax := poly(lterm((2()5:2(166), Jt2(243)), 0), term(i2(fcz(-275),fc2(243)),1)l)
 bx := poly([term(i2(^2(‘'''®®®®)' ^2(^5625)), 0)])
-pr{"QZlx]; ax, "I ", bx, ") = 0", ©(ax, bx)}
+pr{"QZlx]; ax, "I ", bx, ") = 0", \odiv(ax, bx)}
 integers: 1/3 = 0
 ((5/9)q)/((•2)q + (3/2)q*X) - Oq
 QZ:
@@ -857,7 +1090,7 @@ QZ:
 QZlx): ((166z/243z)q + ((-275z)/243z)q*X / (1156682/75625z)q) =
 (6276875z/14053662z)q + ((•20796875z)/28107324z)q*X
 Enclidean domains: representation and basic arithmetic
-modpoiy (a, b) ■<= -ft ©(a, ®(b, ©(a, b))) ■
+modpoiy (a, b) ■<= -ft \odiv(a, ®(b, \odiv(a, b))) ■
 Evaluate /(x) at a, that is evaluate /(a):
 evalpofy (fx, a)
 local r
@@ -919,7 +1152,7 @@ else If X.power > 1 then prsC’X*", x.power}
 
 #### 2.3.4. Truncated Power Series domain r(F[[x]])„.
 
-Truncated Power Series Domain Arithmetic Facilities Data structures tpower Constants ^tpower t ^tpower Operators ®tpowerr ~g>owert ^tpowert ©tpowert normalizetpower Predicates ~ tpower f ^^^^^ower Commands printtpower Data structures.
+Truncated Power Series Domain Arithmetic Facilities Data structures tpower Constants ^tpower t ^tpower Operators ®tpowerr ~g>owert ^tpowert \odivtpowert normalizetpower Predicates ~ tpower f ^^^^^ower Commands printtpower Data structures.
 
 ```icon
 record tpower (Poly, N)
@@ -945,10 +1178,10 @@ b.Poly), a.N) ■
 truncate (p, n) <= -(t poly(p.termslV.n + 1l) ■
 ```
 
-®ipow«- (a. *») <= ■(ttpowor(truncat8(®poly(a.Poly. b.Poly). a.N), a.N) ■ ©9»0H-er
+®ipow«- (a. *») <= ■(ttpowor(truncat8(®poly(a.Poly. b.Poly). a.N), a.N) ■ $\odiv$9»0H-er
 
 ```icon
-**) •()^tpower(truncate(©po/y(a.Poly, b.Poly), a.N), a.N) ■
+**) •()^tpower(truncate(\odivpo/y(a.Poly, b.Poly), a.N), a.N) ■
 normalize,p„^„ (x) -<= Ittpower(norma/zzfipoZy(x.PoIy). x.N) ■
 ```
 
@@ -973,7 +1206,7 @@ We provide algorithms for number of application areas: • GCD, linear congruenc
 
 ### 3.1. GCD, Linear Congruences and Diophantine Equations
 
-We provide algorithms for the following applications: <» Euclid’s algorithm for greatest common divisor, in simple and extended • versions. • Inverse of a mod m. • The Chinese Remainder for 1, 2 or N congruences. • The solutions to the Diophantine equation ax + by = c.
+We provide algorithms for the following applications: <» Euclid’s algorithm for greatest common divisor, in simple and extended • versions. • Inverse of a $mod$ m. • The Chinese Remainder for 1, 2 or N congruences. • The solutions to the Diophantine equation ax + by = c.
 
 
 #### 3.1.1. Greatest Common Divisor
@@ -987,7 +1220,7 @@ Output: a gcd of a,b.
 GCD (a, b) <= "ft (If *(b, 0(b)) then normalize(&} else GCD(b, mod(a, b))) ■
 ```
 
-The following is a table of expressions and their gcd's, as computed via GCD: AlforithiBf for Tsrioni problwnt over Encltdosn doniolnt Greatest Common Divisors Domain GCD S333z *lSz Z5[x] ((-2) mod 5)+(l mod 5)*X*3 (3mod5)+(4mod5) "X QZtx] (166zZ243z)q + ((-275z)/243z)q*X QZ[x] (-2z)q + lzq’X*3 (5z/9z)q EUCUD{a,b) Input: a,h€D, not both zero. Output: g,s,t such that g is a ged of fl, b and g=jfl+rb.
+The following is a table of expressions and their gcd's, as computed via GCD: AlforithiBf for Tsrioni problwnt over Encltdosn doniolnt Greatest Common Divisors Domain GCD S333z *lSz Z5[x] ((-2) $mod$ 5)+(l $mod$ 5)*X*3 (3$mod$5)+(4$mod$5) "X QZtx] (166zZ243z)q + ((-275z)/243z)q*X QZ[x] (-2z)q + lzq’X*3 (5z/9z)q EUCUD{a,b) Input: a,h€D, not both zero. Output: g,s,t such that g is a ged of fl, b and g=jfl+rb.
 
 ```icon
 EUCLID (A. B)
@@ -1000,7 +1233,7 @@ a := [copy(A), copy(B)]
 while not(®=(a(2]. 0(A))) do
 ```
 
-a := (a[21. e(a[1l. ®(al21. q))] a (•[21. e(sI1l. 0(8(21. q))l t ItI21. e(tll]. ®(tI21. q))] } ■fl' [nflrmfl/zze(aI1]). normalize(9{'\]), nflZ7nfl/ize(tI1l)l Algoritlimi for ▼ariooi problem* over Enclidean domains The following is a table of expressions and their extended gcd’s, as computed via EUCLID: Extended Greatest Common Divisors A, B GCD, s, t (5/9)q, (.16/9)q-»-(-4/3)q’X, lq-h(8/9)q’X+(2Z3)q’X^ (.2mod5)+(lmod5)*X3. (-3mod5)+(2mod5)’X^) (3mod5)-t-{4mod5)’X, (Imod 5), (2mod5)*X
+a := (a[21. e(a[1l. ®(al21. q))] a (•[21. e(sI1l. 0(8(21. q))l t ItI21. e(tll]. ®(tI21. q))] } ■fl' [nflrmfl/zze(aI1]). normalize(9{'\]), nflZ7nfl/ize(tI1l)l Algoritlimi for ▼ariooi problem* over Enclidean domains The following is a table of expressions and their extended gcd’s, as computed via EUCLID: Extended Greatest Common Divisors A, B GCD, s, t (5/9)q, (.16/9)q-»-(-4/3)q’X, lq-h(8/9)q’X+(2Z3)q’X^ (.2$mod$5)+(lmod5)*X3. (-3$mod$5)+(2$mod$5)’X^) (3$mod$5)-t-{4$mod$5)’X, (Imod 5), (2$mod$5)*X
 
 
 #### 3.1.2. Modular Inverse
@@ -1011,7 +1244,7 @@ Our modular inverse algorithms is that of Lipson, p. 214. INVERSE{a,m): Computat
 INVERSE (a. m) 4=
 local gst
 gat := EUCLID(m, a)
-If unit (gstllj) then -ftwod (© (gstI3], gstll]), m)
+If unit (gstllj) then -ftwod (\odiv (gstI3], gstll]), m)
 also pr{*’E R R O R: a, "“-1 ", " mod ", m, " doaa not exist"}
 ```
 
@@ -1020,7 +1253,7 @@ A table of modular inverses as computed by INVERSE is as follows: modulus ERROR 
 
 #### 3.1.3. Chinese Remainders and Single-Variable Linear Congruential
 
-Systems We provide three algorithms, CRAl for solving equations of the form a x ■« b mod m, and CRA2 and CRA for solving systems of equations of 2 or more congruences of the form X ■■ a mod m. CRAl (a, b, m): Solution of a single linear congruence relation. Input: a,b,m such that a x ■« b mod m. Output: a particular solution xi. Niven and Zuckerman [NivenSOa], in their section 2.3 note that, given a congruence ax^bmodm^ we can reduce it to my^— bmoda. If yo is a solution of the reduced (myo+^) congruence, then xo=-------------is a solution for the origmal congruence. They apply the reduction until the congruence is solvable “by inspection’’. This we do not do. They also have some tricks for size reduction (on p. 43) we will not apply (due to laziness). Our “by inspection’’ termination condition will be to perform the reduction until a mod m=l or b—Q. Then we return b mod a, in a recursive setting which builds up the original x q .
+Systems We provide three algorithms, CRAl for solving equations of the form a x ■« b $mod$ m, and CRA2 and CRA for solving systems of equations of 2 or more congruences of the form X ■■ a $mod$ m. CRAl (a, b, m): Solution of a single linear congruence relation. Input: a,b,m such that a x ■« b $mod$ m. Output: a particular solution xi. Niven and Zuckerman [NivenSOa], in their section 2.3 note that, given a congruence ax^bmodm^ we can reduce it to my^— bmoda. If yo is a solution of the reduced (myo+^) congruence, then xo=-------------is a solution for the origmal congruence. They apply the reduction until the congruence is solvable “by inspection’’. This we do not do. They also have some tricks for size reduction (on p. 43) we will not apply (due to laziness). Our “by inspection’’ termination condition will be to perform the reduction until a $mod$ m=l or b—Q. Then we return b $mod$ a, in a recursive setting which builds up the original x q .
 
 ```icon
 CRAl (la, bb, m) <=
@@ -1033,7 +1266,7 @@ else If =(b, 0(b)) then i)O(b)
 else If =(a, b) then-f)-1(b)
 ```
 
-else fl-©(©(®(m. CRA1 (m. -(b), a)), b), a) } Algorithm! for ▼arioni problem! over Enclidean domain! Example. The following results were obtained from executing CRAl (the examples are from Niven and Zuckerman [NivenSOa], Sect. 2.3: • C2?A(7,1432,5317): x such that 7x-14327noJ5317 is 4762. • C/?A(863,880,2151): x such that 863x»880nioJ2151 is 173. • C22A(589,5O9,817): There is no x such that 589x"'509/nod817. CJ?A2 and CRA aic from Lipson, p. 254 and p. 257. CRA2 (r, m, s, n): Two-congruence Chinese Remainder Algorithm for Z Input: r,ni,j,n€Z, where n,/n are relatively prime. Output: tZ€Z such that U"*rmodm, U^smodn. CRA2 (r. m. a. n) <=
+else fl-$\odiv$($\odiv$(®(m. CRA1 (m. -(b), a)), b), a) } Algorithm! for ▼arioni problem! over Enclidean domain! Example. The following results were obtained from executing CRAl (the examples are from Niven and Zuckerman [NivenSOa], Sect. 2.3: • C2?A(7,1432,5317): x such that 7x-14327noJ5317 is 4762. • C/?A(863,880,2151): x such that 863x»880nioJ2151 is 173. • C22A(589,5O9,817): There is no x such that 589x"'509/nod817. CJ?A2 and CRA aic from Lipson, p. 254 and p. 257. CRA2 (r, m, s, n): Two-congruence Chinese Remainder Algorithm for Z Input: r,ni,j,n€Z, where n,/n are relatively prime. Output: tZ€Z such that U"*rmodm, U^smodn. CRA2 (r. m. a. n) <=
 
 ```icon
 local c, a, U
@@ -1053,14 +1286,14 @@ c := INVERSE(M. m)
 Algorithm I for ▼arioni problems over Eaclidean domains
 ```
 
-CT := TOoJ(®(e(r. TOod(U. m)). c), m) Example. The problem is to find u(x) in Z[x] such that u(x)mod3=x, u{x)modl= 1,
+CT := TOoJ(®(e(r. TOod(U. m)). c), m) Example. The problem is to find u(x) in Z[x] such that u(x)$mod$3=x, u{x)modl= 1,
 
 ```icon
 M(x)moJ4=2x+3, and
 tt(x)mcwi5=3x+3
 ```
 
-Let u(x)=ax+b. Then a mod 3=1 b mod 3 = 0 a mod 7 = 0 b mod 7=1 a mod 4 = 2 b mod 4 = 3 a mod 5 = 3 We can solve for a and b individually using the n-congruence CRA algorithm, and we are done. Executing the following code:
+Let u(x)=ax+b. Then a $mod$ 3=1 b $mod$ 3 = 0 a $mod$ 7 = 0 b $mod$ 7=1 a $mod$ 4 = 2 b $mod$ 4 = 3 a $mod$ 5 = 3 We can solve for a and b individually using the n-congruence CRA algorithm, and we are done. Executing the following code:
 
 ```icon
 a_congruonco8 := HI, 3], 10, 7], [2, 4], [3, 5]]
@@ -1095,7 +1328,7 @@ then { xj := CRA1(a, c, ahj(b))
 •Is® { yi CRA1(b, c, ab5(a))
 ```
 
-XI := ©(e(c, ®(b. yi)). a) } -n-Ig.xi.yi] } Example. By evaluating D/OPHANrZN£(84,54,-24), we find that all integer solutions (x,y) of the equation 84x+54y=(—24) are of the form x=l + 9t, y=(—2) —14t. Example. By evaluating DZOPHANrZNE(999,-49,5000), we find that all integer solutions (x,y) of the equation 999x+(—49)y=5000 are of the form x=13+49t, y- 163-(-999)f. Example. By evaluating DZOPHA2V77N£(247,589,817), we find that all integer solutions (x,y) of the equation 247x+589y=817 are of the form x=( —ll)+31t, 4y=6— 13t. 3-2 Polynomial remainder sequences Polynomial remainder sequences are studied as a method of finding variants of the greatest common divisor for elements of integral domains. Variation in the definition is required because integral domains do not support long division. It is also desirable to compute values which share properties of the greatest common divisor (which might then be reclaimed by homomorphic image methods; see Lipson, ch. 8), such that the computation does not suffer the large coefficient growth of Euclid’s algorithm on even moderate-sized polynomials. Yap [Yap85a] discusses the issue, presenting an example of Knuth exhibiting the coefficient growth problem. Polynomial remainder sequences are discussed in greater depth in the paper by Loos [Loosa]. We have implemented three variants of polynomial remainder sequence: • mod-based PRS. • prem, a pseudo-remainder for division over integral domains, and a •prem-based PRS, as defined in Yap |Yap85a]. • Subresultant PRS, as defined in Yap [Yap85a] and based on an algorithm of • Collins, as presented by Brown. 3.2.1 MOD-based PRS The simplest polynomial remainder sequence is simply that of Euclid’s algorithm. That is, we define MOD_RS{a,b) to be the PRS of mod{a,b).
+XI := $\odiv$(e(c, ®(b. yi)). a) } -n-Ig.xi.yi] } Example. By evaluating D/OPHANrZN£(84,54,-24), we find that all integer solutions (x,y) of the equation 84x+54y=(—24) are of the form x=l + 9t, y=(—2) —14t. Example. By evaluating DZOPHANrZNE(999,-49,5000), we find that all integer solutions (x,y) of the equation 999x+(—49)y=5000 are of the form x=13+49t, y- 163-(-999)f. Example. By evaluating DZOPHA2V77N£(247,589,817), we find that all integer solutions (x,y) of the equation 247x+589y=817 are of the form x=( —ll)+31t, 4y=6— 13t. 3-2 Polynomial remainder sequences Polynomial remainder sequences are studied as a method of finding variants of the greatest common divisor for elements of integral domains. Variation in the definition is required because integral domains do not support long division. It is also desirable to compute values which share properties of the greatest common divisor (which might then be reclaimed by homomorphic image methods; see Lipson, ch. 8), such that the computation does not suffer the large coefficient growth of Euclid’s algorithm on even moderate-sized polynomials. Yap [Yap85a] discusses the issue, presenting an example of Knuth exhibiting the coefficient growth problem. Polynomial remainder sequences are discussed in greater depth in the paper by Loos [Loosa]. We have implemented three variants of polynomial remainder sequence: • $mod$-based PRS. • prem, a pseudo-remainder for division over integral domains, and a •prem-based PRS, as defined in Yap |Yap85a]. • Subresultant PRS, as defined in Yap [Yap85a] and based on an algorithm of • Collins, as presented by Brown. 3.2.1 MOD-based PRS The simplest polynomial remainder sequence is simply that of Euclid’s algorithm. That is, we define MOD_RS{a,b) to be the PRS of $mod${a,b).
 
 ```icon
 MOD.RS (a, b) 4= -ft l»l 11 (W =(b. 0(b)) then [b] else MOD_RS(b, mod(a, b))) ■
@@ -1179,7 +1412,7 @@ Ci {Pi) <= -ft &adc«!f(Pi) ■
 /?i {Ci, S,-—!, Pj —1) 4=
 ```
 
-exp(P,_i. -<fe,(8,_i. 1))) Pi (8i-2. C,—2. /?»-2) <= ■ft poly_of(®(®(oxp(-(l(c/-2)). Pi {Pi-2. Pi-1. Pi) <= -ft ©(P R E M {Pi-2. Pi-1}. Pi) ■ 3*3 Power series and polynomial inversion and interpolation Under this heading we provide the following facilities; • Newton’s method for construction of polynomials by interpolation. • Fast Fourier Transform (FFT) and Interpolation (FFI). • Newton’s method for truncated power series inversion. 3.3.1 Newton’s method for construction of polynomials by interpolation NIA (rm_list); Newton’s Interpolation Algorithm (CRA for F[x]) Input: [[ak, bk]] such that U(ak) = bk, U(x) € F[x] Output: U(x)
+exp(P,_i. -<fe,(8,_i. 1))) Pi (8i-2. C,—2. /?»-2) <= ■ft poly_of(®(®(oxp(-(l(c/-2)). Pi {Pi-2. Pi-1. Pi) <= -ft $\odiv$(P R E M {Pi-2. Pi-1}. Pi) ■ 3*3 Power series and polynomial inversion and interpolation Under this heading we provide the following facilities; • Newton’s method for construction of polynomials by interpolation. • Fast Fourier Transform (FFT) and Interpolation (FFI). • Newton’s method for truncated power series inversion. 3.3.1 Newton’s method for construction of polynomials by interpolation NIA (rm_list); Newton’s Interpolation Algorithm (CRA for F[x]) Input: [[ak, bk]] such that U(ak) = bk, U(x) € F[x] Output: U(x)
 
 ```icon
 N lA (abjist) 4=
@@ -1193,12 +1426,12 @@ Mx := l(Ux)
 every k ;= 1 to *ab_$ do
 
 ```icon
-{ Mx := ®{Mx, ©(polydterm(1(b), 1)]), poly_of(a)))
+{ Mx := ®{Mx, \odiv(polydterm(1(b), 1)]), poly_of(a)))
 ab := pop(ab_8); a ;= ab[1l; b := abl2l
-c := ©{1(a), eva/pofy(Mx, a))
+c := \odiv{1(a), eva/pofy(Mx, a))
 ```
 
-a := ®{©(poly_of(b), poly_of(evaZpoZj,(Ux, a))), poly_of(c))
+a := ®{$\odiv$(poly_of(b), poly_of(evaZpoZj,(Ux, a))), poly_of(c))
 
 ```icon
 Ux := ®(Ux, ®(CT, Mx))
@@ -1249,8 +1482,8 @@ omega Output; a(x) = sum(i=0, N-1, ai x*i) where a(omega*k) = bk, k=0..N-l.
 FFI (N , B, omega) <=
 local bx, C, ax
 bx polynomlallze(B)
-C := FFT(N, bx, ©(l(omega), omega))
-ax := polynomlallze(©vector ,caZar(C, modulo(N ,13)))
+C := FFT(N, bx, \odiv(l(omega), omega))
+ax := polynomlallze(\odivvector ,caZar(C, modulo(N ,13)))
 polynomiaiize (B) <=
 local r, I
 ```
@@ -1262,7 +1495,7 @@ local R , I
 R := IlstCV); I ;= 1
 ```
 
-every v ;= IV do { R[I] ;= ©(VII], x); I +:= 1 } -fr R 3.3.3 Newton’s method for truncated power series inversion NPSI (): Newton’s Power Series Inversion Method Input: a(t) mod t*(2‘n) » sum(i=0,2‘n-l,ai t*i), aO # 0. Output: x‘(n)(t) « a(t)*-l mod t*2‘n
+every v ;= IV do { R[I] ;= $\odiv$(VII], x); I +:= 1 } -fr R 3.3.3 Newton’s method for truncated power series inversion NPSI (): Newton’s Power Series Inversion Method Input: a(t) $mod$ t*(2‘n) » sum(i=0,2‘n-l,ai t*i), aO # 0. Output: x‘(n)(t) « a(t)*-l $mod$ t*2‘n
 
 ```icon
 NPSI (at)
