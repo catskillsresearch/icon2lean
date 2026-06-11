@@ -51,12 +51,12 @@ The purpose of the package of routines described in this paper is to allow an IC
 
 In order to support a high level of description, it must be possible to describe the implementation of particular Euclidean domains, and to describe algorithms which apply generically to all Euclidean domain instances. We do this by deciding which functions are expected of all Euclidean domain implementations (say, div, mod, + and -), and then implementing a "dispatch" version of each of these. The "dispatch" div function inspects the type of its argument (say, integer, polynomial, quotient domain element or modular domain element), and then calls the associated div function in the domain implementation (say divjnteger, dlv_poly, dlv_Q or dlv_mod). 
 
-The ability to test the run-time environment is a feature of ICON. Given a string, say "X", and an integer corresponding to a number of formal parameters, say 3, proc("X", 3) will return a procedure (a first-class value in ICON, assignable to variables) if the identifier X is globally to a procedure which is defined to take 3 arguments. Otherwise proc fails. To test for the procedure $\otimes_Z$, we evaluate `proc("times" || "_Z", 2)`, and in general, for some string value X which corresponds to a procedure name, Y a domain name, and i a number of formal parameters, we evaluate `proc(X || "_" || Y, i)`, where `||` is the ICON string concatenation operator. For example, here is the code for the "generic" division operation:
+The ability to test the run-time environment is a feature of ICON. Given a string, say "X", and an integer corresponding to a number of formal parameters, say 3, proc("X", 3) will return a procedure (a first-class value in ICON, assignable to variables) if the identifier X is globally to a procedure which is defined to take 3 arguments. Otherwise proc fails. To test for the procedure $\otimes_{Z}$, we evaluate `proc("times" || "_Z", 2)`, and in general, for some string value X which corresponds to a procedure name, Y a domain name, and i a number of formal parameters, we evaluate `proc(X || "_" || Y, i)`, where `||` is the ICON string concatenation operator. For example, here is the code for the "generic" division operation:
 
 <div class="math-left">
 
 $$\begin{aligned}
-&\mathbin{⨸}(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div\textunderscore"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare
+&\mathbin{⨸}(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare
 \end{aligned}$$
 
 </div>
@@ -178,7 +178,7 @@ Lipson’s book, p. 203, contains a significant proviso:
 
  The purpose of this package is to partially implement this proviso. The package implements several primitive domains and *domain constructors*,which are classes of domains composed from other domains. 
  
- When a procedure like $\mathbin{⨸}$ or $mod$ is applied to an object which is an instance of a Euclidean domain, the type of the object is determined by inspection. This is either the primitive type, in the case of an instance of a primitive domain, or the type of the “outermost” constructor, in the case of an instance of a composite domain. In the case of required and optional procedures, the run-time environment is then tested to determine whether the domain implementation supplies an operation of this type. If the name of the domain is $D$, and the procedure name is $P$, then the run-time environment is tested for a procedure named $P_D$. For example, $\mathbin{⨸}$ applied to a quotient will look up the procedure $\mathbin{⨸}_Q$. Required procedures must be defined by the domain implementation, otherwise the operation fails. Implementation-optional procedures will synthesize their values if a more domain-specific implementation does not exist. 
+ When a procedure like $\mathbin{⨸}$ or $mod$ is applied to an object which is an instance of a Euclidean domain, the type of the object is determined by inspection. This is either the primitive type, in the case of an instance of a primitive domain, or the type of the “outermost” constructor, in the case of an instance of a composite domain. In the case of required and optional procedures, the run-time environment is then tested to determine whether the domain implementation supplies an operation of this type. If the name of the domain is $D$, and the procedure name is $P$, then the run-time environment is tested for a procedure named $P_{D}$. For example, $\mathbin{⨸}$ applied to a quotient will look up the procedure $\mathbin{⨸}_{Q}$. Required procedures must be defined by the domain implementation, otherwise the operation fails. Implementation-optional procedures will synthesize their values if a more domain-specific implementation does not exist. 
  
 **Constants.**
  
@@ -187,8 +187,8 @@ Lipson’s book, p. 203, contains a significant proviso:
 <div class="math-left">
 
 $$\begin{aligned}
-&\mathbf{0}(a) \Leftarrow \Uparrow \text{proc}(\text{"zero\textunderscore"}\mathrel{\texttt{||}}\text{type}(a), 1)(a) \ \blacksquare \\
-&\mathbf{1}(a) \Leftarrow \Uparrow \text{proc}(\text{"one\textunderscore"}\mathrel{\texttt{||}}\text{type}(a), 1)(a) \ \blacksquare
+&\mathbf{0}(a) \Leftarrow \Uparrow \text{proc}(\text{"zero_"}\mathrel{\texttt{||}}\text{type}(a), 1)(a) \ \blacksquare \\
+&\mathbf{1}(a) \Leftarrow \Uparrow \text{proc}(\text{"one_"}\mathrel{\texttt{||}}\text{type}(a), 1)(a) \ \blacksquare
 \end{aligned}$$
 
 </div>
@@ -200,14 +200,14 @@ The following procedures define the basic arithmetic operations for domains. As 
 <div class="math-left">
 
 $$\begin{aligned}
-&\text{Abs}(a) \Leftarrow \Uparrow \text{proc}(\text{"Abs\textunderscore"}\mathrel{\texttt{||}}\,\text{type}(a), 1)(a) \ \blacksquare \\
-&\oplus(a, b) \Leftarrow \Uparrow \text{proc}(\text{"plus\textunderscore"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
+&\text{Abs}(a) \Leftarrow \Uparrow \text{proc}(\text{"Abs_"}\mathrel{\texttt{||}}\,\text{type}(a), 1)(a) \ \blacksquare \\
+&\oplus(a, b) \Leftarrow \Uparrow \text{proc}(\text{"plus_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
 &\ominus(a, b) \Leftarrow \Uparrow \oplus(a, -(b)) \ \blacksquare \\
-&- (x) \Leftarrow \Uparrow \text{proc}(\text{"minus\textunderscore"}\mathrel{\texttt{||}}\,\text{type}(x), 2)(x) \ \blacksquare \\
-&\otimes(a, b) \Leftarrow \Uparrow \text{proc}(\text{"times\textunderscore"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
-&\mathbin{⨸}(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div\textunderscore"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
+&- (x) \Leftarrow \Uparrow \text{proc}(\text{"minus_"}\mathrel{\texttt{||}}\,\text{type}(x), 2)(x) \ \blacksquare \\
+&\otimes(a, b) \Leftarrow \Uparrow \text{proc}(\text{"times_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
+&\mathbin{⨸}(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
 &\text{mod}(a, b) \Leftarrow \\
-&\quad \textbf{if } (x := \text{proc}(\text{"mod\textunderscore"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b)) \textbf{ then } \Uparrow x \\
+&\quad \textbf{if } (x := \text{proc}(\text{"mod_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b)) \textbf{ then } \Uparrow x \\
 &\quad \textbf{if } <(b, \mathbf{0}(b)) \textbf{ then } \Uparrow \text{mod}(a, -(b)) \\
 &\quad \Uparrow \text{normalize}( \\
 &\quad\quad \textbf{if } <(a, \mathbf{0}(a)) \\
@@ -258,7 +258,7 @@ $$(-3)q + 2q \cdot X^2 \bmod (-2)q + \tfrac{3}{2}q \cdot X = \tfrac{5}{9}q$$
 
 $$\begin{aligned}
 &\text{rem}(a, b) \Leftarrow \\
-&\quad \Uparrow (\textbf{if } (x := \text{proc}(\text{"rem\textunderscore"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b)) \textbf{ then } x \\
+&\quad \Uparrow (\textbf{if } (x := \text{proc}(\text{"rem_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b)) \textbf{ then } x \\
 &\quad\quad \textbf{else } \ominus(a, \otimes(\mathbin{⨸}(a, b), b))) \ \blacksquare
 \end{aligned}$$
 
@@ -277,7 +277,7 @@ in the domain of quotients of machine-word integers are denoted with ICON by
 
 $$\begin{aligned}
 &\textit{ax} := \text{poly}([\text{term}(\mathcal{Q}(5,1), 0), \text{term}(\mathcal{Q}(-2,1), 1), \text{term}(\mathcal{Q}(1,1), 2)]) \\
-&\textit{bx} := \text{poly\textunderscore of}(\mathcal{Q}(2,1))
+&\textit{bx} := \text{poly_of}(\mathcal{Q}(2,1))
 \end{aligned}$$
 
 </div>
@@ -292,7 +292,7 @@ Similarly, given the equations over the integral domain of polynomials over mach
 
 $$\begin{aligned}
 &\textit{ax} := \text{poly}([\text{term}(8, 0), \text{term}(-9, 1), \text{term}(6, 2)]) \\
-&\textit{bx} := \text{poly\textunderscore of}(3)
+&\textit{bx} := \text{poly_of}(3)
 \end{aligned}$$
 
 </div>
@@ -307,7 +307,7 @@ $$8 + (-9)X + 6X^2 \mathbin{\text{rem}} 3 = 2$$
 
 $$\begin{aligned}
 &\text{normalize}(a) \Leftarrow \\
-&\quad \textbf{if } (x := \text{proc}(\text{"normalize\textunderscore"}\mathrel{\texttt{||}}\text{type}(a), 1)(a)) \textbf{ then } \Uparrow x \\
+&\quad \textbf{if } (x := \text{proc}(\text{"normalize_"}\mathrel{\texttt{||}}\text{type}(a), 1)(a)) \textbf{ then } \Uparrow x \\
 &\quad \Uparrow a \ \blacksquare
 \end{aligned}$$
 
@@ -340,11 +340,11 @@ All of the predicates defined below except | are required to be defined by a dom
 <div class="math-left">
 
 $$\begin{aligned}
-&= (a, b) \Leftarrow \Uparrow \text{proc}(\text{"equal\textunderscore"}\mathrel{\texttt{||}}\text{type}(a), 2)(a, b) \ \blacksquare \\
-&< (a, b) \Leftarrow \Uparrow ((\text{proc}(\text{"less\textunderscore"}\mathrel{\texttt{||}}\text{type}(a), 2)(a, b)) \mathrel{|} <0(\ominus(a, b))) \ \blacksquare \\
-&<0 (x) \Leftarrow \Uparrow \text{proc}(\text{"negative\textunderscore"}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare \\
-&\mathit{unit}\,(x) \Leftarrow \Uparrow \text{proc}(\text{"unit\textunderscore"}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare \\
-&=0 (x) \Leftarrow \Uparrow \text{proc}(\text{"is\textunderscore zero\textunderscore"}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare
+&= (a, b) \Leftarrow \Uparrow \text{proc}(\text{"equal_"}\mathrel{\texttt{||}}\text{type}(a), 2)(a, b) \ \blacksquare \\
+&< (a, b) \Leftarrow \Uparrow ((\text{proc}(\text{"less_"}\mathrel{\texttt{||}}\text{type}(a), 2)(a, b)) \mathrel{|} <0(\ominus(a, b))) \ \blacksquare \\
+&<0 (x) \Leftarrow \Uparrow \text{proc}(\text{"negative_"}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare \\
+&\mathit{unit}\,(x) \Leftarrow \Uparrow \text{proc}(\text{"unit_"}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare \\
+&=0 (x) \Leftarrow \Uparrow \text{proc}(\text{"is_zero_"}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare
 \end{aligned}$$
 
 </div>
@@ -361,7 +361,7 @@ $$\begin{aligned}
 
 **Commands.**
 
-Every domain instance $D$ implementation should define a preferred method of printing values in the domain, $print_D$. On top of this, we supply printing control structures *pr* and *prs*. *pr* takes a list of arguments enclosed in braces, and prints them, using the printing procedure appropriate for the type of each argument, followed by a carriage return. *prs* is the same, omitting the carriage return.
+Every domain instance $D$ implementation should define a preferred method of printing values in the domain, $print_{D}$. On top of this, we supply printing control structures *pr* and *prs*. *pr* takes a list of arguments enclosed in braces, and prints them, using the printing procedure appropriate for the type of each argument, followed by a carriage return. *prs* is the same, omitting the carriage return.
 
 *prs* and *pr* are defined using the user-defined control operation features of ICON 5.10. [Grisw85a, Grisw83a] When *pr* or *prs* is called with a sequence of expressions in braces, the expressions are passed as unactivated co-expressions, which are then activated with the ICON @ operator.
 
@@ -379,7 +379,7 @@ $$\begin{aligned}
 &\quad \textbf{then } \{ \text{writes}(\text{"["}) \\
 &\quad\quad \text{every } y := \texttt{!x}[1:\texttt{*x}] \textbf{ do } \{ \text{print}(y); \text{ writes}(\text{", "}) \} \\
 &\quad\quad \text{print}(x[\texttt{*x}]); \text{ writes}(\text{"]"}) \} \\
-&\quad \textbf{else if } pp := \text{proc}(\text{"print\textunderscore"}\mathrel{\texttt{||}}\,\text{type}(x), 1) \textbf{ then } pp(x) \\
+&\quad \textbf{else if } pp := \text{proc}(\text{"print_"}\mathrel{\texttt{||}}\,\text{type}(x), 1) \textbf{ then } pp(x) \\
 &\quad \textbf{else if } \text{type}(x) \mathrel{==} \text{"string"} \textbf{ then writes}(x) \\
 &\quad \textbf{else writes}(\text{image}(x)) \ \blacksquare
 \end{aligned}$$
@@ -431,8 +431,8 @@ $$\begin{aligned}
 $$\begin{aligned}
 &0_{base_{\mathbf{B}}}(x) \Leftarrow \Uparrow base_{\mathbf{B}}(x.base, [0]) \ \blacksquare \\
 &1_{base_{\mathbf{B}}}(x) \Leftarrow \Uparrow base_{\mathbf{B}}(x.base, [1]) \ \blacksquare \\
-&k_{base_{\mathbf{B}}}(x) \Leftarrow \Uparrow base_{\mathbf{B}}(\text{Base}, digits\textunderscore of(abs(x), \text{Base})) \ \blacksquare \\
-&digits\textunderscore of(x, B) \Leftarrow \textbf{if } x < B \textbf{ then } \Uparrow [x] \textbf{ else } \Uparrow digits\textunderscore of(x/B, B) \mathrel{\texttt{|||}} \ [mod_{integer}(x, B)] \ \blacksquare
+&k_{base_{\mathbf{B}}}(x) \Leftarrow \Uparrow base_{\mathbf{B}}(\text{Base}, digits\_of(abs(x), \text{Base})) \ \blacksquare \\
+&digits\_of(x, B) \Leftarrow \textbf{if } x < B \textbf{ then } \Uparrow [x] \textbf{ else } \Uparrow digits\_of(x/B, B) \mathrel{\texttt{|||}} \ [mod_{integer}(x, B)] \ \blacksquare
 \end{aligned}$$
 
 </div>
@@ -460,15 +460,15 @@ $$\begin{aligned}
 &\quad \textbf{else if } m > n \textbf{ then } \{ a \mathrel{:=} ad;\ b \mathrel{:=} list(m - n, 0) \mathrel{\texttt{|||}} \ bd \} \\
 &\quad \textbf{else } \{ a \mathrel{:=} ad;\ b \mathrel{:=} bd \} \\
 &\quad m \mathrel{:=} \texttt{*}a; \\
-&\quad c\textunderscore digits \mathrel{:=} list(m + 1, 0); \\
+&\quad c\_digits \mathrel{:=} list(m + 1, 0); \\
 &\quad gamma \mathrel{:=} 0 \\
 &\quad \textbf{every } i \mathrel{:=} m \textbf{ to } 1 \textbf{ by } -1 \textbf{ do } \\
 &\quad \{ t \mathrel{:=} a[i] + b[i] + gamma \\
-&\quad\quad c\textunderscore digits[i + 1] \mathrel{:=} mod_{integer}(t, B) \\
+&\quad\quad c\_digits[i + 1] \mathrel{:=} mod_{integer}(t, B) \\
 &\quad\quad gamma \mathrel{:=} t / B \} \\
-&\quad c\textunderscore digits[1] \mathrel{:=} gamma \\
+&\quad c\_digits[1] \mathrel{:=} gamma \\
 &\\
-&\quad \Uparrow normalize_{digits}(c\textunderscore digits) \ \blacksquare
+&\quad \Uparrow normalize_{digits}(c\_digits) \ \blacksquare
 \end{aligned}$$
 
 </div>
@@ -834,12 +834,12 @@ $$\begin{aligned}
 | | |
 |:--|:--|
 | **Data structures** | $Z$ |
-| **Constants** | $0_Z$, $1_Z$, $k_Z$ |
-| **Operators** | $\oplus_Z$, $-_Z$, $\otimes_Z$, $\mathbin{⨸}_Z$, $mod_Z$, $abs_Z$, $deg_Z$, $normalize_Z$ |
-| **Predicates** | $=_Z$, $<_Z$, $unit_Z$, $>0_Z$, $<0_Z$, $=0_Z$ |
-| **Commands** | $print_Z$ |
+| **Constants** | $0_{Z}$, $1_{Z}$, $k_{Z}$ |
+| **Operators** | $\oplus_{Z}$, $-_{Z}$, $\otimes_{Z}$, $\mathbin{⨸}_{Z}$, $mod_{Z}$, $abs_{Z}$, $deg_{Z}$, $normalize_{Z}$ |
+| **Predicates** | $=_{Z}$, $<_{Z}$, $unit_{Z}$, $>0_{Z}$, $<0_{Z}$, $=0_{Z}$ |
+| **Commands** | $print_{Z}$ |
 
-**Data structures.** *sign* is 1 or $-1$. *mantissa* is a base $Base$ integer, where the $Base$ is set by $k_Z$.
+**Data structures.** *sign* is 1 or $-1$. *mantissa* is a base $Base$ integer, where the $Base$ is set by $k_{Z}$.
 
 <div class="math-left">
 
@@ -860,7 +860,7 @@ $$\begin{aligned}
 
 </div>
 
-$k_Z$ takes an ICON integer and transforms it into a $Z$ constant.
+$k_{Z}$ takes an ICON integer and transforms it into a $Z$ constant.
 
 <div class="math-left">
 
@@ -868,7 +868,7 @@ $$\begin{aligned}
 &k_Z(x) \Leftarrow \\
 &\quad \textbf{initial } set_{base}(10000) \\
 &\quad \Uparrow Z(\textbf{if } x = 0 \textbf{ then } 1 \textbf{ else } x/abs(x), \\
-&\quad\quad base_{\mathbf{B}}(Base, digits\textunderscore of(abs(x), Base))) \ \blacksquare
+&\quad\quad base_{\mathbf{B}}(Base, digits\_of(abs(x), Base))) \ \blacksquare
 \end{aligned}$$
 
 </div>
@@ -1133,7 +1133,7 @@ $$\begin{aligned}
 
 ### 2.3. Domain constructors
 
-EUCLID provides three classes of domain constructions: quotient domains $Q_D$, modular domains $D/(e)$, polynomials $D[x]$ and truncated power series $T(D[[x]])_n$.
+EUCLID provides three classes of domain constructions: quotient domains $Q_{D}$, modular domains $D/(e)$, polynomials $D[x]$ and truncated power series $T(D[[x]])_{n}$.
 
 
 #### 2.3.1. Quotient Euclidean domain $\mathcal{Q}$
@@ -1283,7 +1283,7 @@ $$\begin{aligned}
 
 **Data structures.**
 
-An item from a modular domain, say $Z_5$, is specified by the item in the “base” domain, plus the modulus.
+An item from a modular domain, say $Z_{5}$, is specified by the item in the “base” domain, plus the modulus.
 
 <div class="math-left">
 
@@ -1358,7 +1358,7 @@ $$\begin{aligned}
 
 | | |
 |:--|:--|
-| **Data structures** | $poly$, $term$; $poly\textunderscore of$, $0th\textunderscore coef$, $lead\textunderscore coef$ |
+| **Data structures** | $poly$, $term$; $poly\_of$, $0th\_coef$, $lead\_coef$ |
 | **Constants** | $0_{poly}$, $1_{poly}$, $k_{Z_Q}$, $k_{Z_{Qx}}$, $k_{Z_x}$ |
 | **Operators** | $\oplus_{poly}$, $-_{poly}$, $\otimes_{poly}$, $\mathbin{⨸}_{poly}$, $mod_{poly}$, $eval_{poly}$, $deg_{poly}$, $-_{deg}$, $\oplus_{deg}$, $normalize_{poly}$ |
 | **Predicates** | $<_{degree}$, $=_{poly}$, $unit_{poly}$ |
@@ -1374,7 +1374,7 @@ They are represented as lists of terms, in increasing order of power, such that 
 
 $$\begin{aligned}
 &\textbf{record } poly\ (terms) \\
-&poly\textunderscore of(x) \Leftarrow \Uparrow poly([term(x, 0)]) \ \blacksquare
+&poly\_of(x) \Leftarrow \Uparrow poly([term(x, 0)]) \ \blacksquare
 \end{aligned}$$
 
 </div>
@@ -1384,7 +1384,7 @@ The coefficient of the constant term as an element of $D$, if there is a constan
 <div class="math-left">
 
 $$\begin{aligned}
-&0th\textunderscore coef(fx) \Leftarrow \\
+&0th\_coef(fx) \Leftarrow \\
 &\quad \textbf{local } a \\
 &\quad a \mathrel{:=} fx.terms[1] \\
 &\quad \Uparrow (\textbf{if } a.power = 0 \textbf{ then } a.coef \textbf{ else } 0(a.coef)) \ \blacksquare
@@ -1397,7 +1397,7 @@ The coefficient of the term with the highest degree may be obtained with:
 <div class="math-left">
 
 $$\begin{aligned}
-&lead\textunderscore coef(ax) \Leftarrow \Uparrow (ax.terms[\texttt{*}ax.terms]).coef \ \blacksquare
+&lead\_coef(ax) \Leftarrow \Uparrow (ax.terms[\texttt{*}ax.terms]).coef \ \blacksquare
 \end{aligned}$$
 
 </div>
@@ -1439,7 +1439,7 @@ $$\begin{aligned}
 
 is
 
-$Q\text{:    0 = }0_q$  
+$Q\text{:    0 = }0_{q}$  
 $QZ\text{:   0 = }0_{zq}$
 
 The one of the base domain of a coefficient of the polynomial may be obtained with: 
@@ -1505,7 +1505,7 @@ $$\begin{aligned}
 
 $$\begin{aligned}
 &\oplus_{terms}(a, b) \Leftarrow \\
-&\quad \textbf{local } c\textunderscore coef,\ at,\ ap,\ ac,\ bt,\ bp,\ bc \\
+&\quad \textbf{local } c\_coef,\ at,\ ap,\ ac,\ bt,\ bp,\ bc \\
 &\quad \Uparrow ( \\
 &\quad\quad \textbf{if } \texttt{*}a = 0 \textbf{ then } b \\
 &\quad\quad \textbf{else if } \texttt{*}b = 0 \textbf{ then } a \\
@@ -1519,10 +1519,10 @@ $$\begin{aligned}
 &\quad\quad\quad\quad \textbf{else } [at] \ \mathrel{\texttt{||}} \ \oplus_{terms}(rest(a), b) \} \\
 &\quad\quad\quad \textbf{else if } =(ap, bp) \\
 &\quad\quad\quad \textbf{then } \{ \\
-&\quad\quad\quad\quad c\textunderscore coef \mathrel{:=} \oplus(ac, bc) \\
-&\quad\quad\quad\quad \textbf{if } =(c\textunderscore coef, 0(c\textunderscore coef)) \\
+&\quad\quad\quad\quad c\_coef \mathrel{:=} \oplus(ac, bc) \\
+&\quad\quad\quad\quad \textbf{if } =(c\_coef, 0(c\_coef)) \\
 &\quad\quad\quad\quad \textbf{then } \oplus_{terms}(rest(a), rest(b)) \\
-&\quad\quad\quad\quad \textbf{else } [term(c\textunderscore coef, ap)] \ \mathrel{\texttt{||}} \ \oplus_{terms}(rest(a), rest(b)) \} \\
+&\quad\quad\quad\quad \textbf{else } [term(c\_coef, ap)] \ \mathrel{\texttt{||}} \ \oplus_{terms}(rest(a), rest(b)) \} \\
 &\quad\quad\quad \textbf{else } \oplus_{terms}(b, a) \} \\
 &\quad ) \ \blacksquare
 \end{aligned}$$
@@ -1584,12 +1584,12 @@ $QZ\text{: - }((-2z)q + 1zq \cdot X^3) = 2zq + (-1z)q \cdot X^3$
 <div class="math-left">
 
 $$\begin{aligned}
-&\otimes_{poly}(a, b) \Leftarrow \Uparrow \otimes_{poly\textunderscore terms}(a, b.terms) \ \blacksquare \\
+&\otimes_{poly}(a, b) \Leftarrow \Uparrow \otimes_{poly\_terms}(a, b.terms) \ \blacksquare \\
 &\\
-&\otimes_{poly\textunderscore terms}(a, b\textunderscore terms) \Leftarrow \\
-&\quad \Uparrow (\textbf{if } \texttt{*}b\textunderscore terms = 0 \textbf{ then } 0(a) \\
-&\quad\quad \textbf{else } \oplus_{poly}(\otimes_{poly\textunderscore term}(a, b\textunderscore terms[1]), \\
-&\quad\quad\quad \otimes_{poly\textunderscore terms}(a, rest(b\textunderscore terms)))) \ \blacksquare
+&\otimes_{poly\_terms}(a, b\_terms) \Leftarrow \\
+&\quad \Uparrow (\textbf{if } \texttt{*}b\_terms = 0 \textbf{ then } 0(a) \\
+&\quad\quad \textbf{else } \oplus_{poly}(\otimes_{poly\_term}(a, b\_terms[1]), \\
+&\quad\quad\quad \otimes_{poly\_terms}(a, rest(b\_terms)))) \ \blacksquare
 \end{aligned}$$
 
 </div>
@@ -1597,14 +1597,14 @@ $$\begin{aligned}
 <div class="math-left">
 
 $$\begin{aligned}
-&\otimes_{poly\textunderscore term}(a, b\textunderscore term) \Leftarrow \\
+&\otimes_{poly\_term}(a, b\_term) \Leftarrow \\
 &\quad \Uparrow (\textbf{if } \texttt{*}a.terms < 2 \\
-&\quad\quad \textbf{then } poly([\otimes_{term\textunderscore term}(a.terms[1], b\textunderscore term)]) \\
-&\quad\quad \textbf{else } \oplus_{poly}(poly([\otimes_{term\textunderscore term}(a.terms[1], b\textunderscore term)]), \\
-&\quad\quad\quad \otimes_{poly\textunderscore term}(poly(rest(a.terms)), b\textunderscore term))) \ \blacksquare \\
+&\quad\quad \textbf{then } poly([\otimes_{term\_term}(a.terms[1], b\_term)]) \\
+&\quad\quad \textbf{else } \oplus_{poly}(poly([\otimes_{term\_term}(a.terms[1], b\_term)]), \\
+&\quad\quad\quad \otimes_{poly\_term}(poly(rest(a.terms)), b\_term))) \ \blacksquare \\
 &\\
-&\otimes_{term\textunderscore term}(a\textunderscore term, b\textunderscore term) \Leftarrow \\
-&\quad \Uparrow term(\otimes(a\textunderscore term.coef, b\textunderscore term.coef), a\textunderscore term.power + b\textunderscore term.power) \ \blacksquare
+&\otimes_{term\_term}(a\_term, b\_term) \Leftarrow \\
+&\quad \Uparrow term(\otimes(a\_term.coef, b\_term.coef), a\_term.power + b\_term.power) \ \blacksquare
 \end{aligned}$$
 
 </div>
@@ -1641,7 +1641,7 @@ $$\begin{aligned}
 &\quad\quad m \mathrel{:=} deg_{poly}(r) \\
 &\quad\quad \textbf{if } <_{degree}(m, n) \\
 &\quad\quad \textbf{then } \Uparrow quotient \\
-&\quad\quad \textbf{else } \{ q \mathrel{:=} poly([term(\mathbin{⨸}(lead\textunderscore coef(r), lead\textunderscore coef(b)), m - n)]) \\
+&\quad\quad \textbf{else } \{ q \mathrel{:=} poly([term(\mathbin{⨸}(lead\_coef(r), lead\_coef(b)), m - n)]) \\
 &\quad\quad\quad \textbf{if } m = 0 \\
 &\quad\quad\quad \textbf{then } \Uparrow \oplus_{poly}(quotient, q) \\
 &\quad\quad\quad \textbf{else } \{ subtrahend \mathrel{:=} -_{poly}(\otimes_{poly}(q, b)) \\
@@ -1656,7 +1656,7 @@ $$\begin{aligned}
 <div class="math-left">
 
 $$\begin{aligned}
-&ax \mathrel{:=} poly\textunderscore of(1);\ bx \mathrel{:=} poly\textunderscore of(3) \\
+&ax \mathrel{:=} poly\_of(1);\ bx \mathrel{:=} poly\_of(3) \\
 &\text{pr}\{\text{"integers: "},\ ax,\ \text{"/"},\ bx,\ \text{" = "},\ \mathbin{⨸}_{poly}(ax, bx)\} \\
 &ax \mathrel{:=} poly([term(Q(5,9), 0)]) \\
 &bx \mathrel{:=} poly([term(Q(-2,1), 0), term(Q(3,2), 1)]) \\
@@ -1794,7 +1794,7 @@ $$\begin{aligned}
 </div>
 
 
-#### 2.3.4. Truncated Power Series domain $T(D[[x]])_n$
+#### 2.3.4. Truncated Power Series domain $T(D[[x]])_{n}$
 
 <p align="center"><strong>Truncated Power Series Domain Arithmetic Facilities</strong></p>
 
@@ -1930,8 +1930,8 @@ The following is a table of expressions and their gcd's, as computed via GCD:
 | $Z$ | $-18z$ | $5z$ | $1z$ |
 | $Z$ | $228z$ | $612z$ | $12z$ |
 | $Q[x]$ | $(-2)q + 1q \cdot X^3$ | $(-3)q + 2q \cdot X^2$ | $(5/9)q$ |
-| $Z_5$ | $((-2) \bmod 5)$ | $((-3) \bmod 5)$ | $(2 \bmod 5)$ |
-| $Z_5[x]$ | $((-2) \bmod 5) + (1 \bmod 5) \cdot X^3$ | $((-3) \bmod 5) + (2 \bmod 5) \cdot X^2$ | $(3 \bmod 5) + (4 \bmod 5) \cdot X$ |
+| $Z_{5}$ | $((-2) \bmod 5)$ | $((-3) \bmod 5)$ | $(2 \bmod 5)$ |
+| $Z_{5}[x]$ | $((-2) \bmod 5) + (1 \bmod 5) \cdot X^3$ | $((-3) \bmod 5) + (2 \bmod 5) \cdot X^2$ | $(3 \bmod 5) + (4 \bmod 5) \cdot X$ |
 | $QZ[x]$ | $(166z/243z)q + ((-275z)/243z)q \cdot X$ | $(115668z/75625z)q$ | $(115668z/75625z)q$ |
 | $QZ[x]$ | $(-2z)q + 1zq \cdot X^3$ | $(-3z)q + 2zq \cdot X^2$ | $(5z/9z)q$ |
 
@@ -2008,13 +2008,13 @@ We provide three algorithms, **CRA1** for solving equations of the form $ax \equ
 
 **CRA1**$(a, b, m)$: Solution of a single linear congruence relation.  
 Input: $a, b, m$ such that $ax \equiv b \pmod m$.  
-Output: a particular solution $x_1$.
+Output: a particular solution $x_{1}$.
 
-Niven and Zuckerman [Niven80a], in their section 2.3 note that, given a congruence $ax \equiv b \pmod m$, we can reduce it to $my \equiv -b \pmod a$. If $y_0$ is a solution of the reduced congruence, then
+Niven and Zuckerman [Niven80a], in their section 2.3 note that, given a congruence $ax \equiv b \pmod m$, we can reduce it to $my \equiv -b \pmod a$. If $y_{0}$ is a solution of the reduced congruence, then
 
 $$x_0 = \frac{my_0 + b}{a}$$
 
-is a solution for the original congruence. They apply the reduction until the congruence is solvable "by inspection". This we do not do. They also have some tricks for size reduction (on p. 43) we will not apply (due to laziness). Our "by inspection" termination condition will be to perform the reduction until $a \bmod m = 1$ or $b = 0$. Then we return $b \bmod a$, in a recursive setting which builds up the original $x_1$.
+is a solution for the original congruence. They apply the reduction until the congruence is solvable "by inspection". This we do not do. They also have some tricks for size reduction (on p. 43) we will not apply (due to laziness). Our "by inspection" termination condition will be to perform the reduction until $a \bmod m = 1$ or $b = 0$. Then we return $b \bmod a$, in a recursive setting which builds up the original $x_{1}$.
 
 <div class="math-left">
 
@@ -2061,16 +2061,16 @@ $$\begin{aligned}
 
 **Example.** The $x$ such that $x \equiv 6 \pmod 7$ and $x \equiv 3 \pmod 9$ is 48, as obtained by evaluating CRA2(6, 7, 3, 9).
 
-**CRA**$(rm\textunderscore list)$: $N$-congruence Chinese Remainder Algorithm for $Z$  
-Input: $[[r_k, m_k]] \in Z$, where the $m_k$ are relatively prime.  
-Output: $U \in Z$ such that $U \equiv r_i \pmod{m_i}$.
+**CRA**$(rm\_list)$: $N$-congruence Chinese Remainder Algorithm for $Z$  
+Input: $[[r_{k}, m_{k}]] \in Z$, where the $m_{k}$ are relatively prime.  
+Output: $U \in Z$ such that $U \equiv r_{i} \pmod{m_i}$.
 
 <div class="math-left">
 
 $$\begin{aligned}
-&CRA(rm\textunderscore list) \Leftarrow \\
+&CRA(rm\_list) \Leftarrow \\
 &\quad \textbf{local } rms,\ rm,\ M,\ U,\ c,\ \sigma \\
-&\quad rms \mathrel{:=} copy(rm\textunderscore list) \\
+&\quad rms \mathrel{:=} copy(rm\_list) \\
 &\quad rm \mathrel{:=} pop(rms);\ r \mathrel{:=} rm[1];\ m \mathrel{:=} rm[2] \\
 &\quad M \mathrel{:=} 1(m) \\
 &\quad U \mathrel{:=} mod(r, m) \\
@@ -2110,10 +2110,10 @@ We can solve for $a$ and $b$ individually using the $n$-congruence CRA algorithm
 <div class="math-left">
 
 $$\begin{aligned}
-&a\textunderscore congruences \mathrel{:=} [[1, 3], [0, 7], [2, 4], [3, 5]] \\
-&b\textunderscore congruences \mathrel{:=} [[0, 3], [1, 7], [3, 4], [3, 5]] \\
-&a \mathrel{:=} CRA(a\textunderscore congruences) \\
-&b \mathrel{:=} CRA(b\textunderscore congruences) \\
+&a\_congruences \mathrel{:=} [[1, 3], [0, 7], [2, 4], [3, 5]] \\
+&b\_congruences \mathrel{:=} [[0, 3], [1, 7], [3, 4], [3, 5]] \\
+&a \mathrel{:=} CRA(a\_congruences) \\
+&b \mathrel{:=} CRA(b\_congruences) \\
 &ux \mathrel{:=} poly([term(b, 0), term(a, 1)]) \\
 &\text{pr}\{\text{"u(x) = "},\ ux\}
 \end{aligned}$$
@@ -2150,15 +2150,15 @@ According to Niven, sect. 5.2, $ax + by = c$ is solvable iff $g \mid c$ where $g
 
 $$x = x_1 + \frac{b}{g} t, \quad y = y_1 - \frac{a}{g} t$$
 
-where $t$ is an arbitrary integer and $x = x_1$, $y = y_1$ is any particular solution of the equation. Particular solutions are obtained by solving one of the linear congruences
+where $t$ is an arbitrary integer and $x = x_{1}$, $y = y_{1}$ is any particular solution of the equation. Particular solutions are obtained by solving one of the linear congruences
 
 $$ax \equiv c \pmod{|b|} \quad \text{or} \quad by \equiv c \pmod{|a|}$$
 
-for $x_1$ or $y_1$, then substituting $y_1$ or $x_1$ into $ax + by = c$ to obtain a particular $y_1$ or $x_1$. For computational convenience, if $|b| \le |a|$, we solve the first congruence, otherwise we solve the second.
+for $x_{1}$ or $y_{1}$, then substituting $y_{1}$ or $x_{1}$ into $ax + by = c$ to obtain a particular $y_{1}$ or $x_{1}$. For computational convenience, if $|b| \le |a|$, we solve the first congruence, otherwise we solve the second.
 
 **DIOPHANTINE**(a, b, c) solves linear Diophantine equations in 2 variables.  
 Input: $a, b, c$ such that $ax + by = c$.  
-Output: $g$, $x_1$, $y_1$, described above.
+Output: $g$, $x_{1}$, $y_{1}$, described above.
 
 <div class="math-left">
 
@@ -2200,7 +2200,7 @@ The simplest polynomial remainder sequence is simply that of Euclid's algorithm.
 <div class="math-left">
 
 $$\begin{aligned}
-&MOD\textunderscore RS(a, b) \Leftarrow \Uparrow [a] \mathrel{\texttt{|||}{:=}} \ (\textbf{if } =(b, 0(b)) \textbf{ then } [b] \textbf{ else } MOD\textunderscore RS(b, mod(a, b))) \ \blacksquare
+&MOD\_RS(a, b) \Leftarrow \Uparrow [a] \mathrel{\texttt{|||}{:=}} \ (\textbf{if } =(b, 0(b)) \textbf{ then } [b] \textbf{ else } MOD\_RS(b, mod(a, b))) \ \blacksquare
 \end{aligned}$$
 
 </div>
@@ -2218,7 +2218,7 @@ $$\begin{aligned}
 &settime() \\
 &ax \mathrel{:=} poly([k_{Z_{Qx}}(2, 0), k_{Z_{Qx}}(-1, 1), k_{Z_{Qx}}(3, 2), k_{Z_{Qx}}(2, 4), k_{Z_{Qx}}(1, 5)]) \\
 &bx \mathrel{:=} poly([k_{Z_{Qx}}(2, 0), k_{Z_{Qx}}(-1, 1), k_{Z_{Qx}}(3, 3)]) \\
-&\text{pr}\{\text{"QZ[x]: MOD\textunderscore RS("},\ ax,\ \text{", "},\ bx,\ \text{") = "},\ MOD\textunderscore RS(ax, bx)\} \\
+&\text{pr}\{\text{"QZ[x]: MOD_RS("},\ ax,\ \text{", "},\ bx,\ \text{") = "},\ MOD\_RS(ax, bx)\} \\
 &showtime() \\
 \end{aligned}$$
 
@@ -2226,7 +2226,7 @@ $$\begin{aligned}
 
 is
 
-$QZ[x]\text{: MOD\textunderscore RS}(2zq + (-1z)q \cdot X + 3zq \cdot X^2 + 2zq \cdot X^4 + 1zq \cdot X^5,\ 2zq + (-1z)q \cdot X + 3zq \cdot X^3)$  
+$QZ[x]\text{: MOD_RS}(2zq + (-1z)q \cdot X + 3zq \cdot X^2 + 2zq \cdot X^4 + 1zq \cdot X^5,\ 2zq + (-1z)q \cdot X + 3zq \cdot X^3)$  
 $= [2zq + (-1z)q \cdot X + 3zq \cdot X^2 + 2zq \cdot X^4 + 1zq \cdot X^5,\ 2zq + (-1z)q \cdot X + 3zq \cdot X^3,\ (16z/9z)q + ((-20z)/9z)q \cdot X + 3zq \cdot X^2,\ (166z/243z)q + ((-275z)/243z)q \cdot X,\ (115668z/75625z)q,\ 0zq]$
 
 [221033 msecs]
@@ -2247,7 +2247,7 @@ $$\begin{aligned}
 &PREM(px, qx) \Leftarrow \\
 &\quad \textbf{local } d,\ b \\
 &\quad d \mathrel{:=} -_{deg}(deg_{poly}(px), deg_{poly}(qx)) \\
-&\quad b \mathrel{:=} poly\textunderscore of(lead\textunderscore coef(qx)) \\
+&\quad b \mathrel{:=} poly\_of(lead\_coef(qx)) \\
 &\quad \Uparrow rem(\otimes_{poly}(exp(b, d + 1), px), qx) \ \blacksquare
 \end{aligned}$$
 
@@ -2266,7 +2266,7 @@ I.e., a trace of the steps of Euclid's algorithm modified to use PREM.
 <div class="math-left">
 
 $$\begin{aligned}
-&E\textunderscore PRS(a, b) \Leftarrow \Uparrow [a] \mathrel{\texttt{|||}{:=}} \ (\textbf{if } =(b, 0(b)) \textbf{ then } [b] \textbf{ else } E\textunderscore PRS(b, PREM(a, b))) \ \blacksquare
+&E\_PRS(a, b) \Leftarrow \Uparrow [a] \mathrel{\texttt{|||}{:=}} \ (\textbf{if } =(b, 0(b)) \textbf{ then } [b] \textbf{ else } E\_PRS(b, PREM(a, b))) \ \blacksquare
 \end{aligned}$$
 
 </div>
@@ -2276,22 +2276,22 @@ $$\begin{aligned}
 The following algorithm is the Collins-Brown subresultant PRS algorithm, as presented in Yap [Yap85a].
 
 **S_PRS**: Subresultant polynomial remainder sequence.  
-Input: polynomials $p_0, p_1 \in I[x]$ for some integral domain $I$.  
-Output: Subresultant PRS $(p_0, p_1, \ldots, p_k)$ such that $p_{k+1} = 0$.
+Input: polynomials $p_{0}, p_{1} \in I[x]$ for some integral domain $I$.  
+Output: Subresultant PRS $(p_{0}, p_{1}, \ldots, p_{k})$ such that $p_{k+1} = 0$.
 
-Let $\delta_i = \deg(p_i) - \deg(p_{i+1})$. Let $c_i = \text{lead}(p_i)$.
+Let $\delta_{i} = \deg(p_{i}) - \deg(p_{i+1})$. Let $c_{i} = \text{lead}(p_{i})$.
 
-Let $(R_1, R_2, \ldots, R_k)$ be a sequence of length $k$ defined by
+Let $(R_{1}, R_{2}, \ldots, R_{k})$ be a sequence of length $k$ defined by
 
 $$R_1 = c_1^{\delta_0}$$
 $$R_i = c_i^{\delta_{i-1}} R_{i-1}^{1-\delta_{i-1}}, \quad i = 2, \ldots, k$$
 
-Let $(\beta_2, \beta_3, \ldots, \beta_k)$ be a sequence of length $k-1$ defined by
+Let $(\beta_{2}, \beta_{3}, \ldots, \beta_{k})$ be a sequence of length $k-1$ defined by
 
 $$\beta_2 = (-1)^{\delta_0 + 1}$$
 $$\beta_i = (-1)^{1 + \delta_{i-2}} c_{i-2} (R_{i-2})^{\delta_{i-2}}, \quad i = 3, \ldots, k$$
 
-Then we wish to compute the sequence $(p_0, p_1, \ldots, p_k)$ of length $k+1$ such that $p_0$ and $p_1$ are the given polynomials, and
+Then we wish to compute the sequence $(p_{0}, p_{1}, \ldots, p_{k})$ of length $k+1$ such that $p_{0}$ and $p_{1}$ are the given polynomials, and
 
 $$p_i = \frac{\text{PREM}(p_{i-2}, p_{i-1})}{\beta_i}, \quad i = 2, \ldots, k$$
 
@@ -2300,12 +2300,12 @@ $$p_i = \frac{\text{PREM}(p_{i-2}, p_{i-1})}{\beta_i}, \quad i = 2, \ldots, k$$
 <div class="math-left">
 
 $$\begin{aligned}
-&S\textunderscore PRS(p_0, p_1) \Leftarrow \\
+&S\_PRS(p_0, p_1) \Leftarrow \\
 &\quad \textbf{local } \delta_0,\ \beta_2,\ p_2,\ x,\ P,\ R_1, \\
 &\quad\quad \delta_{i-2},\ c_{i-2},\ R_{i-2},\ p_{i-2},\ p_{i-1},\ \beta_i,\ p_i,\ l,\ z \\
 &\quad \delta_0 \mathrel{:=} \delta_i(p_0, p_1) \\
 &\quad c_0 \mathrel{:=} c_i(p_0) \\
-&\quad \beta_2 \mathrel{:=} poly\textunderscore of(exp(-(1(c_0)), \delta_0 + 1)) \\
+&\quad \beta_2 \mathrel{:=} poly\_of(exp(-(1(c_0)), \delta_0 + 1)) \\
 &\quad p_2 \mathrel{:=} P_i(p_0, p_1, \beta_2);\ z \mathrel{:=} 0(p_2) \\
 &\quad \textbf{if } =(p_2, z) \textbf{ then } \Uparrow [p_0, p_1] \\
 &\quad P \mathrel{:=} [p_0, p_1, p_2] \\
@@ -2329,13 +2329,13 @@ $$\begin{aligned}
 &\\
 &\delta_i(p_i, p_{i+1}) \Leftarrow \Uparrow -_{deg}(deg_{poly}(p_i), deg_{poly}(p_{i+1})) \ \blacksquare \\
 &\\
-&c_i(p_i) \Leftarrow \Uparrow lead\textunderscore coef(p_i) \ \blacksquare \\
+&c_i(p_i) \Leftarrow \Uparrow lead\_coef(p_i) \ \blacksquare \\
 &\\
 &R_i(c_i, \delta_{i-1}, R_{i-1}) \Leftarrow \\
 &\quad \Uparrow \otimes(exp(c_i, \delta_{i-1}), exp(R_{i-1}, -_{deg}(\delta_{i-1}, 1))) \ \blacksquare \\
 &\\
 &\beta_i(\delta_{i-2}, c_{i-2}, R_{i-2}) \Leftarrow \\
-&\quad \Uparrow poly\textunderscore of(\otimes(\otimes(exp(-(1(c_{i-2})), 1 + \delta_{i-2}), exp(R_{i-2}, \delta_{i-2})))) \ \blacksquare \\
+&\quad \Uparrow poly\_of(\otimes(\otimes(exp(-(1(c_{i-2})), 1 + \delta_{i-2}), exp(R_{i-2}, \delta_{i-2})))) \ \blacksquare \\
 &\\
 &P_i(p_{i-2}, p_{i-1}, \beta_i) \Leftarrow \Uparrow \mathbin{⨸}(PREM(p_{i-2}, p_{i-1}), \beta_i) \ \blacksquare
 \end{aligned}$$
@@ -2353,23 +2353,23 @@ Under this heading we provide the following facilities:
 #### 3.3.1 Newton's method for construction of polynomials by interpolation
 
 **NIA**(ab_list): Newton's Interpolation Algorithm (CRA for $F[x]$)  
-Input: $[[a_k, b_k]]$ such that $U(a_k) = b_k$, $U(x) \in F[x]$  
+Input: $[[a_{k}, b_{k}]]$ such that $U(a_{k}) = b_{k}$, $U(x) \in F[x]$  
 Output: $U(x)$
 
 <div class="math-left">
 
 $$\begin{aligned}
-&NIA(ab\textunderscore list) \Leftarrow \\
-&\quad \textbf{local } ab\textunderscore s,\ ab,\ a,\ b,\ Ux,\ Mx,\ c,\ \sigma \\
-&\quad ab\textunderscore s \mathrel{:=} copy(ab\textunderscore list) \\
-&\quad ab \mathrel{:=} pop(ab\textunderscore s);\ a \mathrel{:=} ab[1];\ b \mathrel{:=} ab[2] \\
-&\quad Ux \mathrel{:=} poly\textunderscore of(b) \\
+&NIA(ab\_list) \Leftarrow \\
+&\quad \textbf{local } ab\_s,\ ab,\ a,\ b,\ Ux,\ Mx,\ c,\ \sigma \\
+&\quad ab\_s \mathrel{:=} copy(ab\_list) \\
+&\quad ab \mathrel{:=} pop(ab\_s);\ a \mathrel{:=} ab[1];\ b \mathrel{:=} ab[2] \\
+&\quad Ux \mathrel{:=} poly\_of(b) \\
 &\quad Mx \mathrel{:=} 1(Ux) \\
-&\quad \textbf{every } k \mathrel{:=} 1 \textbf{ to } \texttt{*}ab\textunderscore s \textbf{ do } \{ \\
-&\quad\quad Mx \mathrel{:=} \otimes(Mx, \ominus(poly([term(1(b), 1)]), poly\textunderscore of(a))) \\
-&\quad\quad ab \mathrel{:=} pop(ab\textunderscore s);\ a \mathrel{:=} ab[1];\ b \mathrel{:=} ab[2] \\
+&\quad \textbf{every } k \mathrel{:=} 1 \textbf{ to } \texttt{*}ab\_s \textbf{ do } \{ \\
+&\quad\quad Mx \mathrel{:=} \otimes(Mx, \ominus(poly([term(1(b), 1)]), poly\_of(a))) \\
+&\quad\quad ab \mathrel{:=} pop(ab\_s);\ a \mathrel{:=} ab[1];\ b \mathrel{:=} ab[2] \\
 &\quad\quad c \mathrel{:=} \mathbin{⨸}(1(a), eval_{poly}(Mx, a)) \\
-&\quad\quad \sigma \mathrel{:=} \mathbin{⨸}(\ominus(poly\textunderscore of(b), poly\textunderscore of(eval_{poly}(Ux, a))), poly\textunderscore of(c)) \\
+&\quad\quad \sigma \mathrel{:=} \mathbin{⨸}(\ominus(poly\_of(b), poly\_of(eval_{poly}(Ux, a))), poly\_of(c)) \\
 &\quad\quad Ux \mathrel{:=} \oplus(Ux, \otimes(\sigma, Mx)) \} \\
 &\quad \Uparrow Ux \ \blacksquare
 \end{aligned}$$
@@ -2379,8 +2379,8 @@ $$\begin{aligned}
 ### 3.3.2 Fast Fourier Transform (FFT) and Interpolation (FFI)
 
 **FFT**$(N, a(x), \omega, A)$: Fast Fourier Transform  
-Input: integer $N = 2^m$, polynomial $a(x) = \mathrm{sum}(i=0, N-1, a_i \cdot x^i)$, primitive $N$th root of unity $\omega$  
-Output: array $A = (A_0, \ldots, A_{N-1})$ where $A_k = a(\omega^k)$
+Input: integer $N = 2^m$, polynomial $a(x) = \mathrm{sum}(i=0, N-1, a_{i} \cdot x^i)$, primitive $N$th root of unity $\omega$  
+Output: array $A = (A_{0}, \ldots, A_{N-1})$ where $A_{k} = a(\omega^k)$
 
 <div class="math-left">
 
@@ -2391,8 +2391,8 @@ $$\begin{aligned}
 &\quad \textbf{if } N = 1 \ \texttt{*} \text{basis} \\
 &\quad \textbf{then } A[1] \mathrel{:=} 0th_{coef}(ax) \\
 &\quad \textbf{else } \{ n \mathrel{:=} N/2 \ \texttt{*} \text{binary split} \\
-&\quad\quad bx \mathrel{:=} poly\textunderscore of\textunderscore even\textunderscore powered\textunderscore terms(ax) \\
-&\quad\quad cx \mathrel{:=} poly\textunderscore of\textunderscore odd\textunderscore powered\textunderscore terms(ax) \\
+&\quad\quad bx \mathrel{:=} poly\_of\_even\_powered\_terms(ax) \\
+&\quad\quad cx \mathrel{:=} poly\_of\_odd\_powered\_terms(ax) \\
 &\quad\quad \omega^2 \mathrel{:=} exp(\omega, 2) \\
 &\quad\quad B \mathrel{:=} FFT(n, bx, \omega^2) \ \texttt{*} \text{recursive calls} \\
 &\quad\quad C \mathrel{:=} FFT(n, cx, \omega^2) \\
@@ -2410,7 +2410,7 @@ Even powered terms.
 <div class="math-left">
 
 $$\begin{aligned}
-&poly\textunderscore of\textunderscore even\textunderscore powered\textunderscore terms(ax) \Leftarrow \\
+&poly\_of\_even\_powered\_terms(ax) \Leftarrow \\
 &\quad \textbf{local } r \\
 &\quad r \mathrel{:=} [] \\
 &\quad \textbf{every } t \mathrel{:=} \texttt{!}ax.terms \\
@@ -2425,7 +2425,7 @@ Odd powered terms.
 <div class="math-left">
 
 $$\begin{aligned}
-&poly\textunderscore of\textunderscore odd\textunderscore powered\textunderscore terms(ax) \Leftarrow \\
+&poly\_of\_odd\_powered\_terms(ax) \Leftarrow \\
 &\quad \textbf{local } r \\
 &\quad r \mathrel{:=} [] \\
 &\quad \textbf{every } t \mathrel{:=} \texttt{!}ax.terms \\
@@ -2436,8 +2436,8 @@ $$\begin{aligned}
 </div>
 
 **FFI**$(N, B, \omega)$: Fast Fourier Interpolation  
-Input: integer $N = 2^m$, sample values $B = (b_0, \ldots, b_{N-1})$, primitive $N$th root of unity $\omega$  
-Output: $a(x) = \mathrm{sum}(i=0, N-1, a_i x^i)$ where $a(\omega^k) = b_k$, $k=0..N-1$
+Input: integer $N = 2^m$, sample values $B = (b_{0}, \ldots, b_{N-1})$, primitive $N$th root of unity $\omega$  
+Output: $a(x) = \mathrm{sum}(i=0, N-1, a_{i} x^i)$ where $a(\omega^k) = b_{k}$, $k=0..N-1$
 
 <div class="math-left">
 
@@ -2481,7 +2481,7 @@ $$\begin{aligned}
 #### 3.3.3 Newton’s method for truncated power series inversion
 
 **NPSI**(): Newton's Power Series Inversion Method  
-Input: $a(t) \bmod t^{2^n} = \mathrm{sum}(i=0, 2^n-1, a_i t^i)$, $a_0 \neq 0$  
+Input: $a(t) \bmod t^{2^n} = \mathrm{sum}(i=0, 2^n-1, a_{i} t^i)$, $a_{0} \neq 0$  
 Output: $x^{(n)}(t) = a(t)^{-1} \bmod t^{2^n}$
 
 <div class="math-left">
@@ -2490,7 +2490,7 @@ $$\begin{aligned}
 &NPSI(at) \Leftarrow \\
 &\quad \textbf{local } ax,\ xt,\ n \\
 &\quad ax \mathrel{:=} at.Poly \\
-&\quad xt \mathrel{:=} poly\textunderscore of(0th_{coef}(ax)) \\
+&\quad xt \mathrel{:=} poly\_of(0th_{coef}(ax)) \\
 &\quad n \mathrel{:=} log2(\texttt{*}ax.terms) \\
 &\quad \textbf{every } k \mathrel{:=} 0 \textbf{ to } n-1 \\
 &\quad \textbf{do } xt \mathrel{:=} \oplus(\oplus(xt, xt), \\
@@ -2537,7 +2537,7 @@ Blocks of comments are compiled as paragraphs. Paragraphs are demarcated by blan
 <div class="math-left">
 
 $$\begin{aligned}
-&\textbf{global } command\textunderscore line,\ last\textunderscore line,\ cur\textunderscore files,\ read\textunderscore now,\ words \\
+&\textbf{global } command\_line,\ last\_line,\ cur\_files,\ read\_now,\ words \\
 &\\
 &main(x) \Leftarrow \\
 &\quad \textbf{local } fn \\
@@ -2545,21 +2545,21 @@ $$\begin{aligned}
 &\quad words[\text{"↑"}] \mathrel{:=} \text{"↑"} \\
 &\quad words[\text{"■"}] \mathrel{:=} \text{"■"} \\
 &\quad words[\text{"±"}] \mathrel{:=} \text{"±"} \\
-&\quad command\textunderscore line \mathrel{:=} x \\
-&\quad \textbf{if } \texttt{*}command\textunderscore line > 0 \\
-&\quad \textbf{then } \{ fn \mathrel{:=} command\textunderscore line[1] \\
-&\quad\quad load\textunderscore user\textunderscore keywords(fn \ \mathrel{\texttt{||}} \ \text{".keys"}) \\
-&\quad\quad cur\textunderscore files \mathrel{:=} [read\textunderscore now \mathrel{:=} open(fn \ \mathrel{\texttt{||}} \ \text{".icn"}, \text{"r"})] \} \\
-&\quad \textbf{else } cur\textunderscore files \mathrel{:=} [read\textunderscore now \mathrel{:=} \&input] \\
-&\quad last\textunderscore line \mathrel{:=} \&null \\
+&\quad command\_line \mathrel{:=} x \\
+&\quad \textbf{if } \texttt{*}command\_line > 0 \\
+&\quad \textbf{then } \{ fn \mathrel{:=} command\_line[1] \\
+&\quad\quad load\_user\_keywords(fn \ \mathrel{\texttt{||}} \ \text{".keys"}) \\
+&\quad\quad cur\_files \mathrel{:=} [read\_now \mathrel{:=} open(fn \ \mathrel{\texttt{||}} \ \text{".icn"}, \text{"r"})] \} \\
+&\quad \textbf{else } cur\_files \mathrel{:=} [read\_now \mathrel{:=} \&input] \\
+&\quad last\_line \mathrel{:=} \&null \\
 &\quad write(\text{".so /usr2/ericson/euclid/lpp/std.me"}) \\
 &\quad process() \ \blacksquare \\
 &\\
-&get\textunderscore line() \Leftarrow \\
+&get\_line() \Leftarrow \\
 &\quad \textbf{local } x \\
 &\quad x \mathrel{:=} \&null \\
-&\quad \textbf{if } last\textunderscore line \textbf{ then } \{ x \mathrel{:=} last\textunderscore line;\ last\textunderscore line \mathrel{:=} \&null;\ \Uparrow x \} \\
-&\quad \textbf{else if } x \mathrel{:=} read(read\textunderscore now) \textbf{ then } \Uparrow x \ \blacksquare
+&\quad \textbf{if } last\_line \textbf{ then } \{ x \mathrel{:=} last\_line;\ last\_line \mathrel{:=} \&null;\ \Uparrow x \} \\
+&\quad \textbf{else if } x \mathrel{:=} read(read\_now) \textbf{ then } \Uparrow x \ \blacksquare
 \end{aligned}$$
 
 </div>
@@ -2571,18 +2571,18 @@ Reads lines until encountering end of file or `##end` or `##end command`.
 $$\begin{aligned}
 &process(command) \Leftarrow \\
 &\quad \textbf{local } line \\
-&\quad \textbf{while } line \mathrel{:=} get\textunderscore line() \textbf{ do if } not\ process\textunderscore line(line, command) \textbf{ then break} \ \blacksquare \\
+&\quad \textbf{while } line \mathrel{:=} get\_line() \textbf{ do if } not\ process\_line(line, command) \textbf{ then break} \ \blacksquare \\
 &\\
-&process\textunderscore line(line, command) \Leftarrow \\
+&process\_line(line, command) \Leftarrow \\
 &\quad \textbf{if } line[1:3] \mathrel{==} \texttt{"##"} \\
 &\quad \textbf{then } \{ \textbf{if } line[3:6] \mathrel{==} \text{"■"} \\
-&\quad\quad \textbf{then } \{ end\textunderscore command(command, line[7:\texttt{*}line + 1]);\ \bot \} \\
-&\quad\quad \textbf{else } do\textunderscore command(line[3:\texttt{*}line + 1]) \} \\
-&\quad \textbf{else if } line[1] \mathrel{==} \texttt{"#"} \textbf{ then } write\textunderscore line(line[2:\texttt{*}line + 1]) \\
-&\quad \textbf{else } pretty\textunderscore print(line, command) \\
+&\quad\quad \textbf{then } \{ end\_command(command, line[7:\texttt{*}line + 1]);\ \bot \} \\
+&\quad\quad \textbf{else } do\_command(line[3:\texttt{*}line + 1]) \} \\
+&\quad \textbf{else if } line[1] \mathrel{==} \texttt{"#"} \textbf{ then } write\_line(line[2:\texttt{*}line + 1]) \\
+&\quad \textbf{else } pretty\_print(line, command) \\
 &\Uparrow \ \blacksquare \\
 &\\
-&end\textunderscore command(command, line) \Leftarrow \\
+&end\_command(command, line) \Leftarrow \\
 &\quad \textbf{if } command \mathrel{\sim}== line \textbf{ then } write(\&errout, \text{"ERROR: Mismatched END, wanted "}, command, \text{", got "}, line) \ \blacksquare
 \end{aligned}$$
 
@@ -2595,12 +2595,12 @@ For interpreting `##` commands
 <div class="math-left">
 
 $$\begin{aligned}
-&do\textunderscore command(line) \Leftarrow \\
+&do\_command(line) \Leftarrow \\
 &\quad \textbf{local } command,\ args \\
 &\quad x \mathrel{:=} (upto(\mathord{\sim}\&lcase, line) \ | \ (\texttt{*}line + 1)) \\
 &\quad command \mathrel{:=} line[1:x] \\
 &\quad args \mathrel{:=} line[x + 1:\texttt{*}line + 1] \\
-&\quad \textbf{if } not(y \mathrel{:=} proc(\text{"do\textunderscore"} \ \mathrel{\texttt{||}} \ command, 2)) \\
+&\quad \textbf{if } not(y \mathrel{:=} proc(\text{"do_"} \ \mathrel{\texttt{||}} \ command, 2)) \\
 &\quad \textbf{then } write(\&errout, \text{"ERROR: Unknown command: "}, command) \\
 &\quad \textbf{else } y(args) \ \blacksquare
 \end{aligned}$$
@@ -2612,20 +2612,20 @@ $$\begin{aligned}
 <div class="math-left">
 
 $$\begin{aligned}
-&do\textunderscore list(args) \Leftarrow \\
+&do\_list(args) \Leftarrow \\
 &\quad \textbf{local } line \\
 &\quad write(\text{".(l I F"}) \\
-&\quad \textbf{while } line \mathrel{:=} get\textunderscore line() \\
+&\quad \textbf{while } line \mathrel{:=} get\_line() \\
 &\quad \textbf{do if } line[1:3] \mathrel{==} \texttt{"##"} \\
 &\quad\quad \textbf{then } \{ \textbf{if } line[3:6] \mathrel{==} \text{"■"} \\
-&\quad\quad\quad \textbf{then } \{ write(\text{".)l"});\ end\textunderscore command(command, line[7:\texttt{*}line + 1]);\ \bot \} \\
-&\quad\quad\quad \textbf{else } do\textunderscore command(line[3:\texttt{*}line + 1]) \} \\
+&\quad\quad\quad \textbf{then } \{ write(\text{".)l"});\ end\_command(command, line[7:\texttt{*}line + 1]);\ \bot \} \\
+&\quad\quad\quad \textbf{else } do\_command(line[3:\texttt{*}line + 1]) \} \\
 &\quad\quad \textbf{else if } line[1] \mathrel{==} \texttt{"#"} \\
 &\quad\quad \textbf{then } \{ line \mathrel{:=} line[2:\texttt{*}line + 1] \\
 &\quad\quad\quad\quad \textbf{repeat if } upto(\text{' '}, line[1]) \\
 &\quad\quad\quad\quad \textbf{then } line \mathrel{:=} line[2:\texttt{*}line + 1] \textbf{ else break} \\
 &\quad\quad\quad\quad \textbf{if } \texttt{*}line > 0 \textbf{ then } write(\text{"● "}, line) \textbf{ else } write() \} \\
-&\quad\quad \textbf{else } pretty\textunderscore print(line, command) \\
+&\quad\quad \textbf{else } pretty\_print(line, command) \\
 &\quad write(\text{".)l"}) \ \blacksquare
 \end{aligned}$$
 
@@ -2638,7 +2638,7 @@ Section nestings are relative to the file, from 1 on up. An `##include` file's n
 <div class="math-left">
 
 $$\begin{aligned}
-&do\textunderscore section(args) \Leftarrow \\
+&do\_section(args) \Leftarrow \\
 &\quad x \mathrel{:=} (upto(\mathord{\sim}(\text{'0123456789'}), args) \ | \ (\texttt{*}args + 1)) \\
 &\quad level \mathrel{:=} args[1:x] + 0 \\
 &\quad title \mathrel{:=} args[x + 1:\texttt{*}args + 1] \\
@@ -2656,12 +2656,12 @@ Deletes *everything* between skip and end skip.
 <div class="math-left">
 
 $$\begin{aligned}
-&do\textunderscore skip(x) \Leftarrow \\
+&do\_skip(x) \Leftarrow \\
 &\quad \textbf{local } line \\
-&\quad \textbf{while } line \mathrel{:=} get\textunderscore line() \\
+&\quad \textbf{while } line \mathrel{:=} get\_line() \\
 &\quad \textbf{do if } line[1:3] \mathrel{==} \texttt{"##"} \\
 &\quad\quad \textbf{then if } line[3:6] \mathrel{==} \text{"■"} \\
-&\quad\quad\quad \textbf{then } \{ end\textunderscore command(command, line[7:\texttt{*}line + 1]);\ break \} \ \blacksquare
+&\quad\quad\quad \textbf{then } \{ end\_command(command, line[7:\texttt{*}line + 1]);\ break \} \ \blacksquare
 \end{aligned}$$
 
 </div>
@@ -2673,17 +2673,17 @@ Includes file. Home directory for includes within included file is home director
 <div class="math-left">
 
 $$\begin{aligned}
-&do\textunderscore include(arg) \Leftarrow \\
-&\quad \textbf{local } new\textunderscore file \\
-&\quad cur\textunderscore file \mathrel{:=} arg \\
-&\quad new\textunderscore file \mathrel{:=} open(cur\textunderscore file \ \mathrel{\texttt{||}} \ \text{".icn"}, \text{"r"}) \\
-&\quad \textbf{if } /new\textunderscore file \textbf{ then } write(\text{"ERROR: couldn't open "}, cur\textunderscore file, \text{".icn"}) \\
-&\quad \textbf{else } \{ read\textunderscore now \mathrel{:=} new\textunderscore file \\
-&\quad\quad push(cur\textunderscore files, read\textunderscore now) \\
-&\quad\quad load\textunderscore user\textunderscore keywords(cur\textunderscore file \ \mathrel{\texttt{||}} \ \text{".keys"}) \\
+&do\_include(arg) \Leftarrow \\
+&\quad \textbf{local } new\_file \\
+&\quad cur\_file \mathrel{:=} arg \\
+&\quad new\_file \mathrel{:=} open(cur\_file \ \mathrel{\texttt{||}} \ \text{".icn"}, \text{"r"}) \\
+&\quad \textbf{if } /new\_file \textbf{ then } write(\text{"ERROR: couldn't open "}, cur\_file, \text{".icn"}) \\
+&\quad \textbf{else } \{ read\_now \mathrel{:=} new\_file \\
+&\quad\quad push(cur\_files, read\_now) \\
+&\quad\quad load\_user\_keywords(cur\_file \ \mathrel{\texttt{||}} \ \text{".keys"}) \\
 &\quad\quad process(\text{"include"}) \ \texttt{*} \text{ until ■ of file} \\
-&\quad\quad close(pop(cur\textunderscore files)) \\
-&\quad\quad read\textunderscore now \mathrel{:=} cur\textunderscore files[1] \} \ \blacksquare
+&\quad\quad close(pop(cur\_files)) \\
+&\quad\quad read\_now \mathrel{:=} cur\_files[1] \} \ \blacksquare
 \end{aligned}$$
 
 </div>
@@ -2694,7 +2694,7 @@ Example paragraphs are left-justified and preceded by an appropriately numbered 
 <div class="math-left">
 
 $$\begin{aligned}
-&do\textunderscore example(arg) \Leftarrow \\
+&do\_example(arg) \Leftarrow \\
 &\quad writes(\text{"\textbackslash fB Example.\textbackslash fR "}) \\
 &\quad process(\text{"example"}) \ \blacksquare
 \end{aligned}$$
@@ -2708,12 +2708,12 @@ Code is unjustified and Helveticized. Uncommented lines are processed as code. C
 <div class="math-left">
 
 $$\begin{aligned}
-&do\textunderscore code(arg) \Leftarrow \\
+&do\_code(arg) \Leftarrow \\
 &\quad \textbf{local } line \\
 &\quad write(\text{".nf0fH"}) \\
-&\quad \textbf{while } line \mathrel{:=} get\textunderscore line() \\
+&\quad \textbf{while } line \mathrel{:=} get\_line() \\
 &\quad \textbf{do if } line[1:6] \mathrel{==} \texttt{"##■"} \textbf{ then break} \\
-&\quad\quad \textbf{else } pretty\textunderscore print\textunderscore line(line[2:\texttt{*}line + 1]) \\
+&\quad\quad \textbf{else } pretty\_print\_line(line[2:\texttt{*}line + 1]) \\
 &\quad write(\text{".fi0fR"}) \ \blacksquare
 \end{aligned}$$
 
@@ -2726,7 +2726,7 @@ Typeset with TBL, one `.EQ` and `.EN.` per line, except that if the line is term
 <div class="math-left">
 
 $$\begin{aligned}
-&do\textunderscore equations(arg) \Leftarrow \\
+&do\_equations(arg) \Leftarrow \\
 &\quad write(\text{".EQ"}) \\
 &\quad process(\text{"equations"}) \\
 &\quad write(\text{".EN"}) \ \blacksquare
@@ -2741,7 +2741,7 @@ These are typeset with `.(q` and `.)q`.
 <div class="math-left">
 
 $$\begin{aligned}
-&do\textunderscore quote(arg) \Leftarrow \\
+&do\_quote(arg) \Leftarrow \\
 &\quad write(\text{".(q"}) \\
 &\quad process(\text{"quote"}) \\
 &\quad write(\text{".)q"}) \ \blacksquare
@@ -2756,7 +2756,7 @@ Outputs `.TS` and `.TE` commands. Body is straight TBL.
 <div class="math-left">
 
 $$\begin{aligned}
-&do\textunderscore table(args) \Leftarrow \\
+&do\_table(args) \Leftarrow \\
 &\quad write(\text{".sp 4v0(c0TS"}) \\
 &\quad process(\text{"table"}) \\
 &\quad write(\text{".TE0)c0"}) \ \blacksquare
@@ -2769,7 +2769,7 @@ For printing documentation lines. If the text following the `#` is white space, 
 <div class="math-left">
 
 $$\begin{aligned}
-&write\textunderscore line(line) \Leftarrow \\
+&write\_line(line) \Leftarrow \\
 &\quad \textbf{repeat if } upto(\text{' '}, line[1]) \textbf{ then } line \mathrel{:=} line[2:\texttt{*}line + 1] \textbf{ else break} \\
 &\quad \textbf{if } \texttt{*}line = 0 \textbf{ then } write(\text{".lp"}) \textbf{ else } write(line) \ \blacksquare
 \end{aligned}$$
@@ -2781,7 +2781,7 @@ For printing list lines.
 <div class="math-left">
 
 $$\begin{aligned}
-&plain\textunderscore write\textunderscore line(line) \Leftarrow \\
+&plain\_write\_line(line) \Leftarrow \\
 &\quad \textbf{repeat if } upto(\text{' '}, line[1]) \textbf{ then } line \mathrel{:=} line[2:\texttt{*}line + 1] \textbf{ else break} \\
 &\quad write(line) \ \blacksquare
 \end{aligned}$$
@@ -2793,15 +2793,15 @@ $$\begin{aligned}
 <div class="math-left">
 
 $$\begin{aligned}
-&pretty\textunderscore print(l, command) \Leftarrow \\
+&pretty\_print(l, command) \Leftarrow \\
 &\quad \textbf{local } line \\
 &\quad write(\text{".nf0fH "}) \\
-&\quad pretty\textunderscore print\textunderscore line(l) \\
-&\quad \textbf{while } line \mathrel{:=} get\textunderscore line() \\
+&\quad pretty\_print\_line(l) \\
+&\quad \textbf{while } line \mathrel{:=} get\_line() \\
 &\quad \textbf{do if } line[1:2] \mathrel{==} \texttt{"#"} \\
 &\quad\quad \textbf{then } \{ write(\text{".fi0fR "}) \\
-&\quad\quad\quad\quad write(\text{".lp"});\ last\textunderscore line \mathrel{:=} line;\ \bot \} \\
-&\quad\quad \textbf{else } pretty\textunderscore print\textunderscore line(line) \\
+&\quad\quad\quad\quad write(\text{".lp"});\ last\_line \mathrel{:=} line;\ \bot \} \\
+&\quad\quad \textbf{else } pretty\_print\_line(line) \\
 &\quad write(\text{".fi0fR "}) \ \blacksquare
 \end{aligned}$$
 
@@ -2819,11 +2819,11 @@ If the `-U<filename>` option is present, then keywords are read into the words t
 <div class="math-left">
 
 $$\begin{aligned}
-&pretty\textunderscore print\textunderscore line(line) \Leftarrow \\
+&pretty\_print\_line(line) \Leftarrow \\
 &\quad \textbf{local } first,\ last,\ key,\ x,\ y \\
-&\quad \{ x \mathrel{:=} (upto((\&lcase \mathrel{+{+}} \&ucase \mathrel{+{+}} \text{'\textunderscore 0123456789'}), line) \ | \ (\texttt{*}line + 1)) \\
+&\quad \{ x \mathrel{:=} (upto((\&lcase \mathrel{+{+}} \&ucase \mathrel{+{+}} \text{'_0123456789'}), line) \ | \ (\texttt{*}line + 1)) \\
 &\quad\quad \textbf{if } x = \texttt{*}line + 1 \textbf{ then } \{ writes(line);\ break \} \\
-&\quad\quad y \mathrel{:=} (upto(\mathord{\sim}(\&lcase \mathrel{+{+}} \&ucase \mathrel{+{+}} \text{'\textunderscore 0123456789'}), line) \ | \ (\texttt{*}line + 1)) \\
+&\quad\quad y \mathrel{:=} (upto(\mathord{\sim}(\&lcase \mathrel{+{+}} \&ucase \mathrel{+{+}} \text{'_0123456789'}), line) \ | \ (\texttt{*}line + 1)) \\
 &\quad\quad key \mathrel{:=} (line[1:y] \ | \ \text{""}) \\
 &\quad\quad first \mathrel{:=} (line[1:x] \ | \ \text{""}) \\
 &\quad\quad line \mathrel{:=} (line[x:\texttt{*}line + 1] \ | \ \text{""}) \\
@@ -2840,7 +2840,7 @@ $$\begin{aligned}
 <div class="math-left">
 
 $$\begin{aligned}
-&load\textunderscore user\textunderscore keywords(fname) \Leftarrow \\
+&load\_user\_keywords(fname) \Leftarrow \\
 &\quad \textbf{local } w,\ a,\ x \\
 &\quad \textbf{if } not(w \mathrel{:=} open(fname, \text{'r'})) \textbf{ then } \bot \\
 &\quad \textbf{while } x \mathrel{:=} read(w) \\
@@ -2873,13 +2873,13 @@ $$\begin{aligned}
 <div class="math-left">
 
 $$\begin{aligned}
-&\textbf{if } z \mathrel{==} \text{"■"} \textbf{ then } pretty\textunderscore print\textunderscore line(line \ \mathrel{\texttt{||}} \ y \ \mathrel{\texttt{||}} \ \text{" ■"}) \\
-&\textbf{else } \{ pretty\textunderscore print\textunderscore line(line) \\
-&\quad\quad \textbf{if } y \mathrel{==} \text{"■"} \textbf{ then } pretty\textunderscore print\textunderscore line(line \ \mathrel{\texttt{||}} \ \text{" ⊥ ■"}) \\
-&\quad\quad \textbf{else } \{ z \mathrel{:=} get\textunderscore line() \\
+&\textbf{if } z \mathrel{==} \text{"■"} \textbf{ then } pretty\_print\_line(line \ \mathrel{\texttt{||}} \ y \ \mathrel{\texttt{||}} \ \text{" ■"}) \\
+&\textbf{else } \{ pretty\_print\_line(line) \\
+&\quad\quad \textbf{if } y \mathrel{==} \text{"■"} \textbf{ then } pretty\_print\_line(line \ \mathrel{\texttt{||}} \ \text{" ⊥ ■"}) \\
+&\quad\quad \textbf{else } \{ z \mathrel{:=} get\_line() \\
 &\quad\quad\quad\quad \textbf{local } y \\
-&\quad\quad\quad\quad y \mathrel{:=} get\textunderscore line() \\
-&\quad\quad\quad\quad pretty\textunderscore print\textunderscore line(y);\ pretty\textunderscore print\textunderscore line(z) \} \}
+&\quad\quad\quad\quad y \mathrel{:=} get\_line() \\
+&\quad\quad\quad\quad pretty\_print\_line(y);\ pretty\_print\_line(z) \} \}
 \end{aligned}$$
 
 </div>
