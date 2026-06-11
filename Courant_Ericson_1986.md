@@ -74,8 +74,8 @@ Every implementation of a Euclidean domain must supply certain required procedur
 | *Type* | *Required* | *Optional* | *Synthesized* |
 |:--|:-:|:-:|:-:|
 | Constant | 0<br>1 | | |
-| Operator | abs<br>$`\oplus`$<br>$`-`$<br>$`\otimes`$<br>$`\mathbin{⨸}`$ | mod<br>rem<br>normalize | $`\ominus`$<br>exp |
-| Predicates | =<br>$`<0`$<br>unit<br>$`=0`$ | $`<`$ | $`|`$ |
+| Operator | abs<br>`\oplus`<br>`-`<br>`\otimes`<br>`\mathbin{⨸}` | mod<br>rem<br>normalize | `\ominus`<br>exp |
+| Predicates | =<br>`<0`<br>unit<br>`=0` | `<` | `|` |
 | Commands | | print | pr<br>prs |
 
 For a typical domain implementation, which serves as a model for other domain implementations, see for example Section 2.3.1, which describes our implementation of Quotient domains. 
@@ -92,8 +92,8 @@ The domains supported are as follows:
 |:--|:--|:--|
 | **Primitive domains** | *integer* | Machine word integers |
 | | *base*<sub>B</sub> | Arbitrary precision unsigned base B integers |
-| | $`\mathcal{Z}`$ | Signed infinite precision integers |
-| **Domain constructors** | $`\mathcal{Q}`$ | Quotient domain |
+| | `\mathcal{Z}` | Signed infinite precision integers |
+| **Domain constructors** | `\mathcal{Q}` | Quotient domain |
 | | *modulo* | Modular domain |
 | | *poly* | Polynomial domain |
 | | *tpower* | Truncated power series domain |
@@ -124,7 +124,7 @@ We have implemented the following application algorithms, which may be applied t
 | *MOD_RS* | polynomial remainder sequence for GCD |
 | *PREM* | integral domain remainder |
 | *E_PRS* | polynomial remainder sequence for PREM |
-| *INVERSE* | inverse of $`x \pmod y`$ |
+| *INVERSE* | inverse of `x \pmod y` |
 | *NIA* | Newton interpolation algorithm |
 | *CRA2, CRA* | Chinese remainder algorithm for 2 or more<br>linear congruences |
 | *FFT* | Fast Fourier Transform |
@@ -142,9 +142,9 @@ Icon variables (simple names for single items, and procedure names) may appear a
 
 | **Original ICON** | **Fancy Notation** |
 |:--|:--|
-| `one_base_B` | $`1_{base_B}`$ |
-| `delta_i_minus_1` | $`\delta_{i-1}`$ |
-| `plus_poly` | $`\oplus_{poly}`$ |
+| `one_base_B` | `1_{base_B}` |
+| `delta_i_minus_1` | `\delta_{i-1}` |
+| `plus_poly` | `\oplus_{poly}` |
 
 For procedure definitions, instead of the obvious
 
@@ -446,11 +446,11 @@ The latter are best unused: ICON does not notify the user of integer multiplicat
 
 | | |
 |:--|:--|
-| **Data structures** | $`base_{\mathbf{B}}`$; $`set_{base}`$ |
-| **Constants** | $`0_{base_{\mathbf{B}}}`$, $`1_{base_{\mathbf{B}}}`$, $`k_{base_{\mathbf{B}}}`$ |
-| **Operators** | $`\oplus_{base_{\mathbf{B}}}`$, $`\ominus_{base_{\mathbf{B}}}`$, $`\otimes_{base_{\mathbf{B}}}`$, $`\mathbin{⨸}_{base_{\mathbf{B}}}`$, $`normalize_{base_{\mathbf{B}}}`$ |
-| **Predicates** | $`<_{base_{\mathbf{B}}}`$, $`=_{base_{\mathbf{B}}}`$ |
-| **Commands** | $`print_{base_{\mathbf{B}}}`$ |
+| **Data structures** | `base_{\mathbf{B}}`; `set_{base}` |
+| **Constants** | `0_{base_{\mathbf{B}}}`, `1_{base_{\mathbf{B}}}`, `k_{base_{\mathbf{B}}}` |
+| **Operators** | `\oplus_{base_{\mathbf{B}}}`, `\ominus_{base_{\mathbf{B}}}`, `\otimes_{base_{\mathbf{B}}}`, `\mathbin{⨸}_{base_{\mathbf{B}}}`, `normalize_{base_{\mathbf{B}}}` |
+| **Predicates** | `<_{base_{\mathbf{B}}}`, `=_{base_{\mathbf{B}}}` |
+| **Commands** | `print_{base_{\mathbf{B}}}` |
 
 **Data structures.** *base* is a number $`B`$ such that 1 is less than the maximum machine word integer. Then *digits* is a list of machine word integers less than *base* and greater than 0. Width is the printing width of digits of the base, in terms of decimal digits.
 
@@ -950,11 +950,11 @@ is
 
 | | |
 |:--|:--|
-| **Data structures** | $`Z`$ |
-| **Constants** | $`0_{Z}`$, $`1_{Z}`$, $`k_{Z}`$ |
-| **Operators** | $`\oplus_{Z}`$, $`-_{Z}`$, $`\otimes_{Z}`$, $`\mathbin{⨸}_{Z}`$, $`mod_{Z}`$, $`abs_{Z}`$, $`deg_{Z}`$, $`normalize_{Z}`$ |
-| **Predicates** | $`=_{Z}`$, $`<_{Z}`$, $`unit_{Z}`$, $`>0_{Z}`$, $`<0_{Z}`$, $`=0_{Z}`$ |
-| **Commands** | $`print_{Z}`$ |
+| **Data structures** | `Z` |
+| **Constants** | `0_{Z}`, `1_{Z}`, `k_{Z}` |
+| **Operators** | `\oplus_{Z}`, `-_{Z}`, `\otimes_{Z}`, `\mathbin{⨸}_{Z}`, `mod_{Z}`, `abs_{Z}`, `deg_{Z}`, `normalize_{Z}` |
+| **Predicates** | `=_{Z}`, `<_{Z}`, `unit_{Z}`, `>0_{Z}`, `<0_{Z}`, `=0_{Z}` |
+| **Commands** | `print_{Z}` |
 
 **Data structures.** *sign* is 1 or $`-1`$. *mantissa* is a base $`Base`$ integer, where the $`Base`$ is set by $`k_{Z}`$.
 
@@ -1215,10 +1215,10 @@ We provide the following machine integer arithmetic facilities:
 
 | | |
 |:--|:--|
-| **Constants** | $`0_{integer}`$, $`1_{integer}`$ |
-| **Operators** | $`\oplus`$, $`-_{integer}`$, $`\odot_{integer}`$, $`\mathit{circleslash}_{integer}`$, $`rem_{integer}`$, $`mod_{integer}`$, $`deg_{integer}`$, $`abs_{integer}`$ |
-| **Predicates** | $`=0_{integer}`$, $`<0_{integer}`$, $`=_{integer}`$, $`unit_{integer}`$ |
-| **Commands** | $`print_{integer}`$ |
+| **Constants** | `0_{integer}`, `1_{integer}` |
+| **Operators** | `\oplus`, `-_{integer}`, `\odot_{integer}`, `\mathit{circleslash}_{integer}`, `rem_{integer}`, `mod_{integer}`, `deg_{integer}`, `abs_{integer}` |
+| **Predicates** | `=0_{integer}`, `<0_{integer}`, `=_{integer}`, `unit_{integer}` |
+| **Commands** | `print_{integer}` |
 
 
 **Constants.** We provide constants 0 and 1, as follows:
@@ -1322,11 +1322,11 @@ EUCLID provides three classes of domain constructions: quotient domains $`Q_{D}`
 
 | | |
 |:--|:--|
-| **Data structures** | $`\mathcal{Q}`$ |
-| **Constants** | $`0_{\mathcal{Q}}`$, $`1_{\mathcal{Q}}`$, $`k_{i\mathcal{Q}_x}`$ |
-| **Operators** | $`\oplus_{\mathcal{Q}}`$, $`-_{\mathcal{Q}}`$, $`\otimes_{\mathcal{Q}}`$, $`\mathbin{⨸}_{\mathcal{Q}}`$, $`mod_{\mathcal{Q}}`$, $`normalize_{\mathcal{Q}}`$, $`deg_{\mathcal{Q}}`$ |
-| **Predicates** | $`=_{\mathcal{Q}}`$, $`unit_{\mathcal{Q}}`$ |
-| **Commands** | $`print_{\mathcal{Q}}`$ |
+| **Data structures** | `\mathcal{Q}` |
+| **Constants** | `0_{\mathcal{Q}}`, `1_{\mathcal{Q}}`, `k_{i\mathcal{Q}_x}` |
+| **Operators** | `\oplus_{\mathcal{Q}}`, `-_{\mathcal{Q}}`, `\otimes_{\mathcal{Q}}`, `\mathbin{⨸}_{\mathcal{Q}}`, `mod_{\mathcal{Q}}`, `normalize_{\mathcal{Q}}`, `deg_{\mathcal{Q}}` |
+| **Predicates** | `=_{\mathcal{Q}}`, `unit_{\mathcal{Q}}` |
+| **Commands** | `print_{\mathcal{Q}}` |
 
 **Data structures.** The domains $`\mathcal{Q}`$ are of the form $`\mathcal{Q}=\{\frac{m}{n} \mid m, n \in D, n \neq 0\}`$, for some Euclidean domain $`D`$. Elements of such a domain $`\mathcal{Q}`$ are quotients with a dividend and a divisor:
 
@@ -1482,11 +1482,11 @@ Everything is a unit in $`\mathcal{Q}`$.
 
 | | |
 |:--|:--|
-| **Data structures** | $`modulo`$ |
-| **Constants** | $`0_{modulo}`$, $`1_{modulo}`$ |
-| **Operators** | $`\oplus_{modulo}`$, $`-_{modulo}`$, $`\otimes_{modulo}`$, $`\mathbin{⨸}_{modulo}`$, $`normalize_{modulo}`$, $`deg_{modulo}`$ |
-| **Predicates** | $`=_{modulo}`$, $`unit_{modulo}`$, $`<0_{modulo}`$ |
-| **Commands** | $`print_{modulo}`$ |
+| **Data structures** | `modulo` |
+| **Constants** | `0_{modulo}`, `1_{modulo}` |
+| **Operators** | `\oplus_{modulo}`, `-_{modulo}`, `\otimes_{modulo}`, `\mathbin{⨸}_{modulo}`, `normalize_{modulo}`, `deg_{modulo}` |
+| **Predicates** | `=_{modulo}`, `unit_{modulo}`, `<0_{modulo}` |
+| **Commands** | `print_{modulo}` |
 
 **Data structures.**
 
@@ -1583,11 +1583,11 @@ Nothing is negative in a modular domain.
 
 | | |
 |:--|:--|
-| **Data structures** | $`poly`$, $`term`$; $`poly\_of`$, $`0th\_coef`$, $`lead\_coef`$ |
-| **Constants** | $`0_{poly}`$, $`1_{poly}`$, $`k_{Z_Q}`$, $`k_{Z_{Qx}}`$, $`k_{Z_x}`$ |
-| **Operators** | $`\oplus_{poly}`$, $`-_{poly}`$, $`\otimes_{poly}`$, $`\mathbin{⨸}_{poly}`$, $`mod_{poly}`$, $`eval_{poly}`$, $`deg_{poly}`$, $`-_{deg}`$, $`\oplus_{deg}`$, $`normalize_{poly}`$ |
-| **Predicates** | $`<_{degree}`$, $`=_{poly}`$, $`unit_{poly}`$ |
-| **Commands** | $`print_{poly}`$ |
+| **Data structures** | `poly`, `term`; `poly\_of`, `0th\_coef`, `lead\_coef` |
+| **Constants** | `0_{poly}`, `1_{poly}`, `k_{Z_Q}`, `k_{Z_{Qx}}`, `k_{Z_x}` |
+| **Operators** | `\oplus_{poly}`, `-_{poly}`, `\otimes_{poly}`, `\mathbin{⨸}_{poly}`, `mod_{poly}`, `eval_{poly}`, `deg_{poly}`, `-_{deg}`, `\oplus_{deg}`, `normalize_{poly}` |
+| **Predicates** | `<_{degree}`, `=_{poly}`, `unit_{poly}` |
+| **Commands** | `print_{poly}` |
 
 **Data structures.** Polynomials $`a(x) \in D[x]`$ are finite sums of the form
 
@@ -2201,25 +2201,21 @@ We provide algorithms for the following applications:
 - The Chinese Remainder for 1, 2, or $`N`$ congruences.
 - The solutions to the Diophantine equation $`ax + by = c`$.
 
-
 #### 3.1.1. Greatest Common Divisor
 
 We have two versions of Euclid's Algorithm over a Euclidean domain $`D`$, from Lipson, p. 226 and p. 209.
 
-**GCD**$`(a, b, D)`$  
+**GCD**(`(a, b, D)`)  
 Input: $`a, b \in D`$, not both zero.  
 Output: a gcd of $`a`$, $`b`$.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&GCD(a, b) \Leftarrow \\
-&\quad \Uparrow (\textbf{if } =(b, 0(b)) \textbf{ then } normalize(a) \\
-&\quad\quad \textbf{else } GCD(b, mod(a, b))) \ \blacksquare
-\end{aligned}
+```icon
+GCD(a, b) ←
+↑ (if =(b, 0(b)) then normalize(a)
+else GCD(b, mod(a, b))) ■
 ```
-
 
 </div>
 
@@ -2227,39 +2223,36 @@ The following is a table of expressions and their gcd's, as computed via GCD:
 
 <p align="center"><strong>Greatest Common Divisors</strong></p>
 
-| Domain | $`A`$ | $`B`$ | GCD |
+| Domain | `A` | `B` | GCD |
 |:--|:--|:--|:--|
-| $`Z`$ | $`121903z`$ | $`5335z`$ | $`1z`$ |
-| $`Z`$ | $`-18z`$ | $`5z`$ | $`1z`$ |
-| $`Z`$ | $`228z`$ | $`612z`$ | $`12z`$ |
-| $`Q[x]`$ | $`(-2)q + 1q \cdot X^3`$ | $`(-3)q + 2q \cdot X^2`$ | $`(5/9)q`$ |
-| $`Z_{5}`$ | $`((-2) \bmod 5)`$ | $`((-3) \bmod 5)`$ | $`(2 \bmod 5)`$ |
-| $`Z_{5}[x]`$ | $`((-2) \bmod 5) + (1 \bmod 5) \cdot X^3`$ | $`((-3) \bmod 5) + (2 \bmod 5) \cdot X^2`$ | $`(3 \bmod 5) + (4 \bmod 5) \cdot X`$ |
-| $`QZ[x]`$ | $`(166z/243z)q + ((-275z)/243z)q \cdot X`$ | $`(115668z/75625z)q`$ | $`(115668z/75625z)q`$ |
-| $`QZ[x]`$ | $`(-2z)q + 1zq \cdot X^3`$ | $`(-3z)q + 2zq \cdot X^2`$ | $`(5z/9z)q`$ |
+| `Z` | `121903z` | `5335z` | `1z` |
+| `Z` | `-18z` | `5z` | `1z` |
+| `Z` | `228z` | `612z` | `12z` |
+| `Q[x]` | `(-2)q + 1q \cdot X^3` | `(-3)q + 2q \cdot X^2` | `(5/9)q` |
+| `Z_{5}` | `((-2) \bmod 5)` | `((-3) \bmod 5)` | `(2 \bmod 5)` |
+| `Z_{5}[x]` | `((-2) \bmod 5) + (1 \bmod 5) \cdot X^3` | `((-3) \bmod 5) + (2 \bmod 5) \cdot X^2` | `(3 \bmod 5) + (4 \bmod 5) \cdot X` |
+| `QZ[x]` | `(166z/243z)q + ((-275z)/243z)q \cdot X` | `(115668z/75625z)q` | `(115668z/75625z)q` |
+| `QZ[x]` | `(-2z)q + 1zq \cdot X^3` | `(-3z)q + 2zq \cdot X^2` | `(5z/9z)q` |
 
-**EUCLID**$`(a, b)`$  
+**EUCLID**(`(a, b)`)  
 Input: $`a, b \in D`$, not both zero.  
 Output: $`g, s, t`$ such that $`g`$ is a gcd of $`a`$, $`b`$ and $`g = sa + tb`$.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&EUCLID(A, B) \Leftarrow \\
-&\quad \textbf{local } q,\ a,\ s,\ t \\
-&\quad a \mathrel{:=} [copy(A), copy(B)] \\
-&\quad s \mathrel{:=} [1(A), 0(A)] \\
-&\quad t \mathrel{:=} [0(A), 1(A)] \\
-&\quad \textbf{while } not(=(a[2], 0(A))) \textbf{ do } \{ \\
-&\quad\quad q \mathrel{:=} \mathbin{⨸}(a[1], a[2]) \\
-&\quad\quad a \mathrel{:=} [a[2], \ominus(a[1], \otimes(a[2], q))] \\
-&\quad\quad s \mathrel{:=} [s[2], \ominus(s[1], \otimes(s[2], q))] \\
-&\quad\quad t \mathrel{:=} [t[2], \ominus(t[1], \otimes(t[2], q))] \} \\
-&\quad \Uparrow [normalize(a[1]), normalize(s[1]), normalize(t[1])] \ \blacksquare
-\end{aligned}
+```icon
+EUCLID(A, B) ←
+local q, a, s, t
+a := [copy(A), copy(B)]
+s := [1(A), 0(A)]
+t := [0(A), 1(A)]
+while not(=(a[2], 0(A))) do {
+q := ⨸(a[1], a[2])
+a := [a[2], ⊖(a[1], ⊗(a[2], q))]
+s := [s[2], ⊖(s[1], ⊗(s[2], q))]
+t := [t[2], ⊖(t[1], ⊗(t[2], q))] }
+↑ [normalize(a[1]), normalize(s[1]), normalize(t[1])] ■
 ```
-
 
 </div>
 
@@ -2267,55 +2260,52 @@ The following is a table of expressions and their extended *gcd*'s, as computed 
 
 <p align="center"><strong>Extended Greatest Common Divisors</strong></p>
 
-| $`A`$, $`B`$ | GCD, $`s`$, $`t`$ |
+| `A`, `B` | GCD, `s`, `t` |
 |:--|:--|
-| $`2`$, $`4`$ | $`2`$, $`1`$, $`0`$ |
-| $`228`$, $`612`$ | $`12`$, $`(-8)`$, $`3`$ |
-| $`59`$, $`24`$ | $`1`$, $`11`$, $`(-27)`$ |
-| $`(-2)q + 1q \cdot X^3`$, $`(-3)q + 2q \cdot X^2`$ | $`(5/9)q`$, $`(-16/9)q + (-4/3)q \cdot X`$, $`1q + (8/9)q \cdot X + (2/3)q \cdot X^2`$ |
-| $`((-2) \bmod 5) + (1 \bmod 5) \cdot X^3`$, $`((-3) \bmod 5) + (2 \bmod 5) \cdot X^2`$ | $`(3 \bmod 5) + (4 \bmod 5) \cdot X`$, $`(1 \bmod 5)`$, $`(2 \bmod 5) \cdot X`$ |
+| `2`, `4` | `2`, `1`, `0` |
+| `228`, `612` | `12`, `(-8)`, `3` |
+| `59`, `24` | `1`, `11`, `(-27)` |
+| `(-2)q + 1q \cdot X^3`, `(-3)q + 2q \cdot X^2` | `(5/9)q`, `(-16/9)q + (-4/3)q \cdot X`, `1q + (8/9)q \cdot X + (2/3)q \cdot X^2` |
+| `((-2) \bmod 5) + (1 \bmod 5) \cdot X^3`, `((-3) \bmod 5) + (2 \bmod 5) \cdot X^2` | `(3 \bmod 5) + (4 \bmod 5) \cdot X`, `(1 \bmod 5)`, `(2 \bmod 5) \cdot X` |
 
 
 #### 3.1.2. Modular Inverse
 
 Our modular inverse algorithm is that of Lipson, p. 214.
 
-**INVERSE**$`(a, m)`$: Computation of $`a^{-1} \bmod m`$  
+**INVERSE**(`(a, m)`): Computation of $`a^{-1} \bmod m`$  
 Input: $`a, m \in D`$, where $`D`$ is a Euclidean domain.  
 Output: If $`(m, a) = 1`$, then $`a^{-1} \bmod m`$; otherwise error.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&INVERSE(a, m) \Leftarrow \\
-&\quad \textbf{local } gst \\
-&\quad gst \mathrel{:=} EUCLID(m, a) \\
-&\quad \textbf{if } unit(gst[1]) \textbf{ then } \Uparrow mod(\mathbin{⨸}(gst[3], gst[1]), m) \\
-&\quad \textbf{else } pr\{\text{"ERROR: "},\ a,\ \text{"\^{}-1 "},\ \text{" mod "},\ m,\ \text{" does not exist"}\} \ \blacksquare
-\end{aligned}
+```icon
+INVERSE(a, m) ←
+local gst
+gst := EUCLID(m, a)
+if unit(gst[1]) then ↑ mod(⨸(gst[3], gst[1]), m)
+else pr{"ERROR: ", a, "^{-1 "}, " mod ", m, " does not exist"} ■
 ```
-
 
 </div>
 
 A table of modular inverses as computed by INVERSE is as follows:
 
-| $`x`$ | modulus | $`x^{-1}`$ |
+| `x` | modulus | `x^{-1}` |
 |:--|:--|:--|
-| $`30`$ | $`197`$ | $`46`$ |
-| $`16`$ | $`21`$ | $`4`$ |
-| $`18`$ | $`21`$ | ERROR |
-| $`24`$ | $`59`$ | $`32`$ |
-| $`(1 \bmod 2) + (1 \bmod 2) \cdot X^2`$ | $`(1 \bmod 2) + (1 \bmod 2) \cdot X^2 + (1 \bmod 2) \cdot X^5`$ | $`(1 \bmod 2) + (1 \bmod 2) \cdot X + (1 \bmod 2) \cdot X^2 + (1 \bmod 2) \cdot X^4`$ |
-| $`(-3)q + 2q \cdot X^2`$ | $`(-2)q + 1q \cdot X^3`$ | $`(9/5)q + (8/5)q \cdot X + (6/5)q \cdot X^2`$ |
+| `30` | `197` | `46` |
+| `16` | `21` | `4` |
+| `18` | `21` | ERROR |
+| `24` | `59` | `32` |
+| `(1 \bmod 2) + (1 \bmod 2) \cdot X^2` | `(1 \bmod 2) + (1 \bmod 2) \cdot X^2 + (1 \bmod 2) \cdot X^5` | `(1 \bmod 2) + (1 \bmod 2) \cdot X + (1 \bmod 2) \cdot X^2 + (1 \bmod 2) \cdot X^4` |
+| `(-3)q + 2q \cdot X^2` | `(-2)q + 1q \cdot X^3` | `(9/5)q + (8/5)q \cdot X + (6/5)q \cdot X^2` |
 
 
 #### 3.1.3. Chinese Remainders and Single-Variable Linear Congruential Systems
 
 We provide three algorithms, **CRA1** for solving equations of the form $`ax \equiv b \pmod m`$, and **CRA2** and **CRA** for solving systems of two or more congruences of the form $`X \equiv a \pmod m`$.
 
-**CRA1**$`(a, b, m)`$: Solution of a single linear congruence relation.  
+**CRA1**(`(a, b, m)`): Solution of a single linear congruence relation.  
 Input: $`a, b, m`$ such that $`ax \equiv b \pmod m`$.  
 Output: a particular solution $`x_{1}`$.
 
@@ -2327,20 +2317,17 @@ is a solution for the original congruence. They apply the reduction until the co
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&CRA1(aa, bb, m) \Leftarrow \\
-&\quad \textbf{local } a,\ b,\ g \\
-&\quad g \mathrel{:=} GCD(aa, m) \\
-&\quad \textbf{if } not\ |(g, bb) \textbf{ then } pr\{\text{"ERROR: no solution to linear congruence"}\} \\
-&\quad \textbf{else } \{ a \mathrel{:=} mod(aa, m);\ b \mathrel{:=} mod(bb, m) \\
-&\quad\quad \textbf{if } =(a, 1(a)) \textbf{ then } \Uparrow b \\
-&\quad\quad \textbf{else if } =(b, 0(b)) \textbf{ then } \Uparrow 0(b) \\
-&\quad\quad \textbf{else if } =(a, b) \textbf{ then } \Uparrow 1(b) \\
-&\quad\quad \textbf{else } \Uparrow \mathbin{⨸}(\oplus(\otimes(m, CRA1(m, -(b), a)), b), a) \} \ \blacksquare
-\end{aligned}
+```icon
+CRA1(aa, bb, m) ←
+local a, b, g
+g := GCD(aa, m)
+if not |(g, bb) then pr{"ERROR: no solution to linear congruence"}
+else { a := mod(aa, m); b := mod(bb, m)
+if =(a, 1(a)) then ↑ b
+else if =(b, 0(b)) then ↑ 0(b)
+else if =(a, b) then ↑ 1(b)
+else ↑ ⨸(⊕(⊗(m, CRA1(m, -(b), a)), b), a) } ■
 ```
-
 
 </div>
 
@@ -2354,52 +2341,46 @@ is a solution for the original congruence. They apply the reduction until the co
 
 CRA2 and CRA are from Lipson, p. 254 and p. 257.
 
-**CRA2**$`(r, m, s, n)`$: Two-congruence Chinese Remainder Algorithm for $`Z`$  
+**CRA2**(`(r, m, s, n)`): Two-congruence Chinese Remainder Algorithm for $`Z`$  
 Input: $`r, m, s, n \in Z`$, where $`m`$, $`n`$ are relatively prime.  
 Output: $`U \in Z`$ such that $`U \equiv r \pmod m`$ and $`U \equiv s \pmod n`$.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&CRA2(r, m, s, n) \Leftarrow \\
-&\quad \textbf{local } c,\ \sigma,\ U \\
-&\quad c \mathrel{:=} INVERSE(m, n) \\
-&\quad \sigma \mathrel{:=} mod(\otimes(\ominus(s, r), c), n) \\
-&\quad U \mathrel{:=} \oplus(r, \otimes(\sigma, m)) \\
-&\quad \Uparrow U \ \blacksquare
-\end{aligned}
+```icon
+CRA2(r, m, s, n) ←
+local c, sigma, U
+c := INVERSE(m, n)
+sigma := mod(⊗(⊖(s, r), c), n)
+U := ⊕(r, ⊗(sigma, m))
+↑ U ■
 ```
-
 
 </div>
 
 **Example.** The $`x`$ such that $`x \equiv 6 \pmod 7`$ and $`x \equiv 3 \pmod 9`$ is 48, as obtained by evaluating CRA2(6, 7, 3, 9).
 
-**CRA**$`(rm\_list)`$: $`N`$-congruence Chinese Remainder Algorithm for $`Z`$  
+**CRA**(`(rm\_list)`): $`N`$-congruence Chinese Remainder Algorithm for $`Z`$  
 Input: $`[[r_{k}, m_{k}]] \in Z`$, where the $`m_{k}`$ are relatively prime.  
 Output: $`U \in Z`$ such that $`U \equiv r_{i} \pmod{m_i}`$.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&CRA(rm\_list) \Leftarrow \\
-&\quad \textbf{local } rms,\ rm,\ M,\ U,\ c,\ \sigma \\
-&\quad rms \mathrel{:=} copy(rm\_list) \\
-&\quad rm \mathrel{:=} pop(rms);\ r \mathrel{:=} rm[1];\ m \mathrel{:=} rm[2] \\
-&\quad M \mathrel{:=} 1(m) \\
-&\quad U \mathrel{:=} mod(r, m) \\
-&\quad \textbf{every } k \mathrel{:=} 1 \textbf{ to } \texttt{*}rms \textbf{ do } \{ \\
-&\quad\quad M \mathrel{:=} \otimes(M, m) \\
-&\quad\quad rm \mathrel{:=} pop(rms);\ r \mathrel{:=} rm[1];\ m \mathrel{:=} rm[2] \\
-&\quad\quad c \mathrel{:=} INVERSE(M, m) \\
-&\quad\quad \sigma \mathrel{:=} mod(\otimes(\ominus(mod(U, m), r), c), m) \\
-&\quad\quad U \mathrel{:=} \oplus(U, \otimes(\sigma, M)) \} \\
-&\quad \Uparrow U \ \blacksquare
-\end{aligned}
+```icon
+CRA(rm_list) ←
+local rms, rm, M, U, c, sigma
+rms := copy(rm_list)
+rm := pop(rms); r := rm[1]; m := rm[2]
+M := 1(m)
+U := mod(r, m)
+every k := 1 to *rms do {
+M := ⊗(M, m)
+rm := pop(rms); r := rm[1]; m := rm[2]
+c := INVERSE(M, m)
+sigma := mod(⊗(⊖(mod(U, m), r), c), m)
+U := ⊕(U, ⊗(sigma, M)) }
+↑ U ■
 ```
-
 
 </div>
 
@@ -2414,15 +2395,12 @@ Let $`u(x) = ax + b`$. Then
 
 <div class="math-left">
 
-```math
-\begin{array}{ll}
-a \bmod 3 = 1 & b \bmod 3 = 0 \\
-a \bmod 7 = 0 & b \bmod 7 = 1 \\
-a \bmod 4 = 2 & b \bmod 4 = 3 \\
-a \bmod 5 = 3 & b \bmod 5 = 3
-\end{array}
+```icon
+a bmod 3 = 1 & b bmod 3 = 0
+a bmod 7 = 0 & b bmod 7 = 1
+a bmod 4 = 2 & b bmod 4 = 3
+a bmod 5 = 3 & b bmod 5 = 3
 ```
-
 
 </div>
 
@@ -2430,17 +2408,14 @@ We can solve for $`a`$ and $`b`$ individually using the $`n`$-congruence CRA alg
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&a\_congruences \mathrel{:=} [[1, 3], [0, 7], [2, 4], [3, 5]] \\
-&b\_congruences \mathrel{:=} [[0, 3], [1, 7], [3, 4], [3, 5]] \\
-&a \mathrel{:=} CRA(a\_congruences) \\
-&b \mathrel{:=} CRA(b\_congruences) \\
-&ux \mathrel{:=} poly([term(b, 0), term(a, 1)]) \\
-&\text{pr}\{\text{"u(x) = "},\ ux\}
-\end{aligned}
+```icon
+a_congruences := [[1, 3], [0, 7], [2, 4], [3, 5]]
+b_congruences := [[0, 3], [1, 7], [3, 4], [3, 5]]
+a := CRA(a_congruences)
+b := CRA(b_congruences)
+ux := poly([term(b, 0), term(a, 1)])
+pr{"u(x) = ", ux}
 ```
-
 
 </div>
 
@@ -2459,12 +2434,9 @@ Executing the following code
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\text{pr}\{CRA([[1, 3], [3, 5], [0, 7], [10, 11]])\}
-\end{aligned}
+```icon
+pr{CRA([[1, 3], [3, 5], [0, 7], [10, 11]])}
 ```
-
 
 </div>
 
@@ -2489,22 +2461,19 @@ Output: $`g`$, $`x_{1}`$, $`y_{1}`$, described above.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&DIOPHANTINE(a, b, c) \Leftarrow \\
-&\quad \textbf{local } gst,\ g,\ x_1,\ y_1 \\
-&\quad gst \mathrel{:=} EUCLID(a, b) \\
-&\quad g \mathrel{:=} gst[1];\ t \mathrel{:=} gst[3] \\
-&\quad \textbf{if } not\ |(g, c) \textbf{ then } pr\{\text{"ERROR: Diophantine solution nonexistent"}\} \\
-&\quad \textbf{else } \{ \textbf{if } <(abs(b), abs(a)) \\
-&\quad\quad \textbf{then } \{ x_1 \mathrel{:=} CRA1(a, c, abs(b)) \\
-&\quad\quad\quad y_1 \mathrel{:=} \mathbin{⨸}(\ominus(c, \otimes(a, x_1)), b) \} \\
-&\quad\quad \textbf{else } \{ y_1 \mathrel{:=} CRA1(b, c, abs(a)) \\
-&\quad\quad\quad x_1 \mathrel{:=} \mathbin{⨸}(\ominus(c, \otimes(b, y_1)), a) \} \\
-&\quad\quad \Uparrow [g, x_1, y_1] \} \ \blacksquare
-\end{aligned}
+```icon
+DIOPHANTINE(a, b, c) ←
+local gst, g, x_1, y_1
+gst := EUCLID(a, b)
+g := gst[1]; t := gst[3]
+if not |(g, c) then pr{"ERROR: Diophantine solution nonexistent"}
+else { if <(abs(b), abs(a))
+then { x_1 := CRA1(a, c, abs(b))
+y_1 := ⨸(⊖(c, ⊗(a, x_1)), b) }
+else { y_1 := CRA1(b, c, abs(a))
+x_1 := ⨸(⊖(c, ⊗(b, y_1)), a) }
+↑ [g, x_1, y_1] } ■
 ```
-
 
 </div>
 
@@ -2529,12 +2498,9 @@ The simplest polynomial remainder sequence is simply that of Euclid's algorithm.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&MOD\_RS(a, b) \Leftarrow \Uparrow [a] \mathrel{\texttt{|||}}\mathrel{:=} \ (\textbf{if } =(b, 0(b)) \textbf{ then } [b] \textbf{ else } MOD\_RS(b, mod(a, b))) \ \blacksquare
-\end{aligned}
+```icon
+MOD_RS(a, b) ← ↑ [a] ||| := (if =(b, 0(b)) then [b] else MOD_RS(b, mod(a, b))) ■
 ```
-
 
 </div>
 
@@ -2547,16 +2513,13 @@ as encoded in ICON by
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&settime() \\
-&ax \mathrel{:=} poly([k_{Z_{Qx}}(2, 0), k_{Z_{Qx}}(-1, 1), k_{Z_{Qx}}(3, 2), k_{Z_{Qx}}(2, 4), k_{Z_{Qx}}(1, 5)]) \\
-&bx \mathrel{:=} poly([k_{Z_{Qx}}(2, 0), k_{Z_{Qx}}(-1, 1), k_{Z_{Qx}}(3, 3)]) \\
-&\text{pr}\{\text{"QZ[x]: MOD\_RS("},\ ax,\ \text{", "},\ bx,\ \text{") = "},\ MOD\_RS(ax, bx)\} \\
-&showtime() \\
-\end{aligned}
+```icon
+settime()
+ax := poly([k_{Z_{Qx}}(2, 0), k_{Z_{Qx}}(-1, 1), k_{Z_{Qx}}(3, 2), k_{Z_{Qx}}(2, 4), k_{Z_{Qx}}(1, 5)])
+bx := poly([k_{Z_{Qx}}(2, 0), k_{Z_{Qx}}(-1, 1), k_{Z_{Qx}}(3, 3)])
+pr{"QZ[x]: MOD_RS(", ax, ", ", bx, ") = ", MOD_RS(ax, bx)}
+showtime()
 ```
-
 
 </div>
 
@@ -2579,16 +2542,13 @@ PREM(px, qx): Pseudo-remainder of $`px/qx`$ in $`I[x]`$, where $`I[x]`$ is an in
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&PREM(px, qx) \Leftarrow \\
-&\quad \textbf{local } d,\ b \\
-&\quad d \mathrel{:=} -_{deg}(deg_{poly}(px), deg_{poly}(qx)) \\
-&\quad b \mathrel{:=} poly\_of(lead\_coef(qx)) \\
-&\quad \Uparrow rem(\otimes_{poly}(exp(b, d + 1), px), qx) \ \blacksquare
-\end{aligned}
+```icon
+PREM(px, qx) ←
+local d, b
+d := -_{deg}(deg_{poly}(px), deg_{poly}(qx))
+b := poly_of(lead_coef(qx))
+↑ rem(⊗_{poly}(exp(b, d + 1), px), qx) ■
 ```
-
 
 </div>
 
@@ -2604,12 +2564,9 @@ I.e., a trace of the steps of Euclid's algorithm modified to use PREM.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&E\_PRS(a, b) \Leftarrow \Uparrow [a] \mathrel{\texttt{|||}}\mathrel{:=} \ (\textbf{if } =(b, 0(b)) \textbf{ then } [b] \textbf{ else } E\_PRS(b, PREM(a, b))) \ \blacksquare
-\end{aligned}
+```icon
+E_PRS(a, b) ← ↑ [a] ||| := (if =(b, 0(b)) then [b] else E_PRS(b, PREM(a, b))) ■
 ```
-
 
 </div>
 
@@ -2641,49 +2598,41 @@ $$p_i = \frac{\text{PREM}(p_{i-2}, p_{i-1})}{\beta_i}, \quad i = 2, \ldots, k$$
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&S\_PRS(p_0, p_1) \Leftarrow \\
-&\quad \textbf{local } \delta_0,\ \beta_2,\ p_2,\ x,\ P,\ R_1, \\
-&\quad\quad \delta_{i-2},\ c_{i-2},\ R_{i-2},\ p_{i-2},\ p_{i-1},\ \beta_i,\ p_i,\ l,\ z \\
-&\quad \delta_0 \mathrel{:=} \delta_i(p_0, p_1) \\
-&\quad c_0 \mathrel{:=} c_i(p_0) \\
-&\quad \beta_2 \mathrel{:=} poly\_of(exp(-(1(c_0)), \delta_0 + 1)) \\
-&\quad p_2 \mathrel{:=} P_i(p_0, p_1, \beta_2);\ z \mathrel{:=} 0(p_2) \\
-&\quad \textbf{if } =(p_2, z) \textbf{ then } \Uparrow [p_0, p_1] \\
-&\quad P \mathrel{:=} [p_0, p_1, p_2] \\
-&\quad R_1 \mathrel{:=} exp(c_i(p_1), \delta_0) \\
-&\quad \delta_{i-2} \mathrel{:=} \delta_i(p_1, p_2) \\
-&\quad c_{i-2} \mathrel{:=} c_i(p_1) \\
-&\quad R_{i-2} \mathrel{:=} R_1 \\
-&\quad p_{i-2} \mathrel{:=} p_1 \\
-&\quad p_{i-1} \mathrel{:=} p_2 \\
-&\quad l \mathrel{:=} 3 \\
-&\quad \textbf{repeat } \{ \\
-&\quad\quad \beta_i \mathrel{:=} \beta_i(\delta_{i-2}, c_{i-2}, R_{i-2}) \\
-&\quad\quad p_i \mathrel{:=} P_i(p_{i-2}, p_{i-1}, \beta_i) \\
-&\quad\quad \textbf{if } =(p_i, z) \textbf{ then } \Uparrow P \\
-&\quad\quad \textbf{else } P \mathrel{\texttt{|||}}\mathrel{:=} \ [p_i] \\
-&\quad\quad p_{i-2} \mathrel{:=} p_{i-1} \\
-&\quad\quad p_{i-1} \mathrel{:=} p_i \\
-&\quad\quad c_{i-2} \mathrel{:=} c_i(p_{i-2}) \\
-&\quad\quad R_{i-2} \mathrel{:=} R_i(c_{i-2}, \delta_{i-2}, R_{i-2}) \\
-&\quad\quad \delta_{i-2} \mathrel{:=} \delta_i(p_{i-2}, p_{i-1}) \} \ \blacksquare \\
-&\\
-&\delta_i(p_i, p_{i+1}) \Leftarrow \Uparrow -_{deg}(deg_{poly}(p_i), deg_{poly}(p_{i+1})) \ \blacksquare \\
-&\\
-&c_i(p_i) \Leftarrow \Uparrow lead\_coef(p_i) \ \blacksquare \\
-&\\
-&R_i(c_i, \delta_{i-1}, R_{i-1}) \Leftarrow \\
-&\quad \Uparrow \otimes(exp(c_i, \delta_{i-1}), exp(R_{i-1}, -_{deg}(\delta_{i-1}, 1))) \ \blacksquare \\
-&\\
-&\beta_i(\delta_{i-2}, c_{i-2}, R_{i-2}) \Leftarrow \\
-&\quad \Uparrow poly\_of(\otimes(\otimes(exp(-(1(c_{i-2})), 1 + \delta_{i-2}), exp(R_{i-2}, \delta_{i-2})))) \ \blacksquare \\
-&\\
-&P_i(p_{i-2}, p_{i-1}, \beta_i) \Leftarrow \Uparrow \mathbin{⨸}(PREM(p_{i-2}, p_{i-1}), \beta_i) \ \blacksquare
-\end{aligned}
+```icon
+S_PRS(p_0, p_1) ←
+local delta_0, beta_2, p_2, x, P, R_1,
+delta_{i-2}, c_{i-2}, R_{i-2}, p_{i-2}, p_{i-1}, beta_i, p_i, l, z
+delta_0 := delta_i(p_0, p_1)
+c_0 := c_i(p_0)
+beta_2 := poly_of(exp(-(1(c_0)), delta_0 + 1))
+p_2 := P_i(p_0, p_1, beta_2); z := 0(p_2)
+if =(p_2, z) then ↑ [p_0, p_1]
+P := [p_0, p_1, p_2]
+R_1 := exp(c_i(p_1), delta_0)
+delta_{i-2} := delta_i(p_1, p_2)
+c_{i-2} := c_i(p_1)
+R_{i-2} := R_1
+p_{i-2} := p_1
+p_{i-1} := p_2
+l := 3
+repeat {
+beta_i := beta_i(delta_{i-2}, c_{i-2}, R_{i-2})
+p_i := P_i(p_{i-2}, p_{i-1}, beta_i)
+if =(p_i, z) then ↑ P
+else P ||| := [p_i]
+p_{i-2} := p_{i-1}
+p_{i-1} := p_i
+c_{i-2} := c_i(p_{i-2})
+R_{i-2} := R_i(c_{i-2}, delta_{i-2}, R_{i-2})
+delta_{i-2} := delta_i(p_{i-2}, p_{i-1}) } blacksquare
+delta_i(p_i, p_{i+1}) ← ↑ -_{deg}(deg_{poly}(p_i), deg_{poly}(p_{i+1})) blacksquare
+c_i(p_i) ← ↑ lead_coef(p_i) blacksquare
+R_i(c_i, delta_{i-1}, R_{i-1}) ←
+↑ ⊗(exp(c_i, delta_{i-1}), exp(R_{i-1}, -_{deg}(delta_{i-1}, 1))) blacksquare
+beta_i(delta_{i-2}, c_{i-2}, R_{i-2}) ←
+↑ poly_of(⊗(⊗(exp(-(1(c_{i-2})), 1 + delta_{i-2}), exp(R_{i-2}, delta_{i-2})))) blacksquare
+P_i(p_{i-2}, p_{i-1}, beta_i) ← ↑ ⨸(PREM(p_{i-2}, p_{i-1}), beta_i) ■
 ```
-
 
 </div>
 
@@ -2703,56 +2652,50 @@ Output: $`U(x)`$
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&NIA(ab\_list) \Leftarrow \\
-&\quad \textbf{local } ab\_s,\ ab,\ a,\ b,\ Ux,\ Mx,\ c,\ \sigma \\
-&\quad ab\_s \mathrel{:=} copy(ab\_list) \\
-&\quad ab \mathrel{:=} pop(ab\_s);\ a \mathrel{:=} ab[1];\ b \mathrel{:=} ab[2] \\
-&\quad Ux \mathrel{:=} poly\_of(b) \\
-&\quad Mx \mathrel{:=} 1(Ux) \\
-&\quad \textbf{every } k \mathrel{:=} 1 \textbf{ to } \texttt{*}ab\_s \textbf{ do } \{ \\
-&\quad\quad Mx \mathrel{:=} \otimes(Mx, \ominus(poly([term(1(b), 1)]), poly\_of(a))) \\
-&\quad\quad ab \mathrel{:=} pop(ab\_s);\ a \mathrel{:=} ab[1];\ b \mathrel{:=} ab[2] \\
-&\quad\quad c \mathrel{:=} \mathbin{⨸}(1(a), eval_{poly}(Mx, a)) \\
-&\quad\quad \sigma \mathrel{:=} \mathbin{⨸}(\ominus(poly\_of(b), poly\_of(eval_{poly}(Ux, a))), poly\_of(c)) \\
-&\quad\quad Ux \mathrel{:=} \oplus(Ux, \otimes(\sigma, Mx)) \} \\
-&\quad \Uparrow Ux \ \blacksquare
-\end{aligned}
+```icon
+NIA(ab_list) ←
+local ab_s, ab, a, b, Ux, Mx, c, sigma
+ab_s := copy(ab_list)
+ab := pop(ab_s); a := ab[1]; b := ab[2]
+Ux := poly_of(b)
+Mx := 1(Ux)
+every k := 1 to *ab_s do {
+Mx := ⊗(Mx, ⊖(poly([term(1(b), 1)]), poly_of(a)))
+ab := pop(ab_s); a := ab[1]; b := ab[2]
+c := ⨸(1(a), eval_{poly}(Mx, a))
+sigma := ⨸(⊖(poly_of(b), poly_of(eval_{poly}(Ux, a))), poly_of(c))
+Ux := ⊕(Ux, ⊗(sigma, Mx)) }
+↑ Ux ■
 ```
-
 
 </div>
 
 ### 3.3.2 Fast Fourier Transform (FFT) and Interpolation (FFI)
 
-**FFT**$`(N, a(x), \omega, A)`$: Fast Fourier Transform  
+**FFT**(`(N, a(x), \omega, A)`): Fast Fourier Transform  
 Input: integer $`N = 2^m`$, polynomial $`a(x) = \mathrm{sum}(i=0, N-1, a_{i} \cdot x^i)`$, primitive $`N`$th root of unity $`\omega`$  
 Output: array $`A = (A_{0}, \ldots, A_{N-1})`$ where $`A_{k} = a(\omega^k)`$
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&FFT(N, ax, \omega) \Leftarrow \\
-&\quad \textbf{local } A,\ n,\ bx,\ cx,\ \omega^2,\ B,\ C,\ \omega^k \\
-&\quad A \mathrel{:=} list(N, []) \\
-&\quad \textbf{if } N = 1 \ \texttt{*} \text{basis} \\
-&\quad \textbf{then } A[1] \mathrel{:=} 0th_{coef}(ax) \\
-&\quad \textbf{else } \{ n \mathrel{:=} N/2 \ \texttt{*} \text{binary split} \\
-&\quad\quad bx \mathrel{:=} poly\_of\_even\_powered\_terms(ax) \\
-&\quad\quad cx \mathrel{:=} poly\_of\_odd\_powered\_terms(ax) \\
-&\quad\quad \omega^2 \mathrel{:=} exp(\omega, 2) \\
-&\quad\quad B \mathrel{:=} FFT(n, bx, \omega^2) \ \texttt{*} \text{recursive calls} \\
-&\quad\quad C \mathrel{:=} FFT(n, cx, \omega^2) \\
-&\quad\quad \textbf{every } k \mathrel{:=} 1 \textbf{ to } n \textbf{ do } \{ \\
-&\quad\quad\quad \omega^k \mathrel{:=} exp(\omega, k-1) \\
-&\quad\quad\quad A[k] \mathrel{:=} \oplus(B[k], \otimes(\omega^k, C[k])) \\
-&\quad\quad\quad A[k+n] \mathrel{:=} \ominus(B[k], \otimes(\omega^k, C[k])) \} \} \\
-&\quad \Uparrow A \ \blacksquare
-\end{aligned}
+```icon
+FFT(N, ax, omega) ←
+local A, n, bx, cx, omega^2, B, C, omega^k
+A := list(N, [])
+if N = 1 * basis
+then A[1] := 0th_{coef}(ax)
+else { n := N/2 * binary split
+bx := poly_of_even_powered_terms(ax)
+cx := poly_of_odd_powered_terms(ax)
+omega^2 := exp(omega, 2)
+B := FFT(n, bx, omega^2) * recursive calls
+C := FFT(n, cx, omega^2)
+every k := 1 to n do {
+omega^k := exp(omega, k-1)
+A[k] := ⊕(B[k], ⊗(omega^k, C[k]))
+A[k+n] := ⊖(B[k], ⊗(omega^k, C[k])) } }
+↑ A ■
 ```
-
 
 </div>
 
@@ -2760,17 +2703,14 @@ Even powered terms.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&poly\_of\_even\_powered\_terms(ax) \Leftarrow \\
-&\quad \textbf{local } r \\
-&\quad r \mathrel{:=} [] \\
-&\quad \textbf{every } t \mathrel{:=} \texttt{!}ax.terms \\
-&\quad \textbf{do if } mod_{integer}(t.power, 2) = 0 \textbf{ then } r \mathrel{\texttt{|||}}\mathrel{:=} \ [term(t.coef, t.power/2)] \\
-&\quad \Uparrow poly(r) \ \blacksquare
-\end{aligned}
+```icon
+poly_of_even_powered_terms(ax) ←
+local r
+r := []
+every t := !ax.terms
+do if mod_{integer}(t.power, 2) = 0 then r ||| := [term(t.coef, t.power/2)]
+↑ poly(r) ■
 ```
-
 
 </div>
 
@@ -2778,69 +2718,57 @@ Odd powered terms.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&poly\_of\_odd\_powered\_terms(ax) \Leftarrow \\
-&\quad \textbf{local } r \\
-&\quad r \mathrel{:=} [] \\
-&\quad \textbf{every } t \mathrel{:=} \texttt{!}ax.terms \\
-&\quad \textbf{do if } mod_{integer}(t.power, 2) = 1 \textbf{ then } r \mathrel{\texttt{|||}}\mathrel{:=} \ [term(t.coef, (t.power - 1)/2)] \\
-&\quad \textbf{if } \texttt{*}r > 0 \textbf{ then } \Uparrow poly(r) \textbf{ else } \Uparrow 0(ax.terms[1]) \ \blacksquare
-\end{aligned}
+```icon
+poly_of_odd_powered_terms(ax) ←
+local r
+r := []
+every t := !ax.terms
+do if mod_{integer}(t.power, 2) = 1 then r ||| := [term(t.coef, (t.power - 1)/2)]
+if *r > 0 then ↑ poly(r) else ↑ 0(ax.terms[1]) ■
 ```
-
 
 </div>
 
-**FFI**$`(N, B, \omega)`$: Fast Fourier Interpolation  
+**FFI**(`(N, B, \omega)`): Fast Fourier Interpolation  
 Input: integer $`N = 2^m`$, sample values $`B = (b_{0}, \ldots, b_{N-1})`$, primitive $`N`$th root of unity $`\omega`$  
 Output: $`a(x) = \mathrm{sum}(i=0, N-1, a_{i} x^i)`$ where $`a(\omega^k) = b_{k}`$, $`k=0..N-1`$
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&FFI(N, B, \omega) \Leftarrow \\
-&\quad \textbf{local } bx,\ C,\ ax \\
-&\quad bx \mathrel{:=} polynomialize(B) \\
-&\quad C \mathrel{:=} FFT(N, bx, \mathbin{⨸}(1(\omega), \omega)) \\
-&\quad ax \mathrel{:=} polynomialize(\otimes_{vector\ scalar}(C, \mathbin{⨸}(1(N), N))) \\
-&\quad \Uparrow ax \ \blacksquare
-\end{aligned}
+```icon
+FFI(N, B, omega) ←
+local bx, C, ax
+bx := polynomialize(B)
+C := FFT(N, bx, ⨸(1(omega), omega))
+ax := polynomialize(⊗_{vector scalar}(C, ⨸(1(N), N)))
+↑ ax ■
 ```
-
 
 </div>
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&polynomialize(B) \Leftarrow \\
-&\quad \textbf{local } r,\ i \\
-&\quad r \mathrel{:=} [];\ i \mathrel{:=} 0 \\
-&\quad \textbf{every } b \mathrel{:=} \texttt{!}B \textbf{ do } \{ \\
-&\quad\quad \textbf{if } not(=(b, 0(b))) \textbf{ then } r \mathrel{\texttt{|||}}\mathrel{:=} \ [term(b, i)] \\
-&\quad\quad i \mathrel{+{:=}} 1 \} \\
-&\quad \Uparrow poly(r) \ \blacksquare
-\end{aligned}
+```icon
+polynomialize(B) ←
+local r, i
+r := []; i := 0
+every b := !B do {
+if not(=(b, 0(b))) then r ||| := [term(b, i)]
+i mathrel{+{:=}} 1 }
+↑ poly(r) ■
 ```
-
 
 </div>
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\otimes_{vector\ scalar}(V, x) \Leftarrow \\
-&\quad \textbf{local } R,\ i \\
-&\quad R \mathrel{:=} list(\texttt{*}V);\ i \mathrel{:=} 1 \\
-&\quad \textbf{every } v \mathrel{:=} \texttt{!}V \textbf{ do } \{ R[i] \mathrel{:=} \otimes(V[i], x);\ i \mathrel{+{:=}} 1 \} \\
-&\quad \Uparrow R \ \blacksquare
-\end{aligned}
+```icon
+⊗_{vector scalar}(V, x) ←
+local R, i
+R := list(*V); i := 1
+every v := !V do { R[i] := ⊗(V[i], x); i mathrel{+{:=}} 1 }
+↑ R ■
 ```
-
 
 </div>
 
@@ -2852,35 +2780,29 @@ Output: $`x^{(n)}(t) = a(t)^{-1} \bmod t^{2^n}`$
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&NPSI(at) \Leftarrow \\
-&\quad \textbf{local } ax,\ xt,\ n \\
-&\quad ax \mathrel{:=} at.Poly \\
-&\quad xt \mathrel{:=} poly\_of(0th_{coef}(ax)) \\
-&\quad n \mathrel{:=} log2(\texttt{*}ax.terms) \\
-&\quad \textbf{every } k \mathrel{:=} 0 \textbf{ to } n-1 \\
-&\quad \textbf{do } xt \mathrel{:=} \oplus(\oplus(xt, xt), \\
-&\quad\quad\quad\quad -(\otimes_{poly}(truncate(ax, 2^{k+1}), \otimes(xt, xt)))) \\
-&\quad \Uparrow tpower(truncate(xt, at.N), at.N) \ \blacksquare
-\end{aligned}
+```icon
+NPSI(at) ←
+local ax, xt, n
+ax := at.Poly
+xt := poly_of(0th_{coef}(ax))
+n := log2(*ax.terms)
+every k := 0 to n-1
+do xt := ⊕(⊕(xt, xt),
+-(⊗_{poly}(truncate(ax, 2^{k+1}), ⊗(xt, xt))))
+↑ tpower(truncate(xt, at.N), at.N) ■
 ```
-
 
 </div>
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&log2(x) \Leftarrow \\
-&\quad \textbf{local } l \\
-&\quad l \mathrel{:=} 0 \\
-&\quad \textbf{while } x > 1 \textbf{ do } \{ x \mathrel{:=} x/2;\ l \mathrel{:=} l + 1 \} \\
-&\quad \Uparrow l \ \blacksquare
-\end{aligned}
+```icon
+log2(x) ←
+local l
+l := 0
+while x > 1 do { x := x/2; l := l + 1 }
+↑ l ■
 ```
-
 
 </div>
 
@@ -2892,14 +2814,11 @@ A call to `showtime()` prints the elapsed time since `settime()` was invoked.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textbf{global } timer \\
-&showtime() \Leftarrow pr\{\text{"["}, \&time - timer, \text{" msecs]"}\} \ \blacksquare \\
-&settime() \Leftarrow timer \mathrel{:=} \&time \ \blacksquare
-\end{aligned}
+```icon
+global timer
+showtime() ← pr{"[", &time - timer, " msecs]"} blacksquare
+settime() ← timer := &time ■
 ```
-
 
 </div>
 
@@ -2911,34 +2830,29 @@ Blocks of comments are compiled as paragraphs. Paragraphs are demarcated by blan
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textbf{global } command\_line,\ last\_line,\ cur\_files,\ read\_now,\ words \\
-&\\
-&main(x) \Leftarrow \\
-&\quad \textbf{local } fn \\
-&\quad words \mathrel{:=} table("") \\
-&\quad words[\text{"↑"}] \mathrel{:=} \text{"↑"} \\
-&\quad words[\text{"■"}] \mathrel{:=} \text{"■"} \\
-&\quad words[\text{"±"}] \mathrel{:=} \text{"±"} \\
-&\quad command\_line \mathrel{:=} x \\
-&\quad \textbf{if } \texttt{*}command\_line > 0 \\
-&\quad \textbf{then } \{ fn \mathrel{:=} command\_line[1] \\
-&\quad\quad load\_user\_keywords(fn \ \mathrel{\texttt{||}} \ \text{".keys"}) \\
-&\quad\quad cur\_files \mathrel{:=} [read\_now \mathrel{:=} open(fn \ \mathrel{\texttt{||}} \ \text{".icn"}, \text{"r"})] \} \\
-&\quad \textbf{else } cur\_files \mathrel{:=} [read\_now \mathrel{:=} \&input] \\
-&\quad last\_line \mathrel{:=} \&null \\
-&\quad write(\text{".so /usr2/ericson/euclid/lpp/std.me"}) \\
-&\quad process() \ \blacksquare \\
-&\\
-&get\_line() \Leftarrow \\
-&\quad \textbf{local } x \\
-&\quad x \mathrel{:=} \&null \\
-&\quad \textbf{if } last\_line \textbf{ then } \{ x \mathrel{:=} last\_line;\ last\_line \mathrel{:=} \&null;\ \Uparrow x \} \\
-&\quad \textbf{else if } x \mathrel{:=} read(read\_now) \textbf{ then } \Uparrow x \ \blacksquare
-\end{aligned}
+```icon
+global command_line, last_line, cur_files, read_now, words
+main(x) ←
+local fn
+words := table("")
+words["↑"] := "↑"
+words["■"] := "■"
+words["±"] := "±"
+command_line := x
+if *command_line > 0
+then { fn := command_line[1]
+load_user_keywords(fn mathrel{||} ".keys")
+cur_files := [read_now := open(fn mathrel{||} ".icn", "r")] }
+else cur_files := [read_now := &input]
+last_line := &null
+write(".so /usr2/ericson/euclid/lpp/std.me")
+process() blacksquare
+get_line() ←
+local x
+x := &null
+if last_line then { x := last_line; last_line := &null; ↑ x }
+else if x := read(read_now) then ↑ x ■
 ```
-
 
 </div>
 
@@ -2946,26 +2860,21 @@ Reads lines until encountering end of file or `##end` or `##end command`.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&process(command) \Leftarrow \\
-&\quad \textbf{local } line \\
-&\quad \textbf{while } line \mathrel{:=} get\_line() \textbf{ do if } not\ process\_line(line, command) \textbf{ then break} \ \blacksquare \\
-&\\
-&process\_line(line, command) \Leftarrow \\
-&\quad \textbf{if } line[1:3] \mathrel{==} \texttt{"\#\#"} \\
-&\quad \textbf{then } \{ \textbf{if } line[3:6] \mathrel{==} \text{"■"} \\
-&\quad\quad \textbf{then } \{ end\_command(command, line[7:\texttt{*}line + 1]);\ \bot \} \\
-&\quad\quad \textbf{else } do\_command(line[3:\texttt{*}line + 1]) \} \\
-&\quad \textbf{else if } line[1] \mathrel{==} \texttt{"\#"} \textbf{ then } write\_line(line[2:\texttt{*}line + 1]) \\
-&\quad \textbf{else } pretty\_print(line, command) \\
-&\Uparrow \ \blacksquare \\
-&\\
-&end\_command(command, line) \Leftarrow \\
-&\quad \textbf{if } command \mathrel{\sim}== line \textbf{ then } write(\&errout, \text{"ERROR: Mismatched END, wanted "}, command, \text{", got "}, line) \ \blacksquare
-\end{aligned}
+```icon
+process(command) ←
+local line
+while line := get_line() do if not process_line(line, command) then break blacksquare
+process_line(line, command) ←
+if line[1:3] mathrel{==} "##"
+then { if line[3:6] mathrel{==} "■"
+then { end_command(command, line[7:*line + 1]); ⊥ }
+else do_command(line[3:*line + 1]) }
+else if line[1] mathrel{==} "#" then write_line(line[2:*line + 1])
+else pretty_print(line, command)
+↑ blacksquare
+end_command(command, line) ←
+if command mathrel{sim}== line then write(&errout, "ERROR: Mismatched END, wanted ", command, ", got ", line) ■
 ```
-
 
 </div>
 
@@ -2975,19 +2884,16 @@ For interpreting `##` commands
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&do\_command(line) \Leftarrow \\
-&\quad \textbf{local } command,\ args \\
-&\quad x \mathrel{:=} (upto(\mathord{\sim}\&lcase, line) \ | \ (\texttt{*}line + 1)) \\
-&\quad command \mathrel{:=} line[1:x] \\
-&\quad args \mathrel{:=} line[x + 1:\texttt{*}line + 1] \\
-&\quad \textbf{if } not(y \mathrel{:=} proc(\text{"do\_"} \ \mathrel{\texttt{||}} \ command, 2)) \\
-&\quad \textbf{then } write(\&errout, \text{"ERROR: Unknown command: "}, command) \\
-&\quad \textbf{else } y(args) \ \blacksquare
-\end{aligned}
+```icon
+do_command(line) ←
+local command, args
+x := (upto(mathord{sim}&lcase, line) | (*line + 1))
+command := line[1:x]
+args := line[x + 1:*line + 1]
+if not(y := proc("do_" mathrel{||} command, 2))
+then write(&errout, "ERROR: Unknown command: ", command)
+else y(args) ■
 ```
-
 
 </div>
 
@@ -2995,26 +2901,23 @@ For interpreting `##` commands
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&do\_list(args) \Leftarrow \\
-&\quad \textbf{local } line \\
-&\quad write(\text{".(l I F"}) \\
-&\quad \textbf{while } line \mathrel{:=} get\_line() \\
-&\quad \textbf{do if } line[1:3] \mathrel{==} \texttt{"\#\#"} \\
-&\quad\quad \textbf{then } \{ \textbf{if } line[3:6] \mathrel{==} \text{"■"} \\
-&\quad\quad\quad \textbf{then } \{ write(\text{".)l"});\ end\_command(command, line[7:\texttt{*}line + 1]);\ \bot \} \\
-&\quad\quad\quad \textbf{else } do\_command(line[3:\texttt{*}line + 1]) \} \\
-&\quad\quad \textbf{else if } line[1] \mathrel{==} \texttt{"\#"} \\
-&\quad\quad \textbf{then } \{ line \mathrel{:=} line[2:\texttt{*}line + 1] \\
-&\quad\quad\quad\quad \textbf{repeat if } upto(\text{' '}, line[1]) \\
-&\quad\quad\quad\quad \textbf{then } line \mathrel{:=} line[2:\texttt{*}line + 1] \textbf{ else break} \\
-&\quad\quad\quad\quad \textbf{if } \texttt{*}line > 0 \textbf{ then } write(\text{"● "}, line) \textbf{ else } write() \} \\
-&\quad\quad \textbf{else } pretty\_print(line, command) \\
-&\quad write(\text{".)l"}) \ \blacksquare
-\end{aligned}
+```icon
+do_list(args) ←
+local line
+write(".(l I F")
+while line := get_line()
+do if line[1:3] mathrel{==} "##"
+then { if line[3:6] mathrel{==} "■"
+then { write(".)l"); end_command(command, line[7:*line + 1]); ⊥ }
+else do_command(line[3:*line + 1]) }
+else if line[1] mathrel{==} "#"
+then { line := line[2:*line + 1]
+repeat if upto(' ', line[1])
+then line := line[2:*line + 1] else break
+if *line > 0 then write("● ", line) else write() }
+else pretty_print(line, command)
+write(".)l") ■
 ```
-
 
 </div>
 
@@ -3024,18 +2927,15 @@ Section nestings are relative to the file, from 1 on up. An `##include` file's n
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&do\_section(args) \Leftarrow \\
-&\quad x \mathrel{:=} (upto(\mathord{\sim}(\text{'0123456789'}), args) \ | \ (\texttt{*}args + 1)) \\
-&\quad level \mathrel{:=} args[1:x] + 0 \\
-&\quad title \mathrel{:=} args[x + 1:\texttt{*}args + 1] \\
-&\quad write(\text{".sh "}, level, \text{" "}, title) \\
-&\quad write(\text{".sp 2v0lp"}) \\
-&\quad process(\text{"section "} \ \mathrel{\texttt{||}} \ level) \ \blacksquare
-\end{aligned}
+```icon
+do_section(args) ←
+x := (upto(mathord{sim}('0123456789'), args) | (*args + 1))
+level := args[1:x] + 0
+title := args[x + 1:*args + 1]
+write(".sh ", level, " ", title)
+write(".sp 2v0lp")
+process("section " mathrel{||} level) ■
 ```
-
 
 </div>
 
@@ -3045,17 +2945,14 @@ Deletes *everything* between skip and end skip.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&do\_skip(x) \Leftarrow \\
-&\quad \textbf{local } line \\
-&\quad \textbf{while } line \mathrel{:=} get\_line() \\
-&\quad \textbf{do if } line[1:3] \mathrel{==} \texttt{"\#\#"} \\
-&\quad\quad \textbf{then if } line[3:6] \mathrel{==} \text{"■"} \\
-&\quad\quad\quad \textbf{then } \{ end\_command(command, line[7:\texttt{*}line + 1]);\ break \} \ \blacksquare
-\end{aligned}
+```icon
+do_skip(x) ←
+local line
+while line := get_line()
+do if line[1:3] mathrel{==} "##"
+then if line[3:6] mathrel{==} "■"
+then { end_command(command, line[7:*line + 1]); break } ■
 ```
-
 
 </div>
 
@@ -3065,22 +2962,19 @@ Includes file. Home directory for includes within included file is home director
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&do\_include(arg) \Leftarrow \\
-&\quad \textbf{local } new\_file \\
-&\quad cur\_file \mathrel{:=} arg \\
-&\quad new\_file \mathrel{:=} open(cur\_file \ \mathrel{\texttt{||}} \ \text{".icn"}, \text{"r"}) \\
-&\quad \textbf{if } /new\_file \textbf{ then } write(\text{"ERROR: couldn't open "}, cur\_file, \text{".icn"}) \\
-&\quad \textbf{else } \{ read\_now \mathrel{:=} new\_file \\
-&\quad\quad push(cur\_files, read\_now) \\
-&\quad\quad load\_user\_keywords(cur\_file \ \mathrel{\texttt{||}} \ \text{".keys"}) \\
-&\quad\quad process(\text{"include"}) \ \texttt{*} \text{ until ■ of file} \\
-&\quad\quad close(pop(cur\_files)) \\
-&\quad\quad read\_now \mathrel{:=} cur\_files[1] \} \ \blacksquare
-\end{aligned}
+```icon
+do_include(arg) ←
+local new_file
+cur_file := arg
+new_file := open(cur_file mathrel{||} ".icn", "r")
+if /new_file then write("ERROR: couldn't open ", cur_file, ".icn")
+else { read_now := new_file
+push(cur_files, read_now)
+load_user_keywords(cur_file mathrel{||} ".keys")
+process("include") * until ■ of file
+close(pop(cur_files))
+read_now := cur_files[1] } ■
 ```
-
 
 </div>
 
@@ -3089,14 +2983,11 @@ Example paragraphs are left-justified and preceded by an appropriately numbered 
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&do\_example(arg) \Leftarrow \\
-&\quad writes(\text{"\textbackslash fB Example.\textbackslash fR "}) \\
-&\quad process(\text{"example"}) \ \blacksquare
-\end{aligned}
+```icon
+do_example(arg) ←
+writes("textbackslash fB Example.textbackslash fR ")
+process("example") ■
 ```
-
 
 </div>
 
@@ -3106,18 +2997,15 @@ Code is unjustified and Helveticized. Uncommented lines are processed as code. C
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&do\_code(arg) \Leftarrow \\
-&\quad \textbf{local } line \\
-&\quad write(\text{".nf0fH"}) \\
-&\quad \textbf{while } line \mathrel{:=} get\_line() \\
-&\quad \textbf{do if } line[1:6] \mathrel{==} \texttt{"\#\#■"} \textbf{ then break} \\
-&\quad\quad \textbf{else } pretty\_print\_line(line[2:\texttt{*}line + 1]) \\
-&\quad write(\text{".fi0fR"}) \ \blacksquare
-\end{aligned}
+```icon
+do_code(arg) ←
+local line
+write(".nf0fH")
+while line := get_line()
+do if line[1:6] mathrel{==} "##■" then break
+else pretty_print_line(line[2:*line + 1])
+write(".fi0fR") ■
 ```
-
 
 </div>
 
@@ -3127,15 +3015,12 @@ Typeset with TBL, one `.EQ` and `.EN.` per line, except that if the line is term
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&do\_equations(arg) \Leftarrow \\
-&\quad write(\text{".EQ"}) \\
-&\quad process(\text{"equations"}) \\
-&\quad write(\text{".EN"}) \ \blacksquare
-\end{aligned}
+```icon
+do_equations(arg) ←
+write(".EQ")
+process("equations")
+write(".EN") ■
 ```
-
 
 </div>
 
@@ -3145,15 +3030,12 @@ These are typeset with `.(q` and `.)q`.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&do\_quote(arg) \Leftarrow \\
-&\quad write(\text{".(q"}) \\
-&\quad process(\text{"quote"}) \\
-&\quad write(\text{".)q"}) \ \blacksquare
-\end{aligned}
+```icon
+do_quote(arg) ←
+write(".(q")
+process("quote")
+write(".)q") ■
 ```
-
 
 </div>
 
@@ -3163,15 +3045,12 @@ Outputs `.TS` and `.TE` commands. Body is straight TBL.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&do\_table(args) \Leftarrow \\
-&\quad write(\text{".sp 4v0(c0TS"}) \\
-&\quad process(\text{"table"}) \\
-&\quad write(\text{".TE0)c0"}) \ \blacksquare
-\end{aligned}
+```icon
+do_table(args) ←
+write(".sp 4v0(c0TS")
+process("table")
+write(".TE0)c0") ■
 ```
-
 
 </div>
 
@@ -3179,14 +3058,11 @@ For printing documentation lines. If the text following the `#` is white space, 
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&write\_line(line) \Leftarrow \\
-&\quad \textbf{repeat if } upto(\text{' '}, line[1]) \textbf{ then } line \mathrel{:=} line[2:\texttt{*}line + 1] \textbf{ else break} \\
-&\quad \textbf{if } \texttt{*}line = 0 \textbf{ then } write(\text{".lp"}) \textbf{ else } write(line) \ \blacksquare
-\end{aligned}
+```icon
+write_line(line) ←
+repeat if upto(' ', line[1]) then line := line[2:*line + 1] else break
+if *line = 0 then write(".lp") else write(line) ■
 ```
-
 
 </div>
 
@@ -3194,14 +3070,11 @@ For printing list lines.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&plain\_write\_line(line) \Leftarrow \\
-&\quad \textbf{repeat if } upto(\text{' '}, line[1]) \textbf{ then } line \mathrel{:=} line[2:\texttt{*}line + 1] \textbf{ else break} \\
-&\quad write(line) \ \blacksquare
-\end{aligned}
+```icon
+plain_write_line(line) ←
+repeat if upto(' ', line[1]) then line := line[2:*line + 1] else break
+write(line) ■
 ```
-
 
 </div>
 
@@ -3209,21 +3082,18 @@ For printing list lines.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&pretty\_print(l, command) \Leftarrow \\
-&\quad \textbf{local } line \\
-&\quad write(\text{".nf0fH "}) \\
-&\quad pretty\_print\_line(l) \\
-&\quad \textbf{while } line \mathrel{:=} get\_line() \\
-&\quad \textbf{do if } line[1:2] \mathrel{==} \texttt{"\#"} \\
-&\quad\quad \textbf{then } \{ write(\text{".fi0fR "}) \\
-&\quad\quad\quad\quad write(\text{".lp"});\ last\_line \mathrel{:=} line;\ \bot \} \\
-&\quad\quad \textbf{else } pretty\_print\_line(line) \\
-&\quad write(\text{".fi0fR "}) \ \blacksquare
-\end{aligned}
+```icon
+pretty_print(l, command) ←
+local line
+write(".nf0fH ")
+pretty_print_line(l)
+while line := get_line()
+do if line[1:2] mathrel{==} "#"
+then { write(".fi0fR ")
+write(".lp"); last_line := line; ⊥ }
+else pretty_print_line(line)
+write(".fi0fR ") ■
 ```
-
 
 </div>
 
@@ -3238,43 +3108,37 @@ If the `-U<filename>` option is present, then keywords are read into the words t
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&pretty\_print\_line(line) \Leftarrow \\
-&\quad \textbf{local } first,\ last,\ key,\ x,\ y \\
-&\quad \{ x \mathrel{:=} (upto((\&lcase \mathrel{+{+}} \&ucase \mathrel{+{+}} \text{'\_0123456789'}), line) \ | \ (\texttt{*}line + 1)) \\
-&\quad\quad \textbf{if } x = \texttt{*}line + 1 \textbf{ then } \{ writes(line);\ break \} \\
-&\quad\quad y \mathrel{:=} (upto(\mathord{\sim}(\&lcase \mathrel{+{+}} \&ucase \mathrel{+{+}} \text{'\_0123456789'}), line) \ | \ (\texttt{*}line + 1)) \\
-&\quad\quad key \mathrel{:=} (line[1:y] \ | \ \text{""}) \\
-&\quad\quad first \mathrel{:=} (line[1:x] \ | \ \text{""}) \\
-&\quad\quad line \mathrel{:=} (line[x:\texttt{*}line + 1] \ | \ \text{""}) \\
-&\quad\quad \textbf{while } \texttt{*}line > 0 \textbf{ do } \{ \\
-&\quad\quad\quad \textbf{if } words[key] \mathrel{\sim}= \text{""} \textbf{ then } key \mathrel{:=} words[key] \\
-&\quad\quad\quad last \mathrel{:=} line[y:\texttt{*}line + 1] \\
-&\quad\quad\quad writes(first, key) \\
-&\quad\quad\quad line \mathrel{:=} last \} \\
-&\quad\quad write() \} \ \blacksquare
-\end{aligned}
+```icon
+pretty_print_line(line) ←
+local first, last, key, x, y
+{ x := (upto((&lcase mathrel{+{+}} &ucase mathrel{+{+}} '_0123456789'), line) | (*line + 1))
+if x = *line + 1 then { writes(line); break }
+y := (upto(mathord{sim}(&lcase mathrel{+{+}} &ucase mathrel{+{+}} '_0123456789'), line) | (*line + 1))
+key := (line[1:y] | "")
+first := (line[1:x] | "")
+line := (line[x:*line + 1] | "")
+while *line > 0 do {
+if words[key] mathrel{sim}= "" then key := words[key]
+last := line[y:*line + 1]
+writes(first, key)
+line := last }
+write() } ■
 ```
-
 
 </div>
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&load\_user\_keywords(fname) \Leftarrow \\
-&\quad \textbf{local } w,\ a,\ x \\
-&\quad \textbf{if } not(w \mathrel{:=} open(fname, \text{'r'})) \textbf{ then } \bot \\
-&\quad \textbf{while } x \mathrel{:=} read(w) \\
-&\quad \textbf{do } \{ a \mathrel{:=} upto(\text{':'}, x) \\
-&\quad\quad words[x[1:a]] \mathrel{:=} x[a + 1:\texttt{*}x + 1] \} \\
-&\quad close(w) \\
-&\quad \Uparrow \ \blacksquare
-\end{aligned}
+```icon
+load_user_keywords(fname) ←
+local w, a, x
+if not(w := open(fname, 'r')) then ⊥
+while x := read(w)
+do { a := upto(':', x)
+words[x[1:a]] := x[a + 1:*x + 1] }
+close(w)
+↑ ■
 ```
-
 
 </div>
 
@@ -3290,29 +3154,23 @@ we use the logical-looking
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&F (a, b, c) \Leftarrow code \ \blacksquare
-\end{aligned}
+```icon
+F (a, b, c) ← code ■
 ```
-
 
 </div>
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textbf{if } z \mathrel{==} \text{"■"} \textbf{ then } pretty\_print\_line(line \ \mathrel{\texttt{||}} \ y \ \mathrel{\texttt{||}} \ \text{" ■"}) \\
-&\textbf{else } \{ pretty\_print\_line(line) \\
-&\quad\quad \textbf{if } y \mathrel{==} \text{"■"} \textbf{ then } pretty\_print\_line(line \ \mathrel{\texttt{||}} \ \text{" ⊥ ■"}) \\
-&\quad\quad \textbf{else } \{ z \mathrel{:=} get\_line() \\
-&\quad\quad\quad\quad \textbf{local } y \\
-&\quad\quad\quad\quad y \mathrel{:=} get\_line() \\
-&\quad\quad\quad\quad pretty\_print\_line(y);\ pretty\_print\_line(z) \} \}
-\end{aligned}
+```icon
+if z mathrel{==} "■" then pretty_print_line(line mathrel{||} y mathrel{||} " ■")
+else { pretty_print_line(line)
+if y mathrel{==} "■" then pretty_print_line(line mathrel{||} " ⊥ ■")
+else { z := get_line()
+local y
+y := get_line()
+pretty_print_line(y); pretty_print_line(z) } }
 ```
-
 
 </div>
 
