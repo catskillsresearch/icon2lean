@@ -2672,9 +2672,9 @@ Ux := ⊕(Ux, ⊗(sigma, Mx)) }
 
 ### 3.3.2 Fast Fourier Transform (FFT) and Interpolation (FFI)
 
-**FFT**(`(N, a(x), \omega, A)`): Fast Fourier Transform  
-Input: integer $`N = 2^m`$, polynomial $`a(x) = \mathrm{sum}(i=0, N-1, a_{i} \cdot x^i)`$, primitive `N`th root of unity $`\omega`$  
-Output: array $`A = (A_{0}, \ldots, A_{N-1})`$ where $`A_{k} = a(\omega^k)`$
+**FFT**(N, a(x), ω, A): Fast Fourier Transform  
+Input: integer $`N = 2^m`$, polynomial $`a(x) = \sum_{i=0}^{N-1} a_i x^i`$, primitive $`N`$th root of unity $`\omega`$  
+Output: array $`A = (A_0, \ldots, A_{N-1})`$ where $`A_k = a(\omega^k)`$
 
 <div class="math-left">
 
@@ -2729,9 +2729,9 @@ if *r > 0 then ↑ poly(r) else ↑ 0(ax.terms[1]) ■
 
 </div>
 
-**FFI**(N, B, \omega): Fast Fourier Interpolation  
-Input: integer $`N = 2^m`$, sample values $`B = (b_{0}, \ldots, b_{N-1})`$, primitive `N`th root of unity $`\omega`$  
-Output: $`a(x) = \mathrm{sum}(i=0, N-1, a_{i} x^i)`$ where $`a(\omega^k) = b_{k}`$, `k=0..N-1`
+**FFI**(N, B, ω): Fast Fourier Interpolation  
+Input: integer $`N = 2^m`$, sample values $`B = (b_0, \ldots, b_{N-1})`$, primitive $`N`$th root of unity $`\omega`$  
+Output: $`a(x) = \sum_{i=0}^{N-1} a_i x^i`$ where $`a(\omega^k) = b_k`$ for $`k = 0, \ldots, N-1`$
 
 <div class="math-left">
 
@@ -2753,8 +2753,8 @@ polynomialize(B) ←
 local r, i
 r := []; i := 0
 every b := !B do {
-if not(=(b, 0(b))) then r ||| := [term(b, i)]
-i mathrel{+{:=}} 1 }
+if not(=(b, 0(b))) then r |||:= [term(b, i)]
+i +:= 1 }
 ↑ poly(r) ■
 ```
 
@@ -2766,7 +2766,7 @@ i mathrel{+{:=}} 1 }
 ⊗_{vector scalar}(V, x) ←
 local R, i
 R := list(*V); i := 1
-every v := !V do { R[i] := ⊗(V[i], x); i mathrel{+{:=}} 1 }
+every v := !V do { R[i] := ⊗(V[i], x); i +:= 1 }
 ↑ R ■
 ```
 
@@ -2775,7 +2775,7 @@ every v := !V do { R[i] := ⊗(V[i], x); i mathrel{+{:=}} 1 }
 #### 3.3.3 Newton’s method for truncated power series inversion
 
 **NPSI**(): Newton's Power Series Inversion Method  
-Input: $`a(t) \bmod t^{2^n} = \mathrm{sum}(i=0, 2^n-1, a_{i} t^i)`$, $`a_{0} \neq 0`$  
+Input: $`a(t) \bmod t^{2^n} = \sum_{i=0}^{2^n-1} a_i t^i`$, $`a_0 \neq 0`$  
 Output: $`x^{(n)}(t) = a(t)^{-1} \bmod t^{2^n}`$
 
 <div class="math-left">

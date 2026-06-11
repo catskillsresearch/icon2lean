@@ -92,9 +92,11 @@ def math_block_to_icon(body: str) -> str:
         s = s.replace(r"\Uparrow", "↑")
         s = s.replace(r"\bot", "⊥")
         s = re.sub(r"\\textbf\{([^}]*)\}", r"\1", s)
+        s = s.replace(r"\mathrel{+{:=}}", " +:= ")
         s = s.replace(r"\mathrel{:=}", " := ")
         s = s.replace(r"\mathrel{\texttt{|||}}\mathrel{:=}", " |||:= ")
         s = s.replace(r"\mathrel{\texttt{|||}}", " ||| ")
+        s = re.sub(r"mathrel\{[^}]+\}", "", s)
         s = s.replace(r"\mathbin{⨸}", "⨸")
         s = s.replace(r"\mathbin{\text{rem}}", "rem")
         s = s.replace(r"\ominus", "⊖")
@@ -141,12 +143,39 @@ def demath_all_tables(text: str) -> str:
     return "\n".join(demath_table_row(line) for line in text.splitlines())
 
 
+def fix_prose_math(text: str) -> str:
+    text = re.sub(
+        r"\\mathrm\{sum\}\(i=0, N-1, a_\{i\} \\cdot x\^i\)",
+        r"\\sum_{i=0}^{N-1} a_i x^i",
+        text,
+    )
+    text = re.sub(
+        r"\\mathrm\{sum\}\(i=0, N-1, a_\{i\} x\^i\)",
+        r"\\sum_{i=0}^{N-1} a_i x^i",
+        text,
+    )
+    text = re.sub(
+        r"\\mathrm\{sum\}\(i=0, 2\^n-1, a_\{i\} t\^i\)",
+        r"\\sum_{i=0}^{2^n-1} a_i t^i",
+        text,
+    )
+    text = text.replace(r"**FFI**(N, B, \omega)", "**FFI**(N, B, ω)")
+    text = text.replace(r"**FFT**(`(N, a(x), \omega, A)`)", "**FFT**(N, a(x), ω, A)")
+    text = re.sub(
+        r"\*\*([A-Z]+)\*\*\(`\(([^)]+)\)`\)",
+        r"**\1**(\2)",
+        text,
+    )
+    return text
+
+
 def main() -> None:
     lines = MD.read_text().splitlines()
     head = "\n".join(lines[: START_LINE - 1])
     tail = "\n".join(lines[START_LINE - 1 :])
 
     tail = fix_algo_signatures(tail)
+    tail = fix_prose_math(tail)
     tail = remath_all_tables(tail)
     tail = demath_simple_inline(tail)
     tail = convert_math_fences(tail)
