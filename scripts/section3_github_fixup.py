@@ -20,10 +20,32 @@ def demath_inline(text: str) -> str:
     return re.sub(r"\$`([^`]+)`\$", repl, text)
 
 
+KEEP_MATH = re.compile(
+    r"\\|[_^]|\\equiv|\\pmod|\\frac|\\sum|\\cdot|\\in\b|\\bmod|\\neq|\\mathcal|\\text|\\left|\\right"
+)
+
+
+def demath_simple_inline(text: str) -> str:
+    """Drop math delimiters when the expression is a plain identifier or number."""
+
+    def repl(m: re.Match[str]) -> str:
+        content = m.group(1)
+        if KEEP_MATH.search(content):
+            return m.group(0)
+        return f"`{content}`"
+
+    return re.sub(r"\$`([^`]+)`\$", repl, text)
+
+
 def fix_algo_signatures(text: str) -> str:
-    return re.sub(
+    text = re.sub(
         r"\*\*([^*]+)\*\*\$`([^`]+)`\$",
-        r"**\1**(`\2`)",
+        r"**\1**(\2)",
+        text,
+    )
+    return re.sub(
+        r"\*\*([^*]+)\*\*\(`\(([^)]+)\)`\)",
+        r"**\1**(\2)",
         text,
     )
 
@@ -32,6 +54,21 @@ def demath_table_row(line: str) -> str:
     if not line.strip().startswith("|"):
         return line
     return demath_inline(line)
+
+
+def remath_table_row(line: str) -> str:
+    """`expr` -> $`expr`$ inside table rows (GitHub inline math)."""
+    if not line.strip().startswith("|") or "|:--" in line:
+        return line
+
+    def repl(m: re.Match[str]) -> str:
+        return f"$`{m.group(1)}`$"
+
+    return re.sub(r"`([^`]+)`", repl, line)
+
+
+def remath_all_tables(text: str) -> str:
+    return "\n".join(remath_table_row(line) for line in text.splitlines())
 
 
 def math_block_to_icon(body: str) -> str:
@@ -109,9 +146,9 @@ def main() -> None:
     head = "\n".join(lines[: START_LINE - 1])
     tail = "\n".join(lines[START_LINE - 1 :])
 
-    head = demath_all_tables(head)
     tail = fix_algo_signatures(tail)
-    tail = demath_all_tables(tail)
+    tail = remath_all_tables(tail)
+    tail = demath_simple_inline(tail)
     tail = convert_math_fences(tail)
 
     MD.write_text(head + "\n" + tail + "\n")

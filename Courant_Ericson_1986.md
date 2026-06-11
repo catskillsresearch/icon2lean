@@ -2203,18 +2203,18 @@ We provide algorithms for the following applications:
 
 #### 3.1.1. Greatest Common Divisor
 
-We have two versions of Euclid's Algorithm over a Euclidean domain $`D`$, from Lipson, p. 226 and p. 209.
+We have two versions of Euclid's Algorithm over a Euclidean domain `D`, from Lipson, p. 226 and p. 209.
 
-**GCD**(`(a, b, D)`)  
+**GCD**(a, b, D)  
 Input: $`a, b \in D`$, not both zero.  
-Output: a gcd of $`a`$, $`b`$.
+Output: a gcd of `a`, `b`.
 
 <div class="math-left">
 
 ```icon
 GCD(a, b) ←
-↑ (if =(b, 0(b)) then normalize(a)
-else GCD(b, mod(a, b))) ■
+    ↑ (if =(b, 0(b)) then normalize(a)
+    else GCD(b, mod(a, b)))  ■
 ```
 
 </div>
@@ -2223,20 +2223,20 @@ The following is a table of expressions and their gcd's, as computed via GCD:
 
 <p align="center"><strong>Greatest Common Divisors</strong></p>
 
-| Domain | `A` | `B` | GCD |
+| Domain | $`A`$ | $`B`$ | GCD |
 |:--|:--|:--|:--|
-| `Z` | `121903z` | `5335z` | `1z` |
-| `Z` | `-18z` | `5z` | `1z` |
-| `Z` | `228z` | `612z` | `12z` |
-| `Q[x]` | `(-2)q + 1q \cdot X^3` | `(-3)q + 2q \cdot X^2` | `(5/9)q` |
-| `Z_{5}` | `((-2) \bmod 5)` | `((-3) \bmod 5)` | `(2 \bmod 5)` |
-| `Z_{5}[x]` | `((-2) \bmod 5) + (1 \bmod 5) \cdot X^3` | `((-3) \bmod 5) + (2 \bmod 5) \cdot X^2` | `(3 \bmod 5) + (4 \bmod 5) \cdot X` |
-| `QZ[x]` | `(166z/243z)q + ((-275z)/243z)q \cdot X` | `(115668z/75625z)q` | `(115668z/75625z)q` |
-| `QZ[x]` | `(-2z)q + 1zq \cdot X^3` | `(-3z)q + 2zq \cdot X^2` | `(5z/9z)q` |
+| $`Z`$ | $`121903z`$ | $`5335z`$ | $`1z`$ |
+| $`Z`$ | $`-18z`$ | $`5z`$ | $`1z`$ |
+| $`Z`$ | $`228z`$ | $`612z`$ | $`12z`$ |
+| $`Q[x]`$ | $`(-2)q + 1q \cdot X^3`$ | $`(-3)q + 2q \cdot X^2`$ | $`(5/9)q`$ |
+| $`Z_{5}`$ | $`((-2) \bmod 5)`$ | $`((-3) \bmod 5)`$ | $`(2 \bmod 5)`$ |
+| $`Z_{5}[x]`$ | $`((-2) \bmod 5) + (1 \bmod 5) \cdot X^3`$ | $`((-3) \bmod 5) + (2 \bmod 5) \cdot X^2`$ | $`(3 \bmod 5) + (4 \bmod 5) \cdot X`$ |
+| $`QZ[x]`$ | $`(166z/243z)q + ((-275z)/243z)q \cdot X`$ | $`(115668z/75625z)q`$ | $`(115668z/75625z)q`$ |
+| $`QZ[x]`$ | $`(-2z)q + 1zq \cdot X^3`$ | $`(-3z)q + 2zq \cdot X^2`$ | $`(5z/9z)q`$ |
 
-**EUCLID**(`(a, b)`)  
+**EUCLID**(a, b)  
 Input: $`a, b \in D`$, not both zero.  
-Output: $`g, s, t`$ such that $`g`$ is a gcd of $`a`$, $`b`$ and $`g = sa + tb`$.
+Output: `g, s, t` such that `g` is a gcd of `a`, `b` and `g = sa + tb`.
 
 <div class="math-left">
 
@@ -2260,22 +2260,22 @@ The following is a table of expressions and their extended *gcd*'s, as computed 
 
 <p align="center"><strong>Extended Greatest Common Divisors</strong></p>
 
-| `A`, `B` | GCD, `s`, `t` |
+| $`A`$, $`B`$ | GCD, $`s`$, $`t`$ |
 |:--|:--|
-| `2`, `4` | `2`, `1`, `0` |
-| `228`, `612` | `12`, `(-8)`, `3` |
-| `59`, `24` | `1`, `11`, `(-27)` |
-| `(-2)q + 1q \cdot X^3`, `(-3)q + 2q \cdot X^2` | `(5/9)q`, `(-16/9)q + (-4/3)q \cdot X`, `1q + (8/9)q \cdot X + (2/3)q \cdot X^2` |
-| `((-2) \bmod 5) + (1 \bmod 5) \cdot X^3`, `((-3) \bmod 5) + (2 \bmod 5) \cdot X^2` | `(3 \bmod 5) + (4 \bmod 5) \cdot X`, `(1 \bmod 5)`, `(2 \bmod 5) \cdot X` |
+| $`2`$, $`4`$ | $`2`$, $`1`$, $`0`$ |
+| $`228`$, $`612`$ | $`12`$, $`(-8)`$, $`3`$ |
+| $`59`$, $`24`$ | $`1`$, $`11`$, $`(-27)`$ |
+| $`(-2)q + 1q \cdot X^3`$, $`(-3)q + 2q \cdot X^2`$ | $`(5/9)q`$, $`(-16/9)q + (-4/3)q \cdot X`$, $`1q + (8/9)q \cdot X + (2/3)q \cdot X^2`$ |
+| $`((-2) \bmod 5) + (1 \bmod 5) \cdot X^3`$, $`((-3) \bmod 5) + (2 \bmod 5) \cdot X^2`$ | $`(3 \bmod 5) + (4 \bmod 5) \cdot X`$, $`(1 \bmod 5)`$, $`(2 \bmod 5) \cdot X`$ |
 
 
 #### 3.1.2. Modular Inverse
 
 Our modular inverse algorithm is that of Lipson, p. 214.
 
-**INVERSE**(`(a, m)`): Computation of $`a^{-1} \bmod m`$  
-Input: $`a, m \in D`$, where $`D`$ is a Euclidean domain.  
-Output: If $`(m, a) = 1`$, then $`a^{-1} \bmod m`$; otherwise error.
+**INVERSE**(a, m): Computation of $`a^{-1} \bmod m`$  
+Input: $`a, m \in D`$, where `D` is a Euclidean domain.  
+Output: If `(m, a) = 1`, then $`a^{-1} \bmod m`$; otherwise error.
 
 <div class="math-left">
 
@@ -2291,29 +2291,29 @@ else pr{"ERROR: ", a, "^{-1 "}, " mod ", m, " does not exist"} ■
 
 A table of modular inverses as computed by INVERSE is as follows:
 
-| `x` | modulus | `x^{-1}` |
+| $`x`$ | modulus | $`x^{-1}`$ |
 |:--|:--|:--|
-| `30` | `197` | `46` |
-| `16` | `21` | `4` |
-| `18` | `21` | ERROR |
-| `24` | `59` | `32` |
-| `(1 \bmod 2) + (1 \bmod 2) \cdot X^2` | `(1 \bmod 2) + (1 \bmod 2) \cdot X^2 + (1 \bmod 2) \cdot X^5` | `(1 \bmod 2) + (1 \bmod 2) \cdot X + (1 \bmod 2) \cdot X^2 + (1 \bmod 2) \cdot X^4` |
-| `(-3)q + 2q \cdot X^2` | `(-2)q + 1q \cdot X^3` | `(9/5)q + (8/5)q \cdot X + (6/5)q \cdot X^2` |
+| $`30`$ | $`197`$ | $`46`$ |
+| $`16`$ | $`21`$ | $`4`$ |
+| $`18`$ | $`21`$ | ERROR |
+| $`24`$ | $`59`$ | $`32`$ |
+| $`(1 \bmod 2) + (1 \bmod 2) \cdot X^2`$ | $`(1 \bmod 2) + (1 \bmod 2) \cdot X^2 + (1 \bmod 2) \cdot X^5`$ | $`(1 \bmod 2) + (1 \bmod 2) \cdot X + (1 \bmod 2) \cdot X^2 + (1 \bmod 2) \cdot X^4`$ |
+| $`(-3)q + 2q \cdot X^2`$ | $`(-2)q + 1q \cdot X^3`$ | $`(9/5)q + (8/5)q \cdot X + (6/5)q \cdot X^2`$ |
 
 
 #### 3.1.3. Chinese Remainders and Single-Variable Linear Congruential Systems
 
 We provide three algorithms, **CRA1** for solving equations of the form $`ax \equiv b \pmod m`$, and **CRA2** and **CRA** for solving systems of two or more congruences of the form $`X \equiv a \pmod m`$.
 
-**CRA1**(`(a, b, m)`): Solution of a single linear congruence relation.  
-Input: $`a, b, m`$ such that $`ax \equiv b \pmod m`$.  
+**CRA1**(a, b, m): Solution of a single linear congruence relation.  
+Input: `a, b, m` such that $`ax \equiv b \pmod m`$.  
 Output: a particular solution $`x_{1}`$.
 
 Niven and Zuckerman [Niven80a], in their section 2.3 note that, given a congruence $`ax \equiv b \pmod m`$, we can reduce it to $`my \equiv -b \pmod a`$. If $`y_{0}`$ is a solution of the reduced congruence, then
 
 $$x_0 = \frac{my_0 + b}{a}$$
 
-is a solution for the original congruence. They apply the reduction until the congruence is solvable "by inspection". This we do not do. They also have some tricks for size reduction (on p. 43) we will not apply (due to laziness). Our "by inspection" termination condition will be to perform the reduction until $`a \bmod m = 1`$ or $`b = 0`$. Then we return $`b \bmod a`$, in a recursive setting which builds up the original $`x_{1}`$.
+is a solution for the original congruence. They apply the reduction until the congruence is solvable "by inspection". This we do not do. They also have some tricks for size reduction (on p. 43) we will not apply (due to laziness). Our "by inspection" termination condition will be to perform the reduction until $`a \bmod m = 1`$ or `b = 0`. Then we return $`b \bmod a`$, in a recursive setting which builds up the original $`x_{1}`$.
 
 <div class="math-left">
 
@@ -2335,14 +2335,14 @@ else ↑ ⨸(⊕(⊗(m, CRA1(m, -(b), a)), b), a) } ■
 
 **Example.** The following results were obtained from executing CRA (the examples are from Niven and Zuckerman [Niven80a], Sect. 2.3):
 
-- CRA(7, 1432, 5317): $`x`$ such that $`7x \equiv 1432 \bmod 5317`$ is 4762.
-- CRA(863, 880, 2151): $`x`$ such that $`863x \equiv 880 \bmod 2151`$ is 173.
-- CRA(589, 509, 817): There is no $`x`$ such that $`589x \equiv 509 \bmod 817`$.
+- CRA(7, 1432, 5317): `x` such that $`7x \equiv 1432 \bmod 5317`$ is 4762.
+- CRA(863, 880, 2151): `x` such that $`863x \equiv 880 \bmod 2151`$ is 173.
+- CRA(589, 509, 817): There is no `x` such that $`589x \equiv 509 \bmod 817`$.
 
 CRA2 and CRA are from Lipson, p. 254 and p. 257.
 
-**CRA2**(`(r, m, s, n)`): Two-congruence Chinese Remainder Algorithm for $`Z`$  
-Input: $`r, m, s, n \in Z`$, where $`m`$, $`n`$ are relatively prime.  
+**CRA2**(r, m, s, n): Two-congruence Chinese Remainder Algorithm for `Z`  
+Input: $`r, m, s, n \in Z`$, where `m`, `n` are relatively prime.  
 Output: $`U \in Z`$ such that $`U \equiv r \pmod m`$ and $`U \equiv s \pmod n`$.
 
 <div class="math-left">
@@ -2358,9 +2358,9 @@ U := ⊕(r, ⊗(sigma, m))
 
 </div>
 
-**Example.** The $`x`$ such that $`x \equiv 6 \pmod 7`$ and $`x \equiv 3 \pmod 9`$ is 48, as obtained by evaluating CRA2(6, 7, 3, 9).
+**Example.** The `x` such that $`x \equiv 6 \pmod 7`$ and $`x \equiv 3 \pmod 9`$ is 48, as obtained by evaluating CRA2(6, 7, 3, 9).
 
-**CRA**(`(rm\_list)`): $`N`$-congruence Chinese Remainder Algorithm for $`Z`$  
+**CRA**(rm\_list): `N`-congruence Chinese Remainder Algorithm for `Z`  
 Input: $`[[r_{k}, m_{k}]] \in Z`$, where the $`m_{k}`$ are relatively prime.  
 Output: $`U \in Z`$ such that $`U \equiv r_{i} \pmod{m_i}`$.
 
@@ -2384,14 +2384,14 @@ U := ⊕(U, ⊗(sigma, M)) }
 
 </div>
 
-**Example.** The problem is to find $`u(x)`$ in $`Z[x]`$ such that
+**Example.** The problem is to find `u(x)` in `Z[x]` such that
 
 $`u(x) \bmod 3 = x`$,  
 $`u(x) \bmod 7 = 1`$,  
 $`u(x) \bmod 4 = 2x + 3`$, and  
 $`u(x) \bmod 5 = 3x + 3`$.
 
-Let $`u(x) = ax + b`$. Then
+Let `u(x) = ax + b`. Then
 
 <div class="math-left">
 
@@ -2404,7 +2404,7 @@ a bmod 5 = 3 & b bmod 5 = 3
 
 </div>
 
-We can solve for $`a`$ and $`b`$ individually using the $`n`$-congruence CRA algorithm, and we are done. Executing the following code:
+We can solve for `a` and `b` individually using the `n`-congruence CRA algorithm, and we are done. Executing the following code:
 
 <div class="math-left">
 
@@ -2423,7 +2423,7 @@ we discover (final term due to Yap) that
 
 $$u(x) = 183 + 238 \cdot X + 3 \cdot 7 \cdot 4 \cdot 5 \sum_{i=0}^{\infty} t_i x^i.$$
 
-**Example.** Another example, from Lipson, p. 258, is to compute $`u`$ such that
+**Example.** Another example, from Lipson, p. 258, is to compute `u` such that
 
 $`u \equiv 1 \pmod 3`$,  
 $`u \equiv 3 \pmod 5`$,  
@@ -2440,24 +2440,24 @@ pr{CRA([[1, 3], [3, 5], [0, 7], [10, 11]])}
 
 </div>
 
-yields a value of 868 for $`U`$.
+yields a value of 868 for `U`.
 
 
 #### 3.1.4. Linear Diophantine Equations in Two Variables
 
-According to Niven, sect. 5.2, $`ax + by = c`$ is solvable iff $`g \mid c`$ where $`g = \gcd(a, b)`$. If $`g \mid c`$ then all solutions are of the form
+According to Niven, sect. 5.2, `ax + by = c` is solvable iff $`g \mid c`$ where $`g = \gcd(a, b)`$. If $`g \mid c`$ then all solutions are of the form
 
 $$x = x_1 + \frac{b}{g} t, \quad y = y_1 - \frac{a}{g} t$$
 
-where $`t`$ is an arbitrary integer and $`x = x_{1}`$, $`y = y_{1}`$ is any particular solution of the equation. Particular solutions are obtained by solving one of the linear congruences
+where `t` is an arbitrary integer and $`x = x_{1}`$, $`y = y_{1}`$ is any particular solution of the equation. Particular solutions are obtained by solving one of the linear congruences
 
 $$ax \equiv c \pmod{|b|} \quad \text{or} \quad by \equiv c \pmod{|a|}$$
 
-for $`x_{1}`$ or $`y_{1}`$, then substituting $`y_{1}`$ or $`x_{1}`$ into $`ax + by = c`$ to obtain a particular $`y_{1}`$ or $`x_{1}`$. For computational convenience, if $`|b| \le |a|`$, we solve the first congruence, otherwise we solve the second.
+for $`x_{1}`$ or $`y_{1}`$, then substituting $`y_{1}`$ or $`x_{1}`$ into `ax + by = c` to obtain a particular $`y_{1}`$ or $`x_{1}`$. For computational convenience, if $`|b| \le |a|`$, we solve the first congruence, otherwise we solve the second.
 
 **DIOPHANTINE**(a, b, c) solves linear Diophantine equations in 2 variables.  
-Input: $`a, b, c`$ such that $`ax + by = c`$.  
-Output: $`g`$, $`x_{1}`$, $`y_{1}`$, described above.
+Input: `a, b, c` such that `ax + by = c`.  
+Output: `g`, $`x_{1}`$, $`y_{1}`$, described above.
 
 <div class="math-left">
 
@@ -2477,11 +2477,11 @@ x_1 := ⨸(⊖(c, ⊗(b, y_1)), a) }
 
 </div>
 
-**Example.** By evaluating DIOPHANTINE(84, 54, -24), we find that all integer solutions $`(x, y)`$ of the equation $`84x + 54y = -24`$ are of the form $`x = 1 + 9t`$, $`y = (-2) - 14t`$.
+**Example.** By evaluating DIOPHANTINE(84, 54, -24), we find that all integer solutions `(x, y)` of the equation `84x + 54y = -24` are of the form `x = 1 + 9t`, `y = (-2) - 14t`.
 
-**Example.** By evaluating DIOPHANTINE(999, -49, 5000), we find that all integer solutions $`(x, y)`$ of the equation $`999x + (-49)y = 5000`$ are of the form $`x = 13 + 49t`$, $`y = 163 - (-999)t`$.
+**Example.** By evaluating DIOPHANTINE(999, -49, 5000), we find that all integer solutions `(x, y)` of the equation `999x + (-49)y = 5000` are of the form `x = 13 + 49t`, `y = 163 - (-999)t`.
 
-**Example.** By evaluating DIOPHANTINE(247, 589, 817), we find that all integer solutions $`(x, y)`$ of the equation $`247x + 589y = 817`$ are of the form $`x = (-11) + 31t`$, $`y = 6 - 13t`$.
+**Example.** By evaluating DIOPHANTINE(247, 589, 817), we find that all integer solutions `(x, y)` of the equation `247x + 589y = 817` are of the form `x = (-11) + 31t`, `y = 6 - 13t`.
 
 
 ### 3.2 Polynomial remainder sequences 
@@ -2504,7 +2504,7 @@ MOD_RS(a, b) ← ↑ [a] ||| := (if =(b, 0(b)) then [b] else MOD_RS(b, mod(a, b)
 
 </div>
 
-**Example.** In $`QZ[x]`$, the remainder sequence of
+**Example.** In `QZ[x]`, the remainder sequence of
 
 $`a(x) = x^5 + 2x^4 + 3x^2 - x + 2`$  
 $`b(x) = 3x^3 - x + 2`$
@@ -2532,12 +2532,12 @@ $`= [2zq + (-1z)q \cdot X + 3zq \cdot X^2 + 2zq \cdot X^4 + 1zq \cdot X^5,\ 2zq 
 
 #### 3.2.2 Pseudo-remainder for division over integral domains
 
-PREM(px, qx): Pseudo-remainder of $`px/qx`$ in $`I[x]`$, where $`I[x]`$ is an integral domain.
+PREM(px, qx): Pseudo-remainder of `px/qx` in `I[x]`, where `I[x]` is an integral domain.
 
 **Method:**
 
 1. Let $`d = \deg(p) - \deg(q)`$
-2. Let $`b`$ = lead coefficient of $`q(x)`$
+2. Let `b` = lead coefficient of `q(x)`
 3. Return $`\text{rem}(b^{d+1} \cdot px, qx)`$
 
 <div class="math-left">
@@ -2575,22 +2575,22 @@ E_PRS(a, b) ← ↑ [a] ||| := (if =(b, 0(b)) then [b] else E_PRS(b, PREM(a, b))
 The following algorithm is the Collins-Brown subresultant PRS algorithm, as presented in Yap [Yap85a].
 
 **S_PRS**: Subresultant polynomial remainder sequence.  
-Input: polynomials $`p_{0}, p_{1} \in I[x]`$ for some integral domain $`I`$.  
+Input: polynomials $`p_{0}, p_{1} \in I[x]`$ for some integral domain `I`.  
 Output: Subresultant PRS $`(p_{0}, p_{1}, \ldots, p_{k})`$ such that $`p_{k+1} = 0`$.
 
 Let $`\delta_{i} = \deg(p_{i}) - \deg(p_{i+1})`$. Let $`c_{i} = \text{lead}(p_{i})`$.
 
-Let $`(R_{1}, R_{2}, \ldots, R_{k})`$ be a sequence of length $`k`$ defined by
+Let $`(R_{1}, R_{2}, \ldots, R_{k})`$ be a sequence of length `k` defined by
 
 $$R_1 = c_1^{\delta_0}$$
 $$R_i = c_i^{\delta_{i-1}} R_{i-1}^{1-\delta_{i-1}}, \quad i = 2, \ldots, k$$
 
-Let $`(\beta_{2}, \beta_{3}, \ldots, \beta_{k})`$ be a sequence of length $`k-1`$ defined by
+Let $`(\beta_{2}, \beta_{3}, \ldots, \beta_{k})`$ be a sequence of length `k-1` defined by
 
 $$\beta_2 = (-1)^{\delta_0 + 1}$$
 $$\beta_i = (-1)^{1 + \delta_{i-2}} c_{i-2} (R_{i-2})^{\delta_{i-2}}, \quad i = 3, \ldots, k$$
 
-Then we wish to compute the sequence $`(p_{0}, p_{1}, \ldots, p_{k})`$ of length $`k+1`$ such that $`p_{0}`$ and $`p_{1}`$ are the given polynomials, and
+Then we wish to compute the sequence $`(p_{0}, p_{1}, \ldots, p_{k})`$ of length `k+1` such that $`p_{0}`$ and $`p_{1}`$ are the given polynomials, and
 
 $$p_i = \frac{\text{PREM}(p_{i-2}, p_{i-1})}{\beta_i}, \quad i = 2, \ldots, k$$
 
@@ -2646,9 +2646,9 @@ Under this heading we provide the following facilities:
 
 #### 3.3.1 Newton's method for construction of polynomials by interpolation
 
-**NIA**(ab_list): Newton's Interpolation Algorithm (CRA for $`F[x]`$)  
+**NIA**(ab_list): Newton's Interpolation Algorithm (CRA for `F[x]`)  
 Input: $`[[a_{k}, b_{k}]]`$ such that $`U(a_{k}) = b_{k}`$, $`U(x) \in F[x]`$  
-Output: $`U(x)`$
+Output: `U(x)`
 
 <div class="math-left">
 
@@ -2673,7 +2673,7 @@ Ux := ⊕(Ux, ⊗(sigma, Mx)) }
 ### 3.3.2 Fast Fourier Transform (FFT) and Interpolation (FFI)
 
 **FFT**(`(N, a(x), \omega, A)`): Fast Fourier Transform  
-Input: integer $`N = 2^m`$, polynomial $`a(x) = \mathrm{sum}(i=0, N-1, a_{i} \cdot x^i)`$, primitive $`N`$th root of unity $`\omega`$  
+Input: integer $`N = 2^m`$, polynomial $`a(x) = \mathrm{sum}(i=0, N-1, a_{i} \cdot x^i)`$, primitive `N`th root of unity $`\omega`$  
 Output: array $`A = (A_{0}, \ldots, A_{N-1})`$ where $`A_{k} = a(\omega^k)`$
 
 <div class="math-left">
@@ -2729,9 +2729,9 @@ if *r > 0 then ↑ poly(r) else ↑ 0(ax.terms[1]) ■
 
 </div>
 
-**FFI**(`(N, B, \omega)`): Fast Fourier Interpolation  
-Input: integer $`N = 2^m`$, sample values $`B = (b_{0}, \ldots, b_{N-1})`$, primitive $`N`$th root of unity $`\omega`$  
-Output: $`a(x) = \mathrm{sum}(i=0, N-1, a_{i} x^i)`$ where $`a(\omega^k) = b_{k}`$, $`k=0..N-1`$
+**FFI**(N, B, \omega): Fast Fourier Interpolation  
+Input: integer $`N = 2^m`$, sample values $`B = (b_{0}, \ldots, b_{N-1})`$, primitive `N`th root of unity $`\omega`$  
+Output: $`a(x) = \mathrm{sum}(i=0, N-1, a_{i} x^i)`$ where $`a(\omega^k) = b_{k}`$, `k=0..N-1`
 
 <div class="math-left">
 
@@ -3176,7 +3176,7 @@ pretty_print_line(y); pretty_print_line(z) } }
 
 **Control Structures: return, fail and every.**
 
-Instead of `return x` we use *uparrow* $`x`$, and for return we use ↑. Instead of `fail` we use ⊥.
+Instead of `return x` we use *uparrow* `x`, and for return we use ↑. Instead of `fail` we use ⊥.
 
 For `every i := 1 to j do C` we use `every i in 1, 2..j do C`
 
