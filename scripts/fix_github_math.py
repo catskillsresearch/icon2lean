@@ -114,25 +114,23 @@ def fix_underscores(body: str) -> str:
     return body
 
 
-MATHOP_OPERATORS = (
-    "-_{deg}",
-    "=_{poly}",
-    "=_{terms}",
-    "=_{term}",
-    "=_{tpower}",
-    "<_{degree}",
-)
-
-
-def fix_mathop_operators(body: str) -> str:
-    for op in MATHOP_OPERATORS:
-        if op.startswith(("-", "<", "=")):
-            body = body.replace(op, rf"\mathop{{{op[0]}}}_{{{op.split('_', 1)[1][1:-1]}}}")
-    body = re.sub(
-        r"type\(([^)]+)\) = \\text\{",
-        r"type(\1) \\mathrel{=} \\text{",
-        body,
+def fix_github_algorithm_operators(body: str) -> str:
+    body = re.sub(r"\\mathop\{([<=-])\}_\{([^}]+)\}", r"\1_{\2}", body)
+    body = re.sub(r"^&([<=-])_", r"&{\1}_", body, flags=re.MULTILINE)
+    body = re.sub(r"(?<!\\text\{)type\(([^)]+)\)", r"\\text{type}(\1)", body)
+    body = body.replace(
+        r'\text{type}(a) \mathrel{=} \text{"string"}',
+        r'\text{type}(a) \mathrel{==} \text{"string"}',
     )
+    body = body.replace(
+        r'\text{type}(b) \mathrel{=} \text{"string"}',
+        r'\text{type}(b) \mathrel{==} \text{"string"}',
+    )
+    body = body.replace(r'\text{"- infinity"}', r"\text{- infinity}")
+    body = body.replace(
+        r"\mathrel{\texttt{|||}{:=}}", r"\mathrel{\texttt{|||}}\mathrel{:=}"
+    )
+    body = re.sub(r"^&\\\\\s*$", "", body, flags=re.MULTILINE)
     return body
 
 
@@ -238,7 +236,7 @@ def normalize_math_body(body: str) -> str:
     body = fix_github_operators(body)
     body = fix_underscores(body)
     body = escape_hash_in_texttt(body)
-    body = fix_mathop_operators(body)
+    body = fix_github_algorithm_operators(body)
     body = array_to_aligned(body)
     return body
 

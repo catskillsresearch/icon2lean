@@ -1751,7 +1751,7 @@ An arbitrary-precision integer-coefficient indeterminate $`e x^y`$ is obtained w
 &\quad \textbf{local } Terms,\ T,\ z \\
 &\quad Terms \mathrel{:=} \oplus_{terms}(a.terms, b.terms) \\
 &\quad T \mathrel{:=} [];\ z \mathrel{:=} 0(a.terms[1].coef) \\
-&\quad \textbf{every } t \mathrel{:=} \texttt{!}Terms \textbf{ do if not } =(t.coef, z) \textbf{ then } T \mathrel{\texttt{|||}{:=}} \ [t] \\
+&\quad \textbf{every } t \mathrel{:=} \texttt{!}Terms \textbf{ do if not } =(t.coef, z) \textbf{ then } T \mathrel{\texttt{|||}}\mathrel{:=} \ [t] \\
 &\quad \Uparrow (\textbf{if } \texttt{*}T > 0 \textbf{ then } poly(T) \textbf{ else } 0(a)) \ \blacksquare
 \end{aligned}
 ```
@@ -1820,7 +1820,7 @@ $`QZ\text{: }((-2z)q + 1zq \cdot X^3) + ((-3z)q + 2zq \cdot X^3) = (-5z)q + 3zq 
 &-_{poly}(x) \Leftarrow \\
 &\quad \textbf{local } c \\
 &\quad c \mathrel{:=} [] \\
-&\quad \textbf{every } t \mathrel{:=} \texttt{!}x.terms \textbf{ do } c \mathrel{\texttt{|||}{:=}} \ [-_{term}(t)] \\
+&\quad \textbf{every } t \mathrel{:=} \texttt{!}x.terms \textbf{ do } c \mathrel{\texttt{|||}}\mathrel{:=} \ [-_{term}(t)] \\
 &\quad \Uparrow poly(c) \ \blacksquare \\
 &\\
 &-_{term}(t) \Leftarrow \Uparrow term(-(t.coef), t.power) \ \blacksquare
@@ -1919,7 +1919,7 @@ $`QZ\text{:   }((-2z)q + 1zq \cdot X^3) * ((-3z)q + 2zq \cdot X^3) = 6zq + (-7z)
 &\quad quotient \mathrel{:=} 0_{poly}(r) \\
 &\quad \textbf{repeat } \{ \\
 &\quad\quad m \mathrel{:=} deg_{poly}(r) \\
-&\quad\quad \textbf{if } \mathop{<}_{degree}(m, n) \\
+&\quad\quad \textbf{if } <_{degree}(m, n) \\
 &\quad\quad \textbf{then } \Uparrow quotient \\
 &\quad\quad \textbf{else } \{ q \mathrel{:=} poly([term(\mathbin{⨸}(lead\_coef(r), lead\_coef(b)), m - n)]) \\
 &\quad\quad\quad \textbf{if } m = 0 \\
@@ -2011,12 +2011,16 @@ Degrees of polynomials are values which may be integers, or the string `"- infin
 ```math
 \begin{aligned}
 &deg_{poly}(x) \Leftarrow \\
-&\quad \textbf{if } \mathop{=}_{poly}(x, 0_{poly}(x)) \textbf{ then } \Uparrow \text{"- infinity"} \\
-&\quad \textbf{else } \Uparrow x.terms[\texttt{*}x.terms].power \ \blacksquare \\
-&\\
-&\mathop{-}_{deg}(a, b) \Leftarrow \\
-&\quad \Uparrow (\textbf{if } type(a) \mathrel{=} \text{"string"} \textbf{ then } b \\
-&\quad\quad \textbf{else if } type(b) \mathrel{=} \text{"string"} \textbf{ then } a \\
+&\quad \textbf{if } =_{poly}(x, 0_{poly}(x)) \textbf{ then } \Uparrow \text{- infinity} \\
+&\quad \textbf{else } \Uparrow x.terms[\texttt{*}x.terms].power \ \blacksquare
+\end{aligned}
+```
+
+```math
+\begin{aligned}
+&{-}_{deg}(a, b) \Leftarrow \\
+&\quad \Uparrow (\textbf{if } \text{type}(a) \mathrel{==} \text{"string"} \textbf{ then } b \\
+&\quad\quad \textbf{else if } \text{type}(b) \mathrel{==} \text{"string"} \textbf{ then } a \\
 &\quad\quad \textbf{else } a - b) \ \blacksquare
 \end{aligned}
 ```
@@ -2029,8 +2033,8 @@ Degrees of polynomials are values which may be integers, or the string `"- infin
 ```math
 \begin{aligned}
 &\oplus_{deg}(a, b) \Leftarrow \\
-&\quad \Uparrow (\textbf{if } type(a) \mathrel{=} \text{"string"} \textbf{ then } b \\
-&\quad\quad \textbf{else if } type(b) \mathrel{=} \text{"string"} \textbf{ then } a \\
+&\quad \Uparrow (\textbf{if } \text{type}(a) \mathrel{==} \text{"string"} \textbf{ then } b \\
+&\quad\quad \textbf{else if } \text{type}(b) \mathrel{==} \text{"string"} \textbf{ then } a \\
 &\quad\quad \textbf{else } a + b) \ \blacksquare
 \end{aligned}
 ```
@@ -2047,7 +2051,7 @@ A normal-form polynomial is one whose terms are in normal form (and in ascending
 &normalize_{poly}(x) \Leftarrow \\
 &\quad \textbf{local } ts \\
 &\quad ts \mathrel{:=} [] \\
-&\quad \textbf{every } t \mathrel{:=} \texttt{!}x.terms \textbf{ do } ts \mathrel{\texttt{|||}{:=}} \ [term(normalize(t.coef), t.power)] \\
+&\quad \textbf{every } t \mathrel{:=} \texttt{!}x.terms \textbf{ do } ts \mathrel{\texttt{|||}}\mathrel{:=} \ [term(normalize(t.coef), t.power)] \\
 &\quad \Uparrow poly(ts) \ \blacksquare
 \end{aligned}
 ```
@@ -2061,20 +2065,36 @@ A normal-form polynomial is one whose terms are in normal form (and in ascending
 
 ```math
 \begin{aligned}
-&\mathop{<}_{degree}(a, b) \Leftarrow \\
-&\quad \textbf{if } type(a) \mathrel{=} \text{"string"} \\
-&\quad \textbf{then } \Uparrow not(type(b) \mathrel{=} \text{"string"}) \\
-&\quad \textbf{else } \Uparrow a < b \ \blacksquare \\
-&\\
-&\mathop{=}_{poly}(a, b) \Leftarrow \Uparrow \mathop{=}_{terms}(a.terms, b.terms) \ \blacksquare \\
-&\\
-&\mathop{=}_{terms}(a, b) \Leftarrow \\
+&{<}_{degree}(a, b) \Leftarrow \\
+&\quad \textbf{if } \text{type}(a) \mathrel{==} \text{"string"} \\
+&\quad \textbf{then } \Uparrow not(\text{type}(b) \mathrel{==} \text{"string"}) \\
+&\quad \textbf{else } \Uparrow a < b \ \blacksquare
+\end{aligned}
+```
+
+```math
+\begin{aligned}
+&{=}_{poly}(a, b) \Leftarrow \Uparrow {=}_{terms}(a.terms, b.terms) \ \blacksquare
+\end{aligned}
+```
+
+```math
+\begin{aligned}
+&{=}_{terms}(a, b) \Leftarrow \\
 &\quad \textbf{if } \texttt{*}a \neq \texttt{*}b \textbf{ then } \bot \\
 &\quad \textbf{if } \texttt{*}a = 0 \textbf{ then } \Uparrow \\
-&\quad \textbf{if } \mathop{=}_{term}(a[1], b[1]) \textbf{ then } \Uparrow \mathop{=}_{terms}(rest(a), rest(b)) \ \blacksquare \\
-&\\
-&\mathop{=}_{term}(a, b) \Leftarrow \Uparrow (=(a.coef, b.coef) \ \&\ =(a.power, b.power)) \ \blacksquare \\
-&\\
+&\quad \textbf{if } {=}_{term}(a[1], b[1]) \textbf{ then } \Uparrow {=}_{terms}(rest(a), rest(b)) \ \blacksquare
+\end{aligned}
+```
+
+```math
+\begin{aligned}
+&{=}_{term}(a, b) \Leftarrow \Uparrow (=(a.coef, b.coef) \ \&\ =(a.power, b.power)) \ \blacksquare
+\end{aligned}
+```
+
+```math
+\begin{aligned}
 &unit_{poly}(x) \Leftarrow \Uparrow ((\texttt{*}x.terms = 1) \ \&\ (x.terms[1].power = 0) \ \&\ unit(x.terms[1].coef)) \ \blacksquare
 \end{aligned}
 ```
@@ -2185,7 +2205,7 @@ The one of the base domain of a coefficient of the polynomial:
 
 ```math
 \begin{aligned}
-&\mathop{=}_{tpower}(a, b) \Leftarrow \Uparrow (a.N = b.N) \ \&\ \mathop{=}_{poly}(a.Poly, b.Poly) \ \blacksquare \\
+&=_{tpower}(a, b) \Leftarrow \Uparrow (a.N = b.N) \ \&\ =_{poly}(a.Poly, b.Poly) \ \blacksquare \\
 &\\
 &unit_{tpower}(x) \Leftarrow \Uparrow unit_{poly}(x.Poly) \ \blacksquare
 \end{aligned}
@@ -2558,7 +2578,7 @@ The simplest polynomial remainder sequence is simply that of Euclid's algorithm.
 
 ```math
 \begin{aligned}
-&MOD\_RS(a, b) \Leftarrow \Uparrow [a] \mathrel{\texttt{|||}{:=}} \ (\textbf{if } =(b, 0(b)) \textbf{ then } [b] \textbf{ else } MOD\_RS(b, mod(a, b))) \ \blacksquare
+&MOD\_RS(a, b) \Leftarrow \Uparrow [a] \mathrel{\texttt{|||}}\mathrel{:=} \ (\textbf{if } =(b, 0(b)) \textbf{ then } [b] \textbf{ else } MOD\_RS(b, mod(a, b))) \ \blacksquare
 \end{aligned}
 ```
 
@@ -2610,7 +2630,7 @@ PREM(px, qx): Pseudo-remainder of $`px/qx`$ in $`I[x]`$, where $`I[x]`$ is an in
 \begin{aligned}
 &PREM(px, qx) \Leftarrow \\
 &\quad \textbf{local } d,\ b \\
-&\quad d \mathrel{:=} \mathop{-}_{deg}(deg_{poly}(px), deg_{poly}(qx)) \\
+&\quad d \mathrel{:=} -_{deg}(deg_{poly}(px), deg_{poly}(qx)) \\
 &\quad b \mathrel{:=} poly\_of(lead\_coef(qx)) \\
 &\quad \Uparrow rem(\otimes_{poly}(exp(b, d + 1), px), qx) \ \blacksquare
 \end{aligned}
@@ -2633,7 +2653,7 @@ I.e., a trace of the steps of Euclid's algorithm modified to use PREM.
 
 ```math
 \begin{aligned}
-&E\_PRS(a, b) \Leftarrow \Uparrow [a] \mathrel{\texttt{|||}{:=}} \ (\textbf{if } =(b, 0(b)) \textbf{ then } [b] \textbf{ else } E\_PRS(b, PREM(a, b))) \ \blacksquare
+&E\_PRS(a, b) \Leftarrow \Uparrow [a] \mathrel{\texttt{|||}}\mathrel{:=} \ (\textbf{if } =(b, 0(b)) \textbf{ then } [b] \textbf{ else } E\_PRS(b, PREM(a, b))) \ \blacksquare
 \end{aligned}
 ```
 
@@ -2690,19 +2710,19 @@ $$p_i = \frac{\text{PREM}(p_{i-2}, p_{i-1})}{\beta_i}, \quad i = 2, \ldots, k$$
 &\quad\quad \beta_i \mathrel{:=} \beta_i(\delta_{i-2}, c_{i-2}, R_{i-2}) \\
 &\quad\quad p_i \mathrel{:=} P_i(p_{i-2}, p_{i-1}, \beta_i) \\
 &\quad\quad \textbf{if } =(p_i, z) \textbf{ then } \Uparrow P \\
-&\quad\quad \textbf{else } P \mathrel{\texttt{|||}{:=}} \ [p_i] \\
+&\quad\quad \textbf{else } P \mathrel{\texttt{|||}}\mathrel{:=} \ [p_i] \\
 &\quad\quad p_{i-2} \mathrel{:=} p_{i-1} \\
 &\quad\quad p_{i-1} \mathrel{:=} p_i \\
 &\quad\quad c_{i-2} \mathrel{:=} c_i(p_{i-2}) \\
 &\quad\quad R_{i-2} \mathrel{:=} R_i(c_{i-2}, \delta_{i-2}, R_{i-2}) \\
 &\quad\quad \delta_{i-2} \mathrel{:=} \delta_i(p_{i-2}, p_{i-1}) \} \ \blacksquare \\
 &\\
-&\delta_i(p_i, p_{i+1}) \Leftarrow \Uparrow \mathop{-}_{deg}(deg_{poly}(p_i), deg_{poly}(p_{i+1})) \ \blacksquare \\
+&\delta_i(p_i, p_{i+1}) \Leftarrow \Uparrow -_{deg}(deg_{poly}(p_i), deg_{poly}(p_{i+1})) \ \blacksquare \\
 &\\
 &c_i(p_i) \Leftarrow \Uparrow lead\_coef(p_i) \ \blacksquare \\
 &\\
 &R_i(c_i, \delta_{i-1}, R_{i-1}) \Leftarrow \\
-&\quad \Uparrow \otimes(exp(c_i, \delta_{i-1}), exp(R_{i-1}, \mathop{-}_{deg}(\delta_{i-1}, 1))) \ \blacksquare \\
+&\quad \Uparrow \otimes(exp(c_i, \delta_{i-1}), exp(R_{i-1}, -_{deg}(\delta_{i-1}, 1))) \ \blacksquare \\
 &\\
 &\beta_i(\delta_{i-2}, c_{i-2}, R_{i-2}) \Leftarrow \\
 &\quad \Uparrow poly\_of(\otimes(\otimes(exp(-(1(c_{i-2})), 1 + \delta_{i-2}), exp(R_{i-2}, \delta_{i-2})))) \ \blacksquare \\
@@ -2793,7 +2813,7 @@ Even powered terms.
 &\quad \textbf{local } r \\
 &\quad r \mathrel{:=} [] \\
 &\quad \textbf{every } t \mathrel{:=} \texttt{!}ax.terms \\
-&\quad \textbf{do if } mod_{integer}(t.power, 2) = 0 \textbf{ then } r \mathrel{\texttt{|||}{:=}} \ [term(t.coef, t.power/2)] \\
+&\quad \textbf{do if } mod_{integer}(t.power, 2) = 0 \textbf{ then } r \mathrel{\texttt{|||}}\mathrel{:=} \ [term(t.coef, t.power/2)] \\
 &\quad \Uparrow poly(r) \ \blacksquare
 \end{aligned}
 ```
@@ -2811,7 +2831,7 @@ Odd powered terms.
 &\quad \textbf{local } r \\
 &\quad r \mathrel{:=} [] \\
 &\quad \textbf{every } t \mathrel{:=} \texttt{!}ax.terms \\
-&\quad \textbf{do if } mod_{integer}(t.power, 2) = 1 \textbf{ then } r \mathrel{\texttt{|||}{:=}} \ [term(t.coef, (t.power - 1)/2)] \\
+&\quad \textbf{do if } mod_{integer}(t.power, 2) = 1 \textbf{ then } r \mathrel{\texttt{|||}}\mathrel{:=} \ [term(t.coef, (t.power - 1)/2)] \\
 &\quad \textbf{if } \texttt{*}r > 0 \textbf{ then } \Uparrow poly(r) \textbf{ else } \Uparrow 0(ax.terms[1]) \ \blacksquare
 \end{aligned}
 ```
@@ -2847,7 +2867,7 @@ Output: $`a(x) = \mathrm{sum}(i=0, N-1, a_{i} x^i)`$ where $`a(\omega^k) = b_{k}
 &\quad \textbf{local } r,\ i \\
 &\quad r \mathrel{:=} [];\ i \mathrel{:=} 0 \\
 &\quad \textbf{every } b \mathrel{:=} \texttt{!}B \textbf{ do } \{ \\
-&\quad\quad \textbf{if } not(=(b, 0(b))) \textbf{ then } r \mathrel{\texttt{|||}{:=}} \ [term(b, i)] \\
+&\quad\quad \textbf{if } not(=(b, 0(b))) \textbf{ then } r \mathrel{\texttt{|||}}\mathrel{:=} \ [term(b, i)] \\
 &\quad\quad i \mathrel{+{:=}} 1 \} \\
 &\quad \Uparrow poly(r) \ \blacksquare
 \end{aligned}
