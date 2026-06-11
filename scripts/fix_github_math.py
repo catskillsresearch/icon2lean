@@ -81,10 +81,22 @@ def fix_underscore_joins(body: str) -> str:
     return body.replace(r"\_\text{", r"\mathord{\texttt{\_}}\text{")
 
 
+def escape_text_underscores(body: str) -> str:
+    def repl(m: re.Match[str]) -> str:
+        inner = re.sub(r"(?<!\\)_", r"\\_", m.group(1))
+        return r"\text{" + inner + "}"
+
+    prev = None
+    while prev != body:
+        prev = body
+        body = re.sub(r"\\text\{([^{}]*)\}", repl, body)
+    return body
+
+
 def fix_underscores(body: str) -> str:
     """No bare _ inside \\text{}; Icon names use \\_ in math mode."""
     body = body.replace(r"\textunderscore", r"\_")
-    body = split_underscores_out_of_text(body)
+    body = escape_text_underscores(body)
     body = fix_underscore_joins(body)
     body = tidy_math_identifiers(body)
     return body
@@ -247,9 +259,21 @@ def fix_prose(text: str) -> str:
     return text
 
 
+MATH_FENCE = re.compile(r"```math\n(.*?)\n```", re.DOTALL)
+
+
+def fix_math_fence_blocks(text: str) -> str:
+    def repl(match: re.Match[str]) -> str:
+        body = normalize_math_body(match.group(1))
+        return "```math\n" + body + "\n```"
+
+    return MATH_FENCE.sub(repl, text)
+
+
 def fix_github_math(text: str) -> str:
     text = fix_prose(text)
     text = fix_math_left_blocks(text)
+    text = fix_math_fence_blocks(text)
     text = fix_display_math(text)
     text = fix_inline_math(text)
     return text

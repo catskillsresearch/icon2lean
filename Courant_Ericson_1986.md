@@ -60,7 +60,7 @@ The ability to test the run-time environment is a feature of ICON. Given a strin
 
 ```math
 \begin{aligned}
-&\mathbin{⨸}(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare
+&\mathbin{⨸}(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div\_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare
 \end{aligned}
 ```
 
@@ -194,8 +194,8 @@ Lipson’s book, p. 203, contains a significant proviso:
 
 ```math
 \begin{aligned}
-&\mathbf{0}(a) \Leftarrow \Uparrow \text{proc}(\text{"zero_"}\mathrel{\texttt{||}}\text{type}(a), 1)(a) \ \blacksquare \\
-&\mathbf{1}(a) \Leftarrow \Uparrow \text{proc}(\text{"one_"}\mathrel{\texttt{||}}\text{type}(a), 1)(a) \ \blacksquare
+&\mathbf{0}(a) \Leftarrow \Uparrow \text{proc}(\text{"zero\_"}\mathrel{\texttt{||}}\text{type}(a), 1)(a) \ \blacksquare \\
+&\mathbf{1}(a) \Leftarrow \Uparrow \text{proc}(\text{"one\_"}\mathrel{\texttt{||}}\text{type}(a), 1)(a) \ \blacksquare
 \end{aligned}
 ```
 
@@ -210,14 +210,14 @@ The following procedures define the basic arithmetic operations for domains. As 
 
 ```math
 \begin{aligned}
-&\text{Abs}(a) \Leftarrow \Uparrow \text{proc}(\text{"Abs_"}\mathrel{\texttt{||}}\,\text{type}(a), 1)(a) \ \blacksquare \\
-&\oplus(a, b) \Leftarrow \Uparrow \text{proc}(\text{"plus_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
+&\text{Abs}(a) \Leftarrow \Uparrow \text{proc}(\text{"Abs\_"}\mathrel{\texttt{||}}\,\text{type}(a), 1)(a) \ \blacksquare \\
+&\oplus(a, b) \Leftarrow \Uparrow \text{proc}(\text{"plus\_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
 &\ominus(a, b) \Leftarrow \Uparrow \oplus(a, -(b)) \ \blacksquare \\
-&- (x) \Leftarrow \Uparrow \text{proc}(\text{"minus_"}\mathrel{\texttt{||}}\,\text{type}(x), 2)(x) \ \blacksquare \\
-&\otimes(a, b) \Leftarrow \Uparrow \text{proc}(\text{"times_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
-&\mathbin{⨸}(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
+&- (x) \Leftarrow \Uparrow \text{proc}(\text{"minus\_"}\mathrel{\texttt{||}}\,\text{type}(x), 2)(x) \ \blacksquare \\
+&\otimes(a, b) \Leftarrow \Uparrow \text{proc}(\text{"times\_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
+&\mathbin{⨸}(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div\_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
 &\text{mod}(a, b) \Leftarrow \\
-&\quad \textbf{if } (x := \text{proc}(\text{"mod_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b)) \textbf{ then } \Uparrow x \\
+&\quad \textbf{if } (x := \text{proc}(\text{"mod\_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b)) \textbf{ then } \Uparrow x \\
 &\quad \textbf{if } <(b, \mathbf{0}(b)) \textbf{ then } \Uparrow \text{mod}(a, -(b)) \\
 &\quad \Uparrow \text{normalize}( \\
 &\quad\quad \textbf{if } <(a, \mathbf{0}(a)) \\
@@ -277,7 +277,7 @@ $$(-3)q + 2q \cdot X^2 \bmod (-2)q + \tfrac{3}{2}q \cdot X = \tfrac{5}{9}q$$
 ```math
 \begin{aligned}
 &\text{rem}(a, b) \Leftarrow \\
-&\quad \Uparrow (\textbf{if } (x := \text{proc}(\text{"rem_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b)) \textbf{ then } x \\
+&\quad \Uparrow (\textbf{if } (x := \text{proc}(\text{"rem\_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b)) \textbf{ then } x \\
 &\quad\quad \textbf{else } \ominus(a, \otimes(\mathbin{⨸}(a, b), b))) \ \blacksquare
 \end{aligned}
 ```
@@ -335,7 +335,7 @@ $$8 + (-9)X + 6X^2 \mathbin{\text{rem}} 3 = 2$$
 ```math
 \begin{aligned}
 &\text{normalize}(a) \Leftarrow \\
-&\quad \textbf{if } (x := \text{proc}(\text{"normalize_"}\mathrel{\texttt{||}}\text{type}(a), 1)(a)) \textbf{ then } \Uparrow x \\
+&\quad \textbf{if } (x := \text{proc}(\text{"normalize\_"}\mathrel{\texttt{||}}\text{type}(a), 1)(a)) \textbf{ then } \Uparrow x \\
 &\quad \Uparrow a \ \blacksquare
 \end{aligned}
 ```
@@ -374,11 +374,11 @@ All of the predicates defined below except | are required to be defined by a dom
 
 ```math
 \begin{aligned}
-&= (a, b) \Leftarrow \Uparrow \text{proc}(\text{"equal_"}\mathrel{\texttt{||}}\text{type}(a), 2)(a, b) \ \blacksquare \\
-&< (a, b) \Leftarrow \Uparrow ((\text{proc}(\text{"less_"}\mathrel{\texttt{||}}\text{type}(a), 2)(a, b)) \mathrel{|} <0(\ominus(a, b))) \ \blacksquare \\
-&<0 (x) \Leftarrow \Uparrow \text{proc}(\text{"negative_"}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare \\
-&\mathit{unit}\,(x) \Leftarrow \Uparrow \text{proc}(\text{"unit_"}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare \\
-&=0 (x) \Leftarrow \Uparrow \text{proc}(\text{"is_zero_"}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare
+&= (a, b) \Leftarrow \Uparrow \text{proc}(\text{"equal\_"}\mathrel{\texttt{||}}\text{type}(a), 2)(a, b) \ \blacksquare \\
+&< (a, b) \Leftarrow \Uparrow ((\text{proc}(\text{"less\_"}\mathrel{\texttt{||}}\text{type}(a), 2)(a, b)) \mathrel{|} <0(\ominus(a, b))) \ \blacksquare \\
+&<0 (x) \Leftarrow \Uparrow \text{proc}(\text{"negative\_"}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare \\
+&\mathit{unit}\,(x) \Leftarrow \Uparrow \text{proc}(\text{"unit\_"}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare \\
+&=0 (x) \Leftarrow \Uparrow \text{proc}(\text{"is\_zero\_"}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare
 \end{aligned}
 ```
 
@@ -419,7 +419,7 @@ Every domain instance $D$ implementation should define a preferred method of pri
 &\quad \textbf{then } \{ \text{writes}(\text{"["}) \\
 &\quad\quad \text{every } y := \texttt{!x}[1:\texttt{*x}] \textbf{ do } \{ \text{print}(y); \text{ writes}(\text{", "}) \} \\
 &\quad\quad \text{print}(x[\texttt{*x}]); \text{ writes}(\text{"]"}) \} \\
-&\quad \textbf{else if } pp := \text{proc}(\text{"print_"}\mathrel{\texttt{||}}\,\text{type}(x), 1) \textbf{ then } pp(x) \\
+&\quad \textbf{else if } pp := \text{proc}(\text{"print\_"}\mathrel{\texttt{||}}\,\text{type}(x), 1) \textbf{ then } pp(x) \\
 &\quad \textbf{else if } \text{type}(x) \mathrel{==} \text{"string"} \textbf{ then writes}(x) \\
 &\quad \textbf{else writes}(\text{image}(x)) \ \blacksquare
 \end{aligned}
@@ -1012,7 +1012,7 @@ $k_{Z}$ takes an ICON integer and transforms it into a $Z$ constant.
 &\quad\quad \textbf{else if } =0_Z(b) \textbf{ then } a \\
 &\quad\quad \textbf{else if } (>0_Z(a) \ \& \ >0_Z(b)) \ | \ (<0_Z(a) \ \& \ <0_Z(b)) \\
 &\quad\quad \textbf{then } Z(a.sign, \oplus_{base_{\mathbf{B}}}(a.mantissa, b.mantissa)) \\
-&\quad\quad \textbf{else } \{ \text{\text{\text{\# }}a} > 0 \textbf{ and } b < 0,\ \textbf{so...} \\
+&\quad\quad \textbf{else } \{ \texttt{\#}a > 0 \textbf{ and } b < 0,\ \textbf{so...} \\
 &\quad\quad\quad \textbf{if } <_{base_{\mathbf{B}}}(a.mantissa, b.mantissa) \\
 &\quad\quad\quad \textbf{then } Z(-1, \ominus_{base_{\mathbf{B}}}(b.mantissa, a.mantissa)) \\
 &\quad\quad\quad \textbf{else } Z(1, \ominus_{base_{\mathbf{B}}}(a.mantissa, b.mantissa)) \} \\
@@ -3009,7 +3009,7 @@ For interpreting `##` commands
 &\quad x \mathrel{:=} (upto(\mathord{\sim}\&lcase, line) \ | \ (\texttt{*}line + 1)) \\
 &\quad command \mathrel{:=} line[1:x] \\
 &\quad args \mathrel{:=} line[x + 1:\texttt{*}line + 1] \\
-&\quad \textbf{if } not(y \mathrel{:=} proc(\text{"do_"} \ \mathrel{\texttt{||}} \ command, 2)) \\
+&\quad \textbf{if } not(y \mathrel{:=} proc(\text{"do\_"} \ \mathrel{\texttt{||}} \ command, 2)) \\
 &\quad \textbf{then } write(\&errout, \text{"ERROR: Unknown command: "}, command) \\
 &\quad \textbf{else } y(args) \ \blacksquare
 \end{aligned}
@@ -3269,9 +3269,9 @@ If the `-U<filename>` option is present, then keywords are read into the words t
 \begin{aligned}
 &pretty\_print\_line(line) \Leftarrow \\
 &\quad \textbf{local } first,\ last,\ key,\ x,\ y \\
-&\quad \{ x \mathrel{:=} (upto((\&lcase \mathrel{+{+}} \&ucase \mathrel{+{+}} \text{'_0123456789'}), line) \ | \ (\texttt{*}line + 1)) \\
+&\quad \{ x \mathrel{:=} (upto((\&lcase \mathrel{+{+}} \&ucase \mathrel{+{+}} \text{'\_0123456789'}), line) \ | \ (\texttt{*}line + 1)) \\
 &\quad\quad \textbf{if } x = \texttt{*}line + 1 \textbf{ then } \{ writes(line);\ break \} \\
-&\quad\quad y \mathrel{:=} (upto(\mathord{\sim}(\&lcase \mathrel{+{+}} \&ucase \mathrel{+{+}} \text{'_0123456789'}), line) \ | \ (\texttt{*}line + 1)) \\
+&\quad\quad y \mathrel{:=} (upto(\mathord{\sim}(\&lcase \mathrel{+{+}} \&ucase \mathrel{+{+}} \text{'\_0123456789'}), line) \ | \ (\texttt{*}line + 1)) \\
 &\quad\quad key \mathrel{:=} (line[1:y] \ | \ \text{""}) \\
 &\quad\quad first \mathrel{:=} (line[1:x] \ | \ \text{""}) \\
 &\quad\quad line \mathrel{:=} (line[x:\texttt{*}line + 1] \ | \ \text{""}) \\
