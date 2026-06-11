@@ -2010,21 +2010,9 @@ Degrees of polynomials are values which may be integers, or the string `"- infin
 
 ```math
 \begin{aligned}
-&deg_{poly}(x) \Leftarrow \\
-&\quad \textbf{if } =_{poly}(x, 0_{poly}(x)) \textbf{ then } \Uparrow \text{- infinity} \\
-&\quad \textbf{else } \Uparrow x.terms[\texttt{*}x.terms].power \ \blacksquare
+&deg_{poly}(x) \Leftarrow \textbf{if } {=}_{poly}(x, 0_{poly}(x)) \textbf{ then } \Uparrow \text{\text{-} infinity} \textbf{ else } \Uparrow x.\mathrm{terms}[\texttt{*}x.\mathrm{terms}].\mathrm{power} \ \blacksquare
 \end{aligned}
 ```
-
-```math
-\begin{aligned}
-&{-}_{deg}(a, b) \Leftarrow \\
-&\quad \Uparrow (\textbf{if } \text{type}(a) \mathrel{==} \text{"string"} \textbf{ then } b \\
-&\quad\quad \textbf{else if } \text{type}(b) \mathrel{==} \text{"string"} \textbf{ then } a \\
-&\quad\quad \textbf{else } a - b) \ \blacksquare
-\end{aligned}
-```
-
 
 </div>
 
@@ -2032,13 +2020,19 @@ Degrees of polynomials are values which may be integers, or the string `"- infin
 
 ```math
 \begin{aligned}
-&\oplus_{deg}(a, b) \Leftarrow \\
-&\quad \Uparrow (\textbf{if } \text{type}(a) \mathrel{==} \text{"string"} \textbf{ then } b \\
-&\quad\quad \textbf{else if } \text{type}(b) \mathrel{==} \text{"string"} \textbf{ then } a \\
-&\quad\quad \textbf{else } a + b) \ \blacksquare
+&{-}_{deg}(a, b) \Leftarrow \Uparrow (\textbf{if } \text{type}(a) \mathrel{==} \text{"string"} \textbf{ then } b \textbf{ else if } \text{type}(b) \mathrel{==} \text{"string"} \textbf{ then } a \textbf{ else } a - b) \ \blacksquare
 \end{aligned}
 ```
 
+</div>
+
+<div class="math-left">
+
+```math
+\begin{aligned}
+&\oplus_{deg}(a, b) \Leftarrow \Uparrow (\textbf{if } \text{type}(a) \mathrel{==} \text{"string"} \textbf{ then } b \textbf{ else if } \text{type}(b) \mathrel{==} \text{"string"} \textbf{ then } a \textbf{ else } a + b) \ \blacksquare
+\end{aligned}
+```
 
 </div>
 
