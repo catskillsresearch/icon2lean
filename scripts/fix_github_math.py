@@ -70,10 +70,22 @@ def tidy_math_identifiers(body: str) -> str:
     return re.sub(r"\\_ +", r"\\_", body)
 
 
+def fix_github_operators(body: str) -> str:
+    body = body.replace(r"\mathrel{\sim=}", r"\neq")
+    body = body.replace(r"\mathbin{\%}", r"\bmod")
+    return body
+
+
+def fix_underscore_joins(body: str) -> str:
+    """GitHub turns \\_ between \\text{} into subscripts; use mathord instead."""
+    return body.replace(r"\_\text{", r"\mathord{\texttt{\_}}\text{")
+
+
 def fix_underscores(body: str) -> str:
     """No bare _ inside \\text{}; Icon names use \\_ in math mode."""
     body = body.replace(r"\textunderscore", r"\_")
     body = split_underscores_out_of_text(body)
+    body = fix_underscore_joins(body)
     body = tidy_math_identifiers(body)
     return body
 
@@ -177,6 +189,7 @@ def normalize_math_body(body: str) -> str:
     body = re.sub(r"(\\begin\{aligned\})\n\n+", r"\1\n", body)
     body = re.sub(r"\n\n+(\\end\{aligned\})", r"\n\1", body)
     body = fix_math_operators(body)
+    body = fix_github_operators(body)
     body = fix_underscores(body)
     body = array_to_aligned(body)
     return body
