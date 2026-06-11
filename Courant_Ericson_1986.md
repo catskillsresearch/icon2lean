@@ -56,7 +56,7 @@ The ability to test the run-time environment is a feature of ICON. Given a strin
 <div class="math-left">
 
 $$\begin{aligned}
-&\mathbin{⨸}(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div"}\mathord{\texttt{\_}}\text{""}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare
+&\mathbin{⨸}(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div"}\mathord{\texttt{\char137}}\text{""}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare
 \end{aligned}$$
 
 </div>
@@ -187,8 +187,8 @@ Lipson’s book, p. 203, contains a significant proviso:
 <div class="math-left">
 
 $$\begin{aligned}
-&\mathbf{0}(a) \Leftarrow \Uparrow \text{proc}(\text{"zero"}\mathord{\texttt{\_}}\text{""}\mathrel{\texttt{||}}\text{type}(a), 1)(a) \ \blacksquare \\
-&\mathbf{1}(a) \Leftarrow \Uparrow \text{proc}(\text{"one"}\mathord{\texttt{\_}}\text{""}\mathrel{\texttt{||}}\text{type}(a), 1)(a) \ \blacksquare
+&\mathbf{0}(a) \Leftarrow \Uparrow \text{proc}(\text{"zero"}\mathord{\texttt{\char137}}\text{""}\mathrel{\texttt{||}}\text{type}(a), 1)(a) \ \blacksquare \\
+&\mathbf{1}(a) \Leftarrow \Uparrow \text{proc}(\text{"one"}\mathord{\texttt{\char137}}\text{""}\mathrel{\texttt{||}}\text{type}(a), 1)(a) \ \blacksquare
 \end{aligned}$$
 
 </div>
@@ -200,14 +200,14 @@ The following procedures define the basic arithmetic operations for domains. As 
 <div class="math-left">
 
 $$\begin{aligned}
-&\text{Abs}(a) \Leftarrow \Uparrow \text{proc}(\text{"Abs"}\mathord{\texttt{\_}}\text{""}\mathrel{\texttt{||}}\,\text{type}(a), 1)(a) \ \blacksquare \\
-&\oplus(a, b) \Leftarrow \Uparrow \text{proc}(\text{"plus"}\mathord{\texttt{\_}}\text{""}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
+&\text{Abs}(a) \Leftarrow \Uparrow \text{proc}(\text{"Abs"}\mathord{\texttt{\char137}}\text{""}\mathrel{\texttt{||}}\,\text{type}(a), 1)(a) \ \blacksquare \\
+&\oplus(a, b) \Leftarrow \Uparrow \text{proc}(\text{"plus"}\mathord{\texttt{\char137}}\text{""}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
 &\ominus(a, b) \Leftarrow \Uparrow \oplus(a, -(b)) \ \blacksquare \\
-&- (x) \Leftarrow \Uparrow \text{proc}(\text{"minus"}\mathord{\texttt{\_}}\text{""}\mathrel{\texttt{||}}\,\text{type}(x), 2)(x) \ \blacksquare \\
-&\otimes(a, b) \Leftarrow \Uparrow \text{proc}(\text{"times"}\mathord{\texttt{\_}}\text{""}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
-&\mathbin{⨸}(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div"}\mathord{\texttt{\_}}\text{""}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
+&- (x) \Leftarrow \Uparrow \text{proc}(\text{"minus"}\mathord{\texttt{\char137}}\text{""}\mathrel{\texttt{||}}\,\text{type}(x), 2)(x) \ \blacksquare \\
+&\otimes(a, b) \Leftarrow \Uparrow \text{proc}(\text{"times"}\mathord{\texttt{\char137}}\text{""}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
+&\mathbin{⨸}(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div"}\mathord{\texttt{\char137}}\text{""}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
 &\text{mod}(a, b) \Leftarrow \\
-&\quad \textbf{if } (x := \text{proc}(\text{"mod"}\mathord{\texttt{\_}}\text{""}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b)) \textbf{ then } \Uparrow x \\
+&\quad \textbf{if } (x := \text{proc}(\text{"mod"}\mathord{\texttt{\char137}}\text{""}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b)) \textbf{ then } \Uparrow x \\
 &\quad \textbf{if } <(b, \mathbf{0}(b)) \textbf{ then } \Uparrow \text{mod}(a, -(b)) \\
 &\quad \Uparrow \text{normalize}( \\
 &\quad\quad \textbf{if } <(a, \mathbf{0}(a)) \\
@@ -258,7 +258,7 @@ $$(-3)q + 2q \cdot X^2 \bmod (-2)q + \tfrac{3}{2}q \cdot X = \tfrac{5}{9}q$$
 
 $$\begin{aligned}
 &\text{rem}(a, b) \Leftarrow \\
-&\quad \Uparrow (\textbf{if } (x := \text{proc}(\text{"rem"}\mathord{\texttt{\_}}\text{""}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b)) \textbf{ then } x \\
+&\quad \Uparrow (\textbf{if } (x := \text{proc}(\text{"rem"}\mathord{\texttt{\char137}}\text{""}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b)) \textbf{ then } x \\
 &\quad\quad \textbf{else } \ominus(a, \otimes(\mathbin{⨸}(a, b), b))) \ \blacksquare
 \end{aligned}$$
 
@@ -277,7 +277,7 @@ in the domain of quotients of machine-word integers are denoted with ICON by
 
 $$\begin{aligned}
 &\textit{ax} := \text{poly}([\text{term}(\mathcal{Q}(5,1), 0), \text{term}(\mathcal{Q}(-2,1), 1), \text{term}(\mathcal{Q}(1,1), 2)]) \\
-&\textit{bx} := \text{poly}\mathord{\texttt{\_}}\text{of}(\mathcal{Q}(2,1))
+&\textit{bx} := \text{poly}\mathord{\texttt{\char137}}\text{of}(\mathcal{Q}(2,1))
 \end{aligned}$$
 
 </div>
@@ -292,7 +292,7 @@ Similarly, given the equations over the integral domain of polynomials over mach
 
 $$\begin{aligned}
 &\textit{ax} := \text{poly}([\text{term}(8, 0), \text{term}(-9, 1), \text{term}(6, 2)]) \\
-&\textit{bx} := \text{poly}\mathord{\texttt{\_}}\text{of}(3)
+&\textit{bx} := \text{poly}\mathord{\texttt{\char137}}\text{of}(3)
 \end{aligned}$$
 
 </div>
@@ -307,7 +307,7 @@ $$8 + (-9)X + 6X^2 \mathbin{\text{rem}} 3 = 2$$
 
 $$\begin{aligned}
 &\text{normalize}(a) \Leftarrow \\
-&\quad \textbf{if } (x := \text{proc}(\text{"normalize"}\mathord{\texttt{\_}}\text{""}\mathrel{\texttt{||}}\text{type}(a), 1)(a)) \textbf{ then } \Uparrow x \\
+&\quad \textbf{if } (x := \text{proc}(\text{"normalize"}\mathord{\texttt{\char137}}\text{""}\mathrel{\texttt{||}}\text{type}(a), 1)(a)) \textbf{ then } \Uparrow x \\
 &\quad \Uparrow a \ \blacksquare
 \end{aligned}$$
 
@@ -340,11 +340,11 @@ All of the predicates defined below except | are required to be defined by a dom
 <div class="math-left">
 
 $$\begin{aligned}
-&= (a, b) \Leftarrow \Uparrow \text{proc}(\text{"equal"}\mathord{\texttt{\_}}\text{""}\mathrel{\texttt{||}}\text{type}(a), 2)(a, b) \ \blacksquare \\
-&< (a, b) \Leftarrow \Uparrow ((\text{proc}(\text{"less"}\mathord{\texttt{\_}}\text{""}\mathrel{\texttt{||}}\text{type}(a), 2)(a, b)) \mathrel{|} <0(\ominus(a, b))) \ \blacksquare \\
-&<0 (x) \Leftarrow \Uparrow \text{proc}(\text{"negative"}\mathord{\texttt{\_}}\text{""}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare \\
-&\mathit{unit}\,(x) \Leftarrow \Uparrow \text{proc}(\text{"unit"}\mathord{\texttt{\_}}\text{""}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare \\
-&=0 (x) \Leftarrow \Uparrow \text{proc}(\text{"is"}\mathord{\texttt{\_}}\text{"zero"}\mathord{\texttt{\_}}\text{""}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare
+&= (a, b) \Leftarrow \Uparrow \text{proc}(\text{"equal"}\mathord{\texttt{\char137}}\text{""}\mathrel{\texttt{||}}\text{type}(a), 2)(a, b) \ \blacksquare \\
+&< (a, b) \Leftarrow \Uparrow ((\text{proc}(\text{"less"}\mathord{\texttt{\char137}}\text{""}\mathrel{\texttt{||}}\text{type}(a), 2)(a, b)) \mathrel{|} <0(\ominus(a, b))) \ \blacksquare \\
+&<0 (x) \Leftarrow \Uparrow \text{proc}(\text{"negative"}\mathord{\texttt{\char137}}\text{""}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare \\
+&\mathit{unit}\,(x) \Leftarrow \Uparrow \text{proc}(\text{"unit"}\mathord{\texttt{\char137}}\text{""}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare \\
+&=0 (x) \Leftarrow \Uparrow \text{proc}(\text{"is"}\mathord{\texttt{\char137}}\text{"zero"}\mathord{\texttt{\char137}}\text{""}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare
 \end{aligned}$$
 
 </div>
@@ -379,7 +379,7 @@ $$\begin{aligned}
 &\quad \textbf{then } \{ \text{writes}(\text{"["}) \\
 &\quad\quad \text{every } y := \texttt{!x}[1:\texttt{*x}] \textbf{ do } \{ \text{print}(y); \text{ writes}(\text{", "}) \} \\
 &\quad\quad \text{print}(x[\texttt{*x}]); \text{ writes}(\text{"]"}) \} \\
-&\quad \textbf{else if } pp := \text{proc}(\text{"print"}\mathord{\texttt{\_}}\text{""}\mathrel{\texttt{||}}\,\text{type}(x), 1) \textbf{ then } pp(x) \\
+&\quad \textbf{else if } pp := \text{proc}(\text{"print"}\mathord{\texttt{\char137}}\text{""}\mathrel{\texttt{||}}\,\text{type}(x), 1) \textbf{ then } pp(x) \\
 &\quad \textbf{else if } \text{type}(x) \mathrel{==} \text{"string"} \textbf{ then writes}(x) \\
 &\quad \textbf{else writes}(\text{image}(x)) \ \blacksquare
 \end{aligned}$$
@@ -2218,7 +2218,7 @@ $$\begin{aligned}
 &settime() \\
 &ax \mathrel{:=} poly([k_{Z_{Qx}}(2, 0), k_{Z_{Qx}}(-1, 1), k_{Z_{Qx}}(3, 2), k_{Z_{Qx}}(2, 4), k_{Z_{Qx}}(1, 5)]) \\
 &bx \mathrel{:=} poly([k_{Z_{Qx}}(2, 0), k_{Z_{Qx}}(-1, 1), k_{Z_{Qx}}(3, 3)]) \\
-&\text{pr}\{\text{"QZ[x]: MOD}\mathord{\texttt{\_}}\text{RS("},\ ax,\ \text{", "},\ bx,\ \text{") = "},\ MOD\_RS(ax, bx)\} \\
+&\text{pr}\{\text{"QZ[x]: MOD}\mathord{\texttt{\char137}}\text{RS("},\ ax,\ \text{", "},\ bx,\ \text{") = "},\ MOD\_RS(ax, bx)\} \\
 &showtime() \\
 \end{aligned}$$
 
@@ -2226,7 +2226,7 @@ $$\begin{aligned}
 
 is
 
-$QZ[x]\text{: MOD}\mathord{\texttt{\_}}\text{RS}(2zq + (-1z)q \cdot X + 3zq \cdot X^2 + 2zq \cdot X^4 + 1zq \cdot X^5,\ 2zq + (-1z)q \cdot X + 3zq \cdot X^3)$  
+$QZ[x]\text{: MOD}\mathord{\texttt{\char137}}\text{RS}(2zq + (-1z)q \cdot X + 3zq \cdot X^2 + 2zq \cdot X^4 + 1zq \cdot X^5,\ 2zq + (-1z)q \cdot X + 3zq \cdot X^3)$  
 $= [2zq + (-1z)q \cdot X + 3zq \cdot X^2 + 2zq \cdot X^4 + 1zq \cdot X^5,\ 2zq + (-1z)q \cdot X + 3zq \cdot X^3,\ (16z/9z)q + ((-20z)/9z)q \cdot X + 3zq \cdot X^2,\ (166z/243z)q + ((-275z)/243z)q \cdot X,\ (115668z/75625z)q,\ 0zq]$
 
 [221033 msecs]
@@ -2600,7 +2600,7 @@ $$\begin{aligned}
 &\quad x \mathrel{:=} (upto(\mathord{\sim}\&lcase, line) \ | \ (\texttt{*}line + 1)) \\
 &\quad command \mathrel{:=} line[1:x] \\
 &\quad args \mathrel{:=} line[x + 1:\texttt{*}line + 1] \\
-&\quad \textbf{if } not(y \mathrel{:=} proc(\text{"do"}\mathord{\texttt{\_}}\text{""} \ \mathrel{\texttt{||}} \ command, 2)) \\
+&\quad \textbf{if } not(y \mathrel{:=} proc(\text{"do"}\mathord{\texttt{\char137}}\text{""} \ \mathrel{\texttt{||}} \ command, 2)) \\
 &\quad \textbf{then } write(\&errout, \text{"ERROR: Unknown command: "}, command) \\
 &\quad \textbf{else } y(args) \ \blacksquare
 \end{aligned}$$
@@ -2821,9 +2821,9 @@ If the `-U<filename>` option is present, then keywords are read into the words t
 $$\begin{aligned}
 &pretty\_print\_line(line) \Leftarrow \\
 &\quad \textbf{local } first,\ last,\ key,\ x,\ y \\
-&\quad \{ x \mathrel{:=} (upto((\&lcase \mathrel{+{+}} \&ucase \mathrel{+{+}} \text{'}\mathord{\texttt{\_}}\text{'0123456789'}), line) \ | \ (\texttt{*}line + 1)) \\
+&\quad \{ x \mathrel{:=} (upto((\&lcase \mathrel{+{+}} \&ucase \mathrel{+{+}} \text{'}\mathord{\texttt{\char137}}\text{'0123456789'}), line) \ | \ (\texttt{*}line + 1)) \\
 &\quad\quad \textbf{if } x = \texttt{*}line + 1 \textbf{ then } \{ writes(line);\ break \} \\
-&\quad\quad y \mathrel{:=} (upto(\mathord{\sim}(\&lcase \mathrel{+{+}} \&ucase \mathrel{+{+}} \text{'}\mathord{\texttt{\_}}\text{'0123456789'}), line) \ | \ (\texttt{*}line + 1)) \\
+&\quad\quad y \mathrel{:=} (upto(\mathord{\sim}(\&lcase \mathrel{+{+}} \&ucase \mathrel{+{+}} \text{'}\mathord{\texttt{\char137}}\text{'0123456789'}), line) \ | \ (\texttt{*}line + 1)) \\
 &\quad\quad key \mathrel{:=} (line[1:y] \ | \ \text{""}) \\
 &\quad\quad first \mathrel{:=} (line[1:x] \ | \ \text{""}) \\
 &\quad\quad line \mathrel{:=} (line[x:\texttt{*}line + 1] \ | \ \text{""}) \\
