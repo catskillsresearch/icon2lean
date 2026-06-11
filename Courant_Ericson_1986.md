@@ -74,8 +74,8 @@ Every implementation of a Euclidean domain must supply certain required procedur
 | *Type* | *Required* | *Optional* | *Synthesized* |
 |:--|:-:|:-:|:-:|
 | Constant | 0<br>1 | | |
-| Operator | abs<br>$\oplus$<br>$-$<br>$\otimes$<br>$\mathbin{⨸}$ | mod<br>rem<br>normalize | $\ominus$<br>exp |
-| Predicates | =<br>$<0$<br>unit<br>$=0$ | $<$ | $|$ |
+| Operator | abs<br>$`\oplus`$<br>$`-`$<br>$`\otimes`$<br>$`\mathbin{⨸}`$ | mod<br>rem<br>normalize | $`\ominus`$<br>exp |
+| Predicates | =<br>$`<0`$<br>unit<br>$`=0`$ | $`<`$ | $`|`$ |
 | Commands | | print | pr<br>prs |
 
 For a typical domain implementation, which serves as a model for other domain implementations, see for example Section 2.3.1, which describes our implementation of Quotient domains. 
@@ -92,8 +92,8 @@ The domains supported are as follows:
 |:--|:--|:--|
 | **Primitive domains** | *integer* | Machine word integers |
 | | *base*<sub>B</sub> | Arbitrary precision unsigned base B integers |
-| | $\mathcal{Z}$ | Signed infinite precision integers |
-| **Domain constructors** | $\mathcal{Q}$ | Quotient domain |
+| | $`\mathcal{Z}`$ | Signed infinite precision integers |
+| **Domain constructors** | $`\mathcal{Q}`$ | Quotient domain |
 | | *modulo* | Modular domain |
 | | *poly* | Polynomial domain |
 | | *tpower* | Truncated power series domain |
@@ -124,7 +124,7 @@ We have implemented the following application algorithms, which may be applied t
 | *MOD_RS* | polynomial remainder sequence for GCD |
 | *PREM* | integral domain remainder |
 | *E_PRS* | polynomial remainder sequence for PREM |
-| *INVERSE* | inverse of $x \pmod y$ |
+| *INVERSE* | inverse of $`x \pmod y`$ |
 | *NIA* | Newton interpolation algorithm |
 | *CRA2, CRA* | Chinese remainder algorithm for 2 or more<br>linear congruences |
 | *FFT* | Fast Fourier Transform |
@@ -142,9 +142,9 @@ Icon variables (simple names for single items, and procedure names) may appear a
 
 | **Original ICON** | **Fancy Notation** |
 |:--|:--|
-| `one_base_B` | $1_{base_B}$ |
-| `delta_i_minus_1` | $\delta_{i-1}$ |
-| `plus_poly` | $\oplus_{poly}$ |
+| `one_base_B` | $`1_{base_B}`$ |
+| `delta_i_minus_1` | $`\delta_{i-1}`$ |
+| `plus_poly` | $`\oplus_{poly}`$ |
 
 For procedure definitions, instead of the obvious
 
@@ -446,11 +446,11 @@ The latter are best unused: ICON does not notify the user of integer multiplicat
 
 | | |
 |:--|:--|
-| **Data structures** | $base_{\mathbf{B}}$; $set_{base}$ |
-| **Constants** | $0_{base_{\mathbf{B}}}$, $1_{base_{\mathbf{B}}}$, $k_{base_{\mathbf{B}}}$ |
-| **Operators** | $\oplus_{base_{\mathbf{B}}}$, $\ominus_{base_{\mathbf{B}}}$, $\otimes_{base_{\mathbf{B}}}$, $\mathbin{⨸}_{base_{\mathbf{B}}}$, $normalize_{base_{\mathbf{B}}}$ |
-| **Predicates** | $<_{base_{\mathbf{B}}}$, $=_{base_{\mathbf{B}}}$ |
-| **Commands** | $print_{base_{\mathbf{B}}}$ |
+| **Data structures** | $`base_{\mathbf{B}}`$; $`set_{base}`$ |
+| **Constants** | $`0_{base_{\mathbf{B}}}`$, $`1_{base_{\mathbf{B}}}`$, $`k_{base_{\mathbf{B}}}`$ |
+| **Operators** | $`\oplus_{base_{\mathbf{B}}}`$, $`\ominus_{base_{\mathbf{B}}}`$, $`\otimes_{base_{\mathbf{B}}}`$, $`\mathbin{⨸}_{base_{\mathbf{B}}}`$, $`normalize_{base_{\mathbf{B}}}`$ |
+| **Predicates** | $`<_{base_{\mathbf{B}}}`$, $`=_{base_{\mathbf{B}}}`$ |
+| **Commands** | $`print_{base_{\mathbf{B}}}`$ |
 
 **Data structures.** *base* is a number $B$ such that 1 is less than the maximum machine word integer. Then *digits* is a list of machine word integers less than *base* and greater than 0. Width is the printing width of digits of the base, in terms of decimal digits.
 
@@ -950,11 +950,11 @@ is
 
 | | |
 |:--|:--|
-| **Data structures** | $Z$ |
-| **Constants** | $0_{Z}$, $1_{Z}$, $k_{Z}$ |
-| **Operators** | $\oplus_{Z}$, $-_{Z}$, $\otimes_{Z}$, $\mathbin{⨸}_{Z}$, $mod_{Z}$, $abs_{Z}$, $deg_{Z}$, $normalize_{Z}$ |
-| **Predicates** | $=_{Z}$, $<_{Z}$, $unit_{Z}$, $>0_{Z}$, $<0_{Z}$, $=0_{Z}$ |
-| **Commands** | $print_{Z}$ |
+| **Data structures** | $`Z`$ |
+| **Constants** | $`0_{Z}`$, $`1_{Z}`$, $`k_{Z}`$ |
+| **Operators** | $`\oplus_{Z}`$, $`-_{Z}`$, $`\otimes_{Z}`$, $`\mathbin{⨸}_{Z}`$, $`mod_{Z}`$, $`abs_{Z}`$, $`deg_{Z}`$, $`normalize_{Z}`$ |
+| **Predicates** | $`=_{Z}`$, $`<_{Z}`$, $`unit_{Z}`$, $`>0_{Z}`$, $`<0_{Z}`$, $`=0_{Z}`$ |
+| **Commands** | $`print_{Z}`$ |
 
 **Data structures.** *sign* is 1 or $-1$. *mantissa* is a base $Base$ integer, where the $Base$ is set by $k_{Z}$.
 
@@ -1215,10 +1215,10 @@ We provide the following machine integer arithmetic facilities:
 
 | | |
 |:--|:--|
-| **Constants** | $0_{integer}$, $1_{integer}$ |
-| **Operators** | $\oplus$, $-_{integer}$, $\odot_{integer}$, $\mathit{circleslash}_{integer}$, $rem_{integer}$, $mod_{integer}$, $deg_{integer}$, $abs_{integer}$ |
-| **Predicates** | $=0_{integer}$, $<0_{integer}$, $=_{integer}$, $unit_{integer}$ |
-| **Commands** | $print_{integer}$ |
+| **Constants** | $`0_{integer}`$, $`1_{integer}`$ |
+| **Operators** | $`\oplus`$, $`-_{integer}`$, $`\odot_{integer}`$, $`\mathit{circleslash}_{integer}`$, $`rem_{integer}`$, $`mod_{integer}`$, $`deg_{integer}`$, $`abs_{integer}`$ |
+| **Predicates** | $`=0_{integer}`$, $`<0_{integer}`$, $`=_{integer}`$, $`unit_{integer}`$ |
+| **Commands** | $`print_{integer}`$ |
 
 
 **Constants.** We provide constants 0 and 1, as follows:
@@ -1322,11 +1322,11 @@ EUCLID provides three classes of domain constructions: quotient domains $Q_{D}$,
 
 | | |
 |:--|:--|
-| **Data structures** | $\mathcal{Q}$ |
-| **Constants** | $0_{\mathcal{Q}}$, $1_{\mathcal{Q}}$, $k_{i\mathcal{Q}_x}$ |
-| **Operators** | $\oplus_{\mathcal{Q}}$, $-_{\mathcal{Q}}$, $\otimes_{\mathcal{Q}}$, $\mathbin{⨸}_{\mathcal{Q}}$, $mod_{\mathcal{Q}}$, $normalize_{\mathcal{Q}}$, $deg_{\mathcal{Q}}$ |
-| **Predicates** | $=_{\mathcal{Q}}$, $unit_{\mathcal{Q}}$ |
-| **Commands** | $print_{\mathcal{Q}}$ |
+| **Data structures** | $`\mathcal{Q}`$ |
+| **Constants** | $`0_{\mathcal{Q}}`$, $`1_{\mathcal{Q}}`$, $`k_{i\mathcal{Q}_x}`$ |
+| **Operators** | $`\oplus_{\mathcal{Q}}`$, $`-_{\mathcal{Q}}`$, $`\otimes_{\mathcal{Q}}`$, $`\mathbin{⨸}_{\mathcal{Q}}`$, $`mod_{\mathcal{Q}}`$, $`normalize_{\mathcal{Q}}`$, $`deg_{\mathcal{Q}}`$ |
+| **Predicates** | $`=_{\mathcal{Q}}`$, $`unit_{\mathcal{Q}}`$ |
+| **Commands** | $`print_{\mathcal{Q}}`$ |
 
 **Data structures.** The domains $\mathcal{Q}$ are of the form $\mathcal{Q}=\{\frac{m}{n} \mid m, n \in D, n \neq 0\}$, for some Euclidean domain $D$. Elements of such a domain $\mathcal{Q}$ are quotients with a dividend and a divisor:
 
@@ -1482,11 +1482,11 @@ Everything is a unit in $\mathcal{Q}$.
 
 | | |
 |:--|:--|
-| **Data structures** | $modulo$ |
-| **Constants** | $0_{modulo}$, $1_{modulo}$ |
-| **Operators** | $\oplus_{modulo}$, $-_{modulo}$, $\otimes_{modulo}$, $\mathbin{⨸}_{modulo}$, $normalize_{modulo}$, $deg_{modulo}$ |
-| **Predicates** | $=_{modulo}$, $unit_{modulo}$, $<0_{modulo}$ |
-| **Commands** | $print_{modulo}$ |
+| **Data structures** | $`modulo`$ |
+| **Constants** | $`0_{modulo}`$, $`1_{modulo}`$ |
+| **Operators** | $`\oplus_{modulo}`$, $`-_{modulo}`$, $`\otimes_{modulo}`$, $`\mathbin{⨸}_{modulo}`$, $`normalize_{modulo}`$, $`deg_{modulo}`$ |
+| **Predicates** | $`=_{modulo}`$, $`unit_{modulo}`$, $`<0_{modulo}`$ |
+| **Commands** | $`print_{modulo}`$ |
 
 **Data structures.**
 
@@ -1583,11 +1583,11 @@ Nothing is negative in a modular domain.
 
 | | |
 |:--|:--|
-| **Data structures** | $poly$, $term$; $poly\_of$, $0th\_coef$, $lead\_coef$ |
-| **Constants** | $0_{poly}$, $1_{poly}$, $k_{Z_Q}$, $k_{Z_{Qx}}$, $k_{Z_x}$ |
-| **Operators** | $\oplus_{poly}$, $-_{poly}$, $\otimes_{poly}$, $\mathbin{⨸}_{poly}$, $mod_{poly}$, $eval_{poly}$, $deg_{poly}$, $-_{deg}$, $\oplus_{deg}$, $normalize_{poly}$ |
-| **Predicates** | $<_{degree}$, $=_{poly}$, $unit_{poly}$ |
-| **Commands** | $print_{poly}$ |
+| **Data structures** | $`poly`$, $`term`$; $`poly\_of`$, $`0th\_coef`$, $`lead\_coef`$ |
+| **Constants** | $`0_{poly}`$, $`1_{poly}`$, $`k_{Z_Q}`$, $`k_{Z_{Qx}}`$, $`k_{Z_x}`$ |
+| **Operators** | $`\oplus_{poly}`$, $`-_{poly}`$, $`\otimes_{poly}`$, $`\mathbin{⨸}_{poly}`$, $`mod_{poly}`$, $`eval_{poly}`$, $`deg_{poly}`$, $`-_{deg}`$, $`\oplus_{deg}`$, $`normalize_{poly}`$ |
+| **Predicates** | $`<_{degree}`$, $`=_{poly}`$, $`unit_{poly}`$ |
+| **Commands** | $`print_{poly}`$ |
 
 **Data structures.** Polynomials $a(x) \in D[x]$ are finite sums of the form
 
@@ -2109,11 +2109,11 @@ A normal-form polynomial is one whose terms are in normal form (and in ascending
 
 | | |
 |:--|:--|
-| **Data structures** | $tpower$ |
-| **Constants** | $0_{tpower}$, $1_{tpower}$ |
-| **Operators** | $\oplus_{tpower}$, $-_{tpower}$, $\otimes_{tpower}$, $\mathbin{⨸}_{tpower}$, $normalize_{tpower}$ |
-| **Predicates** | $=_{tpower}$, $unit_{tpower}$ |
-| **Commands** | $print_{tpower}$ |
+| **Data structures** | $`tpower`$ |
+| **Constants** | $`0_{tpower}`$, $`1_{tpower}`$ |
+| **Operators** | $`\oplus_{tpower}`$, $`-_{tpower}`$, $`\otimes_{tpower}`$, $`\mathbin{⨸}_{tpower}`$, $`normalize_{tpower}`$ |
+| **Predicates** | $`=_{tpower}`$, $`unit_{tpower}`$ |
+| **Commands** | $`print_{tpower}`$ |
 
 **Data structures.**
 
@@ -2254,16 +2254,16 @@ The following is a table of expressions and their gcd's, as computed via GCD:
 
 <p align="center"><strong>Greatest Common Divisors</strong></p>
 
-| Domain | $A$ | $B$ | GCD |
+| Domain | $`A`$ | $`B`$ | GCD |
 |:--|:--|:--|:--|
-| $Z$ | $121903z$ | $5335z$ | $1z$ |
-| $Z$ | $-18z$ | $5z$ | $1z$ |
-| $Z$ | $228z$ | $612z$ | $12z$ |
-| $Q[x]$ | $(-2)q + 1q \cdot X^3$ | $(-3)q + 2q \cdot X^2$ | $(5/9)q$ |
-| $Z_{5}$ | $((-2) \bmod 5)$ | $((-3) \bmod 5)$ | $(2 \bmod 5)$ |
-| $Z_{5}[x]$ | $((-2) \bmod 5) + (1 \bmod 5) \cdot X^3$ | $((-3) \bmod 5) + (2 \bmod 5) \cdot X^2$ | $(3 \bmod 5) + (4 \bmod 5) \cdot X$ |
-| $QZ[x]$ | $(166z/243z)q + ((-275z)/243z)q \cdot X$ | $(115668z/75625z)q$ | $(115668z/75625z)q$ |
-| $QZ[x]$ | $(-2z)q + 1zq \cdot X^3$ | $(-3z)q + 2zq \cdot X^2$ | $(5z/9z)q$ |
+| $`Z`$ | $`121903z`$ | $`5335z`$ | $`1z`$ |
+| $`Z`$ | $`-18z`$ | $`5z`$ | $`1z`$ |
+| $`Z`$ | $`228z`$ | $`612z`$ | $`12z`$ |
+| $`Q[x]`$ | $`(-2)q + 1q \cdot X^3`$ | $`(-3)q + 2q \cdot X^2`$ | $`(5/9)q`$ |
+| $`Z_{5}`$ | $`((-2) \bmod 5)`$ | $`((-3) \bmod 5)`$ | $`(2 \bmod 5)`$ |
+| $`Z_{5}[x]`$ | $`((-2) \bmod 5) + (1 \bmod 5) \cdot X^3`$ | $`((-3) \bmod 5) + (2 \bmod 5) \cdot X^2`$ | $`(3 \bmod 5) + (4 \bmod 5) \cdot X`$ |
+| $`QZ[x]`$ | $`(166z/243z)q + ((-275z)/243z)q \cdot X`$ | $`(115668z/75625z)q`$ | $`(115668z/75625z)q`$ |
+| $`QZ[x]`$ | $`(-2z)q + 1zq \cdot X^3`$ | $`(-3z)q + 2zq \cdot X^2`$ | $`(5z/9z)q`$ |
 
 **EUCLID**$(a, b)$  
 Input: $a, b \in D$, not both zero.  
@@ -2294,13 +2294,13 @@ The following is a table of expressions and their extended *gcd*'s, as computed 
 
 <p align="center"><strong>Extended Greatest Common Divisors</strong></p>
 
-| $A$, $B$ | GCD, $s$, $t$ |
+| $`A`$, $`B`$ | GCD, $`s`$, $`t`$ |
 |:--|:--|
-| $2$, $4$ | $2$, $1$, $0$ |
-| $228$, $612$ | $12$, $(-8)$, $3$ |
-| $59$, $24$ | $1$, $11$, $(-27)$ |
-| $(-2)q + 1q \cdot X^3$, $(-3)q + 2q \cdot X^2$ | $(5/9)q$, $(-16/9)q + (-4/3)q \cdot X$, $1q + (8/9)q \cdot X + (2/3)q \cdot X^2$ |
-| $((-2) \bmod 5) + (1 \bmod 5) \cdot X^3$, $((-3) \bmod 5) + (2 \bmod 5) \cdot X^2$ | $(3 \bmod 5) + (4 \bmod 5) \cdot X$, $(1 \bmod 5)$, $(2 \bmod 5) \cdot X$ |
+| $`2`$, $`4`$ | $`2`$, $`1`$, $`0`$ |
+| $`228`$, $`612`$ | $`12`$, $`(-8)`$, $`3`$ |
+| $`59`$, $`24`$ | $`1`$, $`11`$, $`(-27)`$ |
+| $`(-2)q + 1q \cdot X^3`$, $`(-3)q + 2q \cdot X^2`$ | $`(5/9)q`$, $`(-16/9)q + (-4/3)q \cdot X`$, $`1q + (8/9)q \cdot X + (2/3)q \cdot X^2`$ |
+| $`((-2) \bmod 5) + (1 \bmod 5) \cdot X^3`$, $`((-3) \bmod 5) + (2 \bmod 5) \cdot X^2`$ | $`(3 \bmod 5) + (4 \bmod 5) \cdot X`$, $`(1 \bmod 5)`$, $`(2 \bmod 5) \cdot X`$ |
 
 
 #### 3.1.2. Modular Inverse
@@ -2328,14 +2328,14 @@ Output: If $(m, a) = 1$, then $a^{-1} \bmod m$; otherwise error.
 
 A table of modular inverses as computed by INVERSE is as follows:
 
-| $x$ | modulus | $x^{-1}$ |
+| $`x`$ | modulus | $`x^{-1}`$ |
 |:--|:--|:--|
-| $30$ | $197$ | $46$ |
-| $16$ | $21$ | $4$ |
-| $18$ | $21$ | ERROR |
-| $24$ | $59$ | $32$ |
-| $(1 \bmod 2) + (1 \bmod 2) \cdot X^2$ | $(1 \bmod 2) + (1 \bmod 2) \cdot X^2 + (1 \bmod 2) \cdot X^5$ | $(1 \bmod 2) + (1 \bmod 2) \cdot X + (1 \bmod 2) \cdot X^2 + (1 \bmod 2) \cdot X^4$ |
-| $(-3)q + 2q \cdot X^2$ | $(-2)q + 1q \cdot X^3$ | $(9/5)q + (8/5)q \cdot X + (6/5)q \cdot X^2$ |
+| $`30`$ | $`197`$ | $`46`$ |
+| $`16`$ | $`21`$ | $`4`$ |
+| $`18`$ | $`21`$ | ERROR |
+| $`24`$ | $`59`$ | $`32`$ |
+| $`(1 \bmod 2) + (1 \bmod 2) \cdot X^2`$ | $`(1 \bmod 2) + (1 \bmod 2) \cdot X^2 + (1 \bmod 2) \cdot X^5`$ | $`(1 \bmod 2) + (1 \bmod 2) \cdot X + (1 \bmod 2) \cdot X^2 + (1 \bmod 2) \cdot X^4`$ |
+| $`(-3)q + 2q \cdot X^2`$ | $`(-2)q + 1q \cdot X^3`$ | $`(9/5)q + (8/5)q \cdot X + (6/5)q \cdot X^2`$ |
 
 
 #### 3.1.3. Chinese Remainders and Single-Variable Linear Congruential Systems
