@@ -54,7 +54,7 @@ The purpose of the package of routines described in this paper is to allow an IC
 
 In order to support a high level of description, it must be possible to describe the implementation of particular Euclidean domains, and to describe algorithms which apply generically to all Euclidean domain instances. We do this by deciding which functions are expected of all Euclidean domain implementations (say, div, mod, + and -), and then implementing a "dispatch" version of each of these. The "dispatch" div function inspects the type of its argument (say, integer, polynomial, quotient domain element or modular domain element), and then calls the associated div function in the domain implementation (say divjnteger, dlv_poly, dlv_Q or dlv_mod). 
 
-The ability to test the run-time environment is a feature of ICON. Given a string, say "X", and an integer corresponding to a number of formal parameters, say 3, proc("X", 3) will return a procedure (a first-class value in ICON, assignable to variables) if the identifier X is globally to a procedure which is defined to take 3 arguments. Otherwise proc fails. To test for the procedure $\otimes_{Z}$, we evaluate `proc("times" || "_Z", 2)`, and in general, for some string value X which corresponds to a procedure name, Y a domain name, and i a number of formal parameters, we evaluate `proc(X || "_" || Y, i)`, where `||` is the ICON string concatenation operator. For example, here is the code for the "generic" division operation:
+The ability to test the run-time environment is a feature of ICON. Given a string, say "X", and an integer corresponding to a number of formal parameters, say 3, proc("X", 3) will return a procedure (a first-class value in ICON, assignable to variables) if the identifier X is globally to a procedure which is defined to take 3 arguments. Otherwise proc fails. To test for the procedure $`\otimes_{Z}`$, we evaluate `proc("times" || "_Z", 2)`, and in general, for some string value X which corresponds to a procedure name, Y a domain name, and i a number of formal parameters, we evaluate `proc(X || "_" || Y, i)`, where `||` is the ICON string concatenation operator. For example, here is the code for the "generic" division operation:
 
 <div class="math-left">
 
@@ -158,7 +158,7 @@ we use the logical-looking
 
 $$\text{F}(a, b, c) \Leftarrow \text{code} \ \blacksquare$$
 
-For `return x` we use $\Uparrow x$, and for `return` we use $\Uparrow$. Instead of `fail` we use $\bot$. All other ICON reserved words are bold-faced.
+For `return x` we use $`\Uparrow x`$, and for `return` we use $`\Uparrow`$. Instead of `fail` we use $`\bot`$. All other ICON reserved words are bold-faced.
 
 
 ### 1.4. Afterthoughts
@@ -180,11 +180,11 @@ As an exercise, the author believes that the code addresses some of the essentia
 
 Lipson’s book, p. 203, contains a significant proviso:
 
-> We assume that our (Algol-like) language allows for the manipulation of values from an arbitrary Euclidean domain *D* with degree function *d*. In particular we assume that our language provides a *Division Algorithm* in the form of two operations “div” and $mod$ which return, respectively, a preferred quotient and remainder in accordance with the Division Property of a Euclidean domain...
+> We assume that our (Algol-like) language allows for the manipulation of values from an arbitrary Euclidean domain *D* with degree function *d*. In particular we assume that our language provides a *Division Algorithm* in the form of two operations “div” and $`mod`$ which return, respectively, a preferred quotient and remainder in accordance with the Division Property of a Euclidean domain...
 
  The purpose of this package is to partially implement this proviso. The package implements several primitive domains and *domain constructors*,which are classes of domains composed from other domains. 
  
- When a procedure like $\mathbin{⨸}$ or $mod$ is applied to an object which is an instance of a Euclidean domain, the type of the object is determined by inspection. This is either the primitive type, in the case of an instance of a primitive domain, or the type of the “outermost” constructor, in the case of an instance of a composite domain. In the case of required and optional procedures, the run-time environment is then tested to determine whether the domain implementation supplies an operation of this type. If the name of the domain is $D$, and the procedure name is $P$, then the run-time environment is tested for a procedure named $P_{D}$. For example, $\mathbin{⨸}$ applied to a quotient will look up the procedure $\mathbin{⨸}_{Q}$. Required procedures must be defined by the domain implementation, otherwise the operation fails. Implementation-optional procedures will synthesize their values if a more domain-specific implementation does not exist. 
+ When a procedure like $`\mathbin{⨸}`$ or $`mod`$ is applied to an object which is an instance of a Euclidean domain, the type of the object is determined by inspection. This is either the primitive type, in the case of an instance of a primitive domain, or the type of the “outermost” constructor, in the case of an instance of a composite domain. In the case of required and optional procedures, the run-time environment is then tested to determine whether the domain implementation supplies an operation of this type. If the name of the domain is $`D`$, and the procedure name is $`P`$, then the run-time environment is tested for a procedure named $`P_{D}`$. For example, $`\mathbin{⨸}`$ applied to a quotient will look up the procedure $`\mathbin{⨸}_{Q}`$. Required procedures must be defined by the domain implementation, otherwise the operation fails. Implementation-optional procedures will synthesize their values if a more domain-specific implementation does not exist. 
  
 **Constants.**
  
@@ -204,7 +204,7 @@ Lipson’s book, p. 203, contains a significant proviso:
 
 **Operators.**
 
-The following procedures define the basic arithmetic operations for domains. As noted in Table 1, every domain must supply Abs, $\oplus$, $-$, $\otimes$ and $\mathbin{⨸}$. $mod$, rem and normalize are optional, and $\ominus$ and exp are synthesized.
+The following procedures define the basic arithmetic operations for domains. As noted in Table 1, every domain must supply Abs, $`\oplus`$, $`-`$, $`\otimes`$ and $`\mathbin{⨸}`$. $`mod`$, rem and normalize are optional, and $`\ominus`$ and exp are synthesized.
 
 <div class="math-left">
 
@@ -255,7 +255,7 @@ in the domain of quotients of machine-word integers are denoted within ICON by t
 
 $$(-2)q + 1q \cdot X^3 \bmod (-3)q + 2q \cdot X^2 = (-2)q + \tfrac{3}{2}q \cdot X$$
 
-Similarly, given $c(x)=\tfrac{3}{2}x - 2$, represented as
+Similarly, given $`c(x)=\tfrac{3}{2}x - 2`$, represented as
 
 <div class="math-left">
 
@@ -385,7 +385,7 @@ All of the predicates defined below except | are required to be defined by a dom
 
 </div>
 
-$a \mid c$ (a divides c) if c is a multiple of a, that is, if $\text{rem}(c, a) = 0$.
+$`a \mid c`$ (a divides c) if c is a multiple of a, that is, if $`\text{rem}(c, a) = 0`$.
 
 <div class="math-left">
 
@@ -400,7 +400,7 @@ $a \mid c$ (a divides c) if c is a multiple of a, that is, if $\text{rem}(c, a) 
 
 **Commands.**
 
-Every domain instance $D$ implementation should define a preferred method of printing values in the domain, $print_{D}$. On top of this, we supply printing control structures *pr* and *prs*. *pr* takes a list of arguments enclosed in braces, and prints them, using the printing procedure appropriate for the type of each argument, followed by a carriage return. *prs* is the same, omitting the carriage return.
+Every domain instance $`D`$ implementation should define a preferred method of printing values in the domain, $`print_{D}`$. On top of this, we supply printing control structures *pr* and *prs*. *pr* takes a list of arguments enclosed in braces, and prints them, using the printing procedure appropriate for the type of each argument, followed by a carriage return. *prs* is the same, omitting the carriage return.
 
 *prs* and *pr* are defined using the user-defined control operation features of ICON 5.10. [Grisw85a, Grisw83a] When *pr* or *prs* is called with a sequence of expressions in braces, the expressions are passed as unactivated co-expressions, which are then activated with the ICON @ operator.
 
@@ -452,7 +452,7 @@ The latter are best unused: ICON does not notify the user of integer multiplicat
 | **Predicates** | $`<_{base_{\mathbf{B}}}`$, $`=_{base_{\mathbf{B}}}`$ |
 | **Commands** | $`print_{base_{\mathbf{B}}}`$ |
 
-**Data structures.** *base* is a number $B$ such that 1 is less than the maximum machine word integer. Then *digits* is a list of machine word integers less than *base* and greater than 0. Width is the printing width of digits of the base, in terms of decimal digits.
+**Data structures.** *base* is a number $`B`$ such that 1 is less than the maximum machine word integer. Then *digits* is a list of machine word integers less than *base* and greater than 0. Width is the printing width of digits of the base, in terms of decimal digits.
 
 <div class="math-left">
 
@@ -487,7 +487,7 @@ The latter are best unused: ICON does not notify the user of integer multiplicat
 
 **Operators.**
 
-The base $B$ addition algorithm is that of Lipson, p. 199. For input it takes $a$, $b$, lists of integers $\leq B$, of length $m$ returning $a + b$.
+The base $`B`$ addition algorithm is that of Lipson, p. 199. For input it takes $`a`$, $`b`$, lists of integers $`\leq B`$, of length $`m`$ returning $`a + b`$.
 
 <div class="math-left">
 
@@ -545,7 +545,7 @@ is
 
 1 #8# + 7 7 7 #8# = 1 0 0 0 #8#
 
-The base B subtraction algorithm is Knuth Algorithm 4.3.1 S, transliterated from a SETL implementation of Robert Dewar. Assume $a\geq b$ are lists of integers $\leq B$. Returns $a-b$. 
+The base B subtraction algorithm is Knuth Algorithm 4.3.1 S, transliterated from a SETL implementation of Robert Dewar. Assume $`a\geq b`$ are lists of integers $`\leq B`$. Returns $`a-b`$. 
 
 <div class="math-left">
 
@@ -627,7 +627,7 @@ is
 
 </div>
 
-The base $B$ multiplication algorithm is that of Lipson, p. 200. As input it takes $a$, $b$, lists of integers $\leq B$, of length $m$ and $n$. It outputs $a \otimes b$. 
+The base $`B`$ multiplication algorithm is that of Lipson, p. 200. As input it takes $`a`$, $`b`$, lists of integers $`\leq B`$, of length $`m`$ and $`n`$. It outputs $`a \otimes b`$. 
 
 <div class="math-left">
 
@@ -696,7 +696,7 @@ is
 7 4 7 8 #10# * 4 6 2 5 #10# = 3 4 5 8 5 7 5 0 #10#
 
 
-The following algorithm computes $a\over b$ by long division. The design is that of Knuth Algorithm 4.3.1 D [Knuth73a], and the implementation is largely borrowed from a SETL implementation of Robert Dewar [NYU 84a]. Most of the following comments are lifted from the Dewar implementation. 
+The following algorithm computes $`a\over b`$ by long division. The design is that of Knuth Algorithm 4.3.1 D [Knuth73a], and the implementation is largely borrowed from a SETL implementation of Robert Dewar [NYU 84a]. Most of the following comments are lifted from the Dewar implementation. 
 
 This is by far the most difficult of the four basic operations. This is because the paper and pencil algorithm involves certain amounts of guess work which cannot be programmed directly. The approach (analyzed in detail by Knuth) is to reduce the guess work by computing a rather good guess at each digit of the result, and then correcting if the guess is wrong. 
 
@@ -718,7 +718,7 @@ This is by far the most difficult of the four basic operations. This is because 
 </div>
 
 
-The case of a one digit divisor is treated specially. Not only is this more efficient, but the general algorithm assumes that the divisor contains at least two digits. Basically dividing by a single digit is straightforward. Since we can represent numbers up to $B*B— 1$, we can do the steps of the division exactly without any need for guess work. The division is then done left to right.
+The case of a one digit divisor is treated specially. Not only is this more efficient, but the general algorithm assumes that the divisor contains at least two digits. Basically dividing by a single digit is straightforward. Since we can represent numbers up to $`B*B— 1`$, we can do the steps of the division exactly without any need for guess work. The division is then done left to right.
 
 <div class="math-left">
 
@@ -756,7 +756,7 @@ Otherwise we must commence with the full long division algorithm.
 </div>
 
 
-Knuth Step D1. [Normalize] The first step is to multiply both the divisor and dividend by a scale factor. Obviously such scaling does not affect the quotient. The purpose of this scaling is to ensure that the first digit of the divisor is at least $B/2$. This condition is required for the proper operation of the quotient estimation algorithm used in the division loop. Note that we added an extra digit at the front of the dividend above.
+Knuth Step D1. [Normalize] The first step is to multiply both the divisor and dividend by a scale factor. Obviously such scaling does not affect the quotient. The purpose of this scaling is to ensure that the first digit of the divisor is at least $`B/2`$. This condition is required for the proper operation of the quotient estimation algorithm used in the division loop. Note that we added an extra digit at the front of the dividend above.
 
 <div class="math-left">
 
@@ -772,7 +772,7 @@ Knuth Step D1. [Normalize] The first step is to multiply both the divisor and di
 
 </div>
 
-Knuth Step D2. [Initialize $j$] This is the major loop, corresponding to long division steps.
+Knuth Step D2. [Initialize $`j`$] This is the major loop, corresponding to long division steps.
 
 <div class="math-left">
 
@@ -831,7 +831,7 @@ Knuth Step D4. [Multiply and subtract] Now (for the moment accepting the estimat
 
 </div>
 
-Knuth Step D5,D6. [Test remainder. Add back] If the estimate was one off, then $u[j]$ went negative when the final carry was added above. In this case, we add back the divisor once, and adjust the quotient digit.
+Knuth Step D5,D6. [Test remainder. Add back] If the estimate was one off, then $`u[j]`$ went negative when the final carry was added above. In this case, we add back the divisor once, and adjust the quotient digit.
 
 <div class="math-left">
 
@@ -904,7 +904,7 @@ is
 
 </div>
 
-**Predicates.** We supply two predicates, $<_{base_{\mathbf{B}}}$ and $=_{base_{\mathbf{B}}}$.
+**Predicates.** We supply two predicates, $`<_{base_{\mathbf{B}}}`$ and $`=_{base_{\mathbf{B}}}`$.
 
 <div class="math-left">
 
@@ -956,7 +956,7 @@ is
 | **Predicates** | $`=_{Z}`$, $`<_{Z}`$, $`unit_{Z}`$, $`>0_{Z}`$, $`<0_{Z}`$, $`=0_{Z}`$ |
 | **Commands** | $`print_{Z}`$ |
 
-**Data structures.** *sign* is 1 or $-1$. *mantissa* is a base $Base$ integer, where the $Base$ is set by $k_{Z}$.
+**Data structures.** *sign* is 1 or $`-1`$. *mantissa* is a base $`Base`$ integer, where the $`Base`$ is set by $`k_{Z}`$.
 
 <div class="math-left">
 
@@ -983,7 +983,7 @@ is
 
 </div>
 
-$k_{Z}$ takes an ICON integer and transforms it into a $Z$ constant.
+$`k_{Z}`$ takes an ICON integer and transforms it into a $`Z`$ constant.
 
 <div class="math-left">
 
@@ -1039,7 +1039,7 @@ $k_{Z}$ takes an ICON integer and transforms it into a $Z$ constant.
 
 is
 
-$1z + (-999z) = (-998z)$
+$`1z + (-999z) = (-998z)`$
 
 <div class="math-left">
 
@@ -1069,8 +1069,8 @@ $1z + (-999z) = (-998z)$
 
 is
 
-$-212z = (-212z)$  
-$-(-99z) = 99z$
+$`-212z = (-212z)`$  
+$`-(-99z) = 99z`$
 
 <div class="math-left">
 
@@ -1100,9 +1100,9 @@ $-(-99z) = 99z$
 
 is
 
-$10z / 1z = 10z$  
-$121903z / 5335z = 22z$  
-$115668z / 75625z = 1z$
+$`10z / 1z = 10z`$  
+$`121903z / 5335z = 22z`$  
+$`115668z / 75625z = 1z`$
 
 <div class="math-left">
 
@@ -1135,7 +1135,7 @@ $115668z / 75625z = 1z$
 
 is
 
-$121903z \bmod 5335z = 4533z$
+$`121903z \bmod 5335z = 4533z`$
 
 <div class="math-left">
 
@@ -1313,10 +1313,10 @@ We provide the following machine integer arithmetic facilities:
 
 ### 2.3. Domain constructors
 
-EUCLID provides three classes of domain constructions: quotient domains $Q_{D}$, modular domains $D/(e)$, polynomials $D[x]$ and truncated power series $T(D[[x]])_{n}$.
+EUCLID provides three classes of domain constructions: quotient domains $`Q_{D}`$, modular domains $`D/(e)`$, polynomials $`D[x]`$ and truncated power series $`T(D[[x]])_{n}`$.
 
 
-#### 2.3.1. Quotient Euclidean domain $\mathcal{Q}$
+#### 2.3.1. Quotient Euclidean domain $`\mathcal{Q}`$
 
 <p align="center"><strong>Quotient Domain Arithmetic Facilities</strong></p>
 
@@ -1328,7 +1328,7 @@ EUCLID provides three classes of domain constructions: quotient domains $Q_{D}$,
 | **Predicates** | $`=_{\mathcal{Q}}`$, $`unit_{\mathcal{Q}}`$ |
 | **Commands** | $`print_{\mathcal{Q}}`$ |
 
-**Data structures.** The domains $\mathcal{Q}$ are of the form $\mathcal{Q}=\{\frac{m}{n} \mid m, n \in D, n \neq 0\}$, for some Euclidean domain $D$. Elements of such a domain $\mathcal{Q}$ are quotients with a dividend and a divisor:
+**Data structures.** The domains $`\mathcal{Q}`$ are of the form $`\mathcal{Q}=\{\frac{m}{n} \mid m, n \in D, n \neq 0\}`$, for some Euclidean domain $`D`$. Elements of such a domain $`\mathcal{Q}`$ are quotients with a dividend and a divisor:
 
 <div class="math-left">
 
@@ -1356,7 +1356,7 @@ EUCLID provides three classes of domain constructions: quotient domains $Q_{D}$,
 
 </div>
 
-**Operators.** Let $a = \frac{p}{q}$, $b = \frac{p'}{q'}$. Then $a + b = \frac{x}{y}$ where $x = pq' \oplus p'q$, $y = qq'$.
+**Operators.** Let $`a = \frac{p}{q}`$, $`b = \frac{p'}{q'}`$. Then $`a + b = \frac{x}{y}`$ where $`x = pq' \oplus p'q`$, $`y = qq'`$.
 
 <div class="math-left">
 
@@ -1407,7 +1407,7 @@ There are no remainders in quotient division.
 
 </div>
 
-$normalize_{\mathcal{Q}}(x)$ reduces the size of the dividend and divisor, and ensures that any negative sign is in the dividend. Let $g = GCD(x, y)$. Then $normalize_{\mathcal{Q}}(\frac{x}{y}) = \frac{x \mathbin{⨸} g}{y \mathbin{⨸} g}$.
+$`normalize_{\mathcal{Q}}(x)`$ reduces the size of the dividend and divisor, and ensures that any negative sign is in the dividend. Let $`g = GCD(x, y)`$. Then $`normalize_{\mathcal{Q}}(\frac{x}{y}) = \frac{x \mathbin{⨸} g}{y \mathbin{⨸} g}`$.
 
 <div class="math-left">
 
@@ -1433,7 +1433,7 @@ d8g_Q (X) 4= it X ■
 
 **Predicates.**
 
-$\frac{p}{q} = \frac{p'}{q'}$ if and only if $pq' = qp'$.
+$`\frac{p}{q} = \frac{p'}{q'}`$ if and only if $`pq' = qp'`$.
 
 <div class="math-left">
 
@@ -1446,7 +1446,7 @@ $\frac{p}{q} = \frac{p'}{q'}$ if and only if $pq' = qp'$.
 
 </div>
 
-Everything is a unit in $\mathcal{Q}$.
+Everything is a unit in $`\mathcal{Q}`$.
 
 <div class="math-left">
 
@@ -1476,7 +1476,7 @@ Everything is a unit in $\mathcal{Q}$.
 </div>
 
 
-#### 2.3.2. Modular Euclidean domain $D/(x)$
+#### 2.3.2. Modular Euclidean domain $`D/(x)`$
 
 <p align="center"><strong>Modular Domain Arithmetic Facilities</strong></p>
 
@@ -1490,7 +1490,7 @@ Everything is a unit in $\mathcal{Q}$.
 
 **Data structures.**
 
-An item from a modular domain, say $Z_{5}$, is specified by the item in the “base” domain, plus the modulus.
+An item from a modular domain, say $`Z_{5}`$, is specified by the item in the “base” domain, plus the modulus.
 
 <div class="math-left">
 
@@ -1577,7 +1577,7 @@ Nothing is negative in a modular domain.
 </div>
 
 
-#### 2.3.3. Polynomial Euclidean domain $D[x]$
+#### 2.3.3. Polynomial Euclidean domain $`D[x]`$
 
 <p align="center"><strong>Polynomial Domain Arithmetic Facilities</strong></p>
 
@@ -1589,7 +1589,7 @@ Nothing is negative in a modular domain.
 | **Predicates** | $`<_{degree}`$, $`=_{poly}`$, $`unit_{poly}`$ |
 | **Commands** | $`print_{poly}`$ |
 
-**Data structures.** Polynomials $a(x) \in D[x]$ are finite sums of the form
+**Data structures.** Polynomials $`a(x) \in D[x]`$ are finite sums of the form
 
 $$a(x) = \sum_{i=0}^{m} a_i x^i$$
 
@@ -1607,7 +1607,7 @@ They are represented as lists of terms, in increasing order of power, such that 
 
 </div>
 
-The coefficient of the constant term as an element of $D$, if there is a constant term, otherwise 0, may be obtained with:
+The coefficient of the constant term as an element of $`D`$, if there is a constant term, otherwise 0, may be obtained with:
 
 <div class="math-left">
 
@@ -1636,7 +1636,7 @@ The coefficient of the term with the highest degree may be obtained with:
 
 </div>
 
-A term, say $ax^n$, is represented as $coef \cdot X^{power}$. It is assumed that coefficient and indeterminate range over the same base domain, and that the power ranges over $\mathcal{N}$.
+A term, say $`ax^n`$, is represented as $`coef \cdot X^{power}`$. It is assumed that coefficient and indeterminate range over the same base domain, and that the power ranges over $`\mathcal{N}`$.
 
 <div class="math-left">
 
@@ -1682,8 +1682,8 @@ The zero of the base domain of a coefficient of the polynomial is obtained via:
 
 is
 
-$Q\text{:    0 = }0_{q}$  
-$QZ\text{:   0 = }0_{zq}$
+$`Q\text{:    0 = }0_{q}`$  
+$`QZ\text{:   0 = }0_{zq}`$
 
 The one of the base domain of a coefficient of the polynomial may be obtained with: 
 
@@ -1715,7 +1715,7 @@ An arbitrary-precision rational whole number is obtained with:
 
 </div>
 
-An arbitrary-precision rational whole number-coefficient indeterminate $e x^y$ is obtained with:
+An arbitrary-precision rational whole number-coefficient indeterminate $`e x^y`$ is obtained with:
 
 <div class="math-left">
 
@@ -1728,7 +1728,7 @@ An arbitrary-precision rational whole number-coefficient indeterminate $e x^y$ i
 
 </div>
 
-An arbitrary-precision integer-coefficient indeterminate $e x^y$ is obtained with:
+An arbitrary-precision integer-coefficient indeterminate $`e x^y`$ is obtained with:
 
 <div class="math-left">
 
@@ -1810,8 +1810,8 @@ An arbitrary-precision integer-coefficient indeterminate $e x^y$ is obtained wit
 
 is
 
-$Q\text{: }(-2)q + 1q \cdot X^3) + ((-3)q + 2q \cdot X^3) = (-5)q + 3q \cdot X^3$  
-$QZ\text{: }((-2z)q + 1zq \cdot X^3) + ((-3z)q + 2zq \cdot X^3) = (-5z)q + 3zq \cdot X^3$
+$`Q\text{: }(-2)q + 1q \cdot X^3) + ((-3)q + 2q \cdot X^3) = (-5)q + 3q \cdot X^3`$  
+$`QZ\text{: }((-2z)q + 1zq \cdot X^3) + ((-3z)q + 2zq \cdot X^3) = (-5z)q + 3zq \cdot X^3`$
 
 <div class="math-left">
 
@@ -1848,8 +1848,8 @@ $QZ\text{: }((-2z)q + 1zq \cdot X^3) + ((-3z)q + 2zq \cdot X^3) = (-5z)q + 3zq \
 
 is
 
-$Q\text{:  - }((-2)q + 1q \cdot X^3) = 2q + (-1)q \cdot X^3$  
-$QZ\text{: - }((-2z)q + 1zq \cdot X^3) = 2zq + (-1z)q \cdot X^3$
+$`Q\text{:  - }((-2)q + 1q \cdot X^3) = 2q + (-1)q \cdot X^3`$  
+$`QZ\text{: - }((-2z)q + 1zq \cdot X^3) = 2zq + (-1z)q \cdot X^3`$
 
 <div class="math-left">
 
@@ -1905,8 +1905,8 @@ $QZ\text{: - }((-2z)q + 1zq \cdot X^3) = 2zq + (-1z)q \cdot X^3$
 
 is
 
-$Q\text{:    }((-2)q + 1q \cdot X^3) * ((-3)q + 2q \cdot X^3) = 6q + (-7)q \cdot X^3 + 2q \cdot X^6$  
-$QZ\text{:   }((-2z)q + 1zq \cdot X^3) * ((-3z)q + 2zq \cdot X^3) = 6zq + (-7z)q \cdot X^3 + 2zq \cdot X^6$
+$`Q\text{:    }((-2)q + 1q \cdot X^3) * ((-3)q + 2q \cdot X^3) = 6q + (-7)q \cdot X^3 + 2q \cdot X^6`$  
+$`QZ\text{:   }((-2z)q + 1zq \cdot X^3) * ((-3z)q + 2zq \cdot X^3) = 6zq + (-7z)q \cdot X^3 + 2zq \cdot X^6`$
 
 <div class="math-left">
 
@@ -1919,7 +1919,7 @@ $QZ\text{:   }((-2z)q + 1zq \cdot X^3) * ((-3z)q + 2zq \cdot X^3) = 6zq + (-7z)q
 &\quad quotient \mathrel{:=} 0_{poly}(r) \\
 &\quad \textbf{repeat } \{ \\
 &\quad\quad m \mathrel{:=} deg_{poly}(r) \\
-&\quad\quad \textbf{if } <_{degree}(m, n) \\
+&\quad\quad \textbf{if } \mathop{<}_{degree}(m, n) \\
 &\quad\quad \textbf{then } \Uparrow quotient \\
 &\quad\quad \textbf{else } \{ q \mathrel{:=} poly([term(\mathbin{⨸}(lead\_coef(r), lead\_coef(b)), m - n)]) \\
 &\quad\quad\quad \textbf{if } m = 0 \\
@@ -1958,10 +1958,10 @@ $QZ\text{:   }((-2z)q + 1zq \cdot X^3) * ((-3z)q + 2zq \cdot X^3) = 6zq + (-7z)q
 
 is
 
-$\text{integers: }1/3 = 0$  
-$Q\text{: }((5/9)q) / ((-2)q + (3/2)q \cdot X) = 0q$  
-$QZ\text{: }((-2z)q + (3z/2z)q \cdot X) / ((5z/9z)q) = ((-18z)/5z)q + (27z/10z)q \cdot X$  
-$QZ[x]\text{: }((166z/243z)q + ((-275z)/243z)q \cdot X) / ((115668z/75625z)q) = (6276875z/14053662z)q + ((-20796875z)/28107324z)q \cdot X$
+$`\text{integers: }1/3 = 0`$  
+$`Q\text{: }((5/9)q) / ((-2)q + (3/2)q \cdot X) = 0q`$  
+$`QZ\text{: }((-2z)q + (3z/2z)q \cdot X) / ((5z/9z)q) = ((-18z)/5z)q + (27z/10z)q \cdot X`$  
+$`QZ[x]\text{: }((166z/243z)q + ((-275z)/243z)q \cdot X) / ((115668z/75625z)q) = (6276875z/14053662z)q + ((-20796875z)/28107324z)q \cdot X`$
 
 <div class="math-left">
 
@@ -1974,7 +1974,7 @@ $QZ[x]\text{: }((166z/243z)q + ((-275z)/243z)q \cdot X) / ((115668z/75625z)q) = 
 
 </div>
 
-Evaluate $f(x)$ at $a$, that is evaluate $f(a)$:
+Evaluate $`f(x)`$ at $`a`$, that is evaluate $`f(a)`$:
 
 <div class="math-left">
 
@@ -1991,7 +1991,7 @@ Evaluate $f(x)$ at $a$, that is evaluate $f(a)$:
 
 </div>
 
-Evaluate $cx^p$ at $x=a$:
+Evaluate $`cx^p`$ at $`x=a`$:
 
 <div class="math-left">
 
@@ -2004,19 +2004,19 @@ Evaluate $cx^p$ at $x=a$:
 
 </div>
 
-Degrees of polynomials are values which may be integers, or the string "$-\infty$". Accordingly, special subtraction and addition procedures are required.
+Degrees of polynomials are values which may be integers, or the string `"- infinity"`. Accordingly, special subtraction and addition procedures are required.
 
 <div class="math-left">
 
 ```math
 \begin{aligned}
 &deg_{poly}(x) \Leftarrow \\
-&\quad \textbf{if } =_{poly}(x, 0_{poly}(x)) \textbf{ then } \Uparrow \text{"- infinity"} \\
+&\quad \textbf{if } \mathop{=}_{poly}(x, 0_{poly}(x)) \textbf{ then } \Uparrow \text{"- infinity"} \\
 &\quad \textbf{else } \Uparrow x.terms[\texttt{*}x.terms].power \ \blacksquare \\
 &\\
-&-_{deg}(a, b) \Leftarrow \\
-&\quad \Uparrow (\textbf{if } type(a) = \text{"string"} \textbf{ then } b \\
-&\quad\quad \textbf{else if } type(b) = \text{"string"} \textbf{ then } a \\
+&\mathop{-}_{deg}(a, b) \Leftarrow \\
+&\quad \Uparrow (\textbf{if } type(a) \mathrel{=} \text{"string"} \textbf{ then } b \\
+&\quad\quad \textbf{else if } type(b) \mathrel{=} \text{"string"} \textbf{ then } a \\
 &\quad\quad \textbf{else } a - b) \ \blacksquare
 \end{aligned}
 ```
@@ -2029,8 +2029,8 @@ Degrees of polynomials are values which may be integers, or the string "$-\infty
 ```math
 \begin{aligned}
 &\oplus_{deg}(a, b) \Leftarrow \\
-&\quad \Uparrow (\textbf{if } type(a) = \text{"string"} \textbf{ then } b \\
-&\quad\quad \textbf{else if } type(b) = \text{"string"} \textbf{ then } a \\
+&\quad \Uparrow (\textbf{if } type(a) \mathrel{=} \text{"string"} \textbf{ then } b \\
+&\quad\quad \textbf{else if } type(b) \mathrel{=} \text{"string"} \textbf{ then } a \\
 &\quad\quad \textbf{else } a + b) \ \blacksquare
 \end{aligned}
 ```
@@ -2061,19 +2061,19 @@ A normal-form polynomial is one whose terms are in normal form (and in ascending
 
 ```math
 \begin{aligned}
-&<_{degree}(a, b) \Leftarrow \\
-&\quad \textbf{if } type(a) = \text{"string"} \\
-&\quad \textbf{then } \Uparrow not(type(b) = \text{"string"}) \\
+&\mathop{<}_{degree}(a, b) \Leftarrow \\
+&\quad \textbf{if } type(a) \mathrel{=} \text{"string"} \\
+&\quad \textbf{then } \Uparrow not(type(b) \mathrel{=} \text{"string"}) \\
 &\quad \textbf{else } \Uparrow a < b \ \blacksquare \\
 &\\
-&=_{poly}(a, b) \Leftarrow \Uparrow =_{terms}(a.terms, b.terms) \ \blacksquare \\
+&\mathop{=}_{poly}(a, b) \Leftarrow \Uparrow \mathop{=}_{terms}(a.terms, b.terms) \ \blacksquare \\
 &\\
-&=_{terms}(a, b) \Leftarrow \\
+&\mathop{=}_{terms}(a, b) \Leftarrow \\
 &\quad \textbf{if } \texttt{*}a \neq \texttt{*}b \textbf{ then } \bot \\
 &\quad \textbf{if } \texttt{*}a = 0 \textbf{ then } \Uparrow \\
-&\quad \textbf{if } =_{term}(a[1], b[1]) \textbf{ then } \Uparrow =_{terms}(rest(a), rest(b)) \ \blacksquare \\
+&\quad \textbf{if } \mathop{=}_{term}(a[1], b[1]) \textbf{ then } \Uparrow \mathop{=}_{terms}(rest(a), rest(b)) \ \blacksquare \\
 &\\
-&=_{term}(a, b) \Leftarrow \Uparrow (=(a.coef, b.coef) \ \&\ =(a.power, b.power)) \ \blacksquare \\
+&\mathop{=}_{term}(a, b) \Leftarrow \Uparrow (=(a.coef, b.coef) \ \&\ =(a.power, b.power)) \ \blacksquare \\
 &\\
 &unit_{poly}(x) \Leftarrow \Uparrow ((\texttt{*}x.terms = 1) \ \&\ (x.terms[1].power = 0) \ \&\ unit(x.terms[1].coef)) \ \blacksquare
 \end{aligned}
@@ -2103,7 +2103,7 @@ A normal-form polynomial is one whose terms are in normal form (and in ascending
 </div>
 
 
-#### 2.3.4. Truncated Power Series domain $T(D[[x]])_{n}$
+#### 2.3.4. Truncated Power Series domain $`T(D[[x]])_{n}`$
 
 <p align="center"><strong>Truncated Power Series Domain Arithmetic Facilities</strong></p>
 
@@ -2185,7 +2185,7 @@ The one of the base domain of a coefficient of the polynomial:
 
 ```math
 \begin{aligned}
-&=_{tpower}(a, b) \Leftarrow \Uparrow (a.N = b.N) \ \&\ =_{poly}(a.Poly, b.Poly) \ \blacksquare \\
+&\mathop{=}_{tpower}(a, b) \Leftarrow \Uparrow (a.N = b.N) \ \&\ \mathop{=}_{poly}(a.Poly, b.Poly) \ \blacksquare \\
 &\\
 &unit_{tpower}(x) \Leftarrow \Uparrow unit_{poly}(x.Poly) \ \blacksquare
 \end{aligned}
@@ -2224,18 +2224,18 @@ In addition, we provide a simple timer facility.
 We provide algorithms for the following applications:
 
 - Euclid's algorithm for greatest common divisor, in simple and extended versions.
-- Inverse of $a \bmod m$.
-- The Chinese Remainder for 1, 2, or $N$ congruences.
-- The solutions to the Diophantine equation $ax + by = c$.
+- Inverse of $`a \bmod m`$.
+- The Chinese Remainder for 1, 2, or $`N`$ congruences.
+- The solutions to the Diophantine equation $`ax + by = c`$.
 
 
 #### 3.1.1. Greatest Common Divisor
 
-We have two versions of Euclid's Algorithm over a Euclidean domain $D$, from Lipson, p. 226 and p. 209.
+We have two versions of Euclid's Algorithm over a Euclidean domain $`D`$, from Lipson, p. 226 and p. 209.
 
-**GCD**$(a, b, D)$  
-Input: $a, b \in D$, not both zero.  
-Output: a gcd of $a$, $b$.
+**GCD**$`(a, b, D)`$  
+Input: $`a, b \in D`$, not both zero.  
+Output: a gcd of $`a`$, $`b`$.
 
 <div class="math-left">
 
@@ -2265,9 +2265,9 @@ The following is a table of expressions and their gcd's, as computed via GCD:
 | $`QZ[x]`$ | $`(166z/243z)q + ((-275z)/243z)q \cdot X`$ | $`(115668z/75625z)q`$ | $`(115668z/75625z)q`$ |
 | $`QZ[x]`$ | $`(-2z)q + 1zq \cdot X^3`$ | $`(-3z)q + 2zq \cdot X^2`$ | $`(5z/9z)q`$ |
 
-**EUCLID**$(a, b)$  
-Input: $a, b \in D$, not both zero.  
-Output: $g, s, t$ such that $g$ is a gcd of $a$, $b$ and $g = sa + tb$.
+**EUCLID**$`(a, b)`$  
+Input: $`a, b \in D`$, not both zero.  
+Output: $`g, s, t`$ such that $`g`$ is a gcd of $`a`$, $`b`$ and $`g = sa + tb`$.
 
 <div class="math-left">
 
@@ -2307,9 +2307,9 @@ The following is a table of expressions and their extended *gcd*'s, as computed 
 
 Our modular inverse algorithm is that of Lipson, p. 214.
 
-**INVERSE**$(a, m)$: Computation of $a^{-1} \bmod m$  
-Input: $a, m \in D$, where $D$ is a Euclidean domain.  
-Output: If $(m, a) = 1$, then $a^{-1} \bmod m$; otherwise error.
+**INVERSE**$`(a, m)`$: Computation of $`a^{-1} \bmod m`$  
+Input: $`a, m \in D`$, where $`D`$ is a Euclidean domain.  
+Output: If $`(m, a) = 1`$, then $`a^{-1} \bmod m`$; otherwise error.
 
 <div class="math-left">
 
@@ -2340,17 +2340,17 @@ A table of modular inverses as computed by INVERSE is as follows:
 
 #### 3.1.3. Chinese Remainders and Single-Variable Linear Congruential Systems
 
-We provide three algorithms, **CRA1** for solving equations of the form $ax \equiv b \pmod m$, and **CRA2** and **CRA** for solving systems of two or more congruences of the form $X \equiv a \pmod m$.
+We provide three algorithms, **CRA1** for solving equations of the form $`ax \equiv b \pmod m`$, and **CRA2** and **CRA** for solving systems of two or more congruences of the form $`X \equiv a \pmod m`$.
 
-**CRA1**$(a, b, m)$: Solution of a single linear congruence relation.  
-Input: $a, b, m$ such that $ax \equiv b \pmod m$.  
-Output: a particular solution $x_{1}$.
+**CRA1**$`(a, b, m)`$: Solution of a single linear congruence relation.  
+Input: $`a, b, m`$ such that $`ax \equiv b \pmod m`$.  
+Output: a particular solution $`x_{1}`$.
 
-Niven and Zuckerman [Niven80a], in their section 2.3 note that, given a congruence $ax \equiv b \pmod m$, we can reduce it to $my \equiv -b \pmod a$. If $y_{0}$ is a solution of the reduced congruence, then
+Niven and Zuckerman [Niven80a], in their section 2.3 note that, given a congruence $`ax \equiv b \pmod m`$, we can reduce it to $`my \equiv -b \pmod a`$. If $`y_{0}`$ is a solution of the reduced congruence, then
 
 $$x_0 = \frac{my_0 + b}{a}$$
 
-is a solution for the original congruence. They apply the reduction until the congruence is solvable "by inspection". This we do not do. They also have some tricks for size reduction (on p. 43) we will not apply (due to laziness). Our "by inspection" termination condition will be to perform the reduction until $a \bmod m = 1$ or $b = 0$. Then we return $b \bmod a$, in a recursive setting which builds up the original $x_{1}$.
+is a solution for the original congruence. They apply the reduction until the congruence is solvable "by inspection". This we do not do. They also have some tricks for size reduction (on p. 43) we will not apply (due to laziness). Our "by inspection" termination condition will be to perform the reduction until $`a \bmod m = 1`$ or $`b = 0`$. Then we return $`b \bmod a`$, in a recursive setting which builds up the original $`x_{1}`$.
 
 <div class="math-left">
 
@@ -2375,15 +2375,15 @@ is a solution for the original congruence. They apply the reduction until the co
 
 **Example.** The following results were obtained from executing CRA (the examples are from Niven and Zuckerman [Niven80a], Sect. 2.3):
 
-- CRA(7, 1432, 5317): $x$ such that $7x \equiv 1432 \bmod 5317$ is 4762.
-- CRA(863, 880, 2151): $x$ such that $863x \equiv 880 \bmod 2151$ is 173.
-- CRA(589, 509, 817): There is no $x$ such that $589x \equiv 509 \bmod 817$.
+- CRA(7, 1432, 5317): $`x`$ such that $`7x \equiv 1432 \bmod 5317`$ is 4762.
+- CRA(863, 880, 2151): $`x`$ such that $`863x \equiv 880 \bmod 2151`$ is 173.
+- CRA(589, 509, 817): There is no $`x`$ such that $`589x \equiv 509 \bmod 817`$.
 
 CRA2 and CRA are from Lipson, p. 254 and p. 257.
 
-**CRA2**$(r, m, s, n)$: Two-congruence Chinese Remainder Algorithm for $Z$  
-Input: $r, m, s, n \in Z$, where $m$, $n$ are relatively prime.  
-Output: $U \in Z$ such that $U \equiv r \pmod m$ and $U \equiv s \pmod n$.
+**CRA2**$`(r, m, s, n)`$: Two-congruence Chinese Remainder Algorithm for $`Z`$  
+Input: $`r, m, s, n \in Z`$, where $`m`$, $`n`$ are relatively prime.  
+Output: $`U \in Z`$ such that $`U \equiv r \pmod m`$ and $`U \equiv s \pmod n`$.
 
 <div class="math-left">
 
@@ -2401,11 +2401,11 @@ Output: $U \in Z$ such that $U \equiv r \pmod m$ and $U \equiv s \pmod n$.
 
 </div>
 
-**Example.** The $x$ such that $x \equiv 6 \pmod 7$ and $x \equiv 3 \pmod 9$ is 48, as obtained by evaluating CRA2(6, 7, 3, 9).
+**Example.** The $`x`$ such that $`x \equiv 6 \pmod 7`$ and $`x \equiv 3 \pmod 9`$ is 48, as obtained by evaluating CRA2(6, 7, 3, 9).
 
-**CRA**$(rm\_list)$: $N$-congruence Chinese Remainder Algorithm for $Z$  
-Input: $[[r_{k}, m_{k}]] \in Z$, where the $m_{k}$ are relatively prime.  
-Output: $U \in Z$ such that $U \equiv r_{i} \pmod{m_i}$.
+**CRA**$`(rm\_list)`$: $`N`$-congruence Chinese Remainder Algorithm for $`Z`$  
+Input: $`[[r_{k}, m_{k}]] \in Z`$, where the $`m_{k}`$ are relatively prime.  
+Output: $`U \in Z`$ such that $`U \equiv r_{i} \pmod{m_i}`$.
 
 <div class="math-left">
 
@@ -2430,14 +2430,14 @@ Output: $U \in Z$ such that $U \equiv r_{i} \pmod{m_i}$.
 
 </div>
 
-**Example.** The problem is to find $u(x)$ in $Z[x]$ such that
+**Example.** The problem is to find $`u(x)`$ in $`Z[x]`$ such that
 
-$u(x) \bmod 3 = x$,  
-$u(x) \bmod 7 = 1$,  
-$u(x) \bmod 4 = 2x + 3$, and  
-$u(x) \bmod 5 = 3x + 3$.
+$`u(x) \bmod 3 = x`$,  
+$`u(x) \bmod 7 = 1`$,  
+$`u(x) \bmod 4 = 2x + 3`$, and  
+$`u(x) \bmod 5 = 3x + 3`$.
 
-Let $u(x) = ax + b$. Then
+Let $`u(x) = ax + b`$. Then
 
 <div class="math-left">
 
@@ -2453,7 +2453,7 @@ a \bmod 5 = 3 & b \bmod 5 = 3
 
 </div>
 
-We can solve for $a$ and $b$ individually using the $n$-congruence CRA algorithm, and we are done. Executing the following code:
+We can solve for $`a`$ and $`b`$ individually using the $`n`$-congruence CRA algorithm, and we are done. Executing the following code:
 
 <div class="math-left">
 
@@ -2475,12 +2475,12 @@ we discover (final term due to Yap) that
 
 $$u(x) = 183 + 238 \cdot X + 3 \cdot 7 \cdot 4 \cdot 5 \sum_{i=0}^{\infty} t_i x^i.$$
 
-**Example.** Another example, from Lipson, p. 258, is to compute $u$ such that
+**Example.** Another example, from Lipson, p. 258, is to compute $`u`$ such that
 
-$u \equiv 1 \pmod 3$,  
-$u \equiv 3 \pmod 5$,  
-$u \equiv 0 \pmod 7$,  
-$u \equiv 10 \pmod{11}$.
+$`u \equiv 1 \pmod 3`$,  
+$`u \equiv 3 \pmod 5`$,  
+$`u \equiv 0 \pmod 7`$,  
+$`u \equiv 10 \pmod{11}`$.
 
 Executing the following code
 
@@ -2495,24 +2495,24 @@ Executing the following code
 
 </div>
 
-yields a value of 868 for $U$.
+yields a value of 868 for $`U`$.
 
 
 #### 3.1.4. Linear Diophantine Equations in Two Variables
 
-According to Niven, sect. 5.2, $ax + by = c$ is solvable iff $g \mid c$ where $g = \gcd(a, b)$. If $g \mid c$ then all solutions are of the form
+According to Niven, sect. 5.2, $`ax + by = c`$ is solvable iff $`g \mid c`$ where $`g = \gcd(a, b)`$. If $`g \mid c`$ then all solutions are of the form
 
 $$x = x_1 + \frac{b}{g} t, \quad y = y_1 - \frac{a}{g} t$$
 
-where $t$ is an arbitrary integer and $x = x_{1}$, $y = y_{1}$ is any particular solution of the equation. Particular solutions are obtained by solving one of the linear congruences
+where $`t`$ is an arbitrary integer and $`x = x_{1}`$, $`y = y_{1}`$ is any particular solution of the equation. Particular solutions are obtained by solving one of the linear congruences
 
 $$ax \equiv c \pmod{|b|} \quad \text{or} \quad by \equiv c \pmod{|a|}$$
 
-for $x_{1}$ or $y_{1}$, then substituting $y_{1}$ or $x_{1}$ into $ax + by = c$ to obtain a particular $y_{1}$ or $x_{1}$. For computational convenience, if $|b| \le |a|$, we solve the first congruence, otherwise we solve the second.
+for $`x_{1}`$ or $`y_{1}`$, then substituting $`y_{1}`$ or $`x_{1}`$ into $`ax + by = c`$ to obtain a particular $`y_{1}`$ or $`x_{1}`$. For computational convenience, if $`|b| \le |a|`$, we solve the first congruence, otherwise we solve the second.
 
 **DIOPHANTINE**(a, b, c) solves linear Diophantine equations in 2 variables.  
-Input: $a, b, c$ such that $ax + by = c$.  
-Output: $g$, $x_{1}$, $y_{1}$, described above.
+Input: $`a, b, c`$ such that $`ax + by = c`$.  
+Output: $`g`$, $`x_{1}`$, $`y_{1}`$, described above.
 
 <div class="math-left">
 
@@ -2535,11 +2535,11 @@ Output: $g$, $x_{1}$, $y_{1}$, described above.
 
 </div>
 
-**Example.** By evaluating DIOPHANTINE(84, 54, -24), we find that all integer solutions $(x, y)$ of the equation $84x + 54y = -24$ are of the form $x = 1 + 9t$, $y = (-2) - 14t$.
+**Example.** By evaluating DIOPHANTINE(84, 54, -24), we find that all integer solutions $`(x, y)`$ of the equation $`84x + 54y = -24`$ are of the form $`x = 1 + 9t`$, $`y = (-2) - 14t`$.
 
-**Example.** By evaluating DIOPHANTINE(999, -49, 5000), we find that all integer solutions $(x, y)$ of the equation $999x + (-49)y = 5000$ are of the form $x = 13 + 49t$, $y = 163 - (-999)t$.
+**Example.** By evaluating DIOPHANTINE(999, -49, 5000), we find that all integer solutions $`(x, y)`$ of the equation $`999x + (-49)y = 5000`$ are of the form $`x = 13 + 49t`$, $`y = 163 - (-999)t`$.
 
-**Example.** By evaluating DIOPHANTINE(247, 589, 817), we find that all integer solutions $(x, y)$ of the equation $247x + 589y = 817$ are of the form $x = (-11) + 31t$, $y = 6 - 13t$.
+**Example.** By evaluating DIOPHANTINE(247, 589, 817), we find that all integer solutions $`(x, y)`$ of the equation $`247x + 589y = 817`$ are of the form $`x = (-11) + 31t`$, $`y = 6 - 13t`$.
 
 
 ### 3.2 Polynomial remainder sequences 
@@ -2565,10 +2565,10 @@ The simplest polynomial remainder sequence is simply that of Euclid's algorithm.
 
 </div>
 
-**Example.** In $QZ[x]$, the remainder sequence of
+**Example.** In $`QZ[x]`$, the remainder sequence of
 
-$a(x) = x^5 + 2x^4 + 3x^2 - x + 2$  
-$b(x) = 3x^3 - x + 2$
+$`a(x) = x^5 + 2x^4 + 3x^2 - x + 2`$  
+$`b(x) = 3x^3 - x + 2`$
 
 as encoded in ICON by
 
@@ -2589,20 +2589,20 @@ as encoded in ICON by
 
 is
 
-$QZ[x]\text{: MOD\_RS}(2zq + (-1z)q \cdot X + 3zq \cdot X^2 + 2zq \cdot X^4 + 1zq \cdot X^5,\ 2zq + (-1z)q \cdot X + 3zq \cdot X^3)$  
-$= [2zq + (-1z)q \cdot X + 3zq \cdot X^2 + 2zq \cdot X^4 + 1zq \cdot X^5,\ 2zq + (-1z)q \cdot X + 3zq \cdot X^3,\ (16z/9z)q + ((-20z)/9z)q \cdot X + 3zq \cdot X^2,\ (166z/243z)q + ((-275z)/243z)q \cdot X,\ (115668z/75625z)q,\ 0zq]$
+$`QZ[x]\text{: MOD\_RS}(2zq + (-1z)q \cdot X + 3zq \cdot X^2 + 2zq \cdot X^4 + 1zq \cdot X^5,\ 2zq + (-1z)q \cdot X + 3zq \cdot X^3)`$  
+$`= [2zq + (-1z)q \cdot X + 3zq \cdot X^2 + 2zq \cdot X^4 + 1zq \cdot X^5,\ 2zq + (-1z)q \cdot X + 3zq \cdot X^3,\ (16z/9z)q + ((-20z)/9z)q \cdot X + 3zq \cdot X^2,\ (166z/243z)q + ((-275z)/243z)q \cdot X,\ (115668z/75625z)q,\ 0zq]`$
 
 [221033 msecs]
 
 #### 3.2.2 Pseudo-remainder for division over integral domains
 
-PREM(px, qx): Pseudo-remainder of $px/qx$ in $I[x]$, where $I[x]$ is an integral domain.
+PREM(px, qx): Pseudo-remainder of $`px/qx`$ in $`I[x]`$, where $`I[x]`$ is an integral domain.
 
 **Method:**
 
-1. Let $d = \deg(p) - \deg(q)$
-2. Let $b$ = lead coefficient of $q(x)$
-3. Return $\text{rem}(b^{d+1} \cdot px, qx)$
+1. Let $`d = \deg(p) - \deg(q)`$
+2. Let $`b`$ = lead coefficient of $`q(x)`$
+3. Return $`\text{rem}(b^{d+1} \cdot px, qx)`$
 
 <div class="math-left">
 
@@ -2610,7 +2610,7 @@ PREM(px, qx): Pseudo-remainder of $px/qx$ in $I[x]$, where $I[x]$ is an integral
 \begin{aligned}
 &PREM(px, qx) \Leftarrow \\
 &\quad \textbf{local } d,\ b \\
-&\quad d \mathrel{:=} -_{deg}(deg_{poly}(px), deg_{poly}(qx)) \\
+&\quad d \mathrel{:=} \mathop{-}_{deg}(deg_{poly}(px), deg_{poly}(qx)) \\
 &\quad b \mathrel{:=} poly\_of(lead\_coef(qx)) \\
 &\quad \Uparrow rem(\otimes_{poly}(exp(b, d + 1), px), qx) \ \blacksquare
 \end{aligned}
@@ -2645,22 +2645,22 @@ I.e., a trace of the steps of Euclid's algorithm modified to use PREM.
 The following algorithm is the Collins-Brown subresultant PRS algorithm, as presented in Yap [Yap85a].
 
 **S_PRS**: Subresultant polynomial remainder sequence.  
-Input: polynomials $p_{0}, p_{1} \in I[x]$ for some integral domain $I$.  
-Output: Subresultant PRS $(p_{0}, p_{1}, \ldots, p_{k})$ such that $p_{k+1} = 0$.
+Input: polynomials $`p_{0}, p_{1} \in I[x]`$ for some integral domain $`I`$.  
+Output: Subresultant PRS $`(p_{0}, p_{1}, \ldots, p_{k})`$ such that $`p_{k+1} = 0`$.
 
-Let $\delta_{i} = \deg(p_{i}) - \deg(p_{i+1})$. Let $c_{i} = \text{lead}(p_{i})$.
+Let $`\delta_{i} = \deg(p_{i}) - \deg(p_{i+1})`$. Let $`c_{i} = \text{lead}(p_{i})`$.
 
-Let $(R_{1}, R_{2}, \ldots, R_{k})$ be a sequence of length $k$ defined by
+Let $`(R_{1}, R_{2}, \ldots, R_{k})`$ be a sequence of length $`k`$ defined by
 
 $$R_1 = c_1^{\delta_0}$$
 $$R_i = c_i^{\delta_{i-1}} R_{i-1}^{1-\delta_{i-1}}, \quad i = 2, \ldots, k$$
 
-Let $(\beta_{2}, \beta_{3}, \ldots, \beta_{k})$ be a sequence of length $k-1$ defined by
+Let $`(\beta_{2}, \beta_{3}, \ldots, \beta_{k})`$ be a sequence of length $`k-1`$ defined by
 
 $$\beta_2 = (-1)^{\delta_0 + 1}$$
 $$\beta_i = (-1)^{1 + \delta_{i-2}} c_{i-2} (R_{i-2})^{\delta_{i-2}}, \quad i = 3, \ldots, k$$
 
-Then we wish to compute the sequence $(p_{0}, p_{1}, \ldots, p_{k})$ of length $k+1$ such that $p_{0}$ and $p_{1}$ are the given polynomials, and
+Then we wish to compute the sequence $`(p_{0}, p_{1}, \ldots, p_{k})`$ of length $`k+1`$ such that $`p_{0}`$ and $`p_{1}`$ are the given polynomials, and
 
 $$p_i = \frac{\text{PREM}(p_{i-2}, p_{i-1})}{\beta_i}, \quad i = 2, \ldots, k$$
 
@@ -2697,12 +2697,12 @@ $$p_i = \frac{\text{PREM}(p_{i-2}, p_{i-1})}{\beta_i}, \quad i = 2, \ldots, k$$
 &\quad\quad R_{i-2} \mathrel{:=} R_i(c_{i-2}, \delta_{i-2}, R_{i-2}) \\
 &\quad\quad \delta_{i-2} \mathrel{:=} \delta_i(p_{i-2}, p_{i-1}) \} \ \blacksquare \\
 &\\
-&\delta_i(p_i, p_{i+1}) \Leftarrow \Uparrow -_{deg}(deg_{poly}(p_i), deg_{poly}(p_{i+1})) \ \blacksquare \\
+&\delta_i(p_i, p_{i+1}) \Leftarrow \Uparrow \mathop{-}_{deg}(deg_{poly}(p_i), deg_{poly}(p_{i+1})) \ \blacksquare \\
 &\\
 &c_i(p_i) \Leftarrow \Uparrow lead\_coef(p_i) \ \blacksquare \\
 &\\
 &R_i(c_i, \delta_{i-1}, R_{i-1}) \Leftarrow \\
-&\quad \Uparrow \otimes(exp(c_i, \delta_{i-1}), exp(R_{i-1}, -_{deg}(\delta_{i-1}, 1))) \ \blacksquare \\
+&\quad \Uparrow \otimes(exp(c_i, \delta_{i-1}), exp(R_{i-1}, \mathop{-}_{deg}(\delta_{i-1}, 1))) \ \blacksquare \\
 &\\
 &\beta_i(\delta_{i-2}, c_{i-2}, R_{i-2}) \Leftarrow \\
 &\quad \Uparrow poly\_of(\otimes(\otimes(exp(-(1(c_{i-2})), 1 + \delta_{i-2}), exp(R_{i-2}, \delta_{i-2})))) \ \blacksquare \\
@@ -2724,9 +2724,9 @@ Under this heading we provide the following facilities:
 
 #### 3.3.1 Newton's method for construction of polynomials by interpolation
 
-**NIA**(ab_list): Newton's Interpolation Algorithm (CRA for $F[x]$)  
-Input: $[[a_{k}, b_{k}]]$ such that $U(a_{k}) = b_{k}$, $U(x) \in F[x]$  
-Output: $U(x)$
+**NIA**(ab_list): Newton's Interpolation Algorithm (CRA for $`F[x]`$)  
+Input: $`[[a_{k}, b_{k}]]`$ such that $`U(a_{k}) = b_{k}`$, $`U(x) \in F[x]`$  
+Output: $`U(x)`$
 
 <div class="math-left">
 
@@ -2753,9 +2753,9 @@ Output: $U(x)$
 
 ### 3.3.2 Fast Fourier Transform (FFT) and Interpolation (FFI)
 
-**FFT**$(N, a(x), \omega, A)$: Fast Fourier Transform  
-Input: integer $N = 2^m$, polynomial $a(x) = \mathrm{sum}(i=0, N-1, a_{i} \cdot x^i)$, primitive $N$th root of unity $\omega$  
-Output: array $A = (A_{0}, \ldots, A_{N-1})$ where $A_{k} = a(\omega^k)$
+**FFT**$`(N, a(x), \omega, A)`$: Fast Fourier Transform  
+Input: integer $`N = 2^m`$, polynomial $`a(x) = \mathrm{sum}(i=0, N-1, a_{i} \cdot x^i)`$, primitive $`N`$th root of unity $`\omega`$  
+Output: array $`A = (A_{0}, \ldots, A_{N-1})`$ where $`A_{k} = a(\omega^k)`$
 
 <div class="math-left">
 
@@ -2819,9 +2819,9 @@ Odd powered terms.
 
 </div>
 
-**FFI**$(N, B, \omega)$: Fast Fourier Interpolation  
-Input: integer $N = 2^m$, sample values $B = (b_{0}, \ldots, b_{N-1})$, primitive $N$th root of unity $\omega$  
-Output: $a(x) = \mathrm{sum}(i=0, N-1, a_{i} x^i)$ where $a(\omega^k) = b_{k}$, $k=0..N-1$
+**FFI**$`(N, B, \omega)`$: Fast Fourier Interpolation  
+Input: integer $`N = 2^m`$, sample values $`B = (b_{0}, \ldots, b_{N-1})`$, primitive $`N`$th root of unity $`\omega`$  
+Output: $`a(x) = \mathrm{sum}(i=0, N-1, a_{i} x^i)`$ where $`a(\omega^k) = b_{k}`$, $`k=0..N-1`$
 
 <div class="math-left">
 
@@ -2874,8 +2874,8 @@ Output: $a(x) = \mathrm{sum}(i=0, N-1, a_{i} x^i)$ where $a(\omega^k) = b_{k}$, 
 #### 3.3.3 Newton’s method for truncated power series inversion
 
 **NPSI**(): Newton's Power Series Inversion Method  
-Input: $a(t) \bmod t^{2^n} = \mathrm{sum}(i=0, 2^n-1, a_{i} t^i)$, $a_{0} \neq 0$  
-Output: $x^{(n)}(t) = a(t)^{-1} \bmod t^{2^n}$
+Input: $`a(t) \bmod t^{2^n} = \mathrm{sum}(i=0, 2^n-1, a_{i} t^i)`$, $`a_{0} \neq 0`$  
+Output: $`x^{(n)}(t) = a(t)^{-1} \bmod t^{2^n}`$
 
 <div class="math-left">
 
@@ -3345,7 +3345,7 @@ we use the logical-looking
 
 **Control Structures: return, fail and every.**
 
-Instead of `return x` we use *uparrow* $x$, and for return we use ↑. Instead of `fail` we use ⊥.
+Instead of `return x` we use *uparrow* $`x`$, and for return we use ↑. Instead of `fail` we use ⊥.
 
 For `every i := 1 to j do C` we use `every i in 1, 2..j do C`
 

@@ -114,6 +114,28 @@ def fix_underscores(body: str) -> str:
     return body
 
 
+MATHOP_OPERATORS = (
+    "-_{deg}",
+    "=_{poly}",
+    "=_{terms}",
+    "=_{term}",
+    "=_{tpower}",
+    "<_{degree}",
+)
+
+
+def fix_mathop_operators(body: str) -> str:
+    for op in MATHOP_OPERATORS:
+        if op.startswith(("-", "<", "=")):
+            body = body.replace(op, rf"\mathop{{{op[0]}}}_{{{op.split('_', 1)[1][1:-1]}}}")
+    body = re.sub(
+        r"type\(([^)]+)\) = \\text\{",
+        r"type(\1) \\mathrel{=} \\text{",
+        body,
+    )
+    return body
+
+
 def brace_bare_subscripts(s: str) -> str:
     """Brace _suffix at depth 0 so GitHub markdown does not treat _ as emphasis."""
     result: list[str] = []
@@ -216,6 +238,7 @@ def normalize_math_body(body: str) -> str:
     body = fix_github_operators(body)
     body = fix_underscores(body)
     body = escape_hash_in_texttt(body)
+    body = fix_mathop_operators(body)
     body = array_to_aligned(body)
     return body
 
@@ -249,24 +272,38 @@ def fix_inline_math(text: str) -> str:
     return re.sub(r"(?<!\$)\$(?!\$)(.+?)(?<!\$)\$(?!\$)", repl, text)
 
 
-def fix_table_inline_math(text: str) -> str:
-    """GitHub tables: use $`...`$ so math survives markdown/HTML parsing."""
+INLINE_MATH_DELIM = re.compile(r"(?<!\$)\$([^$\n]+?)\$(?!\$)")
+MATH_FENCE_SPLIT = re.compile(r"(```math\n.*?\n```)", re.DOTALL)
 
-    def fix_line(line: str) -> str:
-        if not line.lstrip().startswith("|"):
-            return line
 
-        def repl(m: re.Match[str]) -> str:
-            inner = m.group(1)
-            if inner.startswith("`") and inner.endswith("`"):
-                return m.group(0)
-            return "$`" + inner + "`$"
+def wrap_inline_math_delimiters(line: str) -> str:
+    """GitHub: $`...`$ protects inline math from markdown/HTML parsing."""
 
-        return re.sub(r"\$([^$\n]+?)\$", repl, line)
+    def repl(m: re.Match[str]) -> str:
+        inner = m.group(1)
+        if inner.startswith("`") and inner.endswith("`"):
+            return m.group(0)
+        return "$`" + inner + "`$"
 
-    return "\n".join(fix_line(line) for line in text.splitlines()) + (
-        "\n" if text.endswith("\n") else ""
-    )
+    return INLINE_MATH_DELIM.sub(repl, line)
+
+
+def fix_inline_math_delimiters(text: str) -> str:
+    parts = MATH_FENCE_SPLIT.split(text)
+    out: list[str] = []
+    for part in parts:
+        if part.startswith("```math"):
+            out.append(part)
+            continue
+        lines: list[str] = []
+        for line in part.splitlines(keepends=True):
+            stripped = line.strip()
+            if stripped.startswith("$$") and stripped.endswith("$$"):
+                lines.append(line)
+            else:
+                lines.append(wrap_inline_math_delimiters(line))
+        out.append("".join(lines))
+    return "".join(out)
 
 
 def fix_prose(text: str) -> str:
@@ -289,6 +326,14 @@ def fix_prose(text: str) -> str:
     )
     text = text.replace('underscore ("_")', 'underscore (`"_"`)')
     text = text.replace("in the 10000^ range.", "in the `10000^4` range.")
+    text = text.replace(
+        'the string "$`-\\infty`$"',
+        'the string `"- infinity"`',
+    )
+    text = text.replace(
+        'the string "$-\\infty$"',
+        'the string `"- infinity"`',
+    )
     return text
 
 
@@ -305,11 +350,11 @@ def fix_math_fence_blocks(text: str) -> str:
 
 def fix_github_math(text: str) -> str:
     text = fix_prose(text)
-    text = fix_table_inline_math(text)
     text = fix_math_left_blocks(text)
     text = fix_math_fence_blocks(text)
     text = fix_display_math(text)
     text = fix_inline_math(text)
+    text = fix_inline_math_delimiters(text)
     return text
 
 
