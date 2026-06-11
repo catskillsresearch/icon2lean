@@ -1,0 +1,276 @@
+# Tests and examples from Courant_Ericson_1986.md
+# Expected outputs are in # EXPECT: comments and tests_manifest.json
+link "code.icon"
+
+# --- test near md line 25 ---
+procedure FFT(N, a(x), omega, A);
+if N = 1
+then
+{ Basis. } A_0 := a_0
+else
+begin
+{ Binary split. }
+n := N/2
+b(x) := sum_i=0^{n-1} a_2i x^i
+c(x) := sum_i=0^{n-1} a_2i+1 x^i
+{ Recursive calls. }
+FFT(n, b(x), omega^2, B)
+FFT(n, c(x), omega^2, C)
+{ Combine. }
+for k := 0 until n - 1 do
+begin
+A_k := B_k + omega^k times C_k
+A_k+n := B_k - omega^k times C_k
+end
+end
+
+# --- snippet line 151 ---
+procedure F (a, b. c)
+  code
+end
+
+# --- snippet line 246 ---
+ax := poly([term(Q(-2,1), 0), term(Q(1,1), 3)])
+bx := poly([term(Q(-3,1), 0), term(Q(2,1), 2)])
+
+# --- snippet line 264 ---
+cx := poly([term(Q(-2,1), 0), term(Q(3,2), 1)])
+
+# --- snippet line 301 ---
+ax := poly([term(Q(5,1), 0), term(Q(-2,1), 1), term(Q(1,1), 2)])
+bx := poly_of(Q(2,1))
+
+# --- snippet line 319 ---
+ax := poly([term(8, 0), term(-9, 1), term(6, 2)])
+bx := poly_of(3)
+
+# --- test near md line 533 ---
+# EXPECT: 1 #8# + 7 7 7 #8# = 1 0 0 0 #8#
+x := base_B(8, [1]); y := base_B(8, [7, 7, 7])
+pr{x, " + ", y, " = ", plus_base_B(x, y)}
+
+# --- test near md line 591 ---
+# EXPECT: 1 0 0 5 6 3 #10# - 5 3 3 5 #10# = 9 5 2 2 8 #10#
+# EXPECT: 2 1 2 #10# - 9 9 #10# = 1 1 3 #10#
+# EXPECT: 2 1 2 #10# - 1 9 9 #10# = 1 3 #10#
+x := base_B(10, [1,0,0,5,6,3]); y := base_B(10, [5,3,3,5])
+pr{x, " - ", y, " = ", ominus_base_B(x,y)}
+x := base_B(10,[2,1,2]); y := base_B(10, [9,9])
+pr{x, " - ", y, " = ", ominus_base_B(x, y)}
+y := base_B(10, [1,9,9])
+pr{x, " - ", y, " = ", ominus_base_B(x, y)}
+
+# --- test near md line 674 ---
+# EXPECT: 2 8 1 0 7 3 2 4 #10# * 7 5 6 2 5 #10# = 2 1 2 5 6 1 6 3 7 7 5 0 0 #10#
+# EXPECT: 7 4 7 8 #10# * 4 6 2 5 #10# = 3 4 5 8 5 7 5 0 #10#
+x := k_base_B(28107324); y := k_base_B(75625)
+pr{x, " * ", y, " = ", times_base_B(x,y)}
+x := k_base_B(28107324); y := k_base_B(75625)
+pr{x, " * ", y, " = ", times_base_B(x,y)}
+x := k_base_B(7478); y := k_base_B(4625)
+pr{x, " * ", y, " = ", times_base_B(x, y)}
+
+# --- snippet line 720 ---
+if *b = 1 then
+{ q := list(*a, 0)
+rr := 0
+every j := 1 to *a do
+{ du := rr * B + a[j]
+q[j] := du / b[1]
+rr := du % b[1] }
+return normalize_digits(q) }
+
+# --- snippet line 740 ---
+u := copy(a)
+v := copy(b)
+n := *v
+m := *u - n
+q := list(m + 1, 0)
+
+# --- snippet line 758 ---
+d := B / (v[1] + 1)
+u := times_digits(u, [d], B)
+if *u = m + n then u := [0] } u
+v := times_digits(v, [d], B)
+
+# --- snippet line 774 ---
+every j := 1 to m + 1 do
+{
+
+# --- snippet line 788 ---
+if u[j] = v[1] then qe := B - 1 else qe := ((u[j] * B) + u[j + 1]) / v[1]
+
+# --- snippet line 801 ---
+while (v[2] * qe) > (((u[j] * B) + u[j + 1] - (qe * v[1])) * B + u[j + 2]) do qe {:=}} 1
+
+# --- snippet line 814 ---
+c := 0
+every k := n to 1 by -1 do
+{ du := u[j + k] - (qe * v[k]) + c
+u[j + k] := du % B
+c := du / B
+if u[j + k] < 0 then { u[j + k] } B; c {:=}} 1 } }
+u[j] } c
+
+# --- snippet line 833 ---
+q[j] := qe
+if u[j] < 0 then
+{ qe {:=}} 1
+c := 0
+every k := n to 1 by -1 do
+{ u[j + k] } v[k] + c
+if u[j + k] geq B then { u[j + k] {:=}} B; c := 1 }
+else c := 0 }
+u[j] } c }
+}
+return normalize_digits(q)
+
+# --- test near md line 856 ---
+# EXPECT: 1 0 #10# / 1 #10# = 1 0 #10#
+# EXPECT: 4 #10# / 2 #10# = 2 #10#
+# EXPECT: 2 7 #10# / 9 #10# = 3 #10#
+# EXPECT: 4 2 #10# / 2 #10# = 2 1 #10#
+# EXPECT: 9 0 #10# / 1 #10# = 9 0 #10#
+# EXPECT: 1 8 8 1 7 5 #10# / 3 2 5 #10# = 5 7 9 #10#
+# EXPECT: 1 8 8 1 7 5 #10# / 5 7 9 #10# = 3 2 5 #10#
+# EXPECT: 1 8 8 1 7 5 #10# / 5 8 0 #10# = 3 2 4 #10#
+# EXPECT: 1 8 8 1 7 5 #10# / 5 7 8 #10# = 3 2 5 #10#
+# EXPECT: 1 2 1 9 0 3 #10# / 5 3 3 5 #10# = 2 2 #10#
+# EXPECT: 2 1 2 #10# / 9 9 #10# = 2 #10#
+# EXPECT: 1 1 5 6 6 8 #10# / 7 5 6 2 5 #10# = 1 #10#
+every xy := ![[10, 1], [4,2], [27, 9], [42,2], [90,1],
+[188175, 325], [188175, 579], [188175, 580],
+[188175, 578], [121903, 5335],
+[212, 99], [115668, 75625]]
+do { x := k_base_B(xy[1]); y := k_base_B(xy[2])
+pr{x, " / ", y, " = ", div_base_B(x, y)} }
+
+# --- snippet line 955 ---
+record Z (sign, mantissa)
+
+# --- test near md line 1022 ---
+# EXPECT: `1z + (-999z) = (-998z)`
+x := k_Z(1); y := k_Z(-999)
+pr{x, " + ", y, " = ", plus_Z(x, y)}
+
+# --- test near md line 1051 ---
+# EXPECT: `-212z = (-212z)`
+# EXPECT: `-(-99z) = 99z`
+x := k_Z(212); y := k_Z(-99)
+pr{"-", x, " = ", minus_Z(x)}
+pr{"-", y, " = ", minus_Z(y)}
+
+# --- test near md line 1082 ---
+# EXPECT: `10z / 1z = 10z`
+# EXPECT: `121903z / 5335z = 22z`
+# EXPECT: `115668z / 75625z = 1z`
+every xy := ![[10, 1], [121903, 5335], [115668, 75625]]
+do { x := k_Z(xy[1]); y := k_Z(xy[2]);
+pr{x, " / ", y, " = ", div_Z(x, y)} }
+
+# --- test near md line 1118 ---
+# EXPECT: `121903z mod 5335z = 4533z`
+x := k_Z(121903); y := k_Z(5335)
+pr{x, " mod ", y, " = ", mod_Z(x, y)}
+
+# --- snippet line 1324 ---
+record Q (dividend, divisor)
+
+# --- snippet line 1416 ---
+d8g_Q (X) 4= it X
+
+# --- snippet line 1486 ---
+record modulo (item, modulus)
+
+# --- snippet line 1631 ---
+record term (coef, power)
+
+# --- test near md line 1661 ---
+# EXPECT: `Q\text{: 0 = }0_q`
+# EXPECT: `QZ\text{: 0 = }0_zq`
+pr{"Q: 0 = ", zero_poly(poly([term(Q(-2,1), 0)]))}
+pr{"QZ: 0 = ", zero_poly(poly([term(k_Z_Qx(-2, 0)]))}
+
+# --- test near md line 1785 ---
+# EXPECT: `Q\text{: }(-2)q + 1q · X^3) + ((-3)q + 2q · X^3) = (-5)q + 3q · X^3`
+# EXPECT: `QZ\text{: }((-2z)q + 1zq · X^3) + ((-3z)q + 2zq · X^3) = (-5z)q + 3zq · X^3`
+ax := poly([term(Q(-2,1), 0), term(Q(1,1), 3)])
+bx := poly([term(Q(-3,1), 0), term(Q(2,1), 3)])
+fx := poly([k_Z_Qx(-2, 0), k_Z_Qx(1,3)])
+gx := poly([k_Z_Qx(-3, 0), k_Z_Qx(2,3)])
+pr{"Q: (", ax, ") + (", bx, ") = ", plus_poly(ax, bx)}
+pr{"QZ: (", fx, ") + (", gx, ") = ", plus_poly(fx, gx)}
+
+# --- test near md line 1824 ---
+# EXPECT: `Q\text{: - }((-2)q + 1q · X^3) = 2q + (-1)q · X^3`
+# EXPECT: `QZ\text{: - }((-2z)q + 1zq · X^3) = 2zq + (-1z)q · X^3`
+ax := poly([term(Q(-2,1), 0), term(Q(1,1), 3)])
+fx := poly([k_Z_Qx(-2, 0), k_Z_Qx(1,3)])
+pr{"Q: - (", ax, ") = ", minus_poly(ax)}
+pr{"QZ: - (", fx, ") = ", minus_poly(fx)}
+
+# --- test near md line 1877 ---
+# EXPECT: `Q\text{: }((-2)q + 1q · X^3) * ((-3)q + 2q · X^3) = 6q + (-7)q · X^3 + 2q · X^6`
+# EXPECT: `QZ\text{: }((-2z)q + 1zq · X^3) * ((-3z)q + 2zq · X^3) = 6zq + (-7z)q · X^3 + 2zq · X^6`
+ax := poly([term(Q(-2,1), 0), term(Q(1,1), 3)])
+bx := poly([term(Q(-3,1), 0), term(Q(2,1), 3)])
+fx := poly([k_Z_Qx(-2, 0), k_Z_Qx(1,3)])
+gx := poly([k_Z_Qx(-3, 0), k_Z_Qx(2,3)])
+pr{"Q: (", ax, ") * (", bx, ") = ", times_poly(ax, bx)}
+pr{"QZ: (", fx, ") * (", gx, ") = ", times_poly(fx, gx)}
+
+# --- test near md line 1925 ---
+# EXPECT: `\text{integers: }1/3 = 0`
+# EXPECT: `Q\text{: }((5/9)q) / ((-2)q + (3/2)q · X) = 0q`
+# EXPECT: `QZ\text{: }((-2z)q + (3z/2z)q · X) / ((5z/9z)q) = ((-18z)/5z)q + (27z/10z)q · X`
+# EXPECT: `QZ[x]\text{: }((166z/243z)q + ((-275z)/243z)q · X) / ((115668z/75625z)q) = (6276875z/14053662z)q + ((-20796875z)/28107324z)q · X`
+ax := poly_of(1); bx := poly_of(3)
+pr{"integers: ", ax, "/", bx, " = ", div_poly(ax, bx)}
+ax := poly([term(Q(5,9), 0)])
+bx := poly([term(Q(-2,1), 0), term(Q(3,2), 1)])
+fx := poly([term(Q(k_Z(5), k_Z(9)), 0)])
+gx := poly([term(Q(k_Z(-2), k_Z(1)), 0), term(Q(k_Z(3), k_Z(2)), 1)])
+pr{"Q: (", ax, ") / (", bx, ") = ", div_poly(ax, bx)}
+pr{"QZ: (", gx, ") / (", fx, ") = ", div_poly(gx, fx)}
+ax := poly([term(Q(k_Z(166), k_Z(243)), 0), term(Q(k_Z(-275), k_Z(243)), 1)])
+bx := poly([term(Q(k_Z(115668), k_Z(75625)), 0)])
+pr{"QZ[x]: (", ax, "/ ", bx, ") = ", div(ax, bx)}
+
+# --- snippet line 2118 ---
+record tpower (Poly, N)
+
+# --- snippet line 2427 ---
+a mod 3 = 1 & b mod 3 = 0
+a mod 7 = 0 & b mod 7 = 1
+a mod 4 = 2 & b mod 4 = 3
+a mod 5 = 3 & b mod 5 = 3
+
+# --- test near md line 2442 ---
+# EXPECT: u(x) = 183 + 238 · X + 3 · 7 · 4 · 5 \sum_i=0^{\infty} t_i x^i.
+a_congruences := [[1, 3], [0, 7], [2, 4], [3, 5]]
+b_congruences := [[0, 3], [1, 7], [3, 4], [3, 5]]
+a := CRA(a_congruences)
+b := CRA(b_congruences)
+ux := poly([term(b, 0), term(a, 1)])
+pr{"u(x) = ", ux}
+
+# --- test near md line 2470 ---
+# EXPECT: x = x_1 + \frac{b}{g} t, \quad y = y_1 - \frac{a}{g} t
+# EXPECT: ax \equiv c \pmod{|b|} \quad \text{or} \quad by \equiv c \pmod{|a|}
+pr{CRA([[1, 3], [3, 5], [0, 7], [10, 11]])}
+
+# --- test near md line 2555 ---
+# EXPECT: [221033 msecs]
+# EXPECT: 1. Let `d = \deg(p) - \deg(q)`
+# EXPECT: 2. Let `b` = lead coefficient of `q(x)`
+# EXPECT: 3. Return `\text{rem}(b^{d+1} · px, qx)`
+settime()
+ax := poly([k_Z_Qx(2, 0), k_Z_Qx(-1, 1), k_Z_Qx(3, 2), k_Z_Qx(2, 4), k_Z_Qx(1, 5)])
+bx := poly([k_Z_Qx(2, 0), k_Z_Qx(-1, 1), k_Z_Qx(3, 3)])
+pr{"QZ[x]: MOD_RS(", ax, ", ", bx, ") = ", MOD_RS(ax, bx)}
+showtime()
+
+# --- test near md line 2882 ---
+global timer
+showtime()  :=  pr{"[", &time - timer, " msecs]"}
+settime()  :=  timer := &time

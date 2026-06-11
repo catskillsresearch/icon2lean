@@ -1,0 +1,1147 @@
+# EUCLID package extracted from Courant_Ericson_1986.md
+# Fancy notation un-mathified per Section 1.3.
+# Link: link "code.icon"  (or include in your Icon program)
+
+# --- div (md line 61) ---
+procedure div(a, b)
+  return proc("div_" || type(a), 2)(a, b)
+end
+
+# --- zero (md line 197) ---
+procedure zero(a)
+  return proc("zero_" || type(a), 1)(a)
+end
+
+# --- one (md line 197) ---
+procedure one(a)
+  return proc("one_" || type(a), 1)(a)
+end
+
+# --- Abs (md line 213) ---
+procedure Abs(a)
+  return proc("Abs_" || type(a), 1)(a)
+end
+
+# --- plus (md line 213) ---
+procedure plus(a, b)
+  return proc("plus_" || type(a), 2)(a, b)
+end
+
+# --- ominus (md line 213) ---
+procedure ominus(a, b)
+  return plus(a, -(b))
+end
+
+# --- minus (md line 213) ---
+procedure minus(x)
+  return proc("minus_" || type(x), 2)(x)
+end
+
+# --- times (md line 213) ---
+procedure times(a, b)
+  return proc("times_" || type(a), 2)(a, b)
+end
+
+# --- div_213 (md line 213) ---
+procedure div(a, b)
+  return proc("div_" || type(a), 2)(a, b)
+end
+
+# --- mod (md line 213) ---
+procedure mod(a, b)
+  if (x := proc("mod_" || type(a), 2)(a, b)) then return x
+  if less(b, zero(b)) then return mod(a, -(b))
+  return normalize(
+  if less(a, zero(a))
+  then plus(a, times(b, plus(ominus(-(a), b), one(a))))
+  else plus(a, -(times(b, div(a, b))))
+  )
+end
+
+# --- rem (md line 279) ---
+procedure rem(a, b)
+  return (if (x := proc("rem_" || type(a), 2)(a, b)) then x
+  else ominus(a, times(div(a, b), b)))
+end
+
+# --- normalize (md line 337) ---
+procedure normalize(a)
+  if (x := proc("normalize_" || type(a), 1)(a)) then return x
+  return a
+end
+
+# --- exp (md line 353) ---
+procedure exp(x, p)
+  if p = 1 then return x
+  else { result := one(x)
+  u := copy(x); v := p
+  running := u
+  while v != 0 do
+  { if v mod 2 = 1 then result := times(result, running)
+  running := times(running, running)
+  v := v / 2 }
+  return result }
+end
+
+# --- equal (md line 377) ---
+procedure equal(a, b)
+  return proc("equal_" || type(a), 2)(a, b)
+end
+
+# --- less (md line 377) ---
+procedure less(a, b)
+  return ((proc("less_" || type(a), 2)(a, b)) & negative(ominus(a, b)))
+end
+
+# --- negative (md line 377) ---
+procedure negative(x)
+  return proc("negative_" || type(x), 1)(x)
+end
+
+# --- unit (md line 377) ---
+procedure unit(x)
+  return proc("unit_" || type(x), 1)(x)
+end
+
+# --- is_zero (md line 377) ---
+procedure is_zero(x)
+  return proc("is_zero_" || type(x), 1)(x)
+end
+
+# --- divides (md line 394) ---
+procedure divides(a, c)
+  return is_zero(rem(c, a))
+end
+
+# --- prs (md line 411) ---
+procedure prs(x)
+  every y := !x do print(@y)
+end
+
+# --- pr (md line 411) ---
+procedure pr(x)
+  (every y := !x do print(@y))
+  write()
+end
+
+# --- print (md line 411) ---
+procedure print(x)
+  if type(x) == "list"
+  then { writes("[")
+  every y := !x[1:*x] do { print(y); writes(", ") }
+  print(x[*x]); writes("]") }
+  else if pp := proc("print_" || type(x), 1) then pp(x)
+  else if type(x) == "string" then writes(x)
+  else writes(image(x))
+end
+
+# --- record_base_B (md line 459) ---
+record base_B (base, digits)
+  global Base, Width
+  set_base(b, w) :=
+  Base := b
+  Width := *(b || "") - 1
+
+# --- zero_base_B (md line 476) ---
+procedure zero_base_B(x)
+  return base_B(x.base, [0])
+end
+
+# --- one_base_B (md line 476) ---
+procedure one_base_B(x)
+  return base_B(x.base, [1])
+end
+
+# --- k_base_B (md line 476) ---
+procedure k_base_B(x)
+  return base_B(Base, digits_of(abs(x), Base))
+end
+
+# --- digits_of (md line 476) ---
+procedure digits_of(x, B)
+  if x < B then return [x] else return digits_of(x/B, B) ||| [mod_integer(x, B)]
+end
+
+# --- plus_base_B (md line 494) ---
+procedure plus_base_B(a, b)
+  B := a.base
+  return base_B(B, plus_digits(a.digits, b.digits, B))
+end
+
+# --- plus_digits (md line 507) ---
+procedure plus_digits(ad, bd, B)
+  m := *ad; n := *bd
+  if m < n then { a := (list(n - m, 0) ||| ad); b := bd }
+  else if m > n then { a := ad; b := list(m - n, 0) ||| bd }
+  else { a := ad; b := bd }
+  m := *a;
+  c_digits := list(m + 1, 0);
+  gamma := 0
+  every i := m to 1 by -1 do
+  { t := a[i] + b[i] + gamma
+  c_digits[i + 1] := mod_integer(t, B)
+  gamma := t / B }
+  c_digits[1] := gamma
+  return normalize_digits(c_digits)
+end
+
+# --- ominus_base_B (md line 551) ---
+procedure ominus_base_B(a, bb)
+  b := copy(bb); B := a.base; m := *a.digits
+  repeat
+  { n := *b.digits
+  if m < n then pr{"ERROR: base_B integer subtraction underflow"}
+  else if m > n
+  then b := base_B(B, list(m - n, 0) ||| b.digits)
+  else return base_B(b.base, ominus_digits(a.digits, b.digits, b.base)) }
+end
+
+# --- ominus_digits (md line 569) ---
+procedure ominus_digits(a, b, B)
+  u := copy(a)
+  v := list(*a - *b, 0) ||| copy(b)
+  k := 0
+  every j := *u to 1 by -1 do
+  { u[j] := u[j] - v[j] + k
+  if u[j] < 0 then { u[j] } B; k := -1 } else k := 0 }
+  return normalize_digits(u)
+end
+
+# --- normalize_base_B (md line 613) ---
+procedure normalize_base_B(r)
+  d := normalize_digits(r.digits)
+  return base_B(r.base, d)
+end
+
+# --- normalize_digits (md line 613) ---
+procedure normalize_digits(d)
+  while (*d > 1) & (d[1] = 0) do pop(d)
+  return d
+end
+
+# --- times_base_B (md line 631) ---
+procedure times_base_B(a, b)
+  return base_B(a.base, times_digits(a.digits, b.digits, a.base))
+end
+
+# --- times_digits (md line 642) ---
+procedure times_digits(a, b, B)
+  m := *a
+  n := *b
+  c := list(m + n, 0)
+  every k := 0 to n - 1 by 1 do
+  {
+  gamma := 0
+  every l := 0 to m - 1 by 1 do
+  {
+  t := a[m - l] * b[n - k] + c[m + n - k - l] + gamma
+  if t < 0
+  then pr{"ERROR: Integer overflow in times_base_B, base = ", B}
+  c[m + n - k - l] := mod_integer(t, B)
+  gamma := t / B
+  }
+  c[n - k] := gamma
+  }
+  return normalize_digits(c)
+end
+
+# --- div_base_B (md line 701) ---
+procedure div_base_B(a, b)
+  return normalize_base_B(base_B(a.base, div_digits(a.digits, b.digits, a.base)))
+end
+
+# --- div_digits (md line 701) ---
+procedure div_digits(a, b, B)
+  If the divisor is 0, then fail.
+  if (*b = 1) & (b[1] = 0) then { pr{"ERROR: divide by 0 in base_B"}; fail }
+  If a is shorter than b, return 0.
+  if *a < *b then return [0]
+end
+
+# --- print_base_B (md line 889) ---
+procedure print_base_B(b)
+  local digits
+  writes(b.digits[1], " ")
+  every writes(right(!rest(b.digits), Width, "0"), " ")
+  writes("#", b.base, "#")
+end
+
+# --- less_base_B (md line 906) ---
+procedure less_base_B(a, b)
+  return less_digits(a.digits, b.digits)
+end
+
+# --- less_digits (md line 906) ---
+procedure less_digits(a, b)
+  if *a < *b then return
+  else if (*a > *b) then fail
+  else if *a = 0 then fail
+  else if (a[1] > b[1]) then fail
+  else if (a[1] < b[1]) then return
+  else return less_digits(rest(a), rest(b))
+end
+
+# --- equal_base_B (md line 906) ---
+procedure equal_base_B(a, b)
+  return equal_digits(a.digits, b.digits)
+end
+
+# --- equal_digits (md line 906) ---
+procedure equal_digits(a, b)
+  if *a < *b then fail
+  else if (*a > *b) then fail
+  else if *a = 0 then return
+  else if (a[1] != b[1]) then fail
+  else return equal_digits(rest(a), rest(b))
+end
+
+# --- rest (md line 930) ---
+procedure rest(x)
+  if *x < 2 then return [] else return x[2:*x + 1]
+end
+
+# --- zero_Z (md line 968) ---
+procedure zero_Z(a)
+  return Z(1, zero_base_B(a.mantissa))
+end
+
+# --- one_Z (md line 968) ---
+procedure one_Z(a)
+  return Z(1, one_base_B(a.mantissa))
+end
+
+# --- k_Z (md line 982) ---
+procedure k_Z(x)
+  initial set_base(10000)
+  return Z(if x = 0 then 1 else x/abs(x),
+  base_B(Base, digits_of(abs(x), Base)))
+end
+
+# --- plus_Z (md line 998) ---
+procedure plus_Z(a, b)
+  if negative_Z(a) & >zero_Z(b) then return plus_Z(b, a)
+  return normalize_Z(
+  if is_zero_Z(a) then b
+  else if is_zero_Z(b) then a
+  else if (>zero_Z(a) & >zero_Z(b)) | (negative_Z(a) & negative_Z(b))
+  then Z(a.sign, plus_base_B(a.mantissa, b.mantissa))
+  else { #a > 0 and b < 0, so...
+  if less_base_B(a.mantissa, b.mantissa)
+  then Z(-1, ominus_base_B(b.mantissa, a.mantissa))
+  else Z(1, ominus_base_B(a.mantissa, b.mantissa)) }
+  )
+end
+
+# --- minus_Z (md line 1038) ---
+procedure minus_Z(x)
+  return normalize_Z(Z(-x.sign, x.mantissa))
+end
+
+# --- times_Z (md line 1069) ---
+procedure times_Z(a, b)
+  return normalize_Z(Z(a.sign * b.sign, times_base_B(a.mantissa, b.mantissa)))
+end
+
+# --- mod_Z (md line 1101) ---
+procedure mod_Z(a, b)
+  return (if less_Z(b, zero_Z(b)) then mod_Z(a, minus_Z(b))
+  else if less_Z(a, zero_Z(a))
+  then plus_Z(a, minus_Z(times_Z(b, plus_Z(minus_Z(one_Z(a)), div_Z(a, b))))
+  else plus_Z(a, minus_Z(times_Z(b, div_Z(a, b)))) )
+end
+
+# --- abs_Z (md line 1134) ---
+procedure abs_Z(x)
+  return Z(1, x.mantissa)
+end
+
+# --- deg_Z (md line 1145) ---
+procedure deg_Z(x)
+  return x
+end
+
+# --- normalize_Z (md line 1145) ---
+procedure normalize_Z(x)
+  return (if is_zero_Z(x) then Z(1, x.mantissa) else x)
+end
+
+# --- equal_Z (md line 1159) ---
+procedure equal_Z(a, b)
+  if is_zero_Z(a) & is_zero_Z(b) then return
+  else if a.sign != b.sign then fail
+  else return equal_base_B(a.mantissa, b.mantissa)
+end
+
+# --- less_Z (md line 1159) ---
+procedure less_Z(a, b)
+  if a.sign < b.sign then return
+  if a.sign > b.sign then fail
+  if a.sign = 1 then return less_base_B(a.mantissa, b.mantissa)
+  if a.sign = -1 then return less_base_B(b.mantissa, a.mantissa)
+end
+
+# --- unit_Z (md line 1159) ---
+procedure unit_Z(x)
+  return (equal_Z(x, one_Z(x)) | equal_Z(x, Z(-1, one_base_B(x.mantissa))))
+end
+
+# --- anon (md line 1159) ---
+>zero_Z(x)  :=  return ((x.sign = 1) & not is_zero_Z(x))
+
+# --- negative_Z (md line 1159) ---
+procedure negative_Z(x)
+  return ((x.sign = -1) & not is_zero_Z(x))
+end
+
+# --- is_zero_Z (md line 1159) ---
+procedure is_zero_Z(x)
+  return equal_base_B(x.mantissa, zero_base_B(x.mantissa))
+end
+
+# --- print_Z (md line 1184) ---
+procedure print_Z(a)
+  local digits
+  if a.sign < 0 then writes("(-")
+  digits := a.mantissa.digits
+  every ch := !digits do writes(right(ch, Width, "0"))
+  writes("z")
+  if a.sign < 0 then writes(")")
+end
+
+# --- zero_integer (md line 1218) ---
+procedure zero_integer(x)
+  return 0
+end
+
+# --- one_integer (md line 1218) ---
+procedure one_integer(x)
+  return 1
+end
+
+# --- plus_1232 (md line 1232) ---
+procedure plus(a, b)
+  return a + b
+end
+
+# --- minus_integer (md line 1232) ---
+procedure minus_integer(x)
+  return -x
+end
+
+# --- odot_integer (md line 1232) ---
+procedure odot_integer(a, b)
+  return a * b
+end
+
+# --- odiv_integer (md line 1232) ---
+procedure odiv_integer(a, b)
+  return a / b
+end
+
+# --- mod_integer (md line 1232) ---
+procedure mod_integer(a, m)
+  if m < 0 then m := -m
+  repeat
+  if a < 0 then a := a + (abs(a/m) + 1) * m else return a % m
+end
+
+# --- rem_integer (md line 1252) ---
+procedure rem_integer(a, b)
+  return a % b
+end
+
+# --- deg_integer (md line 1263) ---
+procedure deg_integer(x)
+  return x
+end
+
+# --- abs_integer (md line 1263) ---
+procedure abs_integer(x)
+  return abs(x)
+end
+
+# --- is_zero_integer (md line 1277) ---
+procedure is_zero_integer(x)
+  return (x = 0)
+end
+
+# --- negative_integer (md line 1277) ---
+procedure negative_integer(x)
+  return x < 0
+end
+
+# --- equal_integer (md line 1277) ---
+procedure equal_integer(a, b)
+  return a = b
+end
+
+# --- unit_integer (md line 1277) ---
+procedure unit_integer(x)
+  if ((x = 1) | (x = -1)) then return x
+end
+
+# --- print_integer (md line 1293) ---
+procedure print_integer(x)
+  if x < 0 then writes("(", x, ")") else writes(x)
+end
+
+# --- zero_Q (md line 1337) ---
+procedure zero_Q(x)
+  return Q(zero(x.dividend), one(x.dividend))
+end
+
+# --- one_Q (md line 1337) ---
+procedure one_Q(x)
+  return Q(one(x.dividend), one(x.dividend))
+end
+
+# --- anon_1337 (md line 1337) ---
+k_{iQ_x}(l, j)  :=  return term(Q(l, one(l)), j)
+
+# --- plus_Q (md line 1352) ---
+procedure plus_Q(a, b)
+  local zz, top
+  top := plus(times(a.dividend, b.divisor), times(b.dividend, a.divisor))
+  zz := zero(a.dividend)
+  return if equal_Q(top, zz) then Q(zz, one(a.dividend))
+  else normalize_Q(Q(top, times(a.divisor, b.divisor)))
+end
+
+# --- minus_Q (md line 1368) ---
+procedure minus_Q(x)
+  return Q(-(x.dividend), x.divisor)
+end
+
+# --- times_Q (md line 1368) ---
+procedure times_Q(a, b)
+  return normalize_Q(Q(times(a.dividend, b.dividend), times(a.divisor, b.divisor)))
+end
+
+# --- div_Q (md line 1368) ---
+procedure div_Q(a, b)
+  local zz
+  zz := zero(b.dividend)
+  if equal(b.dividend, zz) then pr{"ERROR: divide by 0 in Q"}
+  else return (if equal(a.divisor, zz) then zero_Q(a)
+  else normalize_Q(Q(times(a.dividend, b.divisor), times(b.dividend, a.divisor))))
+end
+
+# --- mod_Q (md line 1388) ---
+procedure mod_Q(a, m)
+  return zero_Q(a)
+end
+
+# --- normalize_Q (md line 1401) ---
+procedure normalize_Q(x)
+  local g, top, bottom
+  g := GCD(x.dividend, x.divisor)
+  top := div(x.dividend, g)
+  bottom := div(x.divisor, g)
+  return (if negative(bottom) then Q(-(top), -(bottom))
+  else Q(top, bottom))
+end
+
+# --- equal_Q (md line 1429) ---
+procedure equal_Q(a, b)
+  return (equal(times(a.divisor, b.dividend), times(b.divisor, a.dividend)))
+end
+
+# --- unit_Q (md line 1442) ---
+procedure unit_Q(x)
+  return
+end
+
+# --- print_Q (md line 1455) ---
+procedure print_Q(x)
+  if equal(x.divisor, one(x.divisor))
+  then prs{x.dividend, "q"}
+  else prs{"(", x.dividend, "/", x.divisor, ")q"}
+end
+
+# --- zero_modulo (md line 1499) ---
+procedure zero_modulo(a)
+  return modulo(zero(a.item), a.modulus)
+end
+
+# --- one_modulo (md line 1499) ---
+procedure one_modulo(a)
+  return modulo(one(a.item), a.modulus)
+end
+
+# --- plus_modulo (md line 1513) ---
+procedure plus_modulo(a, b)
+  return normalize_modulo(modulo(plus(a.item, b.item), a.modulus))
+end
+
+# --- minus_modulo (md line 1513) ---
+procedure minus_modulo(x)
+  return normalize_modulo(modulo(-(x.item), x.modulus))
+end
+
+# --- times_modulo (md line 1513) ---
+procedure times_modulo(a, b)
+  return normalize_modulo(modulo(times(a.item, b.item), a.modulus))
+end
+
+# --- div_modulo (md line 1513) ---
+procedure div_modulo(a, b)
+  return normalize_modulo(modulo(times(a.item, INVERSE(b.item, b.modulus)), a.modulus))
+end
+
+# --- normalize_modulo (md line 1513) ---
+procedure normalize_modulo(x)
+  return modulo(mod(x.item, x.modulus), x.modulus)
+end
+
+# --- deg_modulo (md line 1513) ---
+procedure deg_modulo(x)
+  return mod(x.item, x.modulus)
+end
+
+# --- equal_modulo (md line 1531) ---
+procedure equal_modulo(a, b)
+  return (equal(mod(a.item, a.modulus), mod(b.item, b.modulus)))
+end
+
+# --- unit_modulo (md line 1531) ---
+procedure unit_modulo(a)
+  return (equal($mod$(a.item, a.modulus), 1))
+end
+
+# --- negative_modulo (md line 1545) ---
+procedure negative_modulo(a)
+  fail
+end
+
+# --- print_modulo (md line 1558) ---
+procedure print_modulo(x)
+  prs{"(", x.item, " mod ", x.modulus, ")"}
+end
+
+# --- record_poly (md line 1588) ---
+record poly (terms)
+  poly_of(x) := return poly([term(x, 0)])
+
+# --- anon_1602 (md line 1602) ---
+0th_coef(fx) :=
+local a
+a := fx.terms[1]
+return (if a.power = 0 then a.coef else zero(a.coef))
+
+# --- lead_coef (md line 1618) ---
+procedure lead_coef(ax)
+  return (ax.terms[*ax.terms]).coef
+end
+
+# --- zero_poly (md line 1646) ---
+procedure zero_poly(p)
+  z := zero(p.terms[1].coef)
+  return poly([term(z, 0)])
+end
+
+# --- one_poly (md line 1680) ---
+procedure one_poly(p)
+  z := one(p.terms[1].coef)
+  return poly([term(z, 0)])
+end
+
+# --- k_Z_Q (md line 1695) ---
+procedure k_Z_Q(e)
+  top := k_Z(e)
+  return Q(top, one_Z(top))
+end
+
+# --- k_Z_Qx (md line 1710) ---
+procedure k_Z_Qx(e, y)
+  return term(k_Z_Q(e), y)
+end
+
+# --- k_Z_x (md line 1723) ---
+procedure k_Z_x(e, y)
+  return term(k_Z(e), y)
+end
+
+# --- plus_poly (md line 1736) ---
+procedure plus_poly(a, b)
+  local Terms, T, z
+  Terms := plus_terms(a.terms, b.terms)
+  T := []; z := zero(a.terms[1].coef)
+  every t := !Terms do if not equal(t.coef, z) then T ||||:= [t]
+  return (if *T > 0 then poly(T) else zero(a))
+end
+
+# --- plus_terms (md line 1752) ---
+procedure plus_terms(a, b)
+  local c_coef, at, ap, ac, bt, bp, bc
+  return (
+  if *a = 0 then b
+  else if *b = 0 then a
+  else {
+  at := a[1]; ap := at.power; ac := at.coef
+  bt := b[1]; bp := bt.power; bc := bt.coef
+  if less(ap, bp)
+  then {
+  if equal(ac, zero(ac))
+  then plus_terms(rest(a), b)
+  else [at] } plus_terms(rest(a), b) }
+  else if equal(ap, bp)
+  then {
+  c_coef := plus(ac, bc)
+  if equal(c_coef, zero(c_coef))
+  then plus_terms(rest(a), rest(b))
+  else [term(c_coef, ap)] } plus_terms(rest(a), rest(b)) }
+  else plus_terms(b, a) }
+  )
+end
+
+# --- minus_poly (md line 1806) ---
+procedure minus_poly(x)
+  local c
+  c := []
+  every t := !x.terms do c ||||:= [minus_term(t)]
+  return poly(c)
+end
+
+# --- minus_term (md line 1806) ---
+procedure minus_term(t)
+  return term(-(t.coef), t.power)
+end
+
+# --- times_poly (md line 1843) ---
+procedure times_poly(a, b)
+  return times_poly_terms(a, b.terms)
+end
+
+# --- times_poly_terms (md line 1843) ---
+procedure times_poly_terms(a, b_terms)
+  return (if *b_terms = 0 then zero(a)
+  else plus_poly(times_poly_term(a, b_terms[1]),
+  times_poly_terms(a, rest(b_terms))))
+end
+
+# --- times_poly_term (md line 1858) ---
+procedure times_poly_term(a, b_term)
+  return (if *a.terms < 2
+  then poly([times_term_term(a.terms[1], b_term)])
+  else plus_poly(poly([times_term_term(a.terms[1], b_term)]),
+  times_poly_term(poly(rest(a.terms)), b_term)))
+end
+
+# --- times_term_term (md line 1858) ---
+procedure times_term_term(a_term, b_term)
+  return term(times(a_term.coef, b_term.coef), a_term.power + b_term.power)
+end
+
+# --- div_poly (md line 1898) ---
+procedure div_poly(a, b)
+  local n, m, r, q, quotient
+  n := deg_poly(b)
+  r := copy(a)
+  quotient := zero_poly(r)
+  repeat {
+  m := deg_poly(r)
+  if less_degree(m, n)
+  then return quotient
+  else { q := poly([term(div(lead_coef(r), lead_coef(b)), m - n)])
+  if m = 0
+  then return plus_poly(quotient, q)
+  else { subtrahend := minus_poly(times_poly(q, b))
+  r := plus_poly(r, subtrahend)
+  quotient := plus_poly(quotient, q) } } }
+end
+
+# --- mod_poly (md line 1953) ---
+procedure mod_poly(a, b)
+  return ominus(a, times(b, div(a, b)))
+end
+
+# --- eval_poly (md line 1966) ---
+procedure eval_poly(fx, a)
+  local r
+  r := zero(a)
+  every x := !fx.terms do r := plus(r, eval_term(x, a))
+  return r
+end
+
+# --- eval_term (md line 1983) ---
+procedure eval_term(t, a)
+  return times(t.coef, exp(a, t.power))
+end
+
+# --- deg_poly (md line 1996) ---
+procedure deg_poly(x)
+  if equal_poly(x, zero_poly(x)) then return "- infinity"
+  else return x.terms[*x.terms].power
+end
+
+# --- minus_deg (md line 2004) ---
+procedure minus_deg(a, b)
+  return (
+  if type(a) == "string" then b
+  else if type(b) == "string" then a
+  else a - b)
+end
+
+# --- plus_deg (md line 2013) ---
+procedure plus_deg(a, b)
+  return (
+  if type(a) == "string" then b
+  else if type(b) == "string" then a
+  else a + b)
+end
+
+# --- normalize_poly (md line 2028) ---
+procedure normalize_poly(x)
+  local ts
+  ts := []
+  every t := !x.terms do ts ||||:= [term(normalize(t.coef), t.power)]
+  return poly(ts)
+end
+
+# --- less_degree (md line 2044) ---
+procedure less_degree(a, b)
+  if type(a) == "string"
+  then return not(type(b) == "string")
+  else return a < b
+end
+
+# --- equal_poly (md line 2053) ---
+procedure equal_poly(a, b)
+  return equal_terms(a.terms, b.terms)
+end
+
+# --- equal_terms (md line 2059) ---
+procedure equal_terms(a, b)
+  if *a ≠ *b then fail
+  if *a = 0 then return
+  if equal_term(a[1], b[1]) then return equal_terms(rest(a), rest(b))
+end
+
+# --- equal_term (md line 2068) ---
+procedure equal_term(a, b)
+  return (equal(a.coef, b.coef) & equal(a.power, b.power))
+end
+
+# --- unit_poly (md line 2074) ---
+procedure unit_poly(x)
+  return ((*x.terms = 1) & (x.terms[1].power = 0) & unit(x.terms[1].coef))
+end
+
+# --- print_poly (md line 2086) ---
+procedure print_poly(x)
+  print_term(x.terms[1])
+  every t := !rest(x.terms) do { writes("+ "); print_term(t) }
+end
+
+# --- print_term (md line 2086) ---
+procedure print_term(x)
+  print(x.coef)
+  if x.power = 1 then writes("*X")
+  else if x.power > 1 then prs{"*X^", x.power}
+end
+
+# --- zero_tpower (md line 2132) ---
+procedure zero_tpower(x)
+  return tpower(zero_poly(x.Poly), x.N)
+end
+
+# --- one_tpower (md line 2144) ---
+procedure one_tpower(x)
+  return tpower(one_poly(x.Poly), x.N)
+end
+
+# --- plus_tpower (md line 2156) ---
+procedure plus_tpower(a, b)
+  return tpower(plus_poly(a.Poly, b.Poly), a.N)
+end
+
+# --- minus_tpower (md line 2156) ---
+procedure minus_tpower(x)
+  return tpower(minus_poly(x.Poly), x.N)
+end
+
+# --- truncate (md line 2156) ---
+procedure truncate(p, n)
+  return poly(p.terms[1:n+1])
+end
+
+# --- times_tpower (md line 2156) ---
+procedure times_tpower(a, b)
+  return tpower(truncate(times_poly(a.Poly, b.Poly), a.N), a.N)
+end
+
+# --- div_tpower (md line 2156) ---
+procedure div_tpower(a, b)
+  return tpower(truncate(div_poly(a.Poly, b.Poly), a.N), a.N)
+end
+
+# --- normalize_tpower (md line 2156) ---
+procedure normalize_tpower(x)
+  return tpower(normalize_poly(x.Poly), x.N)
+end
+
+# --- equal_tpower (md line 2178) ---
+procedure equal_tpower(a, b)
+  return (a.N = b.N) & equal_poly(a.Poly, b.Poly)
+end
+
+# --- unit_tpower (md line 2178) ---
+procedure unit_tpower(x)
+  return unit_poly(x.Poly)
+end
+
+# --- print_tpower (md line 2192) ---
+procedure print_tpower(x)
+  print_poly(x.Poly)
+end
+
+# --- GCD (md line 2231) ---
+procedure GCD(a, b)
+  return (if equal(b, zero(b)) then normalize(a)
+  else GCD(b, mod(a, b)))
+end
+
+# --- EUCLID (md line 2262) ---
+procedure EUCLID(A, B)
+  local q, a, s, t
+  a := [copy(A), copy(B)]
+  s := [one(A), zero(A)]
+  t := [zero(A), one(A)]
+  while not(equal(a[2], zero(A))) do {
+  q := div(a[1], a[2])
+  a := [a[2], ominus(a[1], times(a[2], q))]
+  s := [s[2], ominus(s[1], times(s[2], q))]
+  t := [t[2], ominus(t[1], times(t[2], q))] }
+  return [normalize(a[1]), normalize(s[1]), normalize(t[1])]
+end
+
+# --- INVERSE (md line 2303) ---
+procedure INVERSE(a, m)
+  local gst
+  gst := EUCLID(m, a)
+  if unit(gst[1]) then return mod(div(gst[3], gst[1]), m)
+  else pr{"ERROR: ", a, "^{-1 "}, " mod ", m, " does not exist"}
+end
+
+# --- CRA1 (md line 2343) ---
+procedure CRA1(aa, bb, m)
+  local a, b, g
+  g := GCD(aa, m)
+  if not divides(g, bb) then pr{"ERROR: no solution to linear congruence"}
+  else { a := mod(aa, m); b := mod(bb, m)
+  if equal(a, one(a)) then return b
+  else if equal(b, zero(b)) then return zero(b)
+  else if equal(a, b) then return one(b)
+  else return div(plus(times(m, CRA1(m, -(b), a)), b), a) }
+end
+
+# --- CRA2 (md line 2375) ---
+procedure CRA2(r, m, s, n)
+  local c, sigma, U
+  c := INVERSE(m, n)
+  sigma := mod(times(ominus(s, r), c), n)
+  U := plus(r, times(sigma, m))
+  return U
+end
+
+# --- CRA (md line 2396) ---
+procedure CRA(rm_list)
+  local rms, rm, M, U, c, sigma
+  rms := copy(rm_list)
+  rm := pop(rms); r := rm[1]; m := rm[2]
+  M := one(m)
+  U := mod(r, m)
+  every k := 1 to *rms do {
+  M := times(M, m)
+  rm := pop(rms); r := rm[1]; m := rm[2]
+  c := INVERSE(M, m)
+  sigma := mod(times(ominus(mod(U, m), r), c), m)
+  U := plus(U, times(sigma, M)) }
+  return U
+end
+
+# --- DIOPHANTINE (md line 2499) ---
+procedure DIOPHANTINE(a, b, c)
+  local gst, g, x_1, y_1
+  gst := EUCLID(a, b)
+  g := gst[1]; t := gst[3]
+  if not divides(g, c) then pr{"ERROR: Diophantine solution nonexistent"}
+  else { if less(abs(b), abs(a))
+  then { x_1 := CRA1(a, c, abs(b))
+  y_1 := div(ominus(c, times(a, x_1)), b) }
+  else { y_1 := CRA1(b, c, abs(a))
+  x_1 := div(ominus(c, times(b, y_1)), a) }
+  return [g, x_1, y_1] }
+end
+
+# --- MOD_RS (md line 2538) ---
+procedure MOD_RS(a, b)
+  return [a] |||||:= (if equal(b, zero(b)) then [b] else MOD_RS(b, mod(a, b)))
+end
+
+# --- PREM (md line 2586) ---
+procedure PREM(px, qx)
+  local d, b
+  d := minus_deg(deg_poly(px), deg_poly(qx))
+  b := poly_of(lead_coef(qx))
+  return rem(times_poly(exp(b, d + 1), px), qx)
+end
+
+# --- E_PRS (md line 2610) ---
+procedure E_PRS(a, b)
+  return [a] |||||:= (if equal(b, zero(b)) then [b] else E_PRS(b, PREM(a, b)))
+end
+
+# --- S_PRS (md line 2646) ---
+procedure S_PRS(p_0, p_1)
+  local delta_0, beta_2, p_2, x, P, R_1,
+  delta_i-2, c_i-2, R_i-2, p_i-2, p_i-1, beta_i, p_i, l, z
+  delta_0 := delta_i(p_0, p_1)
+  c_0 := c_i(p_0)
+  beta_2 := poly_of(exp(-(one(c_0)), delta_0 + 1))
+  p_2 := P_i(p_0, p_1, beta_2); z := zero(p_2)
+  if equal(p_2, z) then return [p_0, p_1]
+  P := [p_0, p_1, p_2]
+  R_1 := exp(c_i(p_1), delta_0)
+  delta_i-2 := delta_i(p_1, p_2)
+  c_i-2 := c_i(p_1)
+  R_i-2 := R_1
+  p_i-2 := p_1
+  p_i-1 := p_2
+  l := 3
+  repeat {
+  beta_i := beta_i(delta_i-2, c_i-2, R_i-2)
+  p_i := P_i(p_i-2, p_i-1, beta_i)
+  if equal(p_i, z) then return P
+  else P ||||:= [p_i]
+  p_i-2 := p_i-1
+  p_i-1 := p_i
+  c_i-2 := c_i(p_i-2)
+  R_i-2 := R_i(c_i-2, delta_i-2, R_i-2)
+  delta_i-2 := delta_i(p_i-2, p_i-1) }
+end
+
+# --- delta_i (md line 2646) ---
+procedure delta_i(p_i, p_i+1)
+  return minus_deg(deg_poly(p_i), deg_poly(p_i+1))
+end
+
+# --- c_i (md line 2646) ---
+procedure c_i(p_i)
+  return lead_coef(p_i)
+end
+
+# --- R_i (md line 2646) ---
+procedure R_i(c_i, delta_i-1, R_i-1)
+  return times(exp(c_i, delta_i-1), exp(R_i-1, minus_deg(delta_i-1, 1)))
+end
+
+# --- beta_i (md line 2646) ---
+procedure beta_i(delta_i-2, c_i-2, R_i-2)
+  return poly_of(times(times(exp(-(one(c_i-2)), 1 + delta_i-2), exp(R_i-2, delta_i-2))))
+end
+
+# --- P_i (md line 2646) ---
+procedure P_i(p_i-2, p_i-1, beta_i)
+  return div(PREM(p_i-2, p_i-1), beta_i)
+end
+
+# --- NIA (md line 2702) ---
+procedure NIA(ab_list)
+  local ab_s, ab, a, b, Ux, Mx, c, sigma
+  ab_s := copy(ab_list)
+  ab := pop(ab_s); a := ab[1]; b := ab[2]
+  Ux := poly_of(b)
+  Mx := one(Ux)
+  every k := 1 to *ab_s do {
+  Mx := times(Mx, ominus(poly([term(one(b), 1)]), poly_of(a)))
+  ab := pop(ab_s); a := ab[1]; b := ab[2]
+  c := div(one(a), eval_poly(Mx, a))
+  sigma := div(ominus(poly_of(b), poly_of(eval_poly(Ux, a))), poly_of(c))
+  Ux := plus(Ux, times(sigma, Mx)) }
+  return Ux
+end
+
+# --- FFT (md line 2730) ---
+procedure FFT(N, ax, omega)
+  local A, n, bx, cx, omega^2, B, C, omega^k
+  A := list(N, [])
+  if N = 1 * basis
+  then A[1] := 0th_coef(ax)
+  else { n := N/2 * binary split
+  bx := poly_of_even_powered_terms(ax)
+  cx := poly_of_odd_powered_terms(ax)
+  omega^2 := exp(omega, 2)
+  B := FFT(n, bx, omega^2) * recursive calls
+  C := FFT(n, cx, omega^2)
+  every k := 1 to n do {
+  omega^k := exp(omega, k-1)
+  A[k] := plus(B[k], times(omega^k, C[k]))
+  A[k+n] := ominus(B[k], times(omega^k, C[k])) } }
+  return A
+end
+
+# --- poly_of_even_powered_terms (md line 2757) ---
+procedure poly_of_even_powered_terms(ax)
+  local r
+  r := []
+  every t := !ax.terms
+  do if mod_integer(t.power, 2) = 0 then r ||||:= [term(t.coef, t.power/2)]
+  return poly(r)
+end
+
+# --- poly_of_odd_powered_terms (md line 2774) ---
+procedure poly_of_odd_powered_terms(ax)
+  local r
+  r := []
+  every t := !ax.terms
+  do if mod_integer(t.power, 2) = 1 then r ||||:= [term(t.coef, (t.power - 1)/2)]
+  if *r > 0 then return poly(r) else return zero(ax.terms[1])
+end
+
+# --- FFI (md line 2793) ---
+procedure FFI(N, B, omega)
+  local bx, C, ax
+  bx := polynomialize(B)
+  C := FFT(N, bx, div(one(omega), omega))
+  ax := polynomialize(times_vector_scalar(C, div(one(N), N)))
+  return ax
+end
+
+# --- polynomialize (md line 2808) ---
+procedure polynomialize(B)
+  local r, i
+  r := []; i := 0
+  every b := !B do {
+  if not(equal(b, zero(b))) then r ||||:= [term(b, i)]
+  i +:= 1 }
+  return poly(r)
+end
+
+# --- times_vector_scalar (md line 2824) ---
+procedure times_vector_scalar(V, x)
+  local R, i
+  R := list(*V); i := 1
+  every v := !V do { R[i] := times(V[i], x); i +:= 1 }
+  return R
+end
+
+# --- NPSI (md line 2844) ---
+procedure NPSI(at)
+  local ax, xt, n
+  ax := at.Poly
+  xt := poly_of(0th_coef(ax))
+  n := log2(*ax.terms)
+  every k := 0 to n-1
+  do xt := plus(plus(xt, xt),
+  -(times_poly(truncate(ax, 2^{k+1}), times(xt, xt))))
+  return tpower(truncate(xt, at.N), at.N)
+end
+
+# --- log2 (md line 2862) ---
+procedure log2(x)
+  local l
+  l := 0
+  while x > 1 do { x := x/2; l := l + 1 }
+  return l
+end

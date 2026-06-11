@@ -1,0 +1,586 @@
+{
+  "source": "Courant_Ericson_1986.md",
+  "procedure_count": 166,
+  "procedures": [
+    "div",
+    "zero",
+    "one",
+    "Abs",
+    "plus",
+    "ominus",
+    "minus",
+    "times",
+    "div_213",
+    "mod",
+    "rem",
+    "normalize",
+    "exp",
+    "equal",
+    "less",
+    "negative",
+    "unit",
+    "is_zero",
+    "divides",
+    "prs",
+    "pr",
+    "print",
+    "record_base_B",
+    "zero_base_B",
+    "one_base_B",
+    "k_base_B",
+    "digits_of",
+    "plus_base_B",
+    "plus_digits",
+    "ominus_base_B",
+    "ominus_digits",
+    "normalize_base_B",
+    "normalize_digits",
+    "times_base_B",
+    "times_digits",
+    "div_base_B",
+    "div_digits",
+    "print_base_B",
+    "less_base_B",
+    "less_digits",
+    "equal_base_B",
+    "equal_digits",
+    "rest",
+    "zero_Z",
+    "one_Z",
+    "k_Z",
+    "plus_Z",
+    "minus_Z",
+    "times_Z",
+    "mod_Z",
+    "abs_Z",
+    "deg_Z",
+    "normalize_Z",
+    "equal_Z",
+    "less_Z",
+    "unit_Z",
+    "anon",
+    "negative_Z",
+    "is_zero_Z",
+    "print_Z",
+    "zero_integer",
+    "one_integer",
+    "plus_1232",
+    "minus_integer",
+    "odot_integer",
+    "odiv_integer",
+    "mod_integer",
+    "rem_integer",
+    "deg_integer",
+    "abs_integer",
+    "is_zero_integer",
+    "negative_integer",
+    "equal_integer",
+    "unit_integer",
+    "print_integer",
+    "zero_Q",
+    "one_Q",
+    "anon_1337",
+    "plus_Q",
+    "minus_Q",
+    "times_Q",
+    "div_Q",
+    "mod_Q",
+    "normalize_Q",
+    "equal_Q",
+    "unit_Q",
+    "print_Q",
+    "zero_modulo",
+    "one_modulo",
+    "plus_modulo",
+    "minus_modulo",
+    "times_modulo",
+    "div_modulo",
+    "normalize_modulo",
+    "deg_modulo",
+    "equal_modulo",
+    "unit_modulo",
+    "negative_modulo",
+    "print_modulo",
+    "record_poly",
+    "anon_1602",
+    "lead_coef",
+    "zero_poly",
+    "one_poly",
+    "k_Z_Q",
+    "k_Z_Qx",
+    "k_Z_x",
+    "plus_poly",
+    "plus_terms",
+    "minus_poly",
+    "minus_term",
+    "times_poly",
+    "times_poly_terms",
+    "times_poly_term",
+    "times_term_term",
+    "div_poly",
+    "mod_poly",
+    "eval_poly",
+    "eval_term",
+    "deg_poly",
+    "minus_deg",
+    "plus_deg",
+    "normalize_poly",
+    "less_degree",
+    "equal_poly",
+    "equal_terms",
+    "equal_term",
+    "unit_poly",
+    "print_poly",
+    "print_term",
+    "zero_tpower",
+    "one_tpower",
+    "plus_tpower",
+    "minus_tpower",
+    "truncate",
+    "times_tpower",
+    "div_tpower",
+    "normalize_tpower",
+    "equal_tpower",
+    "unit_tpower",
+    "print_tpower",
+    "GCD",
+    "EUCLID",
+    "INVERSE",
+    "CRA1",
+    "CRA2",
+    "CRA",
+    "DIOPHANTINE",
+    "MOD_RS",
+    "PREM",
+    "E_PRS",
+    "S_PRS",
+    "delta_i",
+    "c_i",
+    "R_i",
+    "beta_i",
+    "P_i",
+    "NIA",
+    "FFT",
+    "poly_of_even_powered_terms",
+    "poly_of_odd_powered_terms",
+    "FFI",
+    "polynomialize",
+    "times_vector_scalar",
+    "NPSI",
+    "log2"
+  ],
+  "icon_test_cases": [
+    {
+      "md_line": 25,
+      "body": "procedure FFT(N, a(x), omega, A);\nif N = 1\nthen\n{ Basis. } A_0 := a_0\nelse\nbegin\n{ Binary split. }\nn := N/2\nb(x) := sum_i=0^{n-1} a_2i x^i\nc(x) := sum_i=0^{n-1} a_2i+1 x^i\n{ Recursive calls. }\nFFT(n, b(x), omega^2, B)\nFFT(n, c(x), omega^2, C)\n{ Combine. }\nfor k := 0 until n - 1 do\nbegin\nA_k := B_k + omega^k times C_k\nA_k+n := B_k - omega^k times C_k\nend\nend",
+      "expected": []
+    },
+    {
+      "md_line": 533,
+      "body": "x := base_B(8, [1]); y := base_B(8, [7, 7, 7])\npr{x, \" + \", y, \" = \", plus_base_B(x, y)}",
+      "expected": [
+        "1 #8# + 7 7 7 #8# = 1 0 0 0 #8#"
+      ]
+    },
+    {
+      "md_line": 591,
+      "body": "x := base_B(10, [1,0,0,5,6,3]); y := base_B(10, [5,3,3,5])\npr{x, \" - \", y, \" = \", ominus_base_B(x,y)}\nx := base_B(10,[2,1,2]); y := base_B(10, [9,9])\npr{x, \" - \", y, \" = \", ominus_base_B(x, y)}\ny := base_B(10, [1,9,9])\npr{x, \" - \", y, \" = \", ominus_base_B(x, y)}",
+      "expected": [
+        "1 0 0 5 6 3 #10# - 5 3 3 5 #10# = 9 5 2 2 8 #10#",
+        "2 1 2 #10# - 9 9 #10# = 1 1 3 #10#",
+        "2 1 2 #10# - 1 9 9 #10# = 1 3 #10#"
+      ]
+    },
+    {
+      "md_line": 674,
+      "body": "x := k_base_B(28107324); y := k_base_B(75625)\npr{x, \" * \", y, \" = \", times_base_B(x,y)}\nx := k_base_B(28107324); y := k_base_B(75625)\npr{x, \" * \", y, \" = \", times_base_B(x,y)}\nx := k_base_B(7478); y := k_base_B(4625)\npr{x, \" * \", y, \" = \", times_base_B(x, y)}",
+      "expected": [
+        "2 8 1 0 7 3 2 4 #10# * 7 5 6 2 5 #10# = 2 1 2 5 6 1 6 3 7 7 5 0 0 #10#",
+        "7 4 7 8 #10# * 4 6 2 5 #10# = 3 4 5 8 5 7 5 0 #10#"
+      ]
+    },
+    {
+      "md_line": 856,
+      "body": "every xy := ![[10, 1], [4,2], [27, 9], [42,2], [90,1],\n[188175, 325], [188175, 579], [188175, 580],\n[188175, 578], [121903, 5335],\n[212, 99], [115668, 75625]]\ndo { x := k_base_B(xy[1]); y := k_base_B(xy[2])\npr{x, \" / \", y, \" = \", div_base_B(x, y)} }",
+      "expected": [
+        "1 0 #10# / 1 #10# = 1 0 #10#",
+        "4 #10# / 2 #10# = 2 #10#",
+        "2 7 #10# / 9 #10# = 3 #10#",
+        "4 2 #10# / 2 #10# = 2 1 #10#",
+        "9 0 #10# / 1 #10# = 9 0 #10#",
+        "1 8 8 1 7 5 #10# / 3 2 5 #10# = 5 7 9 #10#",
+        "1 8 8 1 7 5 #10# / 5 7 9 #10# = 3 2 5 #10#",
+        "1 8 8 1 7 5 #10# / 5 8 0 #10# = 3 2 4 #10#",
+        "1 8 8 1 7 5 #10# / 5 7 8 #10# = 3 2 5 #10#",
+        "1 2 1 9 0 3 #10# / 5 3 3 5 #10# = 2 2 #10#",
+        "2 1 2 #10# / 9 9 #10# = 2 #10#",
+        "1 1 5 6 6 8 #10# / 7 5 6 2 5 #10# = 1 #10#"
+      ]
+    },
+    {
+      "md_line": 1022,
+      "body": "x := k_Z(1); y := k_Z(-999)\npr{x, \" + \", y, \" = \", plus_Z(x, y)}",
+      "expected": [
+        "`1z + (-999z) = (-998z)`"
+      ]
+    },
+    {
+      "md_line": 1051,
+      "body": "x := k_Z(212); y := k_Z(-99)\npr{\"-\", x, \" = \", minus_Z(x)}\npr{\"-\", y, \" = \", minus_Z(y)}",
+      "expected": [
+        "`-212z = (-212z)`",
+        "`-(-99z) = 99z`"
+      ]
+    },
+    {
+      "md_line": 1082,
+      "body": "every xy := ![[10, 1], [121903, 5335], [115668, 75625]]\ndo { x := k_Z(xy[1]); y := k_Z(xy[2]);\npr{x, \" / \", y, \" = \", div_Z(x, y)} }",
+      "expected": [
+        "`10z / 1z = 10z`",
+        "`121903z / 5335z = 22z`",
+        "`115668z / 75625z = 1z`"
+      ]
+    },
+    {
+      "md_line": 1118,
+      "body": "x := k_Z(121903); y := k_Z(5335)\npr{x, \" mod \", y, \" = \", mod_Z(x, y)}",
+      "expected": [
+        "`121903z mod 5335z = 4533z`"
+      ]
+    },
+    {
+      "md_line": 1661,
+      "body": "pr{\"Q: 0 = \", zero_poly(poly([term(Q(-2,1), 0)]))}\npr{\"QZ: 0 = \", zero_poly(poly([term(k_Z_Qx(-2, 0)]))}",
+      "expected": [
+        "`Q\\text{: 0 = }0_q`",
+        "`QZ\\text{: 0 = }0_zq`"
+      ]
+    },
+    {
+      "md_line": 1785,
+      "body": "ax := poly([term(Q(-2,1), 0), term(Q(1,1), 3)])\nbx := poly([term(Q(-3,1), 0), term(Q(2,1), 3)])\nfx := poly([k_Z_Qx(-2, 0), k_Z_Qx(1,3)])\ngx := poly([k_Z_Qx(-3, 0), k_Z_Qx(2,3)])\npr{\"Q: (\", ax, \") + (\", bx, \") = \", plus_poly(ax, bx)}\npr{\"QZ: (\", fx, \") + (\", gx, \") = \", plus_poly(fx, gx)}",
+      "expected": [
+        "`Q\\text{: }(-2)q + 1q \u00b7 X^3) + ((-3)q + 2q \u00b7 X^3) = (-5)q + 3q \u00b7 X^3`",
+        "`QZ\\text{: }((-2z)q + 1zq \u00b7 X^3) + ((-3z)q + 2zq \u00b7 X^3) = (-5z)q + 3zq \u00b7 X^3`"
+      ]
+    },
+    {
+      "md_line": 1824,
+      "body": "ax := poly([term(Q(-2,1), 0), term(Q(1,1), 3)])\nfx := poly([k_Z_Qx(-2, 0), k_Z_Qx(1,3)])\npr{\"Q: - (\", ax, \") = \", minus_poly(ax)}\npr{\"QZ: - (\", fx, \") = \", minus_poly(fx)}",
+      "expected": [
+        "`Q\\text{: - }((-2)q + 1q \u00b7 X^3) = 2q + (-1)q \u00b7 X^3`",
+        "`QZ\\text{: - }((-2z)q + 1zq \u00b7 X^3) = 2zq + (-1z)q \u00b7 X^3`"
+      ]
+    },
+    {
+      "md_line": 1877,
+      "body": "ax := poly([term(Q(-2,1), 0), term(Q(1,1), 3)])\nbx := poly([term(Q(-3,1), 0), term(Q(2,1), 3)])\nfx := poly([k_Z_Qx(-2, 0), k_Z_Qx(1,3)])\ngx := poly([k_Z_Qx(-3, 0), k_Z_Qx(2,3)])\npr{\"Q: (\", ax, \") * (\", bx, \") = \", times_poly(ax, bx)}\npr{\"QZ: (\", fx, \") * (\", gx, \") = \", times_poly(fx, gx)}",
+      "expected": [
+        "`Q\\text{: }((-2)q + 1q \u00b7 X^3) * ((-3)q + 2q \u00b7 X^3) = 6q + (-7)q \u00b7 X^3 + 2q \u00b7 X^6`",
+        "`QZ\\text{: }((-2z)q + 1zq \u00b7 X^3) * ((-3z)q + 2zq \u00b7 X^3) = 6zq + (-7z)q \u00b7 X^3 + 2zq \u00b7 X^6`"
+      ]
+    },
+    {
+      "md_line": 1925,
+      "body": "ax := poly_of(1); bx := poly_of(3)\npr{\"integers: \", ax, \"/\", bx, \" = \", div_poly(ax, bx)}\nax := poly([term(Q(5,9), 0)])\nbx := poly([term(Q(-2,1), 0), term(Q(3,2), 1)])\nfx := poly([term(Q(k_Z(5), k_Z(9)), 0)])\ngx := poly([term(Q(k_Z(-2), k_Z(1)), 0), term(Q(k_Z(3), k_Z(2)), 1)])\npr{\"Q: (\", ax, \") / (\", bx, \") = \", div_poly(ax, bx)}\npr{\"QZ: (\", gx, \") / (\", fx, \") = \", div_poly(gx, fx)}\nax := poly([term(Q(k_Z(166), k_Z(243)), 0), term(Q(k_Z(-275), k_Z(243)), 1)])\nbx := poly([term(Q(k_Z(115668), k_Z(75625)), 0)])\npr{\"QZ[x]: (\", ax, \"/ \", bx, \") = \", div(ax, bx)}",
+      "expected": [
+        "`\\text{integers: }1/3 = 0`",
+        "`Q\\text{: }((5/9)q) / ((-2)q + (3/2)q \u00b7 X) = 0q`",
+        "`QZ\\text{: }((-2z)q + (3z/2z)q \u00b7 X) / ((5z/9z)q) = ((-18z)/5z)q + (27z/10z)q \u00b7 X`",
+        "`QZ[x]\\text{: }((166z/243z)q + ((-275z)/243z)q \u00b7 X) / ((115668z/75625z)q) = (6276875z/14053662z)q + ((-20796875z)/28107324z)q \u00b7 X`"
+      ]
+    },
+    {
+      "md_line": 2442,
+      "body": "a_congruences := [[1, 3], [0, 7], [2, 4], [3, 5]]\nb_congruences := [[0, 3], [1, 7], [3, 4], [3, 5]]\na := CRA(a_congruences)\nb := CRA(b_congruences)\nux := poly([term(b, 0), term(a, 1)])\npr{\"u(x) = \", ux}",
+      "expected": [
+        "u(x) = 183 + 238 \u00b7 X + 3 \u00b7 7 \u00b7 4 \u00b7 5 \\sum_i=0^{\\infty} t_i x^i."
+      ]
+    },
+    {
+      "md_line": 2470,
+      "body": "pr{CRA([[1, 3], [3, 5], [0, 7], [10, 11]])}",
+      "expected": [
+        "x = x_1 + \\frac{b}{g} t, \\quad y = y_1 - \\frac{a}{g} t",
+        "ax \\equiv c \\pmod{|b|} \\quad \\text{or} \\quad by \\equiv c \\pmod{|a|}"
+      ]
+    },
+    {
+      "md_line": 2555,
+      "body": "settime()\nax := poly([k_Z_Qx(2, 0), k_Z_Qx(-1, 1), k_Z_Qx(3, 2), k_Z_Qx(2, 4), k_Z_Qx(1, 5)])\nbx := poly([k_Z_Qx(2, 0), k_Z_Qx(-1, 1), k_Z_Qx(3, 3)])\npr{\"QZ[x]: MOD_RS(\", ax, \", \", bx, \") = \", MOD_RS(ax, bx)}\nshowtime()",
+      "expected": [
+        "[221033 msecs]",
+        "1. Let `d = \\deg(p) - \\deg(q)`",
+        "2. Let `b` = lead coefficient of `q(x)`",
+        "3. Return `\\text{rem}(b^{d+1} \u00b7 px, qx)`"
+      ]
+    },
+    {
+      "md_line": 2882,
+      "body": "global timer\nshowtime()  :=  pr{\"[\", &time - timer, \" msecs]\"}\nsettime()  :=  timer := &time",
+      "expected": []
+    }
+  ],
+  "table_tests": [
+    {
+      "kind": "table",
+      "section": "#### 3.1.1. Greatest Common Divisor",
+      "cells": [
+        "Domain",
+        "A",
+        "B",
+        "GCD"
+      ],
+      "raw": "| Domain | $`A`$ | $`B`$ | GCD |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.1. Greatest Common Divisor",
+      "cells": [
+        "Z",
+        "121903z",
+        "5335z",
+        "1z"
+      ],
+      "raw": "| $`Z`$ | $`121903z`$ | $`5335z`$ | $`1z`$ |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.1. Greatest Common Divisor",
+      "cells": [
+        "Z",
+        "-18z",
+        "5z",
+        "1z"
+      ],
+      "raw": "| $`Z`$ | $`-18z`$ | $`5z`$ | $`1z`$ |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.1. Greatest Common Divisor",
+      "cells": [
+        "Z",
+        "228z",
+        "612z",
+        "12z"
+      ],
+      "raw": "| $`Z`$ | $`228z`$ | $`612z`$ | $`12z`$ |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.1. Greatest Common Divisor",
+      "cells": [
+        "Q[x]",
+        "(-2)q + 1q \u00b7 X^3",
+        "(-3)q + 2q \u00b7 X^2",
+        "(5/9)q"
+      ],
+      "raw": "| $`Q[x]`$ | $`(-2)q + 1q \\cdot X^3`$ | $`(-3)q + 2q \\cdot X^2`$ | $`(5/9)q`$ |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.1. Greatest Common Divisor",
+      "cells": [
+        "Z_5",
+        "((-2) mod 5)",
+        "((-3) mod 5)",
+        "(2 mod 5)"
+      ],
+      "raw": "| $`Z_5`$ | $`((-2) \\bmod 5)`$ | $`((-3) \\bmod 5)`$ | $`(2 \\bmod 5)`$ |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.1. Greatest Common Divisor",
+      "cells": [
+        "Z_5[x]",
+        "((-2) mod 5) + (1 mod 5) \u00b7 X^3",
+        "((-3) mod 5) + (2 mod 5) \u00b7 X^2",
+        "(3 mod 5) + (4 mod 5) \u00b7 X"
+      ],
+      "raw": "| $`Z_5[x]`$ | $`((-2) \\bmod 5) + (1 \\bmod 5) \\cdot X^3`$ | $`((-3) \\bmod 5) + (2 \\bmod 5) \\cdot X^2`$ | $`(3 \\bmod 5) + (4 \\bmod 5) \\cdot X`$ |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.1. Greatest Common Divisor",
+      "cells": [
+        "QZ[x]",
+        "(166z/243z)q + ((-275z)/243z)q \u00b7 X",
+        "(115668z/75625z)q",
+        "(115668z/75625z)q"
+      ],
+      "raw": "| $`QZ[x]`$ | $`(166z/243z)q + ((-275z)/243z)q \\cdot X`$ | $`(115668z/75625z)q`$ | $`(115668z/75625z)q`$ |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.1. Greatest Common Divisor",
+      "cells": [
+        "QZ[x]",
+        "(-2z)q + 1zq \u00b7 X^3",
+        "(-3z)q + 2zq \u00b7 X^2",
+        "(5z/9z)q"
+      ],
+      "raw": "| $`QZ[x]`$ | $`(-2z)q + 1zq \\cdot X^3`$ | $`(-3z)q + 2zq \\cdot X^2`$ | $`(5z/9z)q`$ |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.1. Greatest Common Divisor",
+      "cells": [
+        "A, B",
+        "GCD, s, t"
+      ],
+      "raw": "| $`A`$, $`B`$ | GCD, $`s`$, $`t`$ |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.1. Greatest Common Divisor",
+      "cells": [
+        "2, 4",
+        "2, 1, 0"
+      ],
+      "raw": "| $`2`$, $`4`$ | $`2`$, $`1`$, $`0`$ |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.1. Greatest Common Divisor",
+      "cells": [
+        "228, 612",
+        "12, (-8), 3"
+      ],
+      "raw": "| $`228`$, $`612`$ | $`12`$, $`(-8)`$, $`3`$ |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.1. Greatest Common Divisor",
+      "cells": [
+        "59, 24",
+        "1, 11, (-27)"
+      ],
+      "raw": "| $`59`$, $`24`$ | $`1`$, $`11`$, $`(-27)`$ |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.1. Greatest Common Divisor",
+      "cells": [
+        "(-2)q + 1q \u00b7 X^3, (-3)q + 2q \u00b7 X^2",
+        "(5/9)q, (-16/9)q + (-4/3)q \u00b7 X, 1q + (8/9)q \u00b7 X + (2/3)q \u00b7 X^2"
+      ],
+      "raw": "| $`(-2)q + 1q \\cdot X^3`$, $`(-3)q + 2q \\cdot X^2`$ | $`(5/9)q`$, $`(-16/9)q + (-4/3)q \\cdot X`$, $`1q + (8/9)q \\cdot X + (2/3)q \\cdot X^2`$ |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.1. Greatest Common Divisor",
+      "cells": [
+        "((-2) mod 5) + (1 mod 5) \u00b7 X^3, ((-3) mod 5) + (2 mod 5) \u00b7 X^2",
+        "(3 mod 5) + (4 mod 5) \u00b7 X, (1 mod 5), (2 mod 5) \u00b7 X"
+      ],
+      "raw": "| $`((-2) \\bmod 5) + (1 \\bmod 5) \\cdot X^3`$, $`((-3) \\bmod 5) + (2 \\bmod 5) \\cdot X^2`$ | $`(3 \\bmod 5) + (4 \\bmod 5) \\cdot X`$, $`(1 \\bmod 5)`$, $`(2 \\bmod 5) \\cdot X`$ |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.2. Modular Inverse",
+      "cells": [
+        "x",
+        "modulus",
+        "x^{-1}"
+      ],
+      "raw": "| $`x`$ | modulus | $`x^{-1}`$ |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.2. Modular Inverse",
+      "cells": [
+        "30",
+        "197",
+        "46"
+      ],
+      "raw": "| $`30`$ | $`197`$ | $`46`$ |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.2. Modular Inverse",
+      "cells": [
+        "16",
+        "21",
+        "4"
+      ],
+      "raw": "| $`16`$ | $`21`$ | $`4`$ |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.2. Modular Inverse",
+      "cells": [
+        "18",
+        "21",
+        "ERROR"
+      ],
+      "raw": "| $`18`$ | $`21`$ | ERROR |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.2. Modular Inverse",
+      "cells": [
+        "24",
+        "59",
+        "32"
+      ],
+      "raw": "| $`24`$ | $`59`$ | $`32`$ |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.2. Modular Inverse",
+      "cells": [
+        "(1 mod 2) + (1 mod 2) \u00b7 X^2",
+        "(1 mod 2) + (1 mod 2) \u00b7 X^2 + (1 mod 2) \u00b7 X^5",
+        "(1 mod 2) + (1 mod 2) \u00b7 X + (1 mod 2) \u00b7 X^2 + (1 mod 2) \u00b7 X^4"
+      ],
+      "raw": "| $`(1 \\bmod 2) + (1 \\bmod 2) \\cdot X^2`$ | $`(1 \\bmod 2) + (1 \\bmod 2) \\cdot X^2 + (1 \\bmod 2) \\cdot X^5`$ | $`(1 \\bmod 2) + (1 \\bmod 2) \\cdot X + (1 \\bmod 2) \\cdot X^2 + (1 \\bmod 2) \\cdot X^4`$ |"
+    },
+    {
+      "kind": "table",
+      "section": "#### 3.1.2. Modular Inverse",
+      "cells": [
+        "(-3)q + 2q \u00b7 X^2",
+        "(-2)q + 1q \u00b7 X^3",
+        "(9/5)q + (8/5)q \u00b7 X + (6/5)q \u00b7 X^2"
+      ],
+      "raw": "| $`(-3)q + 2q \\cdot X^2`$ | $`(-2)q + 1q \\cdot X^3`$ | $`(9/5)q + (8/5)q \\cdot X + (6/5)q \\cdot X^2`$ |"
+    }
+  ],
+  "prose_tests": [
+    {
+      "kind": "display_math",
+      "expected": "\\begin{array}{c}\na(x) = x^3 - 2 \\\\\nb(x) = 2x^2 - 3\n\\end{array}"
+    },
+    {
+      "kind": "display_math",
+      "expected": "\\begin{array}{c}\na(x) = 5 - 2x + x^2 \\\\\nb(x) = 2\n\\end{array}"
+    },
+    {
+      "kind": "cra_bullet",
+      "constraint": "`7x \\equiv 1432 mod 5317`",
+      "expected": "4762"
+    },
+    {
+      "kind": "cra_bullet",
+      "constraint": "`863x \\equiv 880 mod 2151`",
+      "expected": "173"
+    },
+    {
+      "kind": "cra_unsat",
+      "constraint": "`589x \\equiv 509 mod 817`."
+    }
+  ],
+  "lean_golden": {
+    "euclidInt_84_54": "(6, 2, -3)",
+    "cra2_6_7_3_9": "48",
+    "cra_list": "868",
+    "cra_poly_u": "238",
+    "cra_poly_v": "183",
+    "diophantine_84_54": "(1, -2)",
+    "diophantine_999_49": "(13, 163)",
+    "diophantine_247_589": "(-11, 6)",
+    "prem_coeff_0": "198",
+    "prem_coeff_1": "-225",
+    "prem_coeff_2": "306"
+  }
+}
