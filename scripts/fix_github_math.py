@@ -19,12 +19,79 @@ ICON_LEN = re.compile(r"(?<!\\texttt\{)\*([A-Za-z_][A-Za-z0-9_.]*)")
 ARRAY_L = re.compile(r"\\begin\{array\}\{l\}(.*?)\\end\{array\}", re.DOTALL)
 
 
-def fix_underscores(body: str) -> str:
-    """GitHub markdown eats \\_ before MathJax; \\textunderscore works everywhere."""
-    body = body.replace(r"\_", r"\textunderscore")
-    # Tighten string literals: "div\textunderscore " -> "div\textunderscore"
-    body = re.sub(r"\\textunderscore\s+([\"'])", r"\\textunderscore\1", body)
+def fix_textunderscore_in_text_args(body: str) -> str:
+    """\\textunderscore inside \\text{...} is invalid (text mode); use literal _."""
+
+    def repl(match: re.Match[str]) -> str:
+        return r"\text{" + match.group(1).replace(r"\textunderscore", "_") + "}"
+
+    prev = None
+    while prev != body:
+        prev = body
+        body = re.sub(r"\\text\{([^{}]*)\}", repl, body)
     return body
+
+
+def tidy_text_args(body: str) -> str:
+    def repl(match: re.Match[str]) -> str:
+        inner = match.group(1)
+        inner = re.sub(r"_ +", "_", inner)
+        inner = re.sub(r" +_", "_", inner)
+        return r"\text{" + inner + "}"
+
+    prev = None
+    while prev != body:
+        prev = body
+        body = re.sub(r"\\text\{([^{}]*)\}", repl, body)
+    return body
+
+
+def tidy_math_identifiers(body: str) -> str:
+    return re.sub(r"\\_ +", r"\\_", body)
+
+
+def fix_underscores(body: str) -> str:
+    """Icon underscores in math: literal _ inside \\text{}, \\_ elsewhere."""
+    body = fix_textunderscore_in_text_args(body)
+    body = body.replace(r"\textunderscore", r"\_")
+    body = tidy_text_args(body)
+    body = tidy_math_identifiers(body)
+    return body
+
+
+def brace_bare_subscripts(s: str) -> str:
+    """Brace _suffix at depth 0 so GitHub markdown does not treat _ as emphasis."""
+    result: list[str] = []
+    depth = 0
+    i = 0
+    while i < len(s):
+        ch = s[i]
+        escaped = i > 0 and s[i - 1] == "\\"
+        if ch == "{" and not escaped:
+            depth += 1
+            result.append(ch)
+            i += 1
+        elif ch == "}" and not escaped:
+            depth -= 1
+            result.append(ch)
+            i += 1
+        elif ch == "_" and depth == 0 and not escaped:
+            if i + 1 < len(s) and s[i + 1] == "{":
+                result.append(ch)
+                i += 1
+                continue
+            j = i + 1
+            while j < len(s) and (s[j].isalnum() or s[j] == "_"):
+                j += 1
+            suffix = s[i + 1 : j]
+            result.append("_{")
+            result.append(suffix)
+            result.append("}")
+            i = j
+        else:
+            result.append(ch)
+            i += 1
+    return "".join(result)
 
 
 def fix_math_operators(body: str) -> str:
@@ -114,7 +181,8 @@ def fix_display_math(text: str) -> str:
 
 def fix_inline_math_body(body: str) -> str:
     body = body.replace(r"\odiv", ODIV)
-    return fix_underscores(body)
+    body = fix_underscores(body)
+    return brace_bare_subscripts(body)
 
 
 def fix_inline_math(text: str) -> str:
@@ -137,7 +205,7 @@ def fix_prose(text: str) -> str:
         'and in general, for some string value X which corresponds to a procedure name, '
         'Y a domain name, and i a number of formal parameters, we evaluate '
         'proc(X || "_" || Y, i), where || is the ICON string concatenation operator.',
-        'To test for the procedure $\\otimes_Z$, we evaluate `proc("times" || "_Z", 2)`, '
+        'To test for the procedure $\\otimes_{Z}$, we evaluate `proc("times" || "_Z", 2)`, '
         'and in general, for some string value X which corresponds to a procedure name, '
         'Y a domain name, and i a number of formal parameters, we evaluate '
         '`proc(X || "_" || Y, i)`, where `||` is the ICON string concatenation operator.',
