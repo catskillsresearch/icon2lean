@@ -19,25 +19,45 @@ ICON_LEN = re.compile(r"(?<!\\texttt\{)\*([A-Za-z_][A-Za-z0-9_.]*)")
 ARRAY_L = re.compile(r"\\begin\{array\}\{l\}(.*?)\\end\{array\}", re.DOTALL)
 
 
-def fix_textunderscore_in_text_args(body: str) -> str:
-    """\\textunderscore inside \\text{...} is invalid (text mode); use literal _."""
+def split_underscores_out_of_text(body: str) -> str:
+    """GitHub breaks on _ inside \\text{}; keep underscores in math mode via \\_."""
 
     def repl(match: re.Match[str]) -> str:
-        return r"\text{" + match.group(1).replace(r"\textunderscore", "_") + "}"
+        content = match.group(1)
+        if "_" not in content:
+            return match.group(0)
 
-    prev = None
-    while prev != body:
-        prev = body
-        body = re.sub(r"\\text\{([^{}]*)\}", repl, body)
-    return body
+        qtrail = re.fullmatch(r'"([^"]*)_"', content)
+        if qtrail:
+            inner = qtrail.group(1)
+            if "_" in inner:
+                sub = inner.split("_")
+                out = r'\text{"' + sub[0] + '"}'
+                for sp in sub[1:]:
+                    out += r'\_\text{"' + sp + '"}'
+                out += r'\_\text{""}'
+                return out
+            return r'\text{"' + inner + r'"}\_\text{""}'
 
+        qsingle = re.fullmatch(r"'([^']*)'", content)
+        if qsingle:
+            inner = qsingle.group(1)
+            if inner.startswith("_"):
+                return "\\text{'\\}\\_\\text{'" + inner[1:] + "'}"
+            if "_" in inner:
+                sub = inner.split("_")
+                out = r"\text{'" + sub[0] + "'}"
+                for sp in sub[1:]:
+                    out += r"\_\text{'" + sp + "'}"
+                return out
 
-def tidy_text_args(body: str) -> str:
-    def repl(match: re.Match[str]) -> str:
-        inner = match.group(1)
-        inner = re.sub(r"_ +", "_", inner)
-        inner = re.sub(r" +_", "_", inner)
-        return r"\text{" + inner + "}"
+        if r"\_" in content:
+            return match.group(0)
+        parts = content.split("_")
+        out = r"\text{" + parts[0] + "}"
+        for part in parts[1:]:
+            out += r"\_\text{" + part + "}"
+        return out
 
     prev = None
     while prev != body:
@@ -51,10 +71,9 @@ def tidy_math_identifiers(body: str) -> str:
 
 
 def fix_underscores(body: str) -> str:
-    """Icon underscores in math: literal _ inside \\text{}, \\_ elsewhere."""
-    body = fix_textunderscore_in_text_args(body)
+    """No bare _ inside \\text{}; Icon names use \\_ in math mode."""
     body = body.replace(r"\textunderscore", r"\_")
-    body = tidy_text_args(body)
+    body = split_underscores_out_of_text(body)
     body = tidy_math_identifiers(body)
     return body
 
