@@ -1804,697 +1804,1366 @@ $$
 
 **Example.** The result of evaluating
 
-```icon
-ax := poly(Itorm(j2{-2,1), 0), torm(j2(1.'l). 3)])
-bx := poly([torm(^(-3,l), 0), term(^(2,1), 3)1)
-```
+<div class="math-left">
 
-fx := poly(I^Z5jf(-2. 0). ^fZfixd.S)!)
+$$
+\begin{array}{l}
+ax \mathrel{:=} poly([term(Q(-2,1), 0), term(Q(1,1), 3)]) \\
+bx \mathrel{:=} poly([term(Q(-3,1), 0), term(Q(2,1), 3)]) \\
+fx \mathrel{:=} poly([k_{Z_{Qx}}(-2, 0), k_{Z_{Qx}}(1,3)]) \\
+gx \mathrel{:=} poly([k_{Z_{Qx}}(-3, 0), k_{Z_{Qx}}(2,3)]) \\
+\text{pr}\{\text{"Q:    ("},\ ax,\ \text{") * ("},\ bx,\ \text{") = "},\ \otimes_{poly}(ax, bx)\} \\
+\text{pr}\{\text{"QZ:   ("},\ fx,\ \text{") * ("},\ gx,\ \text{") = "},\ \otimes_{poly}(fx, gx)\}
+\end{array}
+$$
 
-```icon
-gx := poly([/rZi2x(-3. 0), A:Zj2x (2.3)1)
-prffi:
-```
+</div>
 
-(". ax. “) * bx. ") = ". ®(ax. bx)} prfQZ: r. fx. ") • (". gx. ") = ”, ®(fx. gx)} ({-2)^ + 1q*X*3) * ((■3)q + 2q*X‘3) = 6q + (-7)q*X*3 + 2q*X*6 Q2: ((■22)q + 1zq*X*3) * {(-32)q + 2zq*X*3) = 6zq + (-72)q*X‘3 + 2zq*X*6 ®poiy (a. b) local n. m. r. q. quotient
+is
 
-```icon
-n := degpoiy{.t)
-r := copy(a)
-quotient := Opofy(r)
-repeat { m := rfegpo/y(r)
-then 'I} quotient
-else { q := poly([term(\odiv(ZeaJco</<f)7eac?coe/b)).m-n)])
-Enciidean domains: representation and basic arithmetic
-If m = 0
-then -ft-\odivpoiyCquotient, q)
-• Ise { subtrand := ~pofy(®pofy(q. b))
-r := \odivpo/y(r. subtrand)
-- quotient := \odivpo/y(quotlont, q)
-```
+$Q\text{:    }((-2)q + 1q \cdot X^3) * ((-3)q + 2q \cdot X^3) = 6q + (-7)q \cdot X^3 + 2q \cdot X^6$  
+$QZ\text{:   }((-2z)q + 1zq \cdot X^3) * ((-3z)q + 2zq \cdot X^3) = 6zq + (-7z)q \cdot X^3 + 2zq \cdot X^6$
 
-Example. The result of evaluating
+<div class="math-left">
 
-```icon
-ax := poly_of(1): bx := poly_of(3)
-prpintegers: ", ax, "T, bx, " = ", \odivpoj^(ax, bx)}
-poly(Iterm(fi(5,9), 0)])
-poly(Iterm(i2(-2,1), 0), term(^2(3,2), 1)])
-fx := poly ([term (j2(A:2(5),^2(9)), 0)])
-gx poly([term(j2(^21'2).^2O))’ tef'”(fi(^7(3).^2(2)), 1)1)
-pr{"fi:
-(", ax, ") ! (", bx, ") = ", \odivpofy{»^. bx)}
-pr{"QZ:
-```
+$$
+\begin{array}{l}
+\odiv_{poly}(a, b) \Leftarrow \\
+\quad \textbf{local } n,\ m,\ r,\ q,\ quotient \\
+\quad n \mathrel{:=} deg_{poly}(b) \\
+\quad r \mathrel{:=} copy(a) \\
+\quad quotient \mathrel{:=} 0_{poly}(r) \\
+\quad \textbf{repeat } \{ \\
+\quad\quad m \mathrel{:=} deg_{poly}(r) \\
+\quad\quad \textbf{if } <_{degree}(m, n) \\
+\quad\quad \textbf{then } \Uparrow quotient \\
+\quad\quad \textbf{else } \{ q \mathrel{:=} poly([term(\odiv(lead\_coef(r), lead\_coef(b)), m - n)]) \\
+\quad\quad\quad \textbf{if } m = 0 \\
+\quad\quad\quad \textbf{then } \Uparrow \oplus_{poly}(quotient, q) \\
+\quad\quad\quad \textbf{else } \{ subtrahend \mathrel{:=} -_{poly}(\otimes_{poly}(q, b)) \\
+\quad\quad\quad\quad r \mathrel{:=} \oplus_{poly}(r, subtrahend) \\
+\quad\quad\quad\quad quotient \mathrel{:=} \oplus_{poly}(quotient, q) \} \} \} \ \blacksquare
+\end{array}
+$$
 
-C. gx. ") ! (", fx, ") - ", \odivpoiyig^. fx)}
+</div>
 
-```icon
-ax := poly(lterm((2()5:2(166), Jt2(243)), 0), term(i2(fcz(-275),fc2(243)),1)l)
-bx := poly([term(i2(^2(‘'''®®®®)' ^2(^5625)), 0)])
-pr{"QZlx]; ax, "I ", bx, ") = 0", \odiv(ax, bx)}
-integers: 1/3 = 0
-((5/9)q)/((•2)q + (3/2)q*X) - Oq
-QZ:
-((-2z)q + (32/2z)q*X) ! ((5z/9z)q) = ((-18z)/5z)q + (272/10z)q*X
-QZlx): ((166z/243z)q + ((-275z)/243z)q*X / (1156682/75625z)q) =
-(6276875z/14053662z)q + ((•20796875z)/28107324z)q*X
-Enclidean domains: representation and basic arithmetic
-modpoiy (a, b) ■<= -ft \odiv(a, ®(b, \odiv(a, b))) ■
-Evaluate /(x) at a, that is evaluate /(a):
-evalpofy (fx, a)
-local r
-ovary x := Ifx.tarma do r :« @(r, evaltermi.^^ *))
-Evaluate cx^ 3.1 x=a'.
-eval,„n (t. a) 4= H®n.coof, axp(a, t.power)) ■
-Degrees of polynomials are values which may be integers, or the string
-Accordingly, special subtraction and addition procedures are required.
-degpoiy (X) <=
--poly(^> ^polyM} than -jy Infinity"
-also fl* x.terms[*x.terms].power
-dtg (a. b)
-■f) (If type(a) == "string" then b
-r r-
-else If type(b) == "string" then a
-else a - b)
-■fy (If typo(a) == "string" then b
-else If type(b) == "string" then a
-Euclidean domaini: repreientation and basic arithmetic
-else a + b)
-```
+**Example.** The result of evaluating
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+ax \mathrel{:=} poly\_of(1);\ bx \mathrel{:=} poly\_of(3) \\
+\text{pr}\{\text{"integers: "},\ ax,\ \text{"/"},\ bx,\ \text{" = "},\ \odiv_{poly}(ax, bx)\} \\
+ax \mathrel{:=} poly([term(Q(5,9), 0)]) \\
+bx \mathrel{:=} poly([term(Q(-2,1), 0), term(Q(3,2), 1)]) \\
+fx \mathrel{:=} poly([term(Q(k_Z(5), k_Z(9)), 0)]) \\
+gx \mathrel{:=} poly([term(Q(k_Z(-2), k_Z(1)), 0), term(Q(k_Z(3), k_Z(2)), 1)]) \\
+\text{pr}\{\text{"Q: ("},\ ax,\ \text{") / ("},\ bx,\ \text{") = "},\ \odiv_{poly}(ax, bx)\} \\
+\text{pr}\{\text{"QZ: ("},\ gx,\ \text{") / ("},\ fx,\ \text{") = "},\ \odiv_{poly}(gx, fx)\} \\
+ax \mathrel{:=} poly([term(Q(k_Z(166), k_Z(243)), 0), term(Q(k_Z(-275), k_Z(243)), 1)]) \\
+bx \mathrel{:=} poly([term(Q(k_Z(115668), k_Z(75625)), 0)]) \\
+\text{pr}\{\text{"QZ[x]: ("},\ ax,\ \text{"/ "},\ bx,\ \text{") = "},\ \odiv(ax, bx)\}
+\end{array}
+$$
+
+</div>
+
+is
+
+$\text{integers: }1/3 = 0$  
+$Q\text{: }((5/9)q) / ((-2)q + (3/2)q \cdot X) = 0q$  
+$QZ\text{: }((-2z)q + (3z/2z)q \cdot X) / ((5z/9z)q) = ((-18z)/5z)q + (27z/10z)q \cdot X$  
+$QZ[x]\text{: }((166z/243z)q + ((-275z)/243z)q \cdot X) / ((115668z/75625z)q) = (6276875z/14053662z)q + ((-20796875z)/28107324z)q \cdot X$
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+mod_{poly}(a, b) \Leftarrow \Uparrow \ominus(a, \otimes(b, \odiv(a, b))) \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+Evaluate $f(x)$ at $a$, that is evaluate $f(a)$:
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+eval_{poly}(fx, a) \Leftarrow \\
+\quad \textbf{local } r \\
+\quad r \mathrel{:=} 0(a) \\
+\quad \textbf{every } x \mathrel{:=} \texttt{!}fx.terms \textbf{ do } r \mathrel{:=} \oplus(r, eval_{term}(x, a)) \\
+\quad \Uparrow r \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+Evaluate $cx^p$ at $x=a$:
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+eval_{term}(t, a) \Leftarrow \Uparrow \otimes(t.coef, exp(a, t.power)) \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+Degrees of polynomials are values which may be integers, or the string "$-\infty$". Accordingly, special subtraction and addition procedures are required.
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+deg_{poly}(x) \Leftarrow \\
+\quad \textbf{if } =_{poly}(x, 0_{poly}(x)) \textbf{ then } \Uparrow \text{"- infinity"} \\
+\quad \textbf{else } \Uparrow x.terms[\texttt{*}x.terms].power \ \blacksquare \\
+\\
+-_{deg}(a, b) \Leftarrow \\
+\quad \Uparrow (\textbf{if } type(a) = \text{"string"} \textbf{ then } b \\
+\quad\quad \textbf{else if } type(b) = \text{"string"} \textbf{ then } a \\
+\quad\quad \textbf{else } a - b) \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+\oplus_{deg}(a, b) \Leftarrow \\
+\quad \Uparrow (\textbf{if } type(a) = \text{"string"} \textbf{ then } b \\
+\quad\quad \textbf{else if } type(b) = \text{"string"} \textbf{ then } a \\
+\quad\quad \textbf{else } a + b) \ \blacksquare
+\end{array}
+$$
+
+</div>
 
 A normal-form polynomial is one whose terms are in normal form (and in ascending order of power).
 
-```icon
-normalizepoiy (x) <=
-```
+<div class="math-left">
 
-every t Ix.terma do ts 11]:= [term(normalize(i.co»1), t.power)] ^poly(t8) Predicates. ^degree (*•
+$$
+\begin{array}{l}
+normalize_{poly}(x) \Leftarrow \\
+\quad \textbf{local } ts \\
+\quad ts \mathrel{:=} [] \\
+\quad \textbf{every } t \mathrel{:=} \texttt{!}x.terms \textbf{ do } ts \ |||{:=}\ [term(normalize(t.coef), t.power)] \\
+\quad \Uparrow poly(ts) \ \blacksquare
+\end{array}
+$$
 
-```icon
-If type(a) == "string"
-then "ftnot (type{b) == "string")
-else -(I a < b
-—poly b) 4= 11 =»ermj (a.terms. b.terms) ■
-— arms (®«
-If ’a "= *b then ±
-If *a = 0 then li-
-```
+</div>
 
-lt = r«Tn{aI1l. bPl) then 11 -termj(rest(a). restfb)) — term («• h) 4= 11( = (a.coef, b.coef) & ={a.power, b.power)) K
+**Predicates.**
 
-```icon
-unitpoiy W IKCx.terms = 1) & (x.term8[1l.power = 0) 4 «nif(x.term8(11.coef)) ■
-```
+<div class="math-left">
 
-Commands. Enclidean domains: representation and basic arithmetic
+$$
+\begin{array}{l}
+<_{degree}(a, b) \Leftarrow \\
+\quad \textbf{if } type(a) = \text{"string"} \\
+\quad \textbf{then } \Uparrow not(type(b) = \text{"string"}) \\
+\quad \textbf{else } \Uparrow a < b \ \blacksquare \\
+\\
+=_{poly}(a, b) \Leftarrow \Uparrow =_{terms}(a.terms, b.terms) \ \blacksquare \\
+\\
+=_{terms}(a, b) \Leftarrow \\
+\quad \textbf{if } \#a \neq \#b \textbf{ then } \bot \\
+\quad \textbf{if } \#a = 0 \textbf{ then } \Uparrow \\
+\quad \textbf{if } =_{term}(a[1], b[1]) \textbf{ then } \Uparrow =_{terms}(rest(a), rest(b)) \ \blacksquare \\
+\\
+=_{term}(a, b) \Leftarrow \Uparrow (=(a.coef, b.coef) \ \&\ =(a.power, b.power)) \ \blacksquare \\
+\\
+unit_{poly}(x) \Leftarrow \Uparrow ((\#x.terms = 1) \ \&\ (x.terms[1].power = 0) \ \&\ unit(x.terms[1].coef)) \ \blacksquare
+\end{array}
+$$
 
-```icon
-printpoiy (x) <=
-print,erm{x.tarms[1])
-•very t := Irest(x.terms) do { wrltosf" + "); print term (t) }
-printterm (X) 4=
-print(x.coef)
-if X.power = 1 then write8(”*X")
-else If X.power > 1 then prsC’X*", x.power}
-```
+</div>
+
+**Commands.**
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+print_{poly}(x) \Leftarrow \\
+\quad print_{term}(x.terms[1]) \\
+\quad \textbf{every } t \mathrel{:=} \texttt{!}rest(x.terms) \textbf{ do } \{ writes(\text{"+ "});\ print_{term}(t) \} \ \blacksquare \\
+\\
+print_{term}(x) \Leftarrow \\
+\quad print(x.coef) \\
+\quad \textbf{if } x.power = 1 \textbf{ then } writes(\text{"*X"}) \\
+\quad \textbf{else if } x.power > 1 \textbf{ then } prs\{\text{"*X\^{}"},\ x.power\} \ \blacksquare
+\end{array}
+$$
+
+</div>
 
 
-#### 2.3.4. Truncated Power Series domain r(F[[x]])„.
+#### 2.3.4. Truncated Power Series domain $T(D[[x]])_n$
 
-Truncated Power Series Domain Arithmetic Facilities Data structures tpower Constants ^tpower t ^tpower Operators ®tpowerr ~g>owert ^tpowert \odivtpowert normalizetpower Predicates ~ tpower f ^^^^^ower Commands printtpower Data structures.
+<p align="center"><strong>Truncated Power Series Domain Arithmetic Facilities</strong></p>
 
-```icon
-record tpower (Poly, N)
-```
+| | |
+|:--|:--|
+| **Data structures** | $tpower$ |
+| **Constants** | $0_{tpower}$, $1_{tpower}$ |
+| **Operators** | $\oplus_{tpower}$, $-_{tpower}$, $\otimes_{tpower}$, $\odiv_{tpower}$, $normalize_{tpower}$ |
+| **Predicates** | $=_{tpower}$, $unit_{tpower}$ |
+| **Commands** | $print_{tpower}$ |
 
-Constants. The zero of the base domain of a coefficient of the polynomial:
+**Data structures.**
 
-```icon
-^tpower (X) ■«J= -JhtpowerfOpoz/x.Poly), x.N)) ■
-```
+<div class="math-left">
+
+$$
+\begin{array}{l}
+\textbf{record } tpower\ (Poly, N)
+\end{array}
+$$
+
+</div>
+
+**Constants.**
+
+The zero of the base domain of a coefficient of the polynomial:
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+0_{tpower}(x) \Leftarrow \Uparrow tpower(0_{poly}(x.Poly), x.N) \ \blacksquare
+\end{array}
+$$
+
+</div>
 
 The one of the base domain of a coefficient of the polynomial:
 
-```icon
-Iqjwer (x) <= 1} tpowor(l^o/y{x.Poly), X.N) ■
-```
+<div class="math-left">
 
-Operators. Qtpower («. b) -4=
+$$
+\begin{array}{l}
+1_{tpower}(x) \Leftarrow \Uparrow tpower(1_{poly}(x.Poly), x.N) \ \blacksquare
+\end{array}
+$$
 
-```icon
-b.Poly), a.N) ■
--tpowtr (X) <= Ittpowert-poZyfx.Poly). x.N) ■
-truncate (p, n) <= -(t poly(p.termslV.n + 1l) ■
-```
+</div>
 
-®ipow«- (a. *») <= ■(ttpowor(truncat8(®poly(a.Poly. b.Poly). a.N), a.N) ■ $\odiv$9»0H-er
+**Operators.**
 
-```icon
-**) •()^tpower(truncate(\odivpo/y(a.Poly, b.Poly), a.N), a.N) ■
-normalize,p„^„ (x) -<= Ittpower(norma/zzfipoZy(x.PoIy). x.N) ■
-```
+<div class="math-left">
 
-Predicates. “ipmver (a. b) f (a.N = b.N) 4 =po/y(a.Poly. b.Poly) ■
+$$
+\begin{array}{l}
+\oplus_{tpower}(a, b) \Leftarrow \Uparrow tpower(\oplus_{poly}(a.Poly, b.Poly), a.N) \ \blacksquare \\
+\\
+-_{tpower}(x) \Leftarrow \Uparrow tpower(-_{poly}(x.Poly), x.N) \ \blacksquare \\
+\\
+truncate(p, n) \Leftarrow \Uparrow poly(p.terms[1:n+1]) \ \blacksquare \\
+\\
+\otimes_{tpower}(a, b) \Leftarrow \Uparrow tpower(truncate(\otimes_{poly}(a.Poly, b.Poly), a.N), a.N) \ \blacksquare \\
+\\
+\odiv_{tpower}(a, b) \Leftarrow \Uparrow tpower(truncate(\odiv_{poly}(a.Poly, b.Poly), a.N), a.N) \ \blacksquare \\
+\\
+normalize_{tpower}(x) \Leftarrow \Uparrow tpower(normalize_{poly}(x.Poly), x.N) \ \blacksquare
+\end{array}
+$$
 
-```icon
-unittpo^er (X) <= -ft uni/poZy(x-Poly) ■
-```
+</div>
 
-Commands.
+**Predicates.**
 
-```icon
-printpon'er (X) <= printpofy(^.PoW} ■
-Algorithm! for Tarioos problems over Enclidean domains
-```
+<div class="math-left">
+
+$$
+\begin{array}{l}
+=_{tpower}(a, b) \Leftarrow \Uparrow (a.N = b.N) \ \&\ =_{poly}(a.Poly, b.Poly) \ \blacksquare \\
+\\
+unit_{tpower}(x) \Leftarrow \Uparrow unit_{poly}(x.Poly) \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+**Commands.**
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+print_{tpower}(x) \Leftarrow print_{poly}(x.Poly) \ \blacksquare
+\end{array}
+$$
+
+</div>
 
 
 ## 3. Algorithms for various problems over Euclidean domains
 
-We provide algorithms for number of application areas: • GCD, linear congruences and Diophantine equations. • Polynomial remainder sequences. • Power series and polynomial inversion and interpolation. Tn addition, we provide a simple timer facility.
+We provide algorithms for a number of application areas:
+
+- GCD, linear congruences and Diophantine equations.
+- Polynomial remainder sequences.
+- Power series and polynomial inversion and interpolation.
+
+In addition, we provide a simple timer facility.
 
 
 ### 3.1. GCD, Linear Congruences and Diophantine Equations
 
-We provide algorithms for the following applications: <» Euclid’s algorithm for greatest common divisor, in simple and extended • versions. • Inverse of a $mod$ m. • The Chinese Remainder for 1, 2 or N congruences. • The solutions to the Diophantine equation ax + by = c.
+We provide algorithms for the following applications:
+
+- Euclid's algorithm for greatest common divisor, in simple and extended versions.
+- Inverse of $a \bmod m$.
+- The Chinese Remainder for 1, 2, or $N$ congruences.
+- The solutions to the Diophantine equation $ax + by = c$.
 
 
 #### 3.1.1. Greatest Common Divisor
 
-We have two versions of Euclid’s Algorithm over a Euclidean domain D, from Lipson, p.
+We have two versions of Euclid's Algorithm over a Euclidean domain $D$, from Lipson, p. 226 and p. 209.
 
-```icon
-GCD(a,h,D)
-Input: a,h€D, not both zero.
-Output: a gcd of a,b.
-GCD (a, b) <= "ft (If *(b, 0(b)) then normalize(&} else GCD(b, mod(a, b))) ■
-```
+**GCD**$(a, b, D)$  
+Input: $a, b \in D$, not both zero.  
+Output: a gcd of $a$, $b$.
 
-The following is a table of expressions and their gcd's, as computed via GCD: AlforithiBf for Tsrioni problwnt over Encltdosn doniolnt Greatest Common Divisors Domain GCD S333z *lSz Z5[x] ((-2) $mod$ 5)+(l $mod$ 5)*X*3 (3$mod$5)+(4$mod$5) "X QZtx] (166zZ243z)q + ((-275z)/243z)q*X QZ[x] (-2z)q + lzq’X*3 (5z/9z)q EUCUD{a,b) Input: a,h€D, not both zero. Output: g,s,t such that g is a ged of fl, b and g=jfl+rb.
+<div class="math-left">
 
-```icon
-EUCLID (A. B)
-local q, a, a, t
-```
+$$
+\begin{array}{l}
+GCD(a, b) \Leftarrow \\
+\quad \Uparrow (\textbf{if } =(b, 0(b)) \textbf{ then } normalize(a) \\
+\quad\quad \textbf{else } GCD(b, mod(a, b))) \ \blacksquare
+\end{array}
+$$
 
-a := [copy(A), copy(B)]
+</div>
 
-```icon
-while not(®=(a(2]. 0(A))) do
-```
+The following is a table of expressions and their gcd's, as computed via GCD:
 
-a := (a[21. e(a[1l. ®(al21. q))] a (•[21. e(sI1l. 0(8(21. q))l t ItI21. e(tll]. ®(tI21. q))] } ■fl' [nflrmfl/zze(aI1]). normalize(9{'\]), nflZ7nfl/ize(tI1l)l Algoritlimi for ▼ariooi problem* over Enclidean domains The following is a table of expressions and their extended gcd’s, as computed via EUCLID: Extended Greatest Common Divisors A, B GCD, s, t (5/9)q, (.16/9)q-»-(-4/3)q’X, lq-h(8/9)q’X+(2Z3)q’X^ (.2$mod$5)+(lmod5)*X3. (-3$mod$5)+(2$mod$5)’X^) (3$mod$5)-t-{4$mod$5)’X, (Imod 5), (2$mod$5)*X
+<p align="center"><strong>Greatest Common Divisors</strong></p>
+
+| Domain | $A$ | $B$ | GCD |
+|:--|:--|:--|:--|
+| $Z$ | $121903z$ | $5335z$ | $1z$ |
+| $Z$ | $-18z$ | $5z$ | $1z$ |
+| $Z$ | $228z$ | $612z$ | $12z$ |
+| $Q[x]$ | $(-2)q + 1q \cdot X^3$ | $(-3)q + 2q \cdot X^2$ | $(5/9)q$ |
+| $Z_5$ | $((-2) \bmod 5)$ | $((-3) \bmod 5)$ | $(2 \bmod 5)$ |
+| $Z_5[x]$ | $((-2) \bmod 5) + (1 \bmod 5) \cdot X^3$ | $((-3) \bmod 5) + (2 \bmod 5) \cdot X^2$ | $(3 \bmod 5) + (4 \bmod 5) \cdot X$ |
+| $QZ[x]$ | $(166z/243z)q + ((-275z)/243z)q \cdot X$ | $(115668z/75625z)q$ | $(115668z/75625z)q$ |
+| $QZ[x]$ | $(-2z)q + 1zq \cdot X^3$ | $(-3z)q + 2zq \cdot X^2$ | $(5z/9z)q$ |
+
+**EUCLID**$(a, b)$  
+Input: $a, b \in D$, not both zero.  
+Output: $g, s, t$ such that $g$ is a gcd of $a$, $b$ and $g = sa + tb$.
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+EUCLID(A, B) \Leftarrow \\
+\quad \textbf{local } q,\ a,\ s,\ t \\
+\quad a \mathrel{:=} [copy(A), copy(B)] \\
+\quad s \mathrel{:=} [1(A), 0(A)] \\
+\quad t \mathrel{:=} [0(A), 1(A)] \\
+\quad \textbf{while } not(=(a[2], 0(A))) \textbf{ do } \{ \\
+\quad\quad q \mathrel{:=} \odiv(a[1], a[2]) \\
+\quad\quad a \mathrel{:=} [a[2], \ominus(a[1], \otimes(a[2], q))] \\
+\quad\quad s \mathrel{:=} [s[2], \ominus(s[1], \otimes(s[2], q))] \\
+\quad\quad t \mathrel{:=} [t[2], \ominus(t[1], \otimes(t[2], q))] \} \\
+\quad \Uparrow [normalize(a[1]), normalize(s[1]), normalize(t[1])] \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+The following is a table of expressions and their extended *gcd*'s, as computed via EUCLID:
+
+<p align="center"><strong>Extended Greatest Common Divisors</strong></p>
+
+| $A$, $B$ | GCD, $s$, $t$ |
+|:--|:--|
+| $2$, $4$ | $2$, $1$, $0$ |
+| $228$, $612$ | $12$, $(-8)$, $3$ |
+| $59$, $24$ | $1$, $11$, $(-27)$ |
+| $(-2)q + 1q \cdot X^3$, $(-3)q + 2q \cdot X^2$ | $(5/9)q$, $(-16/9)q + (-4/3)q \cdot X$, $1q + (8/9)q \cdot X + (2/3)q \cdot X^2$ |
+| $((-2) \bmod 5) + (1 \bmod 5) \cdot X^3$, $((-3) \bmod 5) + (2 \bmod 5) \cdot X^2$ | $(3 \bmod 5) + (4 \bmod 5) \cdot X$, $(1 \bmod 5)$, $(2 \bmod 5) \cdot X$ |
 
 
 #### 3.1.2. Modular Inverse
 
-Our modular inverse algorithms is that of Lipson, p. 214. INVERSE{a,m): Computation of a~^modm Input: a,m€D, where D is a Euclidean domain. Output: If then a~^modm: otherwise error.
+Our modular inverse algorithm is that of Lipson, p. 214.
 
-```icon
-INVERSE (a. m) 4=
-local gst
-gat := EUCLID(m, a)
-If unit (gstllj) then -ftwod (\odiv (gstI3], gstll]), m)
-also pr{*’E R R O R: a, "“-1 ", " mod ", m, " doaa not exist"}
-```
+**INVERSE**$(a, m)$: Computation of $a^{-1} \bmod m$  
+Input: $a, m \in D$, where $D$ is a Euclidean domain.  
+Output: If $(m, a) = 1$, then $a^{-1} \bmod m$; otherwise error.
 
-A table of modular inverses as computed by INVERSE is as follows: modulus ERROR (lmod2)-f-(lmod2)*X*2 (lmod2)+(lmod2)’X*2-l-(lmod2/X‘5) (lmod2)-t-(lmod2)*X-t- (lmod2) •X*2 -t- (Imodl) ‘XM (9/5)q -1- (8/5)q*X + (6/5)q*X-2 Algorithm! for Tarlont problem! over Enclldean domain!
+<div class="math-left">
+
+$$
+\begin{array}{l}
+INVERSE(a, m) \Leftarrow \\
+\quad \textbf{local } gst \\
+\quad gst \mathrel{:=} EUCLID(m, a) \\
+\quad \textbf{if } unit(gst[1]) \textbf{ then } \Uparrow mod(\odiv(gst[3], gst[1]), m) \\
+\quad \textbf{else } pr\{\text{"ERROR: "},\ a,\ \text{"\^{}-1 "},\ \text{" mod "},\ m,\ \text{" does not exist"}\} \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+A table of modular inverses as computed by INVERSE is as follows:
+
+| $x$ | modulus | $x^{-1}$ |
+|:--|:--|:--|
+| $30$ | $197$ | $46$ |
+| $16$ | $21$ | $4$ |
+| $18$ | $21$ | ERROR |
+| $24$ | $59$ | $32$ |
+| $(1 \bmod 2) + (1 \bmod 2) \cdot X^2$ | $(1 \bmod 2) + (1 \bmod 2) \cdot X^2 + (1 \bmod 2) \cdot X^5$ | $(1 \bmod 2) + (1 \bmod 2) \cdot X + (1 \bmod 2) \cdot X^2 + (1 \bmod 2) \cdot X^4$ |
+| $(-3)q + 2q \cdot X^2$ | $(-2)q + 1q \cdot X^3$ | $(9/5)q + (8/5)q \cdot X + (6/5)q \cdot X^2$ |
 
 
-#### 3.1.3. Chinese Remainders and Single-Variable Linear Congruential
+#### 3.1.3. Chinese Remainders and Single-Variable Linear Congruential Systems
 
-Systems We provide three algorithms, CRAl for solving equations of the form a x ■« b $mod$ m, and CRA2 and CRA for solving systems of equations of 2 or more congruences of the form X ■■ a $mod$ m. CRAl (a, b, m): Solution of a single linear congruence relation. Input: a,b,m such that a x ■« b $mod$ m. Output: a particular solution xi. Niven and Zuckerman [NivenSOa], in their section 2.3 note that, given a congruence ax^bmodm^ we can reduce it to my^— bmoda. If yo is a solution of the reduced (myo+^) congruence, then xo=-------------is a solution for the origmal congruence. They apply the reduction until the congruence is solvable “by inspection’’. This we do not do. They also have some tricks for size reduction (on p. 43) we will not apply (due to laziness). Our “by inspection’’ termination condition will be to perform the reduction until a $mod$ m=l or b—Q. Then we return b $mod$ a, in a recursive setting which builds up the original x q .
+We provide three algorithms, **CRA1** for solving equations of the form $ax \equiv b \pmod m$, and **CRA2** and **CRA** for solving systems of two or more congruences of the form $X \equiv a \pmod m$.
 
-```icon
-CRAl (la, bb, m) <=
-local a, b, g
-g GCD(aa, m)
-If not |(g, bb) than pr{”ERROR: no solution to linear congruence"}
-else { a :— mod(»a, m); b := mod(hb, m)
-If =(a, 1(a)) then b
-else If =(b, 0(b)) then i)O(b)
-else If =(a, b) then-f)-1(b)
-```
+**CRA1**$(a, b, m)$: Solution of a single linear congruence relation.  
+Input: $a, b, m$ such that $ax \equiv b \pmod m$.  
+Output: a particular solution $x_1$.
 
-else fl-$\odiv$($\odiv$(®(m. CRA1 (m. -(b), a)), b), a) } Algorithm! for ▼arioni problem! over Enclidean domain! Example. The following results were obtained from executing CRAl (the examples are from Niven and Zuckerman [NivenSOa], Sect. 2.3: • C2?A(7,1432,5317): x such that 7x-14327noJ5317 is 4762. • C/?A(863,880,2151): x such that 863x»880nioJ2151 is 173. • C22A(589,5O9,817): There is no x such that 589x"'509/nod817. CJ?A2 and CRA aic from Lipson, p. 254 and p. 257. CRA2 (r, m, s, n): Two-congruence Chinese Remainder Algorithm for Z Input: r,ni,j,n€Z, where n,/n are relatively prime. Output: tZ€Z such that U"*rmodm, U^smodn. CRA2 (r. m. a. n) <=
+Niven and Zuckerman [Niven80a], in their section 2.3 note that, given a congruence $ax \equiv b \pmod m$, we can reduce it to $my \equiv -b \pmod a$. If $y_0$ is a solution of the reduced congruence, then
 
-```icon
-local c, a, U
-c :— INVERSE(m. n)
-ff :=
-P/rampU- The X such that x"*6mod’l and x»3mod9 is 48, as obuined by evaluating
-CRA (rmjist): N-congruence Chinese Remainder Algorithm for Z
-Input: [[r*,mjt]]€Z, where the ixt relatively prime. Output: CZ€Z such that U^riinodmi.
-CRA (rmJIst) <=
-local rms, rm, M , U , c, tr
-rms := copy(rm_ll!t)
-rm := pop(rms); r rmllj; m ;= tm[21
-U := mod(i, m)
-ovary k := 1 to *rm! do
-rm := popCrms); r rrnll]: m := rmI21
-c := INVERSE(M. m)
-Algorithm I for ▼arioni problems over Eaclidean domains
-```
+$$x_0 = \frac{my_0 + b}{a}$$
 
-CT := TOoJ(®(e(r. TOod(U. m)). c), m) Example. The problem is to find u(x) in Z[x] such that u(x)$mod$3=x, u{x)modl= 1,
+is a solution for the original congruence. They apply the reduction until the congruence is solvable "by inspection". This we do not do. They also have some tricks for size reduction (on p. 43) we will not apply (due to laziness). Our "by inspection" termination condition will be to perform the reduction until $a \bmod m = 1$ or $b = 0$. Then we return $b \bmod a$, in a recursive setting which builds up the original $x_1$.
 
-```icon
-M(x)moJ4=2x+3, and
-tt(x)mcwi5=3x+3
-```
+<div class="math-left">
 
-Let u(x)=ax+b. Then a $mod$ 3=1 b $mod$ 3 = 0 a $mod$ 7 = 0 b $mod$ 7=1 a $mod$ 4 = 2 b $mod$ 4 = 3 a $mod$ 5 = 3 We can solve for a and b individually using the n-congruence CRA algorithm, and we are done. Executing the following code:
+$$
+\begin{array}{l}
+CRA1(aa, bb, m) \Leftarrow \\
+\quad \textbf{local } a,\ b,\ g \\
+\quad g \mathrel{:=} GCD(aa, m) \\
+\quad \textbf{if } not\ |(g, bb) \textbf{ then } pr\{\text{"ERROR: no solution to linear congruence"}\} \\
+\quad \textbf{else } \{ a \mathrel{:=} mod(aa, m);\ b \mathrel{:=} mod(bb, m) \\
+\quad\quad \textbf{if } =(a, 1(a)) \textbf{ then } \Uparrow b \\
+\quad\quad \textbf{else if } =(b, 0(b)) \textbf{ then } \Uparrow 0(b) \\
+\quad\quad \textbf{else if } =(a, b) \textbf{ then } \Uparrow 1(b) \\
+\quad\quad \textbf{else } \Uparrow \odiv(\oplus(\otimes(m, CRA1(m, -(b), a)), b), a) \} \ \blacksquare
+\end{array}
+$$
 
-```icon
-a_congruonco8 := HI, 3], 10, 7], [2, 4], [3, 5]]
-b_congruonco8 := tlO, 31, [1, 7], 13, 4], (3, 51]
-```
+</div>
 
-a := CRA(a_congru8nc88)
 
-```icon
-b := CRA(b_congru8nc88)
-ux := poly([t8rm(b, 0), t8rm(a, 1)])
-pr{"u(x) = ", ux}
-```
 
-we discover (final term due to Yap) that m(x ) = 183+238*X+3-7-4-52^iX*. Example. Another example, from Lipson, p. 258, is to compute u such that M"l(m<x/3) u«‘3(moJ5) u^Q{modl) u^lOCmodll) Executing the following code pr{CRA{U1. 3], 13, 5], [0, 7], (10, 1111)} yields a value of 868 for U.
+**Example.** The following results were obtained from executing CRA (the examples are from Niven and Zuckerman [Niven80a], Sect. 2.3):
+
+- CRA(7, 1432, 5317): $x$ such that $7x \equiv 1432 \bmod 5317$ is 4762.
+- CRA(863, 880, 2151): $x$ such that $863x \equiv 880 \bmod 2151$ is 173.
+- CRA(589, 509, 817): There is no $x$ such that $589x \equiv 509 \bmod 817$.
+
+CRA2 and CRA are from Lipson, p. 254 and p. 257.
+
+**CRA2**$(r, m, s, n)$: Two-congruence Chinese Remainder Algorithm for $Z$  
+Input: $r, m, s, n \in Z$, where $m$, $n$ are relatively prime.  
+Output: $U \in Z$ such that $U \equiv r \pmod m$ and $U \equiv s \pmod n$.
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+CRA2(r, m, s, n) \Leftarrow \\
+\quad \textbf{local } c,\ \sigma,\ U \\
+\quad c \mathrel{:=} INVERSE(m, n) \\
+\quad \sigma \mathrel{:=} mod(\otimes(\ominus(s, r), c), n) \\
+\quad U \mathrel{:=} \oplus(r, \otimes(\sigma, m)) \\
+\quad \Uparrow U \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+**Example.** The $x$ such that $x \equiv 6 \pmod 7$ and $x \equiv 3 \pmod 9$ is 48, as obtained by evaluating CRA2(6, 7, 3, 9).
+
+**CRA**$(rm\_list)$: $N$-congruence Chinese Remainder Algorithm for $Z$  
+Input: $[[r_k, m_k]] \in Z$, where the $m_k$ are relatively prime.  
+Output: $U \in Z$ such that $U \equiv r_i \pmod{m_i}$.
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+CRA(rm\_list) \Leftarrow \\
+\quad \textbf{local } rms,\ rm,\ M,\ U,\ c,\ \sigma \\
+\quad rms \mathrel{:=} copy(rm\_list) \\
+\quad rm \mathrel{:=} pop(rms);\ r \mathrel{:=} rm[1];\ m \mathrel{:=} rm[2] \\
+\quad M \mathrel{:=} 1(m) \\
+\quad U \mathrel{:=} mod(r, m) \\
+\quad \textbf{every } k \mathrel{:=} 1 \textbf{ to } \texttt{*}rms \textbf{ do } \{ \\
+\quad\quad M \mathrel{:=} \otimes(M, m) \\
+\quad\quad rm \mathrel{:=} pop(rms);\ r \mathrel{:=} rm[1];\ m \mathrel{:=} rm[2] \\
+\quad\quad c \mathrel{:=} INVERSE(M, m) \\
+\quad\quad \sigma \mathrel{:=} mod(\otimes(\ominus(mod(U, m), r), c), m) \\
+\quad\quad U \mathrel{:=} \oplus(U, \otimes(\sigma, M)) \} \\
+\quad \Uparrow U \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+**Example.** The problem is to find $u(x)$ in $Z[x]$ such that
+
+$u(x) \bmod 3 = x$,  
+$u(x) \bmod 7 = 1$,  
+$u(x) \bmod 4 = 2x + 3$, and  
+$u(x) \bmod 5 = 3x + 3$.
+
+Let $u(x) = ax + b$. Then
+
+<div class="math-left">
+
+$$
+\begin{array}{ll}
+a \bmod 3 = 1 & b \bmod 3 = 0 \\
+a \bmod 7 = 0 & b \bmod 7 = 1 \\
+a \bmod 4 = 2 & b \bmod 4 = 3 \\
+a \bmod 5 = 3 & b \bmod 5 = 3
+\end{array}
+$$
+
+</div>
+
+We can solve for $a$ and $b$ individually using the $n$-congruence CRA algorithm, and we are done. Executing the following code:
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+a\_congruences \mathrel{:=} [[1, 3], [0, 7], [2, 4], [3, 5]] \\
+b\_congruences \mathrel{:=} [[0, 3], [1, 7], [3, 4], [3, 5]] \\
+a \mathrel{:=} CRA(a\_congruences) \\
+b \mathrel{:=} CRA(b\_congruences) \\
+ux \mathrel{:=} poly([term(b, 0), term(a, 1)]) \\
+\text{pr}\{\text{"u(x) = "},\ ux\}
+\end{array}
+$$
+
+</div>
+
+we discover (final term due to Yap) that
+
+$$u(x) = 183 + 238 \cdot X + 3 \cdot 7 \cdot 4 \cdot 5 \sum_{i=0}^{\infty} t_i x^i.$$
+
+**Example.** Another example, from Lipson, p. 258, is to compute $u$ such that
+
+$u \equiv 1 \pmod 3$,  
+$u \equiv 3 \pmod 5$,  
+$u \equiv 0 \pmod 7$,  
+$u \equiv 10 \pmod{11}$.
+
+Executing the following code
+
+<div class="math-left">
+
+$$
+\text{pr}\{CRA([[1, 3], [3, 5], [0, 7], [10, 11]])\}
+$$
+
+</div>
+
+yields a value of 868 for $U$.
 
 
 #### 3.1.4. Linear Diophantine Equations in Two Variables
 
-According to Niven, sect. 5.2, ax+by—c is solvable iff g\c where g=gcd(a,b). If gjc then all solutions are of the form x=xi+(—)t,y=yi-(-7)t where f is an arbitrary integer and x=xi, y=yi is any particular solution of the equation. Particular solutions are obtained by solving one of the linear congruences ax“cmod|bl,by"C7nod|fll for XI or yi, then substituting yi or xi into ax+by=c to obtain a particular yi or xi. For computational convenience, if lh|s|a|, we solve the first congruence, otherwise we solve the second.
+According to Niven, sect. 5.2, $ax + by = c$ is solvable iff $g \mid c$ where $g = \gcd(a, b)$. If $g \mid c$ then all solutions are of the form
 
-```icon
-DIOPHANTINE (a, b, c); solves linear Diophantine equations in 2 variables.
-Input: a,b,c such that ax+by=c. Output; g,xi,yi, described above.
-DIOPHANTINE (a, b, c) -4=
-local gst, g, xi, yi
-gat := EUCLID(a. b)
-g := gattll: t ;= gst[3]
-If not |(g, c) than prf'ERROR: Diophantine solution nonexistent**}
-else { if <{abs(h). abskt.))
-then { xj := CRA1(a, c, ahj(b))
-•Is® { yi CRA1(b, c, ab5(a))
-```
+$$x = x_1 + \frac{b}{g} t, \quad y = y_1 - \frac{a}{g} t$$
 
-XI := $\odiv$(e(c, ®(b. yi)). a) } -n-Ig.xi.yi] } Example. By evaluating D/OPHANrZN£(84,54,-24), we find that all integer solutions (x,y) of the equation 84x+54y=(—24) are of the form x=l + 9t, y=(—2) —14t. Example. By evaluating DZOPHANrZNE(999,-49,5000), we find that all integer solutions (x,y) of the equation 999x+(—49)y=5000 are of the form x=13+49t, y- 163-(-999)f. Example. By evaluating DZOPHA2V77N£(247,589,817), we find that all integer solutions (x,y) of the equation 247x+589y=817 are of the form x=( —ll)+31t, 4y=6— 13t. 3-2 Polynomial remainder sequences Polynomial remainder sequences are studied as a method of finding variants of the greatest common divisor for elements of integral domains. Variation in the definition is required because integral domains do not support long division. It is also desirable to compute values which share properties of the greatest common divisor (which might then be reclaimed by homomorphic image methods; see Lipson, ch. 8), such that the computation does not suffer the large coefficient growth of Euclid’s algorithm on even moderate-sized polynomials. Yap [Yap85a] discusses the issue, presenting an example of Knuth exhibiting the coefficient growth problem. Polynomial remainder sequences are discussed in greater depth in the paper by Loos [Loosa]. We have implemented three variants of polynomial remainder sequence: • $mod$-based PRS. • prem, a pseudo-remainder for division over integral domains, and a •prem-based PRS, as defined in Yap |Yap85a]. • Subresultant PRS, as defined in Yap [Yap85a] and based on an algorithm of • Collins, as presented by Brown. 3.2.1 MOD-based PRS The simplest polynomial remainder sequence is simply that of Euclid’s algorithm. That is, we define MOD_RS{a,b) to be the PRS of $mod${a,b).
+where $t$ is an arbitrary integer and $x = x_1$, $y = y_1$ is any particular solution of the equation. Particular solutions are obtained by solving one of the linear congruences
 
-```icon
-MOD.RS (a, b) 4= -ft l»l 11 (W =(b. 0(b)) then [b] else MOD_RS(b, mod(a, b))) ■
-```
+$$ax \equiv c \pmod{|b|} \quad \text{or} \quad by \equiv c \pmod{|a|}$$
 
-Example. In Qz[x], the remainder sequence of as encoded in ICON by settimeO
+for $x_1$ or $y_1$, then substituting $y_1$ or $x_1$ into $ax + by = c$ to obtain a particular $y_1$ or $x_1$. For computational convenience, if $|b| \le |a|$, we solve the first congruence, otherwise we solve the second.
 
-```icon
-ax := poly(lJkZfix(2. 0).
-2), kZ^x^^.A}. ^Zfixd-S)!)
-bx := poly([fcZfix(2, 0),
-I)- ^ZfixO- 3)1)
-```
+**DIOPHANTINE**(a, b, c) solves linear Diophantine equations in 2 variables.  
+Input: $a, b, c$ such that $ax + by = c$.  
+Output: $g$, $x_1$, $y_1$, described above.
 
-pr{"QZ[xl; MOD_RS(", ax. ",0", bx. ") = 0. MOD_RS(ax. bx)} Algorithma for Tarioas problems over Euclidean domains ahowtImeO QZIxl: MOD_RS(2zq + (■1z)q*X + 3zq*X‘2 + 2zq’X*4 + 1zq’X 5. 2zq + (-1z)q*X + 3zq*X“3) = I2zq + (-1z)q*X + 3zq*X*2 + 2zq*X‘4 + 1zq*X*5, 2zq + (-1z)q*X + 3zn*X‘3, (16z/9z)q + ((-20z)/9z)q*X + 3zq*X*2, (166z/243z)q + ((-27 5z)/243z)q*X, Ozql
+<div class="math-left">
 
-```icon
+$$
+\begin{array}{l}
+DIOPHANTINE(a, b, c) \Leftarrow \\
+\quad \textbf{local } gst,\ g,\ x_1,\ y_1 \\
+\quad gst \mathrel{:=} EUCLID(a, b) \\
+\quad g \mathrel{:=} gst[1];\ t \mathrel{:=} gst[3] \\
+\quad \textbf{if } not\ |(g, c) \textbf{ then } pr\{\text{"ERROR: Diophantine solution nonexistent"}\} \\
+\quad \textbf{else } \{ \textbf{if } <(abs(b), abs(a)) \\
+\quad\quad \textbf{then } \{ x_1 \mathrel{:=} CRA1(a, c, abs(b)) \\
+\quad\quad\quad y_1 \mathrel{:=} \odiv(\ominus(c, \otimes(a, x_1)), b) \} \\
+\quad\quad \textbf{else } \{ y_1 \mathrel{:=} CRA1(b, c, abs(a)) \\
+\quad\quad\quad x_1 \mathrel{:=} \odiv(\ominus(c, \otimes(b, y_1)), a) \} \\
+\quad\quad \Uparrow [g, x_1, y_1] \} \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+**Example.** By evaluating DIOPHANTINE(84, 54, -24), we find that all integer solutions $(x, y)$ of the equation $84x + 54y = -24$ are of the form $x = 1 + 9t$, $y = (-2) - 14t$.
+
+**Example.** By evaluating DIOPHANTINE(999, -49, 5000), we find that all integer solutions $(x, y)$ of the equation $999x + (-49)y = 5000$ are of the form $x = 13 + 49t$, $y = 163 - (-999)t$.
+
+**Example.** By evaluating DIOPHANTINE(247, 589, 817), we find that all integer solutions $(x, y)$ of the equation $247x + 589y = 817$ are of the form $x = (-11) + 31t$, $y = 6 - 13t$.
+
+
+### 3.2 Polynomial remainder sequences 
+
+Polynomial remainder sequences are studied as a method of finding variants of the greatest common divisor for elements of integral domains. Variation in the definition is required because integral domains do not support long division. It is also desirable to compute values which share properties of the greatest common divisor (which might then be reclaimed by homomorphic image methods; see Lipson, ch. 8), such that the computation does not suffer the large coefficient growth of Euclid's algorithm on even moderate-sized polynomials. Yap [Yap85a] discusses the issue, presenting an example of Knuth exhibiting the coefficient growth problem. Polynomial remainder sequences are discussed in greater depth in the paper by Loos [Loosa]. We have implemented three variants of polynomial remainder sequence:
+
+- mod-based PRS.
+- prem, a pseudo-remainder for division over integral domains, and a prem-based PRS, as defined in Yap [Yap85a].
+- Subresultant PRS, as defined in Yap [Yap85a] and based on an algorithm of Collins, as presented by Brown.
+
+#### 3.2.1 MOD-based PRS
+
+The simplest polynomial remainder sequence is simply that of Euclid's algorithm. That is, we define MOD_RS(a, b) to be the PRS of mod(a, b).
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+MOD\_RS(a, b) \Leftarrow \Uparrow [a] \ |||{:=}\ (\textbf{if } =(b, 0(b)) \textbf{ then } [b] \textbf{ else } MOD\_RS(b, mod(a, b))) \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+**Example.** In $QZ[x]$, the remainder sequence of
+
+$a(x) = x^5 + 2x^4 + 3x^2 - x + 2$  
+$b(x) = 3x^3 - x + 2$
+
+as encoded in ICON by
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+settime() \\
+ax \mathrel{:=} poly([k_{Z_{Qx}}(2, 0), k_{Z_{Qx}}(-1, 1), k_{Z_{Qx}}(3, 2), k_{Z_{Qx}}(2, 4), k_{Z_{Qx}}(1, 5)]) \\
+bx \mathrel{:=} poly([k_{Z_{Qx}}(2, 0), k_{Z_{Qx}}(-1, 1), k_{Z_{Qx}}(3, 3)]) \\
+\text{pr}\{\text{"QZ[x]: MOD\_RS("},\ ax,\ \text{", "},\ bx,\ \text{") = "},\ MOD\_RS(ax, bx)\} \\
+showtime() \\
+\end{array}
+$$
+
+</div>
+
+is
+
+$QZ[x]\text{: MOD\_RS}(2zq + (-1z)q \cdot X + 3zq \cdot X^2 + 2zq \cdot X^4 + 1zq \cdot X^5,\ 2zq + (-1z)q \cdot X + 3zq \cdot X^3)$  
+$= [2zq + (-1z)q \cdot X + 3zq \cdot X^2 + 2zq \cdot X^4 + 1zq \cdot X^5,\ 2zq + (-1z)q \cdot X + 3zq \cdot X^3,\ (16z/9z)q + ((-20z)/9z)q \cdot X + 3zq \cdot X^2,\ (166z/243z)q + ((-275z)/243z)q \cdot X,\ (115668z/75625z)q,\ 0zq]$
+
 [221033 msecs]
-3.2.2 Pseudo-remainder for division over integral domains
-PREM(px, qx): Pseudo-remainder of -^px,qx^I[x}
-where Z[x] is an integral domain.
-Method:
-```
+
+#### 3.2.2 Pseudo-remainder for division over integral domains
+
+PREM(px, qx): Pseudo-remainder of $px/qx$ in $I[x]$, where $I[x]$ is an integral domain.
+
+**Method:**
+
+1. Let $d = \deg(p) - \deg(q)$
+2. Let $b$ = lead coefficient of $q(x)$
+3. Return $\text{rem}(b^{d+1} \cdot px, qx)$
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+PREM(px, qx) \Leftarrow \\
+\quad \textbf{local } d,\ b \\
+\quad d \mathrel{:=} -_{deg}(deg_{poly}(px), deg_{poly}(qx)) \\
+\quad b \mathrel{:=} poly\_of(lead\_coef(qx)) \\
+\quad \Uparrow rem(\otimes_{poly}(exp(b, d + 1), px), qx) \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+**Example.** The following table lists values and their pseudo-remainders. 
 
 
-## 1. Let deg(jf)-deg{q') 2. Let b lead coefficient of q(x) 3. Return rem(h‘^'^^px,9x)
+Algorithm! for Tarions problems over Enclidean domains Domain prem(p, q) QZlx] 2DO5427Uz+1785a34z*X StSX2Simi6tST3l82S2MOz -S8S12S9Z798467382S246000000000000Z QZlx] 21z+(.9z)*X+(.4i)’r2+5z*X‘4+3z*X‘6 (-39S35z)+3Q375zTC+15795z*X:2 QZlxl 22q+(-lz)q’X+3zq*X^+22q’X’4+lxq*X‘6 2xq+(-li)q*X+3zq*y3 198zq+(-225z)q*X+306zq’X^ QZlx] 198zq+(-2252)q*X+306zq*X3 iauj+369zq*X iniegen[x] 
 
-```icon
-PREM (px, qx) <=
-local d, b
-d := -deg {degpoiy{p^}. degpoiyi^^}}
-b := poly_of(/ea/icoe/(q x))
-```
+#### 3.2.3 PREM-based PRS
 
-■(y rem(®po/y(exP (b. d + l), px). qx) Example. The following table lists values and their pseudo-remainders. Algorithm! for Tarions problems over Enclidean domains Domain prem(p, q) QZlx] 2DO5427Uz+1785a34z*X StSX2Simi6tST3l82S2MOz -S8S12S9Z798467382S246000000000000Z QZlx] 21z+(.9z)*X+(.4i)’r2+5z*X‘4+3z*X‘6 (-39S35z)+3Q375zTC+15795z*X:2 QZlxl 22q+(-lz)q’X+3zq*X^+22q’X’4+lxq*X‘6 2xq+(-li)q*X+3zq*y3 198zq+(-225z)q*X+306zq’X^ QZlx] 198zq+(-2252)q*X+306zq*X3 iauj+369zq*X iniegen[x] 3.2.3 PREM-based PRS
+E_PRS(a, b): Euclidean polynomial remainder sequence.  
+I.e., a trace of the steps of Euclid's algorithm modified to use PREM.
 
-```icon
-E_PRS(a, b): Euclidean polynomial remainder sequence.
-I.e., a trace of the steps of Euclid’s algorithm modified to use PREM.
-E_PRS (a. b) <=
-[a] Bl (If “(b. 0(b)) then [bl else E_PRS(b, PREM{a, b))) ■
-3.2.4 Subresultant PRS
-```
+<div class="math-left">
+
+$$
+\begin{array}{l}
+E\_PRS(a, b) \Leftarrow \Uparrow [a] \ |||{:=}\ (\textbf{if } =(b, 0(b)) \textbf{ then } [b] \textbf{ else } E\_PRS(b, PREM(a, b))) \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+#### 3.2.4 Subresultant PRS
 
 The following algorithm is the Collins-Brown subresultant PRS algorithm, as presented in Yap [Yap85a].
 
-```icon
-S_PRS(pO, pl): Subresultant polynomial remainder sequence.
-Input: polynomials
-```
+**S_PRS**: Subresultant polynomial remainder sequence.  
+Input: polynomials $p_0, p_1 \in I[x]$ for some integral domain $I$.  
+Output: Subresultant PRS $(p_0, p_1, \ldots, p_k)$ such that $p_{k+1} = 0$.
 
-for some integral domain Z. Output: Subresultant PRS (potPi.-P*) such that pjt+i=O. Let 8,=deg(p,)-rfeg(p,+i). Let Ci=^lead{pi). Let (Ri.Ri ' ■ ' be a sequence of length k defined by Ri=ci®° Let (P2.P3 ■ * ‘ Pi) be a sequence of length k— 1 defined by 3i=((-l)^^*®”’bc.-2((R'"2)’“’)./=3..;: Then we wish to compute the sequence (po.Z’i>”Pi) ot length A:+l such thatpo andpi are given polynomials, and prem{pi-x,pi-2) , --------- Z--------- ,1-2..k. S_PRS (po. Pl) <=
+Let $\delta_i = \deg(p_i) - \deg(p_{i+1})$. Let $c_i = \text{lead}(p_i)$.
 
-```icon
-local Sq, ^2’ P2> P > ^1> Initial values
-# Iterate values
-So := 8,(po' Pl)
-Sequence Initial values
-cO := C/(po)
-P2 := poly_of(exp(-(l(cO)), Sq+I))
-P2 := PiipO’Pl. P2): z := 0(p2)
-```
+Let $(R_1, R_2, \ldots, R_k)$ be a sequence of length $k$ defined by
 
-If =(P2. ^) then H tPo. Pll 2?1 := exp(c,(pi), Sq) 8,•-2 := ^dPl’Pl) Loop Iterate Initialization, P,-
+$$R_1 = c_1^{\delta_0}$$
+$$R_i = c_i^{\delta_{i-1}} R_{i-1}^{1-\delta_{i-1}}, \quad i = 2, \ldots, k$$
 
-```icon
-Ci-2 := Ci(pi)
-Ri-2
-Pi-2 := Pl
-#torpf
-repeat {
-p,- := p/ (8|_2, Ci-2, Ri-2)
-```
+Let $(\beta_2, \beta_3, \ldots, \beta_k)$ be a sequence of length $k-1$ defined by
 
-Pi ■= Pi (Pi-2. Pi-1. Pi) If =(pi, z) then -ft- P else P ||:- [p,] Pi-2 Pi-1 Pi-1 •- Pi Ci~2 ■— Ci(pi-2)
+$$\beta_2 = (-1)^{\delta_0 + 1}$$
+$$\beta_i = (-1)^{1 + \delta_{i-2}} c_{i-2} (R_{i-2})^{\delta_{i-2}}, \quad i = 3, \ldots, k$$
 
-```icon
-Pi-2 := Ri(Ci-2. 8i_2, Ri-2)
-8i {Pi, Pi-¥1) (y <leg(^^Spofy(Pi)> ^^Spoly(Pi+l)) ■
-Ci {Pi) <= -ft &adc«!f(Pi) ■
-/?i {Ci, S,-—!, Pj —1) 4=
-```
+Then we wish to compute the sequence $(p_0, p_1, \ldots, p_k)$ of length $k+1$ such that $p_0$ and $p_1$ are the given polynomials, and
 
-exp(P,_i. -<fe,(8,_i. 1))) Pi (8i-2. C,—2. /?»-2) <= ■ft poly_of(®(®(oxp(-(l(c/-2)). Pi {Pi-2. Pi-1. Pi) <= -ft $\odiv$(P R E M {Pi-2. Pi-1}. Pi) ■ 3*3 Power series and polynomial inversion and interpolation Under this heading we provide the following facilities; • Newton’s method for construction of polynomials by interpolation. • Fast Fourier Transform (FFT) and Interpolation (FFI). • Newton’s method for truncated power series inversion. 3.3.1 Newton’s method for construction of polynomials by interpolation NIA (rm_list); Newton’s Interpolation Algorithm (CRA for F[x]) Input: [[ak, bk]] such that U(ak) = bk, U(x) € F[x] Output: U(x)
+$$p_i = \frac{\text{PREM}(p_{i-2}, p_{i-1})}{\beta_i}, \quad i = 2, \ldots, k$$
 
-```icon
-N lA (abjist) 4=
-local ab_s. ab, a, b, Ux, Mx, c, a
-ab_8 :« copy(ab_ll8t)
-ab := pop(ab_8); a :« ab(1J; b := ab[2]
-Ux := poly_of(b)
-Mx := l(Ux)
-```
 
-every k ;= 1 to *ab_$ do
 
-```icon
-{ Mx := ®{Mx, \odiv(polydterm(1(b), 1)]), poly_of(a)))
-ab := pop(ab_8); a ;= ab[1l; b := abl2l
-c := \odiv{1(a), eva/pofy(Mx, a))
-```
+<div class="math-left">
 
-a := ®{$\odiv$(poly_of(b), poly_of(evaZpoZj,(Ux, a))), poly_of(c))
+$$
+\begin{array}{l}
+S\_PRS(p_0, p_1) \Leftarrow \\
+\quad \textbf{local } \delta_0,\ \beta_2,\ p_2,\ x,\ P,\ R_1, \\
+\quad\quad \delta_{i-2},\ c_{i-2},\ R_{i-2},\ p_{i-2},\ p_{i-1},\ \beta_i,\ p_i,\ l,\ z \\
+\quad \delta_0 \mathrel{:=} \delta_i(p_0, p_1) \\
+\quad c_0 \mathrel{:=} c_i(p_0) \\
+\quad \beta_2 \mathrel{:=} poly\_of(exp(-(1(c_0)), \delta_0 + 1)) \\
+\quad p_2 \mathrel{:=} P_i(p_0, p_1, \beta_2);\ z \mathrel{:=} 0(p_2) \\
+\quad \textbf{if } =(p_2, z) \textbf{ then } \Uparrow [p_0, p_1] \\
+\quad P \mathrel{:=} [p_0, p_1, p_2] \\
+\quad R_1 \mathrel{:=} exp(c_i(p_1), \delta_0) \\
+\quad \delta_{i-2} \mathrel{:=} \delta_i(p_1, p_2) \\
+\quad c_{i-2} \mathrel{:=} c_i(p_1) \\
+\quad R_{i-2} \mathrel{:=} R_1 \\
+\quad p_{i-2} \mathrel{:=} p_1 \\
+\quad p_{i-1} \mathrel{:=} p_2 \\
+\quad l \mathrel{:=} 3 \\
+\quad \textbf{repeat } \{ \\
+\quad\quad \beta_i \mathrel{:=} \beta_i(\delta_{i-2}, c_{i-2}, R_{i-2}) \\
+\quad\quad p_i \mathrel{:=} P_i(p_{i-2}, p_{i-1}, \beta_i) \\
+\quad\quad \textbf{if } =(p_i, z) \textbf{ then } \Uparrow P \\
+\quad\quad \textbf{else } P \ |||{:=}\ [p_i] \\
+\quad\quad p_{i-2} \mathrel{:=} p_{i-1} \\
+\quad\quad p_{i-1} \mathrel{:=} p_i \\
+\quad\quad c_{i-2} \mathrel{:=} c_i(p_{i-2}) \\
+\quad\quad R_{i-2} \mathrel{:=} R_i(c_{i-2}, \delta_{i-2}, R_{i-2}) \\
+\quad\quad \delta_{i-2} \mathrel{:=} \delta_i(p_{i-2}, p_{i-1}) \} \ \blacksquare \\
+\\
+\delta_i(p_i, p_{i+1}) \Leftarrow \Uparrow -_{deg}(deg_{poly}(p_i), deg_{poly}(p_{i+1})) \ \blacksquare \\
+\\
+c_i(p_i) \Leftarrow \Uparrow lead\_coef(p_i) \ \blacksquare \\
+\\
+R_i(c_i, \delta_{i-1}, R_{i-1}) \Leftarrow \\
+\quad \Uparrow \otimes(exp(c_i, \delta_{i-1}), exp(R_{i-1}, -_{deg}(\delta_{i-1}, 1))) \ \blacksquare \\
+\\
+\beta_i(\delta_{i-2}, c_{i-2}, R_{i-2}) \Leftarrow \\
+\quad \Uparrow poly\_of(\otimes(\otimes(exp(-(1(c_{i-2})), 1 + \delta_{i-2}), exp(R_{i-2}, \delta_{i-2})))) \ \blacksquare \\
+\\
+P_i(p_{i-2}, p_{i-1}, \beta_i) \Leftarrow \Uparrow \odiv(PREM(p_{i-2}, p_{i-1}), \beta_i) \ \blacksquare
+\end{array}
+$$
 
-```icon
-Ux := ®(Ux, ®(CT, Mx))
-3.3.2 Fast Fourier Transform (FFT) and Interpolation (FFI)
-FFT(N,a(x),omega,A): Fast Fourier transform
-Input: integer N = 2‘m, polynomial a(x) = sum(i=0, N-1, ai * a*i), primitive Nth root of
-unity omega Output: array A = (AO
-AN-1) where Ak = a(omega"k)
-FFT (N , ax. omega) <=
-local A, n, bx, ex, (o^, B, C, (o*
-if N = 1
-# basis
-then A11]:= OrAc^j^ax)
-else { n := N/2
-# binary spilt
-bx := poly_of_everi_powered_terms(ax)
-ex := poly_of_odel_powered_terms(ax)
-co^ exp(omega, 2)
-B := FFT(n, bx, (o^)
-# recursive calls
-```
+</div>
 
-C FFT(n. ex. (O^) every k 1 to n do
+## 3.3 Power series and polynomial inversion and interpolation
 
-```icon
-:= exp(omega, k-1)
-A[kl := ®(B(k], Clk]))
-Alk + nl := e(BIk]. ClkD) }}
-ITA
+Under this heading we provide the following facilities:
+
+- Newton's method for construction of polynomials by interpolation.
+- Fast Fourier Transform (FFT) and Interpolation (FFI).
+- Newton's method for truncated power series inversion.
+
+#### 3.3.1 Newton's method for construction of polynomials by interpolation
+
+**NIA**(ab_list): Newton's Interpolation Algorithm (CRA for $F[x]$)  
+Input: $[[a_k, b_k]]$ such that $U(a_k) = b_k$, $U(x) \in F[x]$  
+Output: $U(x)$
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+NIA(ab\_list) \Leftarrow \\
+\quad \textbf{local } ab\_s,\ ab,\ a,\ b,\ Ux,\ Mx,\ c,\ \sigma \\
+\quad ab\_s \mathrel{:=} copy(ab\_list) \\
+\quad ab \mathrel{:=} pop(ab\_s);\ a \mathrel{:=} ab[1];\ b \mathrel{:=} ab[2] \\
+\quad Ux \mathrel{:=} poly\_of(b) \\
+\quad Mx \mathrel{:=} 1(Ux) \\
+\quad \textbf{every } k \mathrel{:=} 1 \textbf{ to } \texttt{*}ab\_s \textbf{ do } \{ \\
+\quad\quad Mx \mathrel{:=} \otimes(Mx, \ominus(poly([term(1(b), 1)]), poly\_of(a))) \\
+\quad\quad ab \mathrel{:=} pop(ab\_s);\ a \mathrel{:=} ab[1];\ b \mathrel{:=} ab[2] \\
+\quad\quad c \mathrel{:=} \odiv(1(a), eval_{poly}(Mx, a)) \\
+\quad\quad \sigma \mathrel{:=} \odiv(\ominus(poly\_of(b), poly\_of(eval_{poly}(Ux, a))), poly\_of(c)) \\
+\quad\quad Ux \mathrel{:=} \oplus(Ux, \otimes(\sigma, Mx)) \} \\
+\quad \Uparrow Ux \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+### 3.3.2 Fast Fourier Transform (FFT) and Interpolation (FFI)
+
+**FFT**$(N, a(x), \omega, A)$: Fast Fourier Transform  
+Input: integer $N = 2^m$, polynomial $a(x) = \mathrm{sum}(i=0, N-1, a_i \cdot x^i)$, primitive $N$th root of unity $\omega$  
+Output: array $A = (A_0, \ldots, A_{N-1})$ where $A_k = a(\omega^k)$
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+FFT(N, ax, \omega) \Leftarrow \\
+\quad \textbf{local } A,\ n,\ bx,\ cx,\ \omega^2,\ B,\ C,\ \omega^k \\
+\quad A \mathrel{:=} list(N, []) \\
+\quad \textbf{if } N = 1 \ \# \text{basis} \\
+\quad \textbf{then } A[1] \mathrel{:=} 0th_{coef}(ax) \\
+\quad \textbf{else } \{ n \mathrel{:=} N/2 \ \# \text{binary split} \\
+\quad\quad bx \mathrel{:=} poly\_of\_even\_powered\_terms(ax) \\
+\quad\quad cx \mathrel{:=} poly\_of\_odd\_powered\_terms(ax) \\
+\quad\quad \omega^2 \mathrel{:=} exp(\omega, 2) \\
+\quad\quad B \mathrel{:=} FFT(n, bx, \omega^2) \ \# \text{recursive calls} \\
+\quad\quad C \mathrel{:=} FFT(n, cx, \omega^2) \\
+\quad\quad \textbf{every } k \mathrel{:=} 1 \textbf{ to } n \textbf{ do } \{ \\
+\quad\quad\quad \omega^k \mathrel{:=} exp(\omega, k-1) \\
+\quad\quad\quad A[k] \mathrel{:=} \oplus(B[k], \otimes(\omega^k, C[k])) \\
+\quad\quad\quad A[k+n] \mathrel{:=} \ominus(B[k], \otimes(\omega^k, C[k])) \} \} \\
+\quad \Uparrow A \ \blacksquare
+\end{array}
+$$
+
+</div>
+
 Even powered terms.
-poly_of_even_powered_t8rm8(ax) ■<1=
-local r
-r := Il
-```
 
-every t := lax.terms do If modjffffgfrd.oo^er. 2) = 0 then r 111:= [term(t.coef, t.power/2)l H poly(f) Odd powered terms. poly_of_odd_powored_torm8(ax) ■<=
+<div class="math-left">
 
-```icon
-local r
-```
+$$
+\begin{array}{l}
+poly\_of\_even\_powered\_terms(ax) \Leftarrow \\
+\quad \textbf{local } r \\
+\quad r \mathrel{:=} [] \\
+\quad \textbf{every } t \mathrel{:=} \texttt{!}ax.terms \\
+\quad \textbf{do if } mod_{integer}(t.power, 2) = 0 \textbf{ then } r \ |||{:=}\ [term(t.coef, t.power/2)] \\
+\quad \Uparrow poly(r) \ \blacksquare
+\end{array}
+$$
 
-every t lax.terms do if znoJi„,e<er(t-powei’.2) = 1 then r (term(t.coef, (t.power - 1)/2)] If *r > 0 then -ff poly(r) else -ff 0(ax.terms[1l)
+</div>
 
-```icon
-FFI(N,B.omega); Fast Fourier interpolation
-Input; integer N “ 2‘m, sample values B = (bO, ... bN-l), primitive Nth root of unity
-omega Output; a(x) = sum(i=0, N-1, ai x*i) where a(omega*k) = bk, k=0..N-l.
-FFI (N , B, omega) <=
-local bx, C, ax
-bx polynomlallze(B)
-C := FFT(N, bx, \odiv(l(omega), omega))
-ax := polynomlallze(\odivvector ,caZar(C, modulo(N ,13)))
-polynomiaiize (B) <=
-local r, I
-```
+Odd powered terms.
 
-every b ;= IB do { If not( = (b, 0(b))) then r lterm(b, I)] H poly(r) ®vector scalar
+<div class="math-left">
 
-```icon
-local R , I
-R := IlstCV); I ;= 1
-```
+$$
+\begin{array}{l}
+poly\_of\_odd\_powered\_terms(ax) \Leftarrow \\
+\quad \textbf{local } r \\
+\quad r \mathrel{:=} [] \\
+\quad \textbf{every } t \mathrel{:=} \texttt{!}ax.terms \\
+\quad \textbf{do if } mod_{integer}(t.power, 2) = 1 \textbf{ then } r \ |||{:=}\ [term(t.coef, (t.power - 1)/2)] \\
+\quad \textbf{if } \texttt{*}r > 0 \textbf{ then } \Uparrow poly(r) \textbf{ else } \Uparrow 0(ax.terms[1]) \ \blacksquare
+\end{array}
+$$
 
-every v ;= IV do { R[I] ;= $\odiv$(VII], x); I +:= 1 } -fr R 3.3.3 Newton’s method for truncated power series inversion NPSI (): Newton’s Power Series Inversion Method Input: a(t) $mod$ t*(2‘n) » sum(i=0,2‘n-l,ai t*i), aO # 0. Output: x‘(n)(t) « a(t)*-l $mod$ t*2‘n
+</div>
 
-```icon
-NPSI (at)
-local ax, xt. n
-ax := at.Poly
-xt poly_ot(Ot/ico^ax))
-n Iog2(*ax.tarms)
-•vary k :«■ 0 to n-1
-do xt := ®(®(xt. xt),
-•“(®p<»iyOfuncata(ax, 2‘(k + l)), ®(xt, xt))))
-•jy tpowar(truncata(xt, at.N), at.N)
-Iog2 (X) <=
-local I
-while X > 1 do {x :« nl2', I := i + 1 }
-3’4 A. simple timer
-```
+**FFI**$(N, B, \omega)$: Fast Fourier Interpolation  
+Input: integer $N = 2^m$, sample values $B = (b_0, \ldots, b_{N-1})$, primitive $N$th root of unity $\omega$  
+Output: $a(x) = \mathrm{sum}(i=0, N-1, a_i x^i)$ where $a(\omega^k) = b_k$, $k=0..N-1$
 
-A call to settimeQ initializes the timer. A call to shawtimeO prints the elapsed time since settimeQ wzs invoked.
+<div class="math-left">
 
-```icon
-global timer
-showtime () <= pr{"I", Atlme - timer, " msecs]”} ■
-eettime () <= timer := Atime ■
-```
+$$
+\begin{array}{l}
+FFI(N, B, \omega) \Leftarrow \\
+\quad \textbf{local } bx,\ C,\ ax \\
+\quad bx \mathrel{:=} polynomialize(B) \\
+\quad C \mathrel{:=} FFT(N, bx, \odiv(1(\omega), \omega)) \\
+\quad ax \mathrel{:=} polynomialize(\otimes_{vector\ scalar}(C, \odiv(1(N), N))) \\
+\quad \Uparrow ax \ \blacksquare
+\end{array}
+$$
 
-The following documentation filter is inspired by Knuth’s Tex (specifically the LaTex variant [Lampo83a,Knuth82a]. Blocks of comments are compiled as paragraphs. Paragraphs are demarcated by blank comment lines. Paragraphs are typeset with .Ip. Code is set off with .nf, and .fi. We strip any leading white space from comment lines before further processing.
+</div>
 
-```icon
-global command_llno, lastjine, cur_flles, read_now, words
-maln(x) <=
-local fn
-words :» tablsl"")
-wordsriy"! ;= "‘fr"
-wordsC’B"! :=
-commandjine :=» x
-If *command_llns > 0
-than { fn := command_llns[1]
-Ioad_u8ar_keyword8(fnir’.keys’’)
-cur_flle8 := [r8ad_now ;= open(fn||".lcn", "r")] }
-else cur_files := [r8ad_now := iinput]
-lastjine := 4null
-write!".so /U8r2/erlc8on/euclid/lpp/8td.me”)
-process!)
-getjine!)
-local X
-X := &null
-If 8t_llne: "(y X }
-else If X := read!read_now) then 'jy x
-Reads lines until encountering end of file or ##ond or ##end command.
-process (command) <=
-local line
-while line := get_llne() do If not proce8S_llne(llne, command) then break
-processjine (line, command) <=
-then { If llne[3;61 —
-then { end_commarid(command, llneI7:*line + l]): ± }
-else do_command(line(3:*llne + l]) }
-else If llne[1J == "#” then write_llne(line[2:*llne + 11)
-else pretty_pfint(llne, command)
-If command is non-null then ##end command should match command.
-end_command (command, line) -<=
-if f then write(&errout, "ERROR:Mismatched END, wanted ",command,”, got ", line)
-```
+<div class="math-left">
 
-For interpreting ## commands
+$$
+\begin{array}{l}
+polynomialize(B) \Leftarrow \\
+\quad \textbf{local } r,\ i \\
+\quad r \mathrel{:=} [];\ i \mathrel{:=} 0 \\
+\quad \textbf{every } b \mathrel{:=} \texttt{!}B \textbf{ do } \{ \\
+\quad\quad \textbf{if } not(=(b, 0(b))) \textbf{ then } r \ |||{:=}\ [term(b, i)] \\
+\quad\quad i \mathrel{+{:=}} 1 \} \\
+\quad \Uparrow poly(r) \ \blacksquare
+\end{array}
+$$
 
-```icon
-do_command (line) <=
-local command, args
-X := {upto("&lca8e, line) | (‘line + 1))
-command ;= llne[1;xl
-args := Ilnelx + 1 ;*line + ll
-If not(y := proc("do_" || command, 2))
-then write(&errout, "ERROR; Unknown command: ", command)
-else y(args)
-##list and ##enci list.
-do_llst (args)
-local line
-wrlte(".(l I F")
-while line := get_llne()
-then { If llneI3:6] == "■”
-then { wrlte(".)r'); end_coinmand(command,llneI7:*^lne + 1]): ± }
-else do_command(llne[3:*llne + l]) }
-else If line[1] ==
-then { line
-llne[2:*llne+ 1]
-repeat If upto('
-*, llne[1])
-then line := llne[2:*llne + ll else break
-‘MK>
-If ’line > 0 then wrlte("* ", line) else wrlte() }
-else pretty_prlnt(llne, command)
-wrlte(".)l")
-##sectlon <l> <tltle> and ##end section <l>.
-Section nestings are relative to the file, from 1 on up. An ##include file’s nestings are
-relative to the current level of the including file plus previous cumulative nesting. I.e., if
-cumulative nesting is 3, and nesting in the including file is 2, then 1 in the included file
-translates to 6 in the final output.
-do_sactlon (args) <=
-X := (upto(’('0123456789’), args) jCargs + 1))
-level :« args(1 :x] + 0
-title :■» argslx + l:’args + fl
-wrlte(".sh ", level, "
-wrlte(".sp 2v0lp")
-process("sectlon "||level)
-##sklp and ##end skip.
+</div>
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+\otimes_{vector\ scalar}(V, x) \Leftarrow \\
+\quad \textbf{local } R,\ i \\
+\quad R \mathrel{:=} list(\texttt{*}V);\ i \mathrel{:=} 1 \\
+\quad \textbf{every } v \mathrel{:=} \texttt{!}V \textbf{ do } \{ R[i] \mathrel{:=} \otimes(V[i], x);\ i \mathrel{+{:=}} 1 \} \\
+\quad \Uparrow R \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+#### 3.3.3 Newton’s method for truncated power series inversion
+
+**NPSI**(): Newton's Power Series Inversion Method  
+Input: $a(t) \bmod t^{2^n} = \mathrm{sum}(i=0, 2^n-1, a_i t^i)$, $a_0 \neq 0$  
+Output: $x^{(n)}(t) = a(t)^{-1} \bmod t^{2^n}$
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+NPSI(at) \Leftarrow \\
+\quad \textbf{local } ax,\ xt,\ n \\
+\quad ax \mathrel{:=} at.Poly \\
+\quad xt \mathrel{:=} poly\_of(0th_{coef}(ax)) \\
+\quad n \mathrel{:=} log2(\texttt{*}ax.terms) \\
+\quad \textbf{every } k \mathrel{:=} 0 \textbf{ to } n-1 \\
+\quad \textbf{do } xt \mathrel{:=} \oplus(\oplus(xt, xt), \\
+\quad\quad\quad\quad -(\otimes_{poly}(truncate(ax, 2^{k+1}), \otimes(xt, xt)))) \\
+\quad \Uparrow tpower(truncate(xt, at.N), at.N) \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+log2(x) \Leftarrow \\
+\quad \textbf{local } l \\
+\quad l \mathrel{:=} 0 \\
+\quad \textbf{while } x > 1 \textbf{ do } \{ x \mathrel{:=} x/2;\ l \mathrel{:=} l + 1 \} \\
+\quad \Uparrow l \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+### 3.4 A simple timer
+
+A call to `settime()` initializes the timer.
+
+A call to `showtime()` prints the elapsed time since `settime()` was invoked.
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+\textbf{global } timer \\
+showtime() \Leftarrow pr\{\text{"["}, \&time - timer, \text{" msecs]"}\} \ \blacksquare \\
+settime() \Leftarrow timer \mathrel{:=} \&time \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+## Appendix. ICON Pretty Printer and Documentation Delaminator
+
+The following documentation filter is inspired by Knuth's *TeX* (specifically the *LaTeX* variant [Lampo83a, Knuth82a].
+
+Blocks of comments are compiled as paragraphs. Paragraphs are demarcated by blank comment lines. Paragraphs are typeset with `.lp`. Code is set off with `.nf`, and `.fi`. We strip any leading white space from comment lines before further processing.
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+\textbf{global } command\_line,\ last\_line,\ cur\_files,\ read\_now,\ words \\
+\\
+main(x) \Leftarrow \\
+\quad \textbf{local } fn \\
+\quad words \mathrel{:=} table("") \\
+\quad words[\text{"↑"}] \mathrel{:=} \text{"↑"} \\
+\quad words[\text{"■"}] \mathrel{:=} \text{"■"} \\
+\quad words[\text{"±"}] \mathrel{:=} \text{"±"} \\
+\quad command\_line \mathrel{:=} x \\
+\quad \textbf{if } \texttt{*}command\_line > 0 \\
+\quad \textbf{then } \{ fn \mathrel{:=} command\_line[1] \\
+\quad\quad load\_user\_keywords(fn \ || \ \text{".keys"}) \\
+\quad\quad cur\_files \mathrel{:=} [read\_now \mathrel{:=} open(fn \ || \ \text{".icn"}, \text{"r"})] \} \\
+\quad \textbf{else } cur\_files \mathrel{:=} [read\_now \mathrel{:=} \&input] \\
+\quad last\_line \mathrel{:=} \&null \\
+\quad write(\text{".so /usr2/ericson/euclid/lpp/std.me"}) \\
+\quad process() \ \blacksquare \\
+\\
+get\_line() \Leftarrow \\
+\quad \textbf{local } x \\
+\quad x \mathrel{:=} \&null \\
+\quad \textbf{if } last\_line \textbf{ then } \{ x \mathrel{:=} last\_line;\ last\_line \mathrel{:=} \&null;\ \Uparrow x \} \\
+\quad \textbf{else if } x \mathrel{:=} read(read\_now) \textbf{ then } \Uparrow x \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+Reads lines until encountering end of file or `##end` or `##end command`.
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+process(command) \Leftarrow \\
+\quad \textbf{local } line \\
+\quad \textbf{while } line \mathrel{:=} get\_line() \textbf{ do if } not\ process\_line(line, command) \textbf{ then break} \ \blacksquare \\
+\\
+process\_line(line, command) \Leftarrow \\
+\quad \textbf{if } line[1:3] \mathrel{==} \text{"\#\#"} \\
+\quad \textbf{then } \{ \textbf{if } line[3:6] \mathrel{==} \text{"■"} \\
+\quad\quad \textbf{then } \{ end\_command(command, line[7:\texttt{*}line + 1]);\ \bot \} \\
+\quad\quad \textbf{else } do\_command(line[3:\texttt{*}line + 1]) \} \\
+\quad \textbf{else if } line[1] \mathrel{==} \text{"\#"} \textbf{ then } write\_line(line[2:\texttt{*}line + 1]) \\
+\quad \textbf{else } pretty\_print(line, command) \\
+\Uparrow \ \blacksquare \\
+\\
+end\_command(command, line) \Leftarrow \\
+\quad \textbf{if } command \mathrel{\sim}== line \textbf{ then } write(\&errout, \text{"ERROR: Mismatched END, wanted "}, command, \text{", got "}, line) \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+If command is non-null then `##■end` command should match command.
+
+For interpreting `##` commands
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+do\_command(line) \Leftarrow \\
+\quad \textbf{local } command,\ args \\
+\quad x \mathrel{:=} (upto(\mathord{\sim}\&lcase, line) \ | \ (\texttt{*}line + 1)) \\
+\quad command \mathrel{:=} line[1:x] \\
+\quad args \mathrel{:=} line[x + 1:\texttt{*}line + 1] \\
+\quad \textbf{if } not(y \mathrel{:=} proc(\text{"do\_"} \ || \ command, 2)) \\
+\quad \textbf{then } write(\&errout, \text{"ERROR: Unknown command: "}, command) \\
+\quad \textbf{else } y(args) \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+`##list` and `##end list`.
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+do\_list(args) \Leftarrow \\
+\quad \textbf{local } line \\
+\quad write(\text{".(l I F"}) \\
+\quad \textbf{while } line \mathrel{:=} get\_line() \\
+\quad \textbf{do if } line[1:3] \mathrel{==} \text{"\#\#"} \\
+\quad\quad \textbf{then } \{ \textbf{if } line[3:6] \mathrel{==} \text{"■"} \\
+\quad\quad\quad \textbf{then } \{ write(\text{".)l"});\ end\_command(command, line[7:\texttt{*}line + 1]);\ \bot \} \\
+\quad\quad\quad \textbf{else } do\_command(line[3:\texttt{*}line + 1]) \} \\
+\quad\quad \textbf{else if } line[1] \mathrel{==} \text{"\#"} \\
+\quad\quad \textbf{then } \{ line \mathrel{:=} line[2:\texttt{*}line + 1] \\
+\quad\quad\quad\quad \textbf{repeat if } upto(\text{' '}, line[1]) \\
+\quad\quad\quad\quad \textbf{then } line \mathrel{:=} line[2:\texttt{*}line + 1] \textbf{ else break} \\
+\quad\quad\quad\quad \textbf{if } \texttt{*}line > 0 \textbf{ then } write(\text{"● "}, line) \textbf{ else } write() \} \\
+\quad\quad \textbf{else } pretty\_print(line, command) \\
+\quad write(\text{".)l"}) \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+`##section <I> <title>` and `##end section <I>`.
+
+Section nestings are relative to the file, from 1 on up. An `##include` file's nestings are relative to the current level of the including file plus previous cumulative nesting. I.e., if cumulative nesting is 3, and nesting in the including file is 2, then 1 in the included file translates to 6 in the final output.
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+do\_section(args) \Leftarrow \\
+\quad x \mathrel{:=} (upto(\mathord{\sim}(\text{'0123456789'}), args) \ | \ (\texttt{*}args + 1)) \\
+\quad level \mathrel{:=} args[1:x] + 0 \\
+\quad title \mathrel{:=} args[x + 1:\texttt{*}args + 1] \\
+\quad write(\text{".sh "}, level, \text{" "}, title) \\
+\quad write(\text{".sp 2v0lp"}) \\
+\quad process(\text{"section "} \ || \ level) \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+`##skip` and `##end skip`.
+
 Deletes *everything* between skip and end skip.
-do_8klp (x) •«i=
-local lino
-while lino := get_Ilno()
-do If ilne[1:3] ==
-then If Ilnol3:6] ==
-then { #nd_command(command, llne[7:*llne + l]): break }
-##lnclude <file>.
-Includes file. Home directory for includes within included file is home directory of file
-relative to current home directory. I.e., if you include foo/bar (.icn is assumed), and
-foo/bar includes dot/zot, then we look for foo/dot/zot. If -I switch is present, don’t bother
-doing includes.
-do_lnclude (arg) ■<=
-local new_flle
-cur_flle := arg
-now_flle := opon(cur_filel|".lcn’', "r")
-If /now_fllo then wrlte("E R RO R : couldn’t open ", cur_flle, ".Icn")
-else { road_now := new_flle
-push(cur_flles, read_now)
-Ioad_u8er_keyword8(cur_flle||".keys")
-proce8s("lnclude")
-# until ■ of file
-clo8e(pop(cur_flles))
-read_now := cur_flles[1] }
-##example and ##end example
-Example paragraphs are left-justified and preceded by an appropriately numbered’
-boldfaced ’Example" keyword.
-do_example (arg) <=
-wrltos('’\fB ExampleAfR ")
-pro cess ("ex am pie")
-##code and ##end code
-Code is unjustified and Helveticized. Uncommented lines are processed as code.
-Commented lines bracketed by ##code are treated similarly; the purpose is to present
-code examples in the file that are not to be seen by the ICON compiler.
-do_cods (arg) <=
-local line
-wrlte(".nfOfH ")
-while line := get_llne()
-do If ltne[1:6] — "##■" then break
-else pretty_prlnt_llne(llne(2:*llne + ll)
-wrlte(".flOfR ")
-##equatlons and ##end equations
-Typeset with TBL, one .EQ and .EN. per line, except that if the line is terminated by ,
-continue equation on the next line.
-do.equations (arg)
-wrIteC’.EQ")
-process("equatlons")
-writo(".EN")
-##quote and ##end quote
-```
 
-These are typeset with .(q and .)q.
+<div class="math-left">
 
-```icon
-do_quote (arg) <=
-wrlte(".(q")
-process("quote**)
-write(’'.)q")
-##table and ##end table
-```
+$$
+\begin{array}{l}
+do\_skip(x) \Leftarrow \\
+\quad \textbf{local } line \\
+\quad \textbf{while } line \mathrel{:=} get\_line() \\
+\quad \textbf{do if } line[1:3] \mathrel{==} \text{"\#\#"} \\
+\quad\quad \textbf{then if } line[3:6] \mathrel{==} \text{"■"} \\
+\quad\quad\quad \textbf{then } \{ end\_command(command, line[7:\texttt{*}line + 1]);\ break \} \ \blacksquare
+\end{array}
+$$
 
-Outputs .TS and -TE commands. Body is straight TBL. do.table (args) ■<= writo(".sp 4vO(cOTS")
+</div>
 
-```icon
-process("table’’)
-wrlte(".TEO)cO)
-```
+`##include <file>`.
 
-For printing documentation lines. If the text following the # is white space, output a .Ip
+Includes file. Home directory for includes within included file is home directory of file relative to current home directory. I.e., if you include foo/bar (`.icn` is assumed), and foo/bar includes dot/zot, then we look for foo/dot/zot. If `-I` switch is present, don't bother doing includes.
 
-```icon
-writejine (line) 4=
-repeat If uptoC Ilnell]) then line := Ilne[2:*llne + 1] else break
-if *line = 0 then wrlte('*.lp") else wrlte(line)
-```
+<div class="math-left">
+
+$$
+\begin{array}{l}
+do\_include(arg) \Leftarrow \\
+\quad \textbf{local } new\_file \\
+\quad cur\_file \mathrel{:=} arg \\
+\quad new\_file \mathrel{:=} open(cur\_file \ || \ \text{".icn"}, \text{"r"}) \\
+\quad \textbf{if } /new\_file \textbf{ then } write(\text{"ERROR: couldn't open "}, cur\_file, \text{".icn"}) \\
+\quad \textbf{else } \{ read\_now \mathrel{:=} new\_file \\
+\quad\quad push(cur\_files, read\_now) \\
+\quad\quad load\_user\_keywords(cur\_file \ || \ \text{".keys"}) \\
+\quad\quad process(\text{"include"}) \ \# \text{ until ■ of file} \\
+\quad\quad close(pop(cur\_files)) \\
+\quad\quad read\_now \mathrel{:=} cur\_files[1] \} \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+`##example` and `##end example`.
+Example paragraphs are left-justified and preceded by an appropriately numbered boldfaced "Example" keyword.
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+do\_example(arg) \Leftarrow \\
+\quad writes(\text{"\textbackslash fB Example.\textbackslash fR "}) \\
+\quad process(\text{"example"}) \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+`##code` and `##end code`.
+
+Code is unjustified and Helveticized. Uncommented lines are processed as code. Commented lines bracketed by `##code` are treated similarly; the purpose is to present code examples in the file that are not to be seen by the ICON compiler.
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+do\_code(arg) \Leftarrow \\
+\quad \textbf{local } line \\
+\quad write(\text{".nf0fH"}) \\
+\quad \textbf{while } line \mathrel{:=} get\_line() \\
+\quad \textbf{do if } line[1:6] \mathrel{==} \text{"\#\#■"} \textbf{ then break} \\
+\quad\quad \textbf{else } pretty\_print\_line(line[2:\texttt{*}line + 1]) \\
+\quad write(\text{".fi0fR"}) \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+`##equations` and `##end equations`.
+
+Typeset with TBL, one `.EQ` and `.EN.` per line, except that if the line is terminated by `\,`, continue equation on the next line.
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+do\_equations(arg) \Leftarrow \\
+\quad write(\text{".EQ"}) \\
+\quad process(\text{"equations"}) \\
+\quad write(\text{".EN"}) \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+`##quote` and `##end quote`.
+
+These are typeset with `.(q` and `.)q`.
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+do\_quote(arg) \Leftarrow \\
+\quad write(\text{".(q"}) \\
+\quad process(\text{"quote"}) \\
+\quad write(\text{".)q"}) \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+`##table` and `##end table`.
+
+Outputs `.TS` and `.TE` commands. Body is straight TBL.
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+do\_table(args) \Leftarrow \\
+\quad write(\text{".sp 4v0(c0TS"}) \\
+\quad process(\text{"table"}) \\
+\quad write(\text{".TE0)c0"}) \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+For printing documentation lines. If the text following the `#` is white space, output a `.lp`
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+write\_line(line) \Leftarrow \\
+\quad \textbf{repeat if } upto(\text{' '}, line[1]) \textbf{ then } line \mathrel{:=} line[2:\texttt{*}line + 1] \textbf{ else break} \\
+\quad \textbf{if } \texttt{*}line = 0 \textbf{ then } write(\text{".lp"}) \textbf{ else } write(line) \ \blacksquare
+\end{array}
+$$
+
+</div>
 
 For printing list lines.
 
-```icon
-plaln_write_llne (line) <=
-repeat If upto(’ line[1]) then line := line[2:*line-r-11 else break
-wrlta(llne)
-```
+<div class="math-left">
 
-pretty_print(lme): For printing code. Output a .nf. Pretty print lines until end-of-file or comment. Output a .fi. Write-line; the comment if there was one. pretty_prlnt (1, command) •<=
+$$
+\begin{array}{l}
+plain\_write\_line(line) \Leftarrow \\
+\quad \textbf{repeat if } upto(\text{' '}, line[1]) \textbf{ then } line \mathrel{:=} line[2:\texttt{*}line + 1] \textbf{ else break} \\
+\quad write(line) \ \blacksquare
+\end{array}
+$$
 
-```icon
-local line
-write(".nfOfH")
-pretty _prlnt_llne(l)
-while line := oet_llne()
-do If Ilnel1:21 -- "#"
-then { wrlte(".flOfR")
-wrlte(".lp"): last_llne := line; ±}
-else pretty_prlnt_line(llne)
-wrIteC’.flOfR")
-Pretty-print does special formatting in the following cases:
-Procedure definitions Control structures Reserved words User keywords
-If the -U<filename> option is present, then keywords are read into the words table, with
-troff equivalents.
-protty_print_lino (lino) ■<=
-local first, last, key, x, y
-dure", line) 4= <=
-{ X := (upto((&lcase + + &ucase + + ’_0123456789’), line) l*llne + l)
-If X = *llne + 1 then { wrltos(line): break }
-ocedure (Ilno(*x + l0:*llne + l]||" <=") -<^4=
-y := (upto('(Alcaso + + &ucase + 4-’_0123456789’), line) |*llne + 1)
-key := (llne[1:y] I "")
-first ;= (llne[1 :x] | "")
-line := (llne[x:*llne + ll 1"")
-else {while ‘line > 0 do
-If word8[keyl "== "" then key word8(keyl
-last := llnely;*llne + 1l
-w rites (firs t, key)
-line := last }
-wrIteO }
-Ioad_u8er_keywords(fname) •<=
-local w, a, X
-If not(w := open(fnarne, 'r')) then ±
-If 75whllo X := read(w)
-do { a ;= upto(’:’, x)
-wordslxlltail := x[a + 1:*x + ll }
-close(w)
+</div>
+
+`pretty_print(line)`: For printing code. Output a `.nf`. Pretty print lines until end-of-file or comment. Output a `.fi`. Write-line, the comment if there was one.
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+pretty\_print(l, command) \Leftarrow \\
+\quad \textbf{local } line \\
+\quad write(\text{".nf0fH "}) \\
+\quad pretty\_print\_line(l) \\
+\quad \textbf{while } line \mathrel{:=} get\_line() \\
+\quad \textbf{do if } line[1:2] \mathrel{==} \text{"\#"} \\
+\quad\quad \textbf{then } \{ write(\text{".fi0fR "}) \\
+\quad\quad\quad\quad write(\text{".lp"});\ last\_line \mathrel{:=} line;\ \bot \} \\
+\quad\quad \textbf{else } pretty\_print\_line(line) \\
+\quad write(\text{".fi0fR "}) \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+Pretty-print does special formatting in the following cases: 
+
+* Procedure definitions 
+* Control structures 
+* Reserved words 
+* User keywords
+
+If the `-U<filename>` option is present, then keywords are read into the words table, with troff equivalents.
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+pretty\_print\_line(line) \Leftarrow \\
+\quad \textbf{local } first,\ last,\ key,\ x,\ y \\
+\quad \{ x \mathrel{:=} (upto((\&lcase \mathrel{+{+}} \&ucase \mathrel{+{+}} \text{'\_0123456789'}), line) \ | \ (\texttt{*}line + 1)) \\
+\quad\quad \textbf{if } x = \texttt{*}line + 1 \textbf{ then } \{ writes(line);\ break \} \\
+\quad\quad y \mathrel{:=} (upto(\mathord{\sim}(\&lcase \mathrel{+{+}} \&ucase \mathrel{+{+}} \text{'\_0123456789'}), line) \ | \ (\texttt{*}line + 1)) \\
+\quad\quad key \mathrel{:=} (line[1:y] \ | \ \text{""}) \\
+\quad\quad first \mathrel{:=} (line[1:x] \ | \ \text{""}) \\
+\quad\quad line \mathrel{:=} (line[x:\texttt{*}line + 1] \ | \ \text{""}) \\
+\quad\quad \textbf{while } \texttt{*}line > 0 \textbf{ do } \{ \\
+\quad\quad\quad \textbf{if } words[key] \mathrel{\sim}= \text{""} \textbf{ then } key \mathrel{:=} words[key] \\
+\quad\quad\quad last \mathrel{:=} line[y:\texttt{*}line + 1] \\
+\quad\quad\quad writes(first, key) \\
+\quad\quad\quad line \mathrel{:=} last \} \\
+\quad\quad write() \} \ \blacksquare
+\end{array}
+$$
+
+</div>
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+load\_user\_keywords(fname) \Leftarrow \\
+\quad \textbf{local } w,\ a,\ x \\
+\quad \textbf{if } not(w \mathrel{:=} open(fname, \text{'r'})) \textbf{ then } \bot \\
+\quad \textbf{while } x \mathrel{:=} read(w) \\
+\quad \textbf{do } \{ a \mathrel{:=} upto(\text{':'}, x) \\
+\quad\quad words[x[1:a]] \mathrel{:=} x[a + 1:\texttt{*}x + 1] \} \\
+\quad close(w) \\
+\quad \Uparrow \ \blacksquare
+\end{array}
+$$
+
+</div>
+
 Procedure definitions. Instead of the obvious
+
+```
 procedure F (a, b, c)
 code
 end
@@ -2502,17 +3171,71 @@ end
 
 we use the logical-looking
 
-```icon
-F (a, b, c) <= code ■
-If 2 == then pretty_prlnt_llne (llne|ly|l" ■")
-else { pretty_prlnt_llne(llno)
-If y == "■"then pretty _prlnt_llne(line |l "±«")
-else { z := get_line()
-local y
-:= got_llne()
-pretty_prlnt_llne(y): pretty_prlnt_llne(z) }}
-Control Structures: return, fall and every.
-Instead of return x we use uparrowx, and for return we use uparrow. Instead of fall we use
-```
+<div class="math-left">
 
-For every i1 to j do C every i:» j to 1 by -1 do C and every x := !Y do C we useevery i in 1, 2..j do C every i in j, j-1 .. 1 do C end every x in Y do C ; A JO 'rtJi' d'JJJAJJJA>A2 ooA" , os'-- bsiiPo’- JiJ'' . Balza84a. Stepehn R. Balzac, James H. Davenport, Patrizia Gianni, Richard D. Jenks, Victor S. Miller, Scott C. Morrison, Michael Rothstein, Christine J. Sundaresan, Robert S. Sutor, and Barry M. Trager, Scratchpad 11: An experimental computer algebra system. Mathematical Sciences Department, IBM Thomas J. Watson Research Center, Yorktown Heights, NY 10598, May, 1984. Dewar81a. Robert B.K. Dewar, Ed Schonberg, and Jacob T. Schwartz, Higher level programming: Introduction to the use of the set-theoretic programming language SETL, Grisw83a. Ralph E. Griswold, “An overview of the Icon programming language (revised, September, 1985),” TR 83-3a, Dept, of Computer Science, University of Arizona, Grisw83b. Ralph E. Griswold and Madge T. Griswold, The Icon Programming Language, Prentice-Hall, Inc., Englewood Cliffs, New Jersey, 1983. Grisw85a. Ralph E. Griswold and William H. Mitchell, Version 5.10 of Icon, TR 85-15, Dept, of Computer Science, University of Arizona, August, 1985. Ingal78a. D.H.H. Ingalls, “The SMALLTALK-76 programming system design and implementation,” in Fifth Annual ACM Symposium on Principles of Programming Languages, pp. 9-16, 1978. Knuth73a. Knuth, The art of computer programming, 1973. Knuth82a. Knuth, Donald, “Web documentation system,” UNIX TeX Distribution Tape, U. of Washington, 1982. Kruch83a. Philippe Kruchten and Edmond Schonberg, The AdalEd system: a large-scale experiment in software prototyping using SETL, Computer Science Department, Lampo83a, Lamport, Leslie, The LaTex Document Preparation System, 1983. Lipso81a. John D. Lipson, Elements of Algebra and Algebraic Computing, Benjamin/Cummings, Loosa. Loos, Polynomial remainder sequences. Computer Algebra (ed. Buchberger). NYU 84a. NYU Ada Project, AdaSem: Static Semantics for Ada, Ada Project, Courant Institute, New York University, 251 Mercer St., New York, NY, 10012, June, 1984. Niven80a. Ivan Niven and H.S. Zuckerman, An introduction to the theory of numbers, 4th ed., John Wiley & Sons, 1980. Yap85a. Yap, Chee, Polynomial remainder sequences and theory of subresultants. Unpublished lecture notes, NYU Courant Institute, Fall, 1985. Yap 86a. Chee Yap, Root Isolation, Unpublished lecture notes, N.Y.U., 1986. Zippe86a. Richard E. Zippel, Algebraic Manipulation, Unpublished lecture notes, M.I.T., 1986.
+$$
+F (a, b, c) \Leftarrow code \ \blacksquare
+$$
+
+</div>
+
+<div class="math-left">
+
+$$
+\begin{array}{l}
+\textbf{if } z \mathrel{==} \text{"■"} \textbf{ then } pretty\_print\_line(line \ || \ y \ || \ \text{" ■"}) \\
+\textbf{else } \{ pretty\_print\_line(line) \\
+\quad\quad \textbf{if } y \mathrel{==} \text{"■"} \textbf{ then } pretty\_print\_line(line \ || \ \text{" ⊥ ■"}) \\
+\quad\quad \textbf{else } \{ z \mathrel{:=} get\_line() \\
+\quad\quad\quad\quad \textbf{local } y \\
+\quad\quad\quad\quad y \mathrel{:=} get\_line() \\
+\quad\quad\quad\quad pretty\_print\_line(y);\ pretty\_print\_line(z) \} \}
+\end{array}
+$$
+
+</div>
+
+**Control Structures: return, fail and every.**
+
+Instead of `return x` we use *uparrow* $x$, and for return we use ↑. Instead of `fail` we use ⊥.
+
+For `every i := 1 to j do C` we use `every i in 1, 2..j do C`
+
+`every i := j to 1 by -1 do C` and `every x := !Y do C` we use `every i in j, j-1 .. 1 do C` and `every x in Y do C`
+
+
+## References
+
+**Balza84a.** Stepehn R. Balzac, James H. Davenport, Patrizia Gianni, Richard D. Jenks, Victor S. Miller, Scott C. Morrison, Michael Rothstein, Christine J. Sundaresan, Robert S. Sutor, and Barry M. Trager, *Scratchpad II: An experimental computer algebra system*, Mathematical Sciences Department, IBM Thomas J. Watson Research Center, Yorktown Heights, NY 10598, May, 1984.
+
+**Dewar81a.** Robert B.K. Dewar, Ed Schonberg, and Jacob T. Schwartz, *Higher level programming: Introduction to the use of the set-theoretic programming language SETL*, Courant Institute, N.Y.U., Summer, 1981.
+
+**Grisw83a.** Ralph E. Griswold, "An overview of the Icon programming language (revised, September, 1985)," TR 83-3a, Dept. of Computer Science, University of Arizona, May, 1983.
+
+**Grisw83b.** Ralph E. Griswold and Madge T. Griswold, *The Icon Programming Language*, Prentice-Hall, Inc., Englewood Cliffs, New Jersey, 1983.
+
+**Grisw85a.** Ralph E. Griswold and William H. Mitchell, *Version 5.10 of Icon*, TR 85-15, Dept. of Computer Science, University of Arizona, August, 1985.
+
+**Ingal78a.** D.H.H. Ingalls, "The SMALLTALK-76 programming system design and implementation," in *Fifth Annual ACM Symposium on Principles of Programming Languages*, pp. 9–16, 1978.
+
+**Knuth73a.** Knuth, *The art of computer programming*, 1973.
+
+**Knuth82a.** Knuth, Donald, "Web documentation system," *UNIX TeX Distribution Tape*, U. of Washington, 1982.
+
+**Kruch83a.** Philippe Kruchten and Edmond Schonberg, *The Ada/Ed system: a large-scale experiment in software prototyping using SETL*, Computer Science Department, Courant Institute, New York University, 251 Mercer St., NY, NY, 10012, 1983.
+
+**Lampo83a.** Lamport, Leslie, *The LaTeX Document Preparation System*, 1983.
+
+**Lipso81a.** John D. Lipson, *Elements of Algebra and Algebraic Computing*, Benjamin/Cummings, 1981.
+
+**Loosa.** Loos, Polynomial remainder sequences. *Computer Algebra* (ed. Buchberger).
+
+**NYU 84a.** NYU Ada Project, *AdaSem: Static Semantics for Ada*, Ada Project, Courant Institute, New York University, 251 Mercer St., New York, NY, 10012, June, 1984.
+
+**Niven80a.** Ivan Niven and H.S. Zuckerman, *An introduction to the theory of numbers*, 4th ed., John Wiley & Sons, 1980.
+
+**Yap85a.** Yap, Chee, Polynomial remainder sequences and theory of subresultants. Unpublished lecture notes, NYU Courant Institute, Fall, 1985.
+
+**Yap86a.** Chee Yap, Root Isolation, Unpublished lecture notes, N.Y.U., 1986.
+
+**Zippe86a.** Richard E. Zippel, Algebraic Manipulation, Unpublished lecture notes, M.I.T., 1986.
