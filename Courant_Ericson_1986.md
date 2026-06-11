@@ -53,13 +53,13 @@ The purpose of the package of routines described in this paper is to allow an IC
 
 In order to support a high level of description, it must be possible to describe the implementation of particular Euclidean domains, and to describe algorithms which apply generically to all Euclidean domain instances. We do this by deciding which functions are expected of all Euclidean domain implementations (say, div, mod, + and -), and then implementing a "dispatch" version of each of these. The "dispatch" div function inspects the type of its argument (say, integer, polynomial, quotient domain element or modular domain element), and then calls the associated div function in the domain implementation (say divjnteger, dlv_poly, dlv_Q or dlv_mod). 
 
-The ability to test the run-time environment is a feature of ICON. Given a string, say "X", and an integer corresponding to a number of formal parameters, say 3, proc("X', 3) will return a procedure (a first-class value in ICON, assignable to variables) if the identifier X is globally to a procedure which is defined to take 3 arguments. Otherwise proc fails. To test for the procedure $\otimes_Z$, we evaluate procC'times" || "_Z", 2), and in general, for some string value X which corresponds to a procedure name, Y a domain name, and i a number of formal parameters, we evaluate proc(X || "_" Y, i), where || is the ICON string concatenation operator. For example, here is the code for the "generic" division operation:
+The ability to test the run-time environment is a feature of ICON. Given a string, say "X", and an integer corresponding to a number of formal parameters, say 3, proc("X", 3) will return a procedure (a first-class value in ICON, assignable to variables) if the identifier X is globally to a procedure which is defined to take 3 arguments. Otherwise proc fails. To test for the procedure $\otimes_Z$, we evaluate `proc("times" || "_Z", 2)`, and in general, for some string value X which corresponds to a procedure name, Y a domain name, and i a number of formal parameters, we evaluate `proc(X || "_" || Y, i)`, where `||` is the ICON string concatenation operator. For example, here is the code for the "generic" division operation:
 
 <div class="math-left">
 
 $$
-\def\odiv{\mathbin{⨸}}
-\odiv(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div\_"}\,\|\|\,\text{type}(a), 2)(a, b) \ \blacksquare
+
+\mathbin{⨸}(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div\_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare
 $$
 
 </div>
@@ -71,7 +71,7 @@ Every implementation of a Euclidean domain must supply certain required procedur
 | *Type* | *Required* | *Optional* | *Synthesized* |
 |:--|:-:|:-:|:-:|
 | Constant | 0<br>1 | | |
-| Operator | abs<br>$\oplus$<br>$-$<br>$\otimes$<br>$\odiv$ | mod<br>rem<br>normalize | $\ominus$<br>exp |
+| Operator | abs<br>$\oplus$<br>$-$<br>$\otimes$<br>$\mathbin{⨸}$ | mod<br>rem<br>normalize | $\ominus$<br>exp |
 | Predicates | =<br>$<0$<br>unit<br>$=0$ | $<$ | $|$ |
 | Commands | | print | pr<br>prs |
 
@@ -135,7 +135,7 @@ The system as described is comprised of about 2000 lines of commented ICON code.
 
 We have dressed up and compressed the syntax of ICON, to give the algorithms presented a more compact, functional appearance. 
 
-Icon variables (simple names for single items, and procedure names) may appear as subscripted quantities. This is purely formal, not actual, subscripting. Also, some operator symbols are defined which would not be legal identifiers in ICON (because the characters don’t exist in ASCII). Rather than spelling them out, in this report we use the symbol we would have liked to use. The following are some examples of the original code and the fancier notation. Note that underscore ("_") is not a meta-character, but an ordinary character that may appear in identifiers in ICON. 
+Icon variables (simple names for single items, and procedure names) may appear as subscripted quantities. This is purely formal, not actual, subscripting. Also, some operator symbols are defined which would not be legal identifiers in ICON (because the characters don’t exist in ASCII). Rather than spelling them out, in this report we use the symbol we would have liked to use. The following are some examples of the original code and the fancier notation. Note that underscore (`"_"`) is not a meta-character, but an ordinary character that may appear in identifiers in ICON. 
 
 | **Original ICON** | **Fancy Notation** |
 |:--|:--|
@@ -183,7 +183,7 @@ Lipson’s book, p. 203, contains a significant proviso:
 
  The purpose of this package is to partially implement this proviso. The package implements several primitive domains and *domain constructors*,which are classes of domains composed from other domains. 
  
- When a procedure like $\odiv$ or $mod$ is applied to an object which is an instance of a Euclidean domain, the type of the object is determined by inspection. This is either the primitive type, in the case of an instance of a primitive domain, or the type of the “outermost” constructor, in the case of an instance of a composite domain. In the case of required and optional procedures, the run-time environment is then tested to determine whether the domain implementation supplies an operation of this type. If the name of the domain is $D$, and the procedure name is $P$, then the run-time environment is tested for a procedure named $P_D$. For example, $\odiv$ applied to a quotient will look up the procedure $\odiv_Q$. Required procedures must be defined by the domain implementation, otherwise the operation fails. Implementation-optional procedures will synthesize their values if a more domain-specific implementation does not exist. 
+ When a procedure like $\mathbin{⨸}$ or $mod$ is applied to an object which is an instance of a Euclidean domain, the type of the object is determined by inspection. This is either the primitive type, in the case of an instance of a primitive domain, or the type of the “outermost” constructor, in the case of an instance of a composite domain. In the case of required and optional procedures, the run-time environment is then tested to determine whether the domain implementation supplies an operation of this type. If the name of the domain is $D$, and the procedure name is $P$, then the run-time environment is tested for a procedure named $P_D$. For example, $\mathbin{⨸}$ applied to a quotient will look up the procedure $\mathbin{⨸}_Q$. Required procedures must be defined by the domain implementation, otherwise the operation fails. Implementation-optional procedures will synthesize their values if a more domain-specific implementation does not exist. 
  
 **Constants.**
  
@@ -193,8 +193,8 @@ Lipson’s book, p. 203, contains a significant proviso:
 
 $$
 \begin{array}{l}
-\mathbf{0}(a) \Leftarrow \Uparrow \text{proc}(\text{"zero\_"}\,\|\,\text{type}(a), 1)(a) \ \blacksquare \\
-\mathbf{1}(a) \Leftarrow \Uparrow \text{proc}(\text{"one\_"}\,\|\,\text{type}(a), 1)(a) \ \blacksquare
+\mathbf{0}(a) \Leftarrow \Uparrow \text{proc}(\text{"zero\_"}\mathrel{\texttt{||}}\text{type}(a), 1)(a) \ \blacksquare \\
+\mathbf{1}(a) \Leftarrow \Uparrow \text{proc}(\text{"one\_"}\mathrel{\texttt{||}}\text{type}(a), 1)(a) \ \blacksquare
 \end{array}
 $$
 
@@ -202,25 +202,25 @@ $$
 
 **Operators.**
 
-The following procedures define the basic arithmetic operations for domains. As noted in Table 1, every domain must supply Abs, $\oplus$, $-$, $\otimes$ and $\odiv$. $mod$, rem and normalize are optional, and $\ominus$ and exp are synthesized.
+The following procedures define the basic arithmetic operations for domains. As noted in Table 1, every domain must supply Abs, $\oplus$, $-$, $\otimes$ and $\mathbin{⨸}$. $mod$, rem and normalize are optional, and $\ominus$ and exp are synthesized.
 
 <div class="math-left">
 
 $$
 \begin{array}{l}
-\text{Abs}(a) \Leftarrow \Uparrow \text{proc}(\text{"Abs\_"}\,\|\|\,\text{type}(a), 1)(a) \ \blacksquare \\
-\oplus(a, b) \Leftarrow \Uparrow \text{proc}(\text{"plus\_"}\,\|\|\,\text{type}(a), 2)(a, b) \ \blacksquare \\
+\text{Abs}(a) \Leftarrow \Uparrow \text{proc}(\text{"Abs\_"}\mathrel{\texttt{||}}\,\text{type}(a), 1)(a) \ \blacksquare \\
+\oplus(a, b) \Leftarrow \Uparrow \text{proc}(\text{"plus\_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
 \ominus(a, b) \Leftarrow \Uparrow \oplus(a, -(b)) \ \blacksquare \\
-- (x) \Leftarrow \Uparrow \text{proc}(\text{"minus\_"}\,\|\|\,\text{type}(x), 2)(x) \ \blacksquare \\
-\otimes(a, b) \Leftarrow \Uparrow \text{proc}(\text{"times\_"}\,\|\|\,\text{type}(a), 2)(a, b) \ \blacksquare \\
-\odiv(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div\_"}\,\|\|\,\text{type}(a), 2)(a, b) \ \blacksquare \\
+- (x) \Leftarrow \Uparrow \text{proc}(\text{"minus\_"}\mathrel{\texttt{||}}\,\text{type}(x), 2)(x) \ \blacksquare \\
+\otimes(a, b) \Leftarrow \Uparrow \text{proc}(\text{"times\_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
+\mathbin{⨸}(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div\_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
 \text{mod}(a, b) \Leftarrow \\
-\quad \textbf{if } (x := \text{proc}(\text{"mod\_"}\,\|\|\,\text{type}(a), 2)(a, b)) \textbf{ then } \Uparrow x \\
+\quad \textbf{if } (x := \text{proc}(\text{"mod\_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b)) \textbf{ then } \Uparrow x \\
 \quad \textbf{if } <(b, \mathbf{0}(b)) \textbf{ then } \Uparrow \text{mod}(a, -(b)) \\
 \quad \Uparrow \text{normalize}( \\
 \quad\quad \textbf{if } <(a, \mathbf{0}(a)) \\
 \quad\quad \textbf{then } \oplus(a, \otimes(b, \oplus(\ominus(-(a), b), \mathbf{1}(a)))) \\
-\quad\quad \textbf{else } \oplus(a, -(\otimes(b, \odiv(a, b)))) \\
+\quad\quad \textbf{else } \oplus(a, -(\otimes(b, \mathbin{⨸}(a, b)))) \\
 \quad ) \ \blacksquare
 \end{array}
 $$
@@ -276,8 +276,8 @@ $$
 $$
 \begin{array}{l}
 \text{rem}(a, b) \Leftarrow \\
-\quad \Uparrow (\textbf{if } (x := \text{proc}(\text{"rem\_"}\,\|\|\,\text{type}(a), 2)(a, b)) \textbf{ then } x \\
-\quad\quad \textbf{else } \ominus(a, \otimes(\odiv(a, b), b))) \ \blacksquare
+\quad \Uparrow (\textbf{if } (x := \text{proc}(\text{"rem\_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b)) \textbf{ then } x \\
+\quad\quad \textbf{else } \ominus(a, \otimes(\mathbin{⨸}(a, b), b))) \ \blacksquare
 \end{array}
 $$
 
@@ -337,7 +337,7 @@ $$
 $$
 \begin{array}{l}
 \text{normalize}(a) \Leftarrow \\
-\quad \textbf{if } (x := \text{proc}(\text{"normalize\_"}\,\|\,\text{type}(a), 1)(a)) \textbf{ then } \Uparrow x \\
+\quad \textbf{if } (x := \text{proc}(\text{"normalize\_"}\mathrel{\texttt{||}}\text{type}(a), 1)(a)) \textbf{ then } \Uparrow x \\
 \quad \Uparrow a \ \blacksquare
 \end{array}
 $$
@@ -374,11 +374,11 @@ All of the predicates defined below except | are required to be defined by a dom
 
 $$
 \begin{array}{l}
-= (a, b) \Leftarrow \Uparrow \text{proc}(\text{"equal\_"}\,\|\,\text{type}(a), 2)(a, b) \ \blacksquare \\
-< (a, b) \Leftarrow \Uparrow ((\text{proc}(\text{"less\_"}\,\|\,\text{type}(a), 2)(a, b)) \mathrel{|} <0(\ominus(a, b))) \ \blacksquare \\
-<0 (x) \Leftarrow \Uparrow \text{proc}(\text{"negative\_"}\,\|\,\text{type}(x), 1)(x) \ \blacksquare \\
-\mathit{unit}\,(x) \Leftarrow \Uparrow \text{proc}(\text{"unit\_"}\,\|\,\text{type}(x), 1)(x) \ \blacksquare \\
-=0 (x) \Leftarrow \Uparrow \text{proc}(\text{"is\_zero\_"}\,\|\,\text{type}(x), 1)(x) \ \blacksquare
+= (a, b) \Leftarrow \Uparrow \text{proc}(\text{"equal\_"}\mathrel{\texttt{||}}\text{type}(a), 2)(a, b) \ \blacksquare \\
+< (a, b) \Leftarrow \Uparrow ((\text{proc}(\text{"less\_"}\mathrel{\texttt{||}}\text{type}(a), 2)(a, b)) \mathrel{|} <0(\ominus(a, b))) \ \blacksquare \\
+<0 (x) \Leftarrow \Uparrow \text{proc}(\text{"negative\_"}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare \\
+\mathit{unit}\,(x) \Leftarrow \Uparrow \text{proc}(\text{"unit\_"}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare \\
+=0 (x) \Leftarrow \Uparrow \text{proc}(\text{"is\_zero\_"}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare
 \end{array}
 $$
 
@@ -415,7 +415,7 @@ $$
 \quad \textbf{then } \{ \text{writes}(\text{"["}) \\
 \quad\quad \text{every } y := \texttt{!x}[1:\texttt{*x}] \textbf{ do } \{ \text{print}(y); \text{ writes}(\text{", "}) \} \\
 \quad\quad \text{print}(x[\texttt{*x}]); \text{ writes}(\text{"]"}) \} \\
-\quad \textbf{else if } pp := \text{proc}(\text{"print\_"}\,\|\|\,\text{type}(x), 1) \textbf{ then } pp(x) \\
+\quad \textbf{else if } pp := \text{proc}(\text{"print\_"}\mathrel{\texttt{||}}\,\text{type}(x), 1) \textbf{ then } pp(x) \\
 \quad \textbf{else if } \text{type}(x) \mathrel{==} \text{"string"} \textbf{ then writes}(x) \\
 \quad \textbf{else writes}(\text{image}(x)) \ \blacksquare
 \end{array}
@@ -432,7 +432,7 @@ The primitive domains are those which are not constructed from other domains, or
 * Arbitrary-precision base 10 integers.
 * Ordinary machine integers. 
 
-The latter are best unused: ICON does not notify the user of integer multiplication overflow, and overflow can occur very easily in the applications we deal with. For example, subresultant polynomial remainder sequences with cofficients in the 10000 range involve intermediate calculations in the 10000^ range.
+The latter are best unused: ICON does not notify the user of integer multiplication overflow, and overflow can occur very easily in the applications we deal with. For example, subresultant polynomial remainder sequences with cofficients in the 10000 range involve intermediate calculations in the `10000^4` range.
 
 
 #### 2.2.1. Abitrary base, infinite precision non-negative integer
@@ -443,7 +443,7 @@ The latter are best unused: ICON does not notify the user of integer multiplicat
 |:--|:--|
 | **Data structures** | $base_{\mathbf{B}}$; $set_{base}$ |
 | **Constants** | $0_{base_{\mathbf{B}}}$, $1_{base_{\mathbf{B}}}$, $k_{base_{\mathbf{B}}}$ |
-| **Operators** | $\oplus_{base_{\mathbf{B}}}$, $\ominus_{base_{\mathbf{B}}}$, $\otimes_{base_{\mathbf{B}}}$, $\odiv_{base_{\mathbf{B}}}$, $normalize_{base_{\mathbf{B}}}$ |
+| **Operators** | $\oplus_{base_{\mathbf{B}}}$, $\ominus_{base_{\mathbf{B}}}$, $\otimes_{base_{\mathbf{B}}}$, $\mathbin{⨸}_{base_{\mathbf{B}}}$, $normalize_{base_{\mathbf{B}}}$ |
 | **Predicates** | $<_{base_{\mathbf{B}}}$, $=_{base_{\mathbf{B}}}$ |
 | **Commands** | $print_{base_{\mathbf{B}}}$ |
 
@@ -457,7 +457,7 @@ $$
 \textbf{global } Base, Width \\
 set_{base}(b, w) \Leftarrow \\
 \quad Base \mathrel{:=} b \\
-\quad Width \mathrel{:=} *(b \ || \ "") - 1 \ \blacksquare
+\quad Width \mathrel{:=} \texttt{*}(b \ \mathrel{\texttt{||}} \ "") - 1 \ \blacksquare
 \end{array}
 $$
 
@@ -472,7 +472,7 @@ $$
 0_{base_{\mathbf{B}}}(x) \Leftarrow \Uparrow base_{\mathbf{B}}(x.base, [0]) \ \blacksquare \\
 1_{base_{\mathbf{B}}}(x) \Leftarrow \Uparrow base_{\mathbf{B}}(x.base, [1]) \ \blacksquare \\
 k_{base_{\mathbf{B}}}(x) \Leftarrow \Uparrow base_{\mathbf{B}}(\text{Base}, digits\_of(abs(x), \text{Base})) \ \blacksquare \\
-digits\_of(x, B) \Leftarrow \textbf{if } x < B \textbf{ then } \Uparrow [x] \textbf{ else } \Uparrow digits\_of(x/B, B) \ ||| \ [mod_{integer}(x, B)] \ \blacksquare
+digits\_of(x, B) \Leftarrow \textbf{if } x < B \textbf{ then } \Uparrow [x] \textbf{ else } \Uparrow digits\_of(x/B, B) \mathrel{\texttt{|||}} \ [mod_{integer}(x, B)] \ \blacksquare
 \end{array}
 $$
 
@@ -499,11 +499,11 @@ $$
 $$
 \begin{array}{l}
 \oplus_{digits}(ad, bd, B) \Leftarrow \\
-\quad m \mathrel{:=} \#ad;\ n \mathrel{:=} \#bd \\
-\quad \textbf{if } m < n \textbf{ then } \{ a \mathrel{:=} (list(n - m, 0) \ ||| \ ad);\ b \mathrel{:=} bd \} \\
-\quad \textbf{else if } m > n \textbf{ then } \{ a \mathrel{:=} ad;\ b \mathrel{:=} list(m - n, 0) \ ||| \ bd \} \\
+\quad m \mathrel{:=} \texttt{*}ad;\ n \mathrel{:=} \texttt{*}bd \\
+\quad \textbf{if } m < n \textbf{ then } \{ a \mathrel{:=} (list(n - m, 0) \mathrel{\texttt{|||}} \ ad);\ b \mathrel{:=} bd \} \\
+\quad \textbf{else if } m > n \textbf{ then } \{ a \mathrel{:=} ad;\ b \mathrel{:=} list(m - n, 0) \mathrel{\texttt{|||}} \ bd \} \\
 \quad \textbf{else } \{ a \mathrel{:=} ad;\ b \mathrel{:=} bd \} \\
-\quad m \mathrel{:=} \#a; \\
+\quad m \mathrel{:=} \texttt{*}a; \\
 \quad c\_digits \mathrel{:=} list(m + 1, 0); \\
 \quad gamma \mathrel{:=} 0 \\
 \quad \textbf{every } i \mathrel{:=} m \textbf{ to } 1 \textbf{ by } -1 \textbf{ do } \\
@@ -542,12 +542,12 @@ The base B subtraction algorithm is Knuth Algorithm 4.3.1 S, transliterated from
 $$
 \begin{array}{l}
 \ominus_{base_{\mathbf{B}}}(a, bb) \Leftarrow \\
-\quad b \mathrel{:=} copy(bb);\ B \mathrel{:=} a.base;\ m \mathrel{:=} *a.digits \\
+\quad b \mathrel{:=} copy(bb);\ B \mathrel{:=} a.base;\ m \mathrel{:=} \texttt{*}a.digits \\
 \quad \textbf{repeat } \\
-\quad \{ n \mathrel{:=} *b.digits \\
+\quad \{ n \mathrel{:=} \texttt{*}b.digits \\
 \quad\quad \textbf{if } m < n \textbf{ then } \text{pr}\{\text{"ERROR: } base_{\mathbf{B}} \text{ integer subtraction underflow"}\} \\
 \quad\quad \textbf{else if } m > n \\
-\quad\quad \textbf{then } b \mathrel{:=} base_{\mathbf{B}}(B, list(m - n, 0) \ ||| \ b.digits) \\
+\quad\quad \textbf{then } b \mathrel{:=} base_{\mathbf{B}}(B, list(m - n, 0) \mathrel{\texttt{|||}} \ b.digits) \\
 \quad\quad \textbf{else } \Uparrow base_{\mathbf{B}}(b.base, \ominus_{digits}(a.digits, b.digits, b.base)) \} \ \blacksquare
 \end{array}
 $$
@@ -560,9 +560,9 @@ $$
 \begin{array}{l}
 \ominus_{digits}(a, b, B) \Leftarrow \\
 \quad u \mathrel{:=} copy(a) \\
-\quad v \mathrel{:=} list(*a - *b, 0) \ ||| \ copy(b) \\
+\quad v \mathrel{:=} list(\texttt{*}a - \texttt{*}b, 0) \mathrel{\texttt{|||}} \ copy(b) \\
 \quad k \mathrel{:=} 0 \\
-\quad \textbf{every } j \mathrel{:=} *u \textbf{ to } 1 \textbf{ by } -1 \textbf{ do } \\
+\quad \textbf{every } j \mathrel{:=} \texttt{*}u \textbf{ to } 1 \textbf{ by } -1 \textbf{ do } \\
 \quad \{ u[j] \mathrel{:=} u[j] - v[j] + k \\
 \quad\quad \textbf{if } u[j] < 0 \textbf{ then } \{ u[j] \mathrel{+{=}} B;\ k \mathrel{:=} -1 \} \textbf{ else } k \mathrel{:=} 0 \} \\
 \\
@@ -606,7 +606,7 @@ normalize_{base_{\mathbf{B}}}(r) \Leftarrow \\
 \quad \Uparrow base_{\mathbf{B}}(r.base, d) \ \blacksquare \\
 \\
 normalize_{digits}(d) \Leftarrow \\
-\quad \textbf{while } (\#d > 1) \ \& \ (d[1] = 0) \textbf{ do } pop(d) \\
+\quad \textbf{while } (\texttt{*}d > 1) \ \& \ (d[1] = 0) \textbf{ do } pop(d) \\
 \quad \Uparrow d \ \blacksquare
 \end{array}
 $$
@@ -630,8 +630,8 @@ $$
 $$
 \begin{array}{l}
 \otimes_{digits}(a, b, B) \Leftarrow \\
-\quad m \mathrel{:=} \#a \\
-\quad n \mathrel{:=} \#b \\
+\quad m \mathrel{:=} \texttt{*}a \\
+\quad n \mathrel{:=} \texttt{*}b \\
 \quad c \mathrel{:=} list(m + n, 0) \\
 \quad \textbf{every } k \mathrel{:=} 0 \textbf{ to } n - 1 \textbf{ by } 1 \textbf{ do } \\
 \quad \{ \\
@@ -687,13 +687,13 @@ This is by far the most difficult of the four basic operations. This is because 
 
 $$
 \begin{array}{l}
-\odiv_{base_{\mathbf{B}}}(a, b) \Leftarrow \Uparrow normalize_{base_{\mathbf{B}}}(base_{\mathbf{B}}(a.base, \odiv_{digits}(a.digits, b.digits, a.base))) \ \blacksquare \\
+\mathbin{⨸}_{base_{\mathbf{B}}}(a, b) \Leftarrow \Uparrow normalize_{base_{\mathbf{B}}}(base_{\mathbf{B}}(a.base, \mathbin{⨸}_{digits}(a.digits, b.digits, a.base))) \ \blacksquare \\
 \\
-\odiv_{digits}(a, b, B) \Leftarrow \\
+\mathbin{⨸}_{digits}(a, b, B) \Leftarrow \\
 \quad \textbf{If the divisor is 0, then fail.} \\
-\quad \textbf{if } (*b = 1) \ \& \ (b[1] = 0) \textbf{ then } \{ \text{pr}\{\text{"ERROR: divide by 0 in } base_{\mathbf{B}}\text{"}\};\ \bot \} \\
+\quad \textbf{if } (\texttt{*}b = 1) \ \& \ (b[1] = 0) \textbf{ then } \{ \text{pr}\{\text{"ERROR: divide by 0 in } base_{\mathbf{B}}\text{"}\};\ \bot \} \\
 \quad \textbf{If } a \textbf{ is shorter than } b, \textbf{ return } 0. \\
-\quad \textbf{if } *a < *b \textbf{ then } \Uparrow [0]
+\quad \textbf{if } \texttt{*}a < \texttt{*}b \textbf{ then } \Uparrow [0]
 \end{array}
 $$
 
@@ -706,10 +706,10 @@ The case of a one digit divisor is treated specially. Not only is this more effi
 
 $$
 \begin{array}{l}
-\textbf{if } *b = 1 \textbf{ then } \\
-\{ q \mathrel{:=} list(*a, 0) \\
+\textbf{if } \texttt{*}b = 1 \textbf{ then } \\
+\{ q \mathrel{:=} list(\texttt{*}a, 0) \\
 \quad rr \mathrel{:=} 0 \\
-\quad \textbf{every } j \mathrel{:=} 1 \textbf{ to } *a \textbf{ do } \\
+\quad \textbf{every } j \mathrel{:=} 1 \textbf{ to } \texttt{*}a \textbf{ do } \\
 \quad \{ du \mathrel{:=} rr * B + a[j] \\
 \quad\quad q[j] \mathrel{:=} du / b[1] \\
 \quad\quad rr \mathrel{:=} du \% b[1] \} \\
@@ -727,8 +727,8 @@ $$
 \begin{array}{l}
 u \mathrel{:=} copy(a) \\
 v \mathrel{:=} copy(b) \\
-n \mathrel{:=} *v \\
-m \mathrel{:=} *u - n \\
+n \mathrel{:=} \texttt{*}v \\
+m \mathrel{:=} \texttt{*}u - n \\
 q \mathrel{:=} list(m + 1, 0)
 \end{array}
 $$
@@ -744,7 +744,7 @@ $$
 \begin{array}{l}
 d \mathrel{:=} B / (v[1] + 1) \\
 u \mathrel{:=} \otimes_{digits}(u, [d], B) \\
-\textbf{if } \#u = m + n \textbf{ then } u \mathrel{:=} [0] \ || \ u \\
+\textbf{if } \texttt{*}u = m + n \textbf{ then } u \mathrel{:=} [0] \ \mathrel{\texttt{||}} \ u \\
 v \mathrel{:=} \otimes_{digits}(v, [d], B)
 \end{array}
 $$
@@ -839,7 +839,7 @@ $$
 \quad\quad [188175, 578], [121903, 5335], \\
 \quad\quad [212, 99], [115668, 75625]] \\
 \textbf{do } \{ x \mathrel{:=} k_{base_{\mathbf{B}}}(xy[1]);\ y \mathrel{:=} k_{base_{\mathbf{B}}}(xy[2]) \\
-\quad \text{pr}\{x,\ \text{" / "},\ y,\ \text{" = "},\ \odiv_{base_{\mathbf{B}}}(x, y)\} \}
+\quad \text{pr}\{x,\ \text{" / "},\ y,\ \text{" = "},\ \mathbin{⨸}_{base_{\mathbf{B}}}(x, y)\} \}
 \end{array}
 $$
 
@@ -870,7 +870,7 @@ print_{base_{\mathbf{B}}}(b) \Leftarrow \\
 \quad \textbf{local } digits \\
 \quad writes(b.digits[1],\ \text{" "}) \\
 \quad \textbf{every } writes(right(\texttt{!}rest(b.digits),\ Width,\ \text{"0"}),\ \text{" "}) \\
-\quad writes(\text{"\#"},\ b.base,\ \text{"\#"}) \ \blacksquare
+\quad writes(\texttt{"#"},\ b.base,\ \texttt{"#"}) \ \blacksquare
 \end{array}
 $$
 
@@ -885,9 +885,9 @@ $$
 <_{base_{\mathbf{B}}}(a, b) \Leftarrow \Uparrow <_{digits}(a.digits, b.digits) \ \blacksquare \\
 \\
 <_{digits}(a, b) \Leftarrow \\
-\quad \textbf{if } *a < *b \textbf{ then } \Uparrow \\
-\quad \textbf{else if } (*a > *b) \textbf{ then } \bot \\
-\quad \textbf{else if } *a = 0 \textbf{ then } \bot \\
+\quad \textbf{if } \texttt{*}a < \texttt{*}b \textbf{ then } \Uparrow \\
+\quad \textbf{else if } (\texttt{*}a > \texttt{*}b) \textbf{ then } \bot \\
+\quad \textbf{else if } \texttt{*}a = 0 \textbf{ then } \bot \\
 \quad \textbf{else if } (a[1] > b[1]) \textbf{ then } \bot \\
 \quad \textbf{else if } (a[1] < b[1]) \textbf{ then } \Uparrow \\
 \quad \textbf{else } \Uparrow <_{digits}(rest(a), rest(b)) \ \blacksquare \\
@@ -895,9 +895,9 @@ $$
 =_{base_{\mathbf{B}}}(a, b) \Leftarrow \Uparrow =_{digits}(a.digits, b.digits) \ \blacksquare \\
 \\
 =_{digits}(a, b) \Leftarrow \\
-\quad \textbf{if } *a < *b \textbf{ then } \bot \\
-\quad \textbf{else if } (*a > *b) \textbf{ then } \bot \\
-\quad \textbf{else if } *a = 0 \textbf{ then } \Uparrow \\
+\quad \textbf{if } \texttt{*}a < \texttt{*}b \textbf{ then } \bot \\
+\quad \textbf{else if } (\texttt{*}a > \texttt{*}b) \textbf{ then } \bot \\
+\quad \textbf{else if } \texttt{*}a = 0 \textbf{ then } \Uparrow \\
 \quad \textbf{else if } (a[1] \neq b[1]) \textbf{ then } \bot \\
 \quad \textbf{else } \Uparrow =_{digits}(rest(a), rest(b)) \ \blacksquare
 \end{array}
@@ -908,7 +908,7 @@ $$
 
 $$
 \begin{array}{l}
-rest(x) \Leftarrow \textbf{if } *x < 2 \textbf{ then } \Uparrow []\ \textbf{else } \Uparrow x[2:*x + 1] \ \blacksquare
+rest(x) \Leftarrow \textbf{if } \texttt{*}x < 2 \textbf{ then } \Uparrow []\ \textbf{else } \Uparrow x[2:\texttt{*}x + 1] \ \blacksquare
 \end{array}
 $$
 
@@ -922,7 +922,7 @@ $$
 |:--|:--|
 | **Data structures** | $Z$ |
 | **Constants** | $0_Z$, $1_Z$, $k_Z$ |
-| **Operators** | $\oplus_Z$, $-_Z$, $\otimes_Z$, $\odiv_Z$, $mod_Z$, $abs_Z$, $deg_Z$, $normalize_Z$ |
+| **Operators** | $\oplus_Z$, $-_Z$, $\otimes_Z$, $\mathbin{⨸}_Z$, $mod_Z$, $abs_Z$, $deg_Z$, $normalize_Z$ |
 | **Predicates** | $=_Z$, $<_Z$, $unit_Z$, $>0_Z$, $<0_Z$, $=0_Z$ |
 | **Commands** | $print_Z$ |
 
@@ -979,7 +979,7 @@ $$
 \quad\quad \textbf{else if } =0_Z(b) \textbf{ then } a \\
 \quad\quad \textbf{else if } (>0_Z(a) \ \& \ >0_Z(b)) \ | \ (<0_Z(a) \ \& \ <0_Z(b)) \\
 \quad\quad \textbf{then } Z(a.sign, \oplus_{base_{\mathbf{B}}}(a.mantissa, b.mantissa)) \\
-\quad\quad \textbf{else } \{ \#\ a > 0 \textbf{ and } b < 0,\ \textbf{so...} \\
+\quad\quad \textbf{else } \{ \text{\# a} > 0 \textbf{ and } b < 0,\ \textbf{so...} \\
 \quad\quad\quad \textbf{if } <_{base_{\mathbf{B}}}(a.mantissa, b.mantissa) \\
 \quad\quad\quad \textbf{then } Z(-1, \ominus_{base_{\mathbf{B}}}(b.mantissa, a.mantissa)) \\
 \quad\quad\quad \textbf{else } Z(1, \ominus_{base_{\mathbf{B}}}(a.mantissa, b.mantissa)) \} \\
@@ -1053,7 +1053,7 @@ $$
 \begin{array}{l}
 \textbf{every } xy \mathrel{:=} ![[10, 1], [121903, 5335], [115668, 75625]] \\
 \textbf{do } \{ x \mathrel{:=} k_Z(xy[1]);\ y \mathrel{:=} k_Z(xy[2]); \\
-\quad \text{pr}\{x,\ \text{" / "},\ y,\ \text{" = "},\ \odiv_Z(x, y)\} \}
+\quad \text{pr}\{x,\ \text{" / "},\ y,\ \text{" = "},\ \mathbin{⨸}_Z(x, y)\} \}
 \end{array}
 $$
 
@@ -1072,8 +1072,8 @@ $$
 mod_Z(a, b) \Leftarrow \\
 \Uparrow (\textbf{if } <_Z(b, 0_Z(b)) \textbf{ then } mod_Z(a, -_Z(b)) \\
 \quad \textbf{else if } <_Z(a, 0_Z(a)) \\
-\quad \textbf{then } \oplus_Z(a, -_Z(\otimes_Z(b, \oplus_Z(-_Z(1_Z(a)), \odiv_Z(a, b)))) \\
-\quad \textbf{else } \oplus_Z(a, -_Z(\otimes_Z(b, \odiv_Z(a, b)))) )
+\quad \textbf{then } \oplus_Z(a, -_Z(\otimes_Z(b, \oplus_Z(-_Z(1_Z(a)), \mathbin{⨸}_Z(a, b)))) \\
+\quad \textbf{else } \oplus_Z(a, -_Z(\otimes_Z(b, \mathbin{⨸}_Z(a, b)))) )
 \end{array}
 $$
 
@@ -1273,7 +1273,7 @@ EUCLID provides three classes of domain constructions: quotient domains $Q_D$, m
 |:--|:--|
 | **Data structures** | $\mathcal{Q}$ |
 | **Constants** | $0_{\mathcal{Q}}$, $1_{\mathcal{Q}}$, $k_{i\mathcal{Q}_x}$ |
-| **Operators** | $\oplus_{\mathcal{Q}}$, $-_{\mathcal{Q}}$, $\otimes_{\mathcal{Q}}$, $\odiv_{\mathcal{Q}}$, $mod_{\mathcal{Q}}$, $normalize_{\mathcal{Q}}$, $deg_{\mathcal{Q}}$ |
+| **Operators** | $\oplus_{\mathcal{Q}}$, $-_{\mathcal{Q}}$, $\otimes_{\mathcal{Q}}$, $\mathbin{⨸}_{\mathcal{Q}}$, $mod_{\mathcal{Q}}$, $normalize_{\mathcal{Q}}$, $deg_{\mathcal{Q}}$ |
 | **Predicates** | $=_{\mathcal{Q}}$, $unit_{\mathcal{Q}}$ |
 | **Commands** | $print_{\mathcal{Q}}$ |
 
@@ -1328,7 +1328,7 @@ $$
 \\
 \otimes_{\mathcal{Q}}(a, b) \Leftarrow \Uparrow normalize_{\mathcal{Q}}(Q(\otimes(a.dividend, b.dividend), \otimes(a.divisor, b.divisor))) \ \blacksquare \\
 \\
-\odiv_{\mathcal{Q}}(a, b) \Leftarrow \\
+\mathbin{⨸}_{\mathcal{Q}}(a, b) \Leftarrow \\
 \quad \textbf{local } zz \\
 \quad zz \mathrel{:=} 0(b.dividend) \\
 \quad \textbf{if } =(b.dividend, zz) \textbf{ then } \text{pr}\{\text{"ERROR: divide by 0 in } \mathcal{Q}\text{"}\} \\
@@ -1351,7 +1351,7 @@ $$
 
 </div>
 
-$normalize_{\mathcal{Q}}(x)$ reduces the size of the dividend and divisor, and ensures that any negative sign is in the dividend. Let $g = GCD(x, y)$. Then $normalize_{\mathcal{Q}}(\frac{x}{y}) = \frac{x \odiv g}{y \odiv g}$.
+$normalize_{\mathcal{Q}}(x)$ reduces the size of the dividend and divisor, and ensures that any negative sign is in the dividend. Let $g = GCD(x, y)$. Then $normalize_{\mathcal{Q}}(\frac{x}{y}) = \frac{x \mathbin{⨸} g}{y \mathbin{⨸} g}$.
 
 <div class="math-left">
 
@@ -1360,8 +1360,8 @@ $$
 normalize_{\mathcal{Q}}(x) \Leftarrow \\
 \quad \textbf{local } g,\ top,\ bottom \\
 \quad g \mathrel{:=} GCD(x.dividend, x.divisor) \\
-\quad top \mathrel{:=} \odiv(x.dividend, g) \\
-\quad bottom \mathrel{:=} \odiv(x.divisor, g) \\
+\quad top \mathrel{:=} \mathbin{⨸}(x.dividend, g) \\
+\quad bottom \mathrel{:=} \mathbin{⨸}(x.divisor, g) \\
 \quad \Uparrow (\textbf{if } <0(bottom) \textbf{ then } Q(-(top), -(bottom)) \\
 \quad\quad \textbf{else } Q(top, bottom)) \ \blacksquare
 \end{array}
@@ -1424,7 +1424,7 @@ $$
 |:--|:--|
 | **Data structures** | $modulo$ |
 | **Constants** | $0_{modulo}$, $1_{modulo}$ |
-| **Operators** | $\oplus_{modulo}$, $-_{modulo}$, $\otimes_{modulo}$, $\odiv_{modulo}$, $normalize_{modulo}$, $deg_{modulo}$ |
+| **Operators** | $\oplus_{modulo}$, $-_{modulo}$, $\otimes_{modulo}$, $\mathbin{⨸}_{modulo}$, $normalize_{modulo}$, $deg_{modulo}$ |
 | **Predicates** | $=_{modulo}$, $unit_{modulo}$, $<0_{modulo}$ |
 | **Commands** | $print_{modulo}$ |
 
@@ -1464,7 +1464,7 @@ $$
 \oplus_{modulo}(a, b) \Leftarrow \Uparrow normalize_{modulo}(modulo(\oplus(a.item, b.item), a.modulus)) \ \blacksquare \\
 -_{modulo}(x) \Leftarrow \Uparrow normalize_{modulo}(modulo(-(x.item), x.modulus)) \ \blacksquare \\
 \otimes_{modulo}(a, b) \Leftarrow \Uparrow normalize_{modulo}(modulo(\otimes(a.item, b.item), a.modulus)) \ \blacksquare \\
-\odiv_{modulo}(a, b) \Leftarrow \Uparrow normalize_{modulo}(modulo(\otimes(a.item, INVERSE(b.item, b.modulus)), a.modulus)) \ \blacksquare \\
+\mathbin{⨸}_{modulo}(a, b) \Leftarrow \Uparrow normalize_{modulo}(modulo(\otimes(a.item, INVERSE(b.item, b.modulus)), a.modulus)) \ \blacksquare \\
 \\
 normalize_{modulo}(x) \Leftarrow \Uparrow modulo(mod(x.item, x.modulus), x.modulus) \ \blacksquare \\
 deg_{modulo}(x) \Leftarrow \Uparrow mod(x.item, x.modulus) \ \blacksquare
@@ -1519,7 +1519,7 @@ $$
 |:--|:--|
 | **Data structures** | $poly$, $term$; $poly\_of$, $0th\_coef$, $lead\_coef$ |
 | **Constants** | $0_{poly}$, $1_{poly}$, $k_{Z_Q}$, $k_{Z_{Qx}}$, $k_{Z_x}$ |
-| **Operators** | $\oplus_{poly}$, $-_{poly}$, $\otimes_{poly}$, $\odiv_{poly}$, $mod_{poly}$, $eval_{poly}$, $deg_{poly}$, $-_{deg}$, $\oplus_{deg}$, $normalize_{poly}$ |
+| **Operators** | $\oplus_{poly}$, $-_{poly}$, $\otimes_{poly}$, $\mathbin{⨸}_{poly}$, $mod_{poly}$, $eval_{poly}$, $deg_{poly}$, $-_{deg}$, $\oplus_{deg}$, $normalize_{poly}$ |
 | **Predicates** | $<_{degree}$, $=_{poly}$, $unit_{poly}$ |
 | **Commands** | $print_{poly}$ |
 
@@ -1675,8 +1675,8 @@ $$
 \quad \textbf{local } Terms,\ T,\ z \\
 \quad Terms \mathrel{:=} \oplus_{terms}(a.terms, b.terms) \\
 \quad T \mathrel{:=} [];\ z \mathrel{:=} 0(a.terms[1].coef) \\
-\quad \textbf{every } t \mathrel{:=} \texttt{!}Terms \textbf{ do if not } =(t.coef, z) \textbf{ then } T \ |||{:=}\ [t] \\
-\quad \Uparrow (\textbf{if } \#T > 0 \textbf{ then } poly(T) \textbf{ else } 0(a)) \ \blacksquare
+\quad \textbf{every } t \mathrel{:=} \texttt{!}Terms \textbf{ do if not } =(t.coef, z) \textbf{ then } T \mathrel{\texttt{|||}{:=}} \ [t] \\
+\quad \Uparrow (\textbf{if } \texttt{*}T > 0 \textbf{ then } poly(T) \textbf{ else } 0(a)) \ \blacksquare
 \end{array}
 $$
 
@@ -1689,8 +1689,8 @@ $$
 \oplus_{terms}(a, b) \Leftarrow \\
 \quad \textbf{local } c\_coef,\ at,\ ap,\ ac,\ bt,\ bp,\ bc \\
 \quad \Uparrow ( \\
-\quad\quad \textbf{if } *a = 0 \textbf{ then } b \\
-\quad\quad \textbf{else if } *b = 0 \textbf{ then } a \\
+\quad\quad \textbf{if } \texttt{*}a = 0 \textbf{ then } b \\
+\quad\quad \textbf{else if } \texttt{*}b = 0 \textbf{ then } a \\
 \quad\quad \textbf{else } \{ \\
 \quad\quad\quad at \mathrel{:=} a[1];\ ap \mathrel{:=} at.power;\ ac \mathrel{:=} at.coef \\
 \quad\quad\quad bt \mathrel{:=} b[1];\ bp \mathrel{:=} bt.power;\ bc \mathrel{:=} bt.coef \\
@@ -1698,13 +1698,13 @@ $$
 \quad\quad\quad \textbf{then } \{ \\
 \quad\quad\quad\quad \textbf{if } =(ac, 0(ac)) \\
 \quad\quad\quad\quad \textbf{then } \oplus_{terms}(rest(a), b) \\
-\quad\quad\quad\quad \textbf{else } [at] \ || \ \oplus_{terms}(rest(a), b) \} \\
+\quad\quad\quad\quad \textbf{else } [at] \ \mathrel{\texttt{||}} \ \oplus_{terms}(rest(a), b) \} \\
 \quad\quad\quad \textbf{else if } =(ap, bp) \\
 \quad\quad\quad \textbf{then } \{ \\
 \quad\quad\quad\quad c\_coef \mathrel{:=} \oplus(ac, bc) \\
 \quad\quad\quad\quad \textbf{if } =(c\_coef, 0(c\_coef)) \\
 \quad\quad\quad\quad \textbf{then } \oplus_{terms}(rest(a), rest(b)) \\
-\quad\quad\quad\quad \textbf{else } [term(c\_coef, ap)] \ || \ \oplus_{terms}(rest(a), rest(b)) \} \\
+\quad\quad\quad\quad \textbf{else } [term(c\_coef, ap)] \ \mathrel{\texttt{||}} \ \oplus_{terms}(rest(a), rest(b)) \} \\
 \quad\quad\quad \textbf{else } \oplus_{terms}(b, a) \} \\
 \quad ) \ \blacksquare
 \end{array}
@@ -1741,7 +1741,7 @@ $$
 -_{poly}(x) \Leftarrow \\
 \quad \textbf{local } c \\
 \quad c \mathrel{:=} [] \\
-\quad \textbf{every } t \mathrel{:=} \texttt{!}x.terms \textbf{ do } c \ |||{:=}\ [-_{term}(t)] \\
+\quad \textbf{every } t \mathrel{:=} \texttt{!}x.terms \textbf{ do } c \mathrel{\texttt{|||}{:=}} \ [-_{term}(t)] \\
 \quad \Uparrow poly(c) \ \blacksquare \\
 \\
 -_{term}(t) \Leftarrow \Uparrow term(-(t.coef), t.power) \ \blacksquare
@@ -1777,7 +1777,7 @@ $$
 \otimes_{poly}(a, b) \Leftarrow \Uparrow \otimes_{poly\_terms}(a, b.terms) \ \blacksquare \\
 \\
 \otimes_{poly\_terms}(a, b\_terms) \Leftarrow \\
-\quad \Uparrow (\textbf{if } \#b\_terms = 0 \textbf{ then } 0(a) \\
+\quad \Uparrow (\textbf{if } \texttt{*}b\_terms = 0 \textbf{ then } 0(a) \\
 \quad\quad \textbf{else } \oplus_{poly}(\otimes_{poly\_term}(a, b\_terms[1]), \\
 \quad\quad\quad \otimes_{poly\_terms}(a, rest(b\_terms)))) \ \blacksquare
 \end{array}
@@ -1790,7 +1790,7 @@ $$
 $$
 \begin{array}{l}
 \otimes_{poly\_term}(a, b\_term) \Leftarrow \\
-\quad \Uparrow (\textbf{if } *a.terms < 2 \\
+\quad \Uparrow (\textbf{if } \texttt{*}a.terms < 2 \\
 \quad\quad \textbf{then } poly([\otimes_{term\_term}(a.terms[1], b\_term)]) \\
 \quad\quad \textbf{else } \oplus_{poly}(poly([\otimes_{term\_term}(a.terms[1], b\_term)]), \\
 \quad\quad\quad \otimes_{poly\_term}(poly(rest(a.terms)), b\_term))) \ \blacksquare \\
@@ -1828,7 +1828,7 @@ $QZ\text{:   }((-2z)q + 1zq \cdot X^3) * ((-3z)q + 2zq \cdot X^3) = 6zq + (-7z)q
 
 $$
 \begin{array}{l}
-\odiv_{poly}(a, b) \Leftarrow \\
+\mathbin{⨸}_{poly}(a, b) \Leftarrow \\
 \quad \textbf{local } n,\ m,\ r,\ q,\ quotient \\
 \quad n \mathrel{:=} deg_{poly}(b) \\
 \quad r \mathrel{:=} copy(a) \\
@@ -1837,7 +1837,7 @@ $$
 \quad\quad m \mathrel{:=} deg_{poly}(r) \\
 \quad\quad \textbf{if } <_{degree}(m, n) \\
 \quad\quad \textbf{then } \Uparrow quotient \\
-\quad\quad \textbf{else } \{ q \mathrel{:=} poly([term(\odiv(lead\_coef(r), lead\_coef(b)), m - n)]) \\
+\quad\quad \textbf{else } \{ q \mathrel{:=} poly([term(\mathbin{⨸}(lead\_coef(r), lead\_coef(b)), m - n)]) \\
 \quad\quad\quad \textbf{if } m = 0 \\
 \quad\quad\quad \textbf{then } \Uparrow \oplus_{poly}(quotient, q) \\
 \quad\quad\quad \textbf{else } \{ subtrahend \mathrel{:=} -_{poly}(\otimes_{poly}(q, b)) \\
@@ -1855,16 +1855,16 @@ $$
 $$
 \begin{array}{l}
 ax \mathrel{:=} poly\_of(1);\ bx \mathrel{:=} poly\_of(3) \\
-\text{pr}\{\text{"integers: "},\ ax,\ \text{"/"},\ bx,\ \text{" = "},\ \odiv_{poly}(ax, bx)\} \\
+\text{pr}\{\text{"integers: "},\ ax,\ \text{"/"},\ bx,\ \text{" = "},\ \mathbin{⨸}_{poly}(ax, bx)\} \\
 ax \mathrel{:=} poly([term(Q(5,9), 0)]) \\
 bx \mathrel{:=} poly([term(Q(-2,1), 0), term(Q(3,2), 1)]) \\
 fx \mathrel{:=} poly([term(Q(k_Z(5), k_Z(9)), 0)]) \\
 gx \mathrel{:=} poly([term(Q(k_Z(-2), k_Z(1)), 0), term(Q(k_Z(3), k_Z(2)), 1)]) \\
-\text{pr}\{\text{"Q: ("},\ ax,\ \text{") / ("},\ bx,\ \text{") = "},\ \odiv_{poly}(ax, bx)\} \\
-\text{pr}\{\text{"QZ: ("},\ gx,\ \text{") / ("},\ fx,\ \text{") = "},\ \odiv_{poly}(gx, fx)\} \\
+\text{pr}\{\text{"Q: ("},\ ax,\ \text{") / ("},\ bx,\ \text{") = "},\ \mathbin{⨸}_{poly}(ax, bx)\} \\
+\text{pr}\{\text{"QZ: ("},\ gx,\ \text{") / ("},\ fx,\ \text{") = "},\ \mathbin{⨸}_{poly}(gx, fx)\} \\
 ax \mathrel{:=} poly([term(Q(k_Z(166), k_Z(243)), 0), term(Q(k_Z(-275), k_Z(243)), 1)]) \\
 bx \mathrel{:=} poly([term(Q(k_Z(115668), k_Z(75625)), 0)]) \\
-\text{pr}\{\text{"QZ[x]: ("},\ ax,\ \text{"/ "},\ bx,\ \text{") = "},\ \odiv(ax, bx)\}
+\text{pr}\{\text{"QZ[x]: ("},\ ax,\ \text{"/ "},\ bx,\ \text{") = "},\ \mathbin{⨸}(ax, bx)\}
 \end{array}
 $$
 
@@ -1881,7 +1881,7 @@ $QZ[x]\text{: }((166z/243z)q + ((-275z)/243z)q \cdot X) / ((115668z/75625z)q) = 
 
 $$
 \begin{array}{l}
-mod_{poly}(a, b) \Leftarrow \Uparrow \ominus(a, \otimes(b, \odiv(a, b))) \ \blacksquare
+mod_{poly}(a, b) \Leftarrow \Uparrow \ominus(a, \otimes(b, \mathbin{⨸}(a, b))) \ \blacksquare
 \end{array}
 $$
 
@@ -1956,7 +1956,7 @@ $$
 normalize_{poly}(x) \Leftarrow \\
 \quad \textbf{local } ts \\
 \quad ts \mathrel{:=} [] \\
-\quad \textbf{every } t \mathrel{:=} \texttt{!}x.terms \textbf{ do } ts \ |||{:=}\ [term(normalize(t.coef), t.power)] \\
+\quad \textbf{every } t \mathrel{:=} \texttt{!}x.terms \textbf{ do } ts \mathrel{\texttt{|||}{:=}} \ [term(normalize(t.coef), t.power)] \\
 \quad \Uparrow poly(ts) \ \blacksquare
 \end{array}
 $$
@@ -1977,13 +1977,13 @@ $$
 =_{poly}(a, b) \Leftarrow \Uparrow =_{terms}(a.terms, b.terms) \ \blacksquare \\
 \\
 =_{terms}(a, b) \Leftarrow \\
-\quad \textbf{if } \#a \neq \#b \textbf{ then } \bot \\
-\quad \textbf{if } \#a = 0 \textbf{ then } \Uparrow \\
+\quad \textbf{if } \texttt{*}a \neq \texttt{*}b \textbf{ then } \bot \\
+\quad \textbf{if } \texttt{*}a = 0 \textbf{ then } \Uparrow \\
 \quad \textbf{if } =_{term}(a[1], b[1]) \textbf{ then } \Uparrow =_{terms}(rest(a), rest(b)) \ \blacksquare \\
 \\
 =_{term}(a, b) \Leftarrow \Uparrow (=(a.coef, b.coef) \ \&\ =(a.power, b.power)) \ \blacksquare \\
 \\
-unit_{poly}(x) \Leftarrow \Uparrow ((\#x.terms = 1) \ \&\ (x.terms[1].power = 0) \ \&\ unit(x.terms[1].coef)) \ \blacksquare
+unit_{poly}(x) \Leftarrow \Uparrow ((\texttt{*}x.terms = 1) \ \&\ (x.terms[1].power = 0) \ \&\ unit(x.terms[1].coef)) \ \blacksquare
 \end{array}
 $$
 
@@ -2001,8 +2001,8 @@ print_{poly}(x) \Leftarrow \\
 \\
 print_{term}(x) \Leftarrow \\
 \quad print(x.coef) \\
-\quad \textbf{if } x.power = 1 \textbf{ then } writes(\text{"*X"}) \\
-\quad \textbf{else if } x.power > 1 \textbf{ then } prs\{\text{"*X\^{}"},\ x.power\} \ \blacksquare
+\quad \textbf{if } x.power = 1 \textbf{ then } writes(\text{"\texttt{*}X"}) \\
+\quad \textbf{else if } x.power > 1 \textbf{ then } prs\{\text{"\texttt{*}X\^{}"},\ x.power\} \ \blacksquare
 \end{array}
 $$
 
@@ -2017,7 +2017,7 @@ $$
 |:--|:--|
 | **Data structures** | $tpower$ |
 | **Constants** | $0_{tpower}$, $1_{tpower}$ |
-| **Operators** | $\oplus_{tpower}$, $-_{tpower}$, $\otimes_{tpower}$, $\odiv_{tpower}$, $normalize_{tpower}$ |
+| **Operators** | $\oplus_{tpower}$, $-_{tpower}$, $\otimes_{tpower}$, $\mathbin{⨸}_{tpower}$, $normalize_{tpower}$ |
 | **Predicates** | $=_{tpower}$, $unit_{tpower}$ |
 | **Commands** | $print_{tpower}$ |
 
@@ -2073,7 +2073,7 @@ truncate(p, n) \Leftarrow \Uparrow poly(p.terms[1:n+1]) \ \blacksquare \\
 \\
 \otimes_{tpower}(a, b) \Leftarrow \Uparrow tpower(truncate(\otimes_{poly}(a.Poly, b.Poly), a.N), a.N) \ \blacksquare \\
 \\
-\odiv_{tpower}(a, b) \Leftarrow \Uparrow tpower(truncate(\odiv_{poly}(a.Poly, b.Poly), a.N), a.N) \ \blacksquare \\
+\mathbin{⨸}_{tpower}(a, b) \Leftarrow \Uparrow tpower(truncate(\mathbin{⨸}_{poly}(a.Poly, b.Poly), a.N), a.N) \ \blacksquare \\
 \\
 normalize_{tpower}(x) \Leftarrow \Uparrow tpower(normalize_{poly}(x.Poly), x.N) \ \blacksquare
 \end{array}
@@ -2178,7 +2178,7 @@ EUCLID(A, B) \Leftarrow \\
 \quad s \mathrel{:=} [1(A), 0(A)] \\
 \quad t \mathrel{:=} [0(A), 1(A)] \\
 \quad \textbf{while } not(=(a[2], 0(A))) \textbf{ do } \{ \\
-\quad\quad q \mathrel{:=} \odiv(a[1], a[2]) \\
+\quad\quad q \mathrel{:=} \mathbin{⨸}(a[1], a[2]) \\
 \quad\quad a \mathrel{:=} [a[2], \ominus(a[1], \otimes(a[2], q))] \\
 \quad\quad s \mathrel{:=} [s[2], \ominus(s[1], \otimes(s[2], q))] \\
 \quad\quad t \mathrel{:=} [t[2], \ominus(t[1], \otimes(t[2], q))] \} \\
@@ -2216,7 +2216,7 @@ $$
 INVERSE(a, m) \Leftarrow \\
 \quad \textbf{local } gst \\
 \quad gst \mathrel{:=} EUCLID(m, a) \\
-\quad \textbf{if } unit(gst[1]) \textbf{ then } \Uparrow mod(\odiv(gst[3], gst[1]), m) \\
+\quad \textbf{if } unit(gst[1]) \textbf{ then } \Uparrow mod(\mathbin{⨸}(gst[3], gst[1]), m) \\
 \quad \textbf{else } pr\{\text{"ERROR: "},\ a,\ \text{"\^{}-1 "},\ \text{" mod "},\ m,\ \text{" does not exist"}\} \ \blacksquare
 \end{array}
 $$
@@ -2261,7 +2261,7 @@ CRA1(aa, bb, m) \Leftarrow \\
 \quad\quad \textbf{if } =(a, 1(a)) \textbf{ then } \Uparrow b \\
 \quad\quad \textbf{else if } =(b, 0(b)) \textbf{ then } \Uparrow 0(b) \\
 \quad\quad \textbf{else if } =(a, b) \textbf{ then } \Uparrow 1(b) \\
-\quad\quad \textbf{else } \Uparrow \odiv(\oplus(\otimes(m, CRA1(m, -(b), a)), b), a) \} \ \blacksquare
+\quad\quad \textbf{else } \Uparrow \mathbin{⨸}(\oplus(\otimes(m, CRA1(m, -(b), a)), b), a) \} \ \blacksquare
 \end{array}
 $$
 
@@ -2414,9 +2414,9 @@ DIOPHANTINE(a, b, c) \Leftarrow \\
 \quad \textbf{if } not\ |(g, c) \textbf{ then } pr\{\text{"ERROR: Diophantine solution nonexistent"}\} \\
 \quad \textbf{else } \{ \textbf{if } <(abs(b), abs(a)) \\
 \quad\quad \textbf{then } \{ x_1 \mathrel{:=} CRA1(a, c, abs(b)) \\
-\quad\quad\quad y_1 \mathrel{:=} \odiv(\ominus(c, \otimes(a, x_1)), b) \} \\
+\quad\quad\quad y_1 \mathrel{:=} \mathbin{⨸}(\ominus(c, \otimes(a, x_1)), b) \} \\
 \quad\quad \textbf{else } \{ y_1 \mathrel{:=} CRA1(b, c, abs(a)) \\
-\quad\quad\quad x_1 \mathrel{:=} \odiv(\ominus(c, \otimes(b, y_1)), a) \} \\
+\quad\quad\quad x_1 \mathrel{:=} \mathbin{⨸}(\ominus(c, \otimes(b, y_1)), a) \} \\
 \quad\quad \Uparrow [g, x_1, y_1] \} \ \blacksquare
 \end{array}
 $$
@@ -2446,7 +2446,7 @@ The simplest polynomial remainder sequence is simply that of Euclid's algorithm.
 
 $$
 \begin{array}{l}
-MOD\_RS(a, b) \Leftarrow \Uparrow [a] \ |||{:=}\ (\textbf{if } =(b, 0(b)) \textbf{ then } [b] \textbf{ else } MOD\_RS(b, mod(a, b))) \ \blacksquare
+MOD\_RS(a, b) \Leftarrow \Uparrow [a] \mathrel{\texttt{|||}{:=}} \ (\textbf{if } =(b, 0(b)) \textbf{ then } [b] \textbf{ else } MOD\_RS(b, mod(a, b))) \ \blacksquare
 \end{array}
 $$
 
@@ -2518,7 +2518,7 @@ I.e., a trace of the steps of Euclid's algorithm modified to use PREM.
 
 $$
 \begin{array}{l}
-E\_PRS(a, b) \Leftarrow \Uparrow [a] \ |||{:=}\ (\textbf{if } =(b, 0(b)) \textbf{ then } [b] \textbf{ else } E\_PRS(b, PREM(a, b))) \ \blacksquare
+E\_PRS(a, b) \Leftarrow \Uparrow [a] \mathrel{\texttt{|||}{:=}} \ (\textbf{if } =(b, 0(b)) \textbf{ then } [b] \textbf{ else } E\_PRS(b, PREM(a, b))) \ \blacksquare
 \end{array}
 $$
 
@@ -2574,7 +2574,7 @@ S\_PRS(p_0, p_1) \Leftarrow \\
 \quad\quad \beta_i \mathrel{:=} \beta_i(\delta_{i-2}, c_{i-2}, R_{i-2}) \\
 \quad\quad p_i \mathrel{:=} P_i(p_{i-2}, p_{i-1}, \beta_i) \\
 \quad\quad \textbf{if } =(p_i, z) \textbf{ then } \Uparrow P \\
-\quad\quad \textbf{else } P \ |||{:=}\ [p_i] \\
+\quad\quad \textbf{else } P \mathrel{\texttt{|||}{:=}} \ [p_i] \\
 \quad\quad p_{i-2} \mathrel{:=} p_{i-1} \\
 \quad\quad p_{i-1} \mathrel{:=} p_i \\
 \quad\quad c_{i-2} \mathrel{:=} c_i(p_{i-2}) \\
@@ -2591,7 +2591,7 @@ R_i(c_i, \delta_{i-1}, R_{i-1}) \Leftarrow \\
 \beta_i(\delta_{i-2}, c_{i-2}, R_{i-2}) \Leftarrow \\
 \quad \Uparrow poly\_of(\otimes(\otimes(exp(-(1(c_{i-2})), 1 + \delta_{i-2}), exp(R_{i-2}, \delta_{i-2})))) \ \blacksquare \\
 \\
-P_i(p_{i-2}, p_{i-1}, \beta_i) \Leftarrow \Uparrow \odiv(PREM(p_{i-2}, p_{i-1}), \beta_i) \ \blacksquare
+P_i(p_{i-2}, p_{i-1}, \beta_i) \Leftarrow \Uparrow \mathbin{⨸}(PREM(p_{i-2}, p_{i-1}), \beta_i) \ \blacksquare
 \end{array}
 $$
 
@@ -2624,8 +2624,8 @@ NIA(ab\_list) \Leftarrow \\
 \quad \textbf{every } k \mathrel{:=} 1 \textbf{ to } \texttt{*}ab\_s \textbf{ do } \{ \\
 \quad\quad Mx \mathrel{:=} \otimes(Mx, \ominus(poly([term(1(b), 1)]), poly\_of(a))) \\
 \quad\quad ab \mathrel{:=} pop(ab\_s);\ a \mathrel{:=} ab[1];\ b \mathrel{:=} ab[2] \\
-\quad\quad c \mathrel{:=} \odiv(1(a), eval_{poly}(Mx, a)) \\
-\quad\quad \sigma \mathrel{:=} \odiv(\ominus(poly\_of(b), poly\_of(eval_{poly}(Ux, a))), poly\_of(c)) \\
+\quad\quad c \mathrel{:=} \mathbin{⨸}(1(a), eval_{poly}(Mx, a)) \\
+\quad\quad \sigma \mathrel{:=} \mathbin{⨸}(\ominus(poly\_of(b), poly\_of(eval_{poly}(Ux, a))), poly\_of(c)) \\
 \quad\quad Ux \mathrel{:=} \oplus(Ux, \otimes(\sigma, Mx)) \} \\
 \quad \Uparrow Ux \ \blacksquare
 \end{array}
@@ -2646,13 +2646,13 @@ $$
 FFT(N, ax, \omega) \Leftarrow \\
 \quad \textbf{local } A,\ n,\ bx,\ cx,\ \omega^2,\ B,\ C,\ \omega^k \\
 \quad A \mathrel{:=} list(N, []) \\
-\quad \textbf{if } N = 1 \ \# \text{basis} \\
+\quad \textbf{if } N = 1 \ \texttt{*} \text{basis} \\
 \quad \textbf{then } A[1] \mathrel{:=} 0th_{coef}(ax) \\
-\quad \textbf{else } \{ n \mathrel{:=} N/2 \ \# \text{binary split} \\
+\quad \textbf{else } \{ n \mathrel{:=} N/2 \ \texttt{*} \text{binary split} \\
 \quad\quad bx \mathrel{:=} poly\_of\_even\_powered\_terms(ax) \\
 \quad\quad cx \mathrel{:=} poly\_of\_odd\_powered\_terms(ax) \\
 \quad\quad \omega^2 \mathrel{:=} exp(\omega, 2) \\
-\quad\quad B \mathrel{:=} FFT(n, bx, \omega^2) \ \# \text{recursive calls} \\
+\quad\quad B \mathrel{:=} FFT(n, bx, \omega^2) \ \texttt{*} \text{recursive calls} \\
 \quad\quad C \mathrel{:=} FFT(n, cx, \omega^2) \\
 \quad\quad \textbf{every } k \mathrel{:=} 1 \textbf{ to } n \textbf{ do } \{ \\
 \quad\quad\quad \omega^k \mathrel{:=} exp(\omega, k-1) \\
@@ -2674,7 +2674,7 @@ poly\_of\_even\_powered\_terms(ax) \Leftarrow \\
 \quad \textbf{local } r \\
 \quad r \mathrel{:=} [] \\
 \quad \textbf{every } t \mathrel{:=} \texttt{!}ax.terms \\
-\quad \textbf{do if } mod_{integer}(t.power, 2) = 0 \textbf{ then } r \ |||{:=}\ [term(t.coef, t.power/2)] \\
+\quad \textbf{do if } mod_{integer}(t.power, 2) = 0 \textbf{ then } r \mathrel{\texttt{|||}{:=}} \ [term(t.coef, t.power/2)] \\
 \quad \Uparrow poly(r) \ \blacksquare
 \end{array}
 $$
@@ -2691,7 +2691,7 @@ poly\_of\_odd\_powered\_terms(ax) \Leftarrow \\
 \quad \textbf{local } r \\
 \quad r \mathrel{:=} [] \\
 \quad \textbf{every } t \mathrel{:=} \texttt{!}ax.terms \\
-\quad \textbf{do if } mod_{integer}(t.power, 2) = 1 \textbf{ then } r \ |||{:=}\ [term(t.coef, (t.power - 1)/2)] \\
+\quad \textbf{do if } mod_{integer}(t.power, 2) = 1 \textbf{ then } r \mathrel{\texttt{|||}{:=}} \ [term(t.coef, (t.power - 1)/2)] \\
 \quad \textbf{if } \texttt{*}r > 0 \textbf{ then } \Uparrow poly(r) \textbf{ else } \Uparrow 0(ax.terms[1]) \ \blacksquare
 \end{array}
 $$
@@ -2709,8 +2709,8 @@ $$
 FFI(N, B, \omega) \Leftarrow \\
 \quad \textbf{local } bx,\ C,\ ax \\
 \quad bx \mathrel{:=} polynomialize(B) \\
-\quad C \mathrel{:=} FFT(N, bx, \odiv(1(\omega), \omega)) \\
-\quad ax \mathrel{:=} polynomialize(\otimes_{vector\ scalar}(C, \odiv(1(N), N))) \\
+\quad C \mathrel{:=} FFT(N, bx, \mathbin{⨸}(1(\omega), \omega)) \\
+\quad ax \mathrel{:=} polynomialize(\otimes_{vector\ scalar}(C, \mathbin{⨸}(1(N), N))) \\
 \quad \Uparrow ax \ \blacksquare
 \end{array}
 $$
@@ -2725,7 +2725,7 @@ polynomialize(B) \Leftarrow \\
 \quad \textbf{local } r,\ i \\
 \quad r \mathrel{:=} [];\ i \mathrel{:=} 0 \\
 \quad \textbf{every } b \mathrel{:=} \texttt{!}B \textbf{ do } \{ \\
-\quad\quad \textbf{if } not(=(b, 0(b))) \textbf{ then } r \ |||{:=}\ [term(b, i)] \\
+\quad\quad \textbf{if } not(=(b, 0(b))) \textbf{ then } r \mathrel{\texttt{|||}{:=}} \ [term(b, i)] \\
 \quad\quad i \mathrel{+{:=}} 1 \} \\
 \quad \Uparrow poly(r) \ \blacksquare
 \end{array}
@@ -2824,8 +2824,8 @@ main(x) \Leftarrow \\
 \quad command\_line \mathrel{:=} x \\
 \quad \textbf{if } \texttt{*}command\_line > 0 \\
 \quad \textbf{then } \{ fn \mathrel{:=} command\_line[1] \\
-\quad\quad load\_user\_keywords(fn \ || \ \text{".keys"}) \\
-\quad\quad cur\_files \mathrel{:=} [read\_now \mathrel{:=} open(fn \ || \ \text{".icn"}, \text{"r"})] \} \\
+\quad\quad load\_user\_keywords(fn \ \mathrel{\texttt{||}} \ \text{".keys"}) \\
+\quad\quad cur\_files \mathrel{:=} [read\_now \mathrel{:=} open(fn \ \mathrel{\texttt{||}} \ \text{".icn"}, \text{"r"})] \} \\
 \quad \textbf{else } cur\_files \mathrel{:=} [read\_now \mathrel{:=} \&input] \\
 \quad last\_line \mathrel{:=} \&null \\
 \quad write(\text{".so /usr2/ericson/euclid/lpp/std.me"}) \\
@@ -2852,11 +2852,11 @@ process(command) \Leftarrow \\
 \quad \textbf{while } line \mathrel{:=} get\_line() \textbf{ do if } not\ process\_line(line, command) \textbf{ then break} \ \blacksquare \\
 \\
 process\_line(line, command) \Leftarrow \\
-\quad \textbf{if } line[1:3] \mathrel{==} \text{"\#\#"} \\
+\quad \textbf{if } line[1:3] \mathrel{==} \texttt{"##"} \\
 \quad \textbf{then } \{ \textbf{if } line[3:6] \mathrel{==} \text{"■"} \\
 \quad\quad \textbf{then } \{ end\_command(command, line[7:\texttt{*}line + 1]);\ \bot \} \\
 \quad\quad \textbf{else } do\_command(line[3:\texttt{*}line + 1]) \} \\
-\quad \textbf{else if } line[1] \mathrel{==} \text{"\#"} \textbf{ then } write\_line(line[2:\texttt{*}line + 1]) \\
+\quad \textbf{else if } line[1] \mathrel{==} \texttt{"#"} \textbf{ then } write\_line(line[2:\texttt{*}line + 1]) \\
 \quad \textbf{else } pretty\_print(line, command) \\
 \Uparrow \ \blacksquare \\
 \\
@@ -2880,7 +2880,7 @@ do\_command(line) \Leftarrow \\
 \quad x \mathrel{:=} (upto(\mathord{\sim}\&lcase, line) \ | \ (\texttt{*}line + 1)) \\
 \quad command \mathrel{:=} line[1:x] \\
 \quad args \mathrel{:=} line[x + 1:\texttt{*}line + 1] \\
-\quad \textbf{if } not(y \mathrel{:=} proc(\text{"do\_"} \ || \ command, 2)) \\
+\quad \textbf{if } not(y \mathrel{:=} proc(\text{"do\_"} \ \mathrel{\texttt{||}} \ command, 2)) \\
 \quad \textbf{then } write(\&errout, \text{"ERROR: Unknown command: "}, command) \\
 \quad \textbf{else } y(args) \ \blacksquare
 \end{array}
@@ -2898,11 +2898,11 @@ do\_list(args) \Leftarrow \\
 \quad \textbf{local } line \\
 \quad write(\text{".(l I F"}) \\
 \quad \textbf{while } line \mathrel{:=} get\_line() \\
-\quad \textbf{do if } line[1:3] \mathrel{==} \text{"\#\#"} \\
+\quad \textbf{do if } line[1:3] \mathrel{==} \texttt{"##"} \\
 \quad\quad \textbf{then } \{ \textbf{if } line[3:6] \mathrel{==} \text{"■"} \\
 \quad\quad\quad \textbf{then } \{ write(\text{".)l"});\ end\_command(command, line[7:\texttt{*}line + 1]);\ \bot \} \\
 \quad\quad\quad \textbf{else } do\_command(line[3:\texttt{*}line + 1]) \} \\
-\quad\quad \textbf{else if } line[1] \mathrel{==} \text{"\#"} \\
+\quad\quad \textbf{else if } line[1] \mathrel{==} \texttt{"#"} \\
 \quad\quad \textbf{then } \{ line \mathrel{:=} line[2:\texttt{*}line + 1] \\
 \quad\quad\quad\quad \textbf{repeat if } upto(\text{' '}, line[1]) \\
 \quad\quad\quad\quad \textbf{then } line \mathrel{:=} line[2:\texttt{*}line + 1] \textbf{ else break} \\
@@ -2928,7 +2928,7 @@ do\_section(args) \Leftarrow \\
 \quad title \mathrel{:=} args[x + 1:\texttt{*}args + 1] \\
 \quad write(\text{".sh "}, level, \text{" "}, title) \\
 \quad write(\text{".sp 2v0lp"}) \\
-\quad process(\text{"section "} \ || \ level) \ \blacksquare
+\quad process(\text{"section "} \ \mathrel{\texttt{||}} \ level) \ \blacksquare
 \end{array}
 $$
 
@@ -2945,7 +2945,7 @@ $$
 do\_skip(x) \Leftarrow \\
 \quad \textbf{local } line \\
 \quad \textbf{while } line \mathrel{:=} get\_line() \\
-\quad \textbf{do if } line[1:3] \mathrel{==} \text{"\#\#"} \\
+\quad \textbf{do if } line[1:3] \mathrel{==} \texttt{"##"} \\
 \quad\quad \textbf{then if } line[3:6] \mathrel{==} \text{"■"} \\
 \quad\quad\quad \textbf{then } \{ end\_command(command, line[7:\texttt{*}line + 1]);\ break \} \ \blacksquare
 \end{array}
@@ -2964,12 +2964,12 @@ $$
 do\_include(arg) \Leftarrow \\
 \quad \textbf{local } new\_file \\
 \quad cur\_file \mathrel{:=} arg \\
-\quad new\_file \mathrel{:=} open(cur\_file \ || \ \text{".icn"}, \text{"r"}) \\
+\quad new\_file \mathrel{:=} open(cur\_file \ \mathrel{\texttt{||}} \ \text{".icn"}, \text{"r"}) \\
 \quad \textbf{if } /new\_file \textbf{ then } write(\text{"ERROR: couldn't open "}, cur\_file, \text{".icn"}) \\
 \quad \textbf{else } \{ read\_now \mathrel{:=} new\_file \\
 \quad\quad push(cur\_files, read\_now) \\
-\quad\quad load\_user\_keywords(cur\_file \ || \ \text{".keys"}) \\
-\quad\quad process(\text{"include"}) \ \# \text{ until ■ of file} \\
+\quad\quad load\_user\_keywords(cur\_file \ \mathrel{\texttt{||}} \ \text{".keys"}) \\
+\quad\quad process(\text{"include"}) \ \texttt{*} \text{ until ■ of file} \\
 \quad\quad close(pop(cur\_files)) \\
 \quad\quad read\_now \mathrel{:=} cur\_files[1] \} \ \blacksquare
 \end{array}
@@ -3004,7 +3004,7 @@ do\_code(arg) \Leftarrow \\
 \quad \textbf{local } line \\
 \quad write(\text{".nf0fH"}) \\
 \quad \textbf{while } line \mathrel{:=} get\_line() \\
-\quad \textbf{do if } line[1:6] \mathrel{==} \text{"\#\#■"} \textbf{ then break} \\
+\quad \textbf{do if } line[1:6] \mathrel{==} \texttt{"##■"} \textbf{ then break} \\
 \quad\quad \textbf{else } pretty\_print\_line(line[2:\texttt{*}line + 1]) \\
 \quad write(\text{".fi0fR"}) \ \blacksquare
 \end{array}
@@ -3102,7 +3102,7 @@ pretty\_print(l, command) \Leftarrow \\
 \quad write(\text{".nf0fH "}) \\
 \quad pretty\_print\_line(l) \\
 \quad \textbf{while } line \mathrel{:=} get\_line() \\
-\quad \textbf{do if } line[1:2] \mathrel{==} \text{"\#"} \\
+\quad \textbf{do if } line[1:2] \mathrel{==} \texttt{"#"} \\
 \quad\quad \textbf{then } \{ write(\text{".fi0fR "}) \\
 \quad\quad\quad\quad write(\text{".lp"});\ last\_line \mathrel{:=} line;\ \bot \} \\
 \quad\quad \textbf{else } pretty\_print\_line(line) \\
@@ -3183,9 +3183,9 @@ $$
 
 $$
 \begin{array}{l}
-\textbf{if } z \mathrel{==} \text{"■"} \textbf{ then } pretty\_print\_line(line \ || \ y \ || \ \text{" ■"}) \\
+\textbf{if } z \mathrel{==} \text{"■"} \textbf{ then } pretty\_print\_line(line \ \mathrel{\texttt{||}} \ y \ \mathrel{\texttt{||}} \ \text{" ■"}) \\
 \textbf{else } \{ pretty\_print\_line(line) \\
-\quad\quad \textbf{if } y \mathrel{==} \text{"■"} \textbf{ then } pretty\_print\_line(line \ || \ \text{" ⊥ ■"}) \\
+\quad\quad \textbf{if } y \mathrel{==} \text{"■"} \textbf{ then } pretty\_print\_line(line \ \mathrel{\texttt{||}} \ \text{" ⊥ ■"}) \\
 \quad\quad \textbf{else } \{ z \mathrel{:=} get\_line() \\
 \quad\quad\quad\quad \textbf{local } y \\
 \quad\quad\quad\quad y \mathrel{:=} get\_line() \\
