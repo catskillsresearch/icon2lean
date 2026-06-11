@@ -249,6 +249,26 @@ def fix_inline_math(text: str) -> str:
     return re.sub(r"(?<!\$)\$(?!\$)(.+?)(?<!\$)\$(?!\$)", repl, text)
 
 
+def fix_table_inline_math(text: str) -> str:
+    """GitHub tables: use $`...`$ so math survives markdown/HTML parsing."""
+
+    def fix_line(line: str) -> str:
+        if not line.lstrip().startswith("|"):
+            return line
+
+        def repl(m: re.Match[str]) -> str:
+            inner = m.group(1)
+            if inner.startswith("`") and inner.endswith("`"):
+                return m.group(0)
+            return "$`" + inner + "`$"
+
+        return re.sub(r"\$([^$\n]+?)\$", repl, line)
+
+    return "\n".join(fix_line(line) for line in text.splitlines()) + (
+        "\n" if text.endswith("\n") else ""
+    )
+
+
 def fix_prose(text: str) -> str:
     text = text.replace('proc("X\', 3)', 'proc("X", 3)')
     text = text.replace(
@@ -285,6 +305,7 @@ def fix_math_fence_blocks(text: str) -> str:
 
 def fix_github_math(text: str) -> str:
     text = fix_prose(text)
+    text = fix_table_inline_math(text)
     text = fix_math_left_blocks(text)
     text = fix_math_fence_blocks(text)
     text = fix_display_math(text)
