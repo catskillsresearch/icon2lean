@@ -2008,30 +2008,24 @@ Degrees of polynomials are values which may be integers, or the string `"- infin
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&deg_{poly}(x) \Leftarrow \textbf{if } {=}_{poly}(x, 0_{poly}(x)) \textbf{ then } \Uparrow \text{\text{-} infinity} \textbf{ else } \Uparrow x.\mathrm{terms}[\texttt{*}x.\mathrm{terms}].\mathrm{power} \ \blacksquare
-\end{aligned}
+```icon
+deg_poly(x) ←
+    if =_poly(x, 0_poly(x)) then ↑ "- infinity"
+    else ↑ x.terms[*x.terms].power  ■
 ```
 
-</div>
-
-<div class="math-left">
-
-```math
-\begin{aligned}
-&{-}_{deg}(a, b) \Leftarrow \Uparrow (\textbf{if } \text{type}(a) \mathrel{==} \text{"string"} \textbf{ then } b \textbf{ else if } \text{type}(b) \mathrel{==} \text{"string"} \textbf{ then } a \textbf{ else } a - b) \ \blacksquare
-\end{aligned}
+```icon
+-_deg(a, b) ← ↑ (
+    if type(a) == "string" then b
+    else if type(b) == "string" then a
+    else a - b)  ■
 ```
 
-</div>
-
-<div class="math-left">
-
-```math
-\begin{aligned}
-&\oplus_{deg}(a, b) \Leftarrow \Uparrow (\textbf{if } \text{type}(a) \mathrel{==} \text{"string"} \textbf{ then } b \textbf{ else if } \text{type}(b) \mathrel{==} \text{"string"} \textbf{ then } a \textbf{ else } a + b) \ \blacksquare
-\end{aligned}
+```icon
+⊕_deg(a, b) ← ↑ (
+    if type(a) == "string" then b
+    else if type(b) == "string" then a
+    else a + b)  ■
 ```
 
 </div>
@@ -2040,16 +2034,13 @@ A normal-form polynomial is one whose terms are in normal form (and in ascending
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&normalize_{poly}(x) \Leftarrow \\
-&\quad \textbf{local } ts \\
-&\quad ts \mathrel{:=} [] \\
-&\quad \textbf{every } t \mathrel{:=} \texttt{!}x.terms \textbf{ do } ts \mathrel{\texttt{|||}}\mathrel{:=} \ [term(normalize(t.coef), t.power)] \\
-&\quad \Uparrow poly(ts) \ \blacksquare
-\end{aligned}
+```icon
+normalize_poly(x) ←
+    local ts
+    ts := []
+    every t := !x.terms do ts |||:= [term(normalize(t.coef), t.power)]
+    ↑ poly(ts)  ■
 ```
-
 
 </div>
 
@@ -2057,42 +2048,31 @@ A normal-form polynomial is one whose terms are in normal form (and in ascending
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&{<}_{degree}(a, b) \Leftarrow \\
-&\quad \textbf{if } \text{type}(a) \mathrel{==} \text{"string"} \\
-&\quad \textbf{then } \Uparrow not(\text{type}(b) \mathrel{==} \text{"string"}) \\
-&\quad \textbf{else } \Uparrow a < b \ \blacksquare
-\end{aligned}
+```icon
+<_degree(a, b) ←
+    if type(a) == "string"
+    then ↑ not(type(b) == "string")
+    else ↑ a < b  ■
 ```
 
-```math
-\begin{aligned}
-&{=}_{poly}(a, b) \Leftarrow \Uparrow {=}_{terms}(a.terms, b.terms) \ \blacksquare
-\end{aligned}
+```icon
+=_poly(a, b) ← ↑ =_terms(a.terms, b.terms)  ■
 ```
 
-```math
-\begin{aligned}
-&{=}_{terms}(a, b) \Leftarrow \\
-&\quad \textbf{if } \texttt{*}a \neq \texttt{*}b \textbf{ then } \bot \\
-&\quad \textbf{if } \texttt{*}a = 0 \textbf{ then } \Uparrow \\
-&\quad \textbf{if } {=}_{term}(a[1], b[1]) \textbf{ then } \Uparrow {=}_{terms}(rest(a), rest(b)) \ \blacksquare
-\end{aligned}
+```icon
+=_terms(a, b) ←
+    if *a ≠ *b then ⊥
+    if *a = 0 then ↑
+    if =_term(a[1], b[1]) then ↑ =_terms(rest(a), rest(b))  ■
 ```
 
-```math
-\begin{aligned}
-&{=}_{term}(a, b) \Leftarrow \Uparrow (=(a.coef, b.coef) \ \&\ =(a.power, b.power)) \ \blacksquare
-\end{aligned}
+```icon
+=_term(a, b) ← ↑ (=(a.coef, b.coef) & =(a.power, b.power))  ■
 ```
 
-```math
-\begin{aligned}
-&unit_{poly}(x) \Leftarrow \Uparrow ((\texttt{*}x.terms = 1) \ \&\ (x.terms[1].power = 0) \ \&\ unit(x.terms[1].coef)) \ \blacksquare
-\end{aligned}
+```icon
+unit_poly(x) ← ↑ ((*x.terms = 1) & (x.terms[1].power = 0) & unit(x.terms[1].coef))  ■
 ```
-
 
 </div>
 
