@@ -1313,7 +1313,7 @@ We provide the following machine integer arithmetic facilities:
 
 ### 2.3. Domain constructors
 
-EUCLID provides three classes of domain constructions: quotient domains $`Q_{D}`$, modular domains $`D/(e)`$, polynomials $`D[x]`$ and truncated power series $`T(D[[x]])_{n}`$.
+EUCLID provides three classes of domain constructions: quotient domains $`Q_{D}`$, modular domains $`D/(e)`$, polynomials $`D[x]`$ and truncated power series `T(D[[x]])_n`.
 
 
 #### 2.3.1. Quotient Euclidean domain $`\mathcal{Q}`$
@@ -2080,45 +2080,39 @@ unit_poly(x) ← ↑ ((*x.terms = 1) & (x.terms[1].power = 0) & unit(x.terms[1].
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&print_{poly}(x) \Leftarrow \\
-&\quad print_{term}(x.terms[1]) \\
-&\quad \textbf{every } t \mathrel{:=} \texttt{!}rest(x.terms) \textbf{ do } \{ writes(\text{"+ "});\ print_{term}(t) \} \ \blacksquare \\
-&\\
-&print_{term}(x) \Leftarrow \\
-&\quad print(x.coef) \\
-&\quad \textbf{if } x.power = 1 \textbf{ then } writes(\text{"\texttt{*}X"}) \\
-&\quad \textbf{else if } x.power > 1 \textbf{ then } prs\{\text{"\texttt{*}X\^{}"},\ x.power\} \ \blacksquare
-\end{aligned}
-```
+```icon
+print_poly(x) ←
+    print_term(x.terms[1])
+    every t := !rest(x.terms) do { writes("+ "); print_term(t) }  ■
 
+print_term(x) ←
+    print(x.coef)
+    if x.power = 1 then writes("*X")
+    else if x.power > 1 then prs{"*X^", x.power}  ■
+```
 
 </div>
 
 
-#### 2.3.4. Truncated Power Series domain $`T(D[[x]])_{n}`$
+#### 2.3.4. Truncated Power Series domain `T(D[[x]])_n`
 
 <p align="center"><strong>Truncated Power Series Domain Arithmetic Facilities</strong></p>
 
 | | |
 |:--|:--|
-| **Data structures** | $`tpower`$ |
-| **Constants** | $`0_{tpower}`$, $`1_{tpower}`$ |
-| **Operators** | $`\oplus_{tpower}`$, $`-_{tpower}`$, $`\otimes_{tpower}`$, $`\mathbin{⨸}_{tpower}`$, $`normalize_{tpower}`$ |
-| **Predicates** | $`=_{tpower}`$, $`unit_{tpower}`$ |
-| **Commands** | $`print_{tpower}`$ |
+| **Data structures** | `tpower` |
+| **Constants** | `0_tpower`, `1_tpower` |
+| **Operators** | `⊕_tpower`, `-_tpower`, `⊗_tpower`, `⨸_tpower`, `normalize_tpower` |
+| **Predicates** | `=_tpower`, `unit_tpower` |
+| **Commands** | `print_tpower` |
 
 **Data structures.**
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textbf{record } tpower\ (Poly, N)
-\end{aligned}
+```icon
+record tpower (Poly, N)
 ```
-
 
 </div>
 
@@ -2128,12 +2122,9 @@ The zero of the base domain of a coefficient of the polynomial:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&0_{tpower}(x) \Leftarrow \Uparrow tpower(0_{poly}(x.Poly), x.N) \ \blacksquare
-\end{aligned}
+```icon
+0_tpower(x) ← ↑ tpower(0_poly(x.Poly), x.N)  ■
 ```
-
 
 </div>
 
@@ -2141,12 +2132,9 @@ The one of the base domain of a coefficient of the polynomial:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&1_{tpower}(x) \Leftarrow \Uparrow tpower(1_{poly}(x.Poly), x.N) \ \blacksquare
-\end{aligned}
+```icon
+1_tpower(x) ← ↑ tpower(1_poly(x.Poly), x.N)  ■
 ```
-
 
 </div>
 
@@ -2154,22 +2142,19 @@ The one of the base domain of a coefficient of the polynomial:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\oplus_{tpower}(a, b) \Leftarrow \Uparrow tpower(\oplus_{poly}(a.Poly, b.Poly), a.N) \ \blacksquare \\
-&\\
-&-_{tpower}(x) \Leftarrow \Uparrow tpower(-_{poly}(x.Poly), x.N) \ \blacksquare \\
-&\\
-&truncate(p, n) \Leftarrow \Uparrow poly(p.terms[1:n+1]) \ \blacksquare \\
-&\\
-&\otimes_{tpower}(a, b) \Leftarrow \Uparrow tpower(truncate(\otimes_{poly}(a.Poly, b.Poly), a.N), a.N) \ \blacksquare \\
-&\\
-&\mathbin{⨸}_{tpower}(a, b) \Leftarrow \Uparrow tpower(truncate(\mathbin{⨸}_{poly}(a.Poly, b.Poly), a.N), a.N) \ \blacksquare \\
-&\\
-&normalize_{tpower}(x) \Leftarrow \Uparrow tpower(normalize_{poly}(x.Poly), x.N) \ \blacksquare
-\end{aligned}
-```
+```icon
+⊕_tpower(a, b) ← ↑ tpower(⊕_poly(a.Poly, b.Poly), a.N)  ■
 
+-_tpower(x) ← ↑ tpower(-_poly(x.Poly), x.N)  ■
+
+truncate(p, n) ← ↑ poly(p.terms[1:n+1])  ■
+
+⊗_tpower(a, b) ← ↑ tpower(truncate(⊗_poly(a.Poly, b.Poly), a.N), a.N)  ■
+
+⨸_tpower(a, b) ← ↑ tpower(truncate(⨸_poly(a.Poly, b.Poly), a.N), a.N)  ■
+
+normalize_tpower(x) ← ↑ tpower(normalize_poly(x.Poly), x.N)  ■
+```
 
 </div>
 
@@ -2177,14 +2162,11 @@ The one of the base domain of a coefficient of the polynomial:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&=_{tpower}(a, b) \Leftarrow \Uparrow (a.N = b.N) \ \&\ =_{poly}(a.Poly, b.Poly) \ \blacksquare \\
-&\\
-&unit_{tpower}(x) \Leftarrow \Uparrow unit_{poly}(x.Poly) \ \blacksquare
-\end{aligned}
-```
+```icon
+=_tpower(a, b) ← ↑ (a.N = b.N) & =_poly(a.Poly, b.Poly)  ■
 
+unit_tpower(x) ← ↑ unit_poly(x.Poly)  ■
+```
 
 </div>
 
@@ -2192,12 +2174,9 @@ The one of the base domain of a coefficient of the polynomial:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&print_{tpower}(x) \Leftarrow print_{poly}(x.Poly) \ \blacksquare
-\end{aligned}
+```icon
+print_tpower(x) ← print_poly(x.Poly)  ■
 ```
-
 
 </div>
 
