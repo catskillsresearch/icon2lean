@@ -93,10 +93,13 @@ def math_block_to_icon(body: str) -> str:
         s = s.replace(r"\bot", "⊥")
         s = re.sub(r"\\textbf\{([^}]*)\}", r"\1", s)
         s = s.replace(r"\mathrel{+{:=}}", " +:= ")
-        s = s.replace(r"\mathrel{:=}", " := ")
         s = s.replace(r"\mathrel{\texttt{|||}}\mathrel{:=}", " |||:= ")
-        s = s.replace(r"\mathrel{\texttt{|||}}", " ||| ")
-        s = re.sub(r"mathrel\{[^}]+\}", "", s)
+        s = s.replace(r"\mathrel{\texttt{|||}}", " |||")
+        s = s.replace(r"\mathrel{\texttt{||}}", " ||")
+        s = s.replace(r"\mathrel{:=}", " := ")
+        s = re.sub(r"\\mathrel\{[^{}]+\}", "", s)
+        s = s.replace('proc("div_" ||', 'proc("div_" ||')
+        s = re.sub(r'proc\("div_"\},', 'proc("div_" ||', s)
         s = s.replace(r"\mathbin{⨸}", "⨸")
         s = s.replace(r"\mathbin{\text{rem}}", "rem")
         s = s.replace(r"\ominus", "⊖")
@@ -116,9 +119,23 @@ def math_block_to_icon(body: str) -> str:
         s = re.sub(r"\\quad+", "    ", s)
         s = re.sub(r"\\+", "", s)
         s = re.sub(r"  +", " ", s).strip()
+        s = fix_icon_subscripts(s)
         if s:
             out.append(s)
     return "\n".join(out)
+
+
+def fix_icon_subscripts(text: str) -> str:
+    """LaTeX _{foo} → Icon _foo inside code blocks."""
+    prev = None
+    while prev != text:
+        prev = text
+        text = re.sub(
+            r"_\{([^{}]+)\}",
+            lambda m: "_" + m.group(1).replace(" ", "_"),
+            text,
+        )
+    return text
 
 
 def convert_math_fences(text: str) -> str:
@@ -141,6 +158,39 @@ def convert_math_fences(text: str) -> str:
 def demath_all_tables(text: str) -> str:
     """Reduce math load in tables file-wide (GitHub MathJax cumulative limit)."""
     return "\n".join(demath_table_row(line) for line in text.splitlines())
+
+
+def prose_input_output_plain(text: str) -> str:
+    """Replace algorithm I/O lines that use math with Unicode plain text."""
+    replacements = [
+        (
+            r"Input: integer \$`N = 2\^m`$, polynomial \$`a\(x\) = \\sum_\{i=0\}\^\{N-1\} a_i x\^i`$, primitive \$`N`\$th root of unity \$`\\omega`\$",
+            "Input: integer N = 2^m, polynomial a(x) = Σ_{i=0}^{N−1} a_i x^i, primitive Nth root of unity ω",
+        ),
+        (
+            r"Output: array \$`A = \(A_0, \\ldots, A_\{N-1\}\)`\$ where \$`A_k = a\(\\omega\^k\)`\$",
+            "Output: array A = (A₀, …, A_{N−1}) where A_k = a(ω^k)",
+        ),
+        (
+            r"Input: integer \$`N = 2\^m`$, sample values \$`B = \(b_0, \\ldots, b_\{N-1\}\)`$, primitive \$`N`\$th root of unity \$`\\omega`\$",
+            "Input: integer N = 2^m, sample values B = (b₀, …, b_{N−1}), primitive Nth root of unity ω",
+        ),
+        (
+            r"Output: \$`a\(x\) = \\sum_\{i=0\}\^\{N-1\} a_i x\^i`\$ where \$`a\(\\omega\^k\) = b_k`\$ for \$`k = 0, \\ldots, N-1`\$",
+            "Output: a(x) = Σ_{i=0}^{N−1} a_i x^i where a(ω^k) = b_k for k = 0, …, N−1",
+        ),
+        (
+            r"Input: \$`a\(t\) \\bmod t\^\{2\^n\} = \\sum_\{i=0\}\^\{2\^n-1\} a_i t\^i`$, \$`a_0 \\neq 0`\$",
+            "Input: a(t) mod t^{2^n} = Σ_{i=0}^{2^n−1} a_i t^i, a₀ ≠ 0",
+        ),
+        (
+            r"Output: \$`x\^\{\(n\)\}\(t\) = a\(t\)\^\{-1\} \\bmod t\^\{2\^n\}`\$",
+            "Output: x^(n)(t) = a(t)^{−1} mod t^{2^n}",
+        ),
+    ]
+    for pattern, repl in replacements:
+        text = re.sub(pattern, repl, text)
+    return text
 
 
 def fix_prose_math(text: str) -> str:

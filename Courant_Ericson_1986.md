@@ -22,29 +22,29 @@ John Lipson’s book. Elements of Algebra and Algebraic Computing, presents a nu
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textbf{procedure } \text{FFT}(N, a(x), \omega, A); \\
-&\textbf{if } N = 1 \\
-&\textbf{then} \\
-&\quad \{ \text{Basis.} \} \ A_0 := a_0 \\
-&\textbf{else} \\
-&\textbf{begin} \\
-&\quad \{ \text{Binary split.} \} \\
-&\quad\quad n := N/2 \\
-&\quad\quad b(x) := \sum_{i=0}^{n-1} a_{2i} x^i \\
-&\quad\quad c(x) := \sum_{i=0}^{n-1} a_{2i+1} x^i \\
-&\quad \{ \text{Recursive calls.} \} \\
-&\quad\quad \text{FFT}(n, b(x), \omega^2, B) \\
-&\quad\quad \text{FFT}(n, c(x), \omega^2, C) \\
-&\quad \{ \text{Combine.} \} \\
-&\quad\quad \textbf{for } k := 0 \textbf{ until } n - 1 \textbf{ do} \\
-&\textbf{begin} \\
-&\quad\quad\quad A_k := B_k + \omega^k \otimes C_k \\
-&\quad\quad\quad A_{k+n} := B_k - \omega^k \otimes C_k \\
-&\quad\quad \textbf{end} \\
-&\textbf{end}
-\end{aligned}
+```icon
+
+
+procedure FFT(N, a(x), omega, A);
+if N = 1
+then
+{ Basis. } A_0 := a_0
+else
+begin
+{ Binary split. }
+n := N/2
+b(x) := sum_i=0^{n-1} a_2i x^i
+c(x) := sum_i=0^{n-1} a_2i+1 x^i
+{ Recursive calls. }
+FFT(n, b(x), omega^2, B)
+FFT(n, c(x), omega^2, C)
+{ Combine. }
+for k := 0 until n - 1 do
+begin
+A_k := B_k + omega^k ⊗ C_k
+A_k+n := B_k - omega^k ⊗ C_k
+end
+end
 ```
 
 
@@ -54,14 +54,14 @@ The purpose of the package of routines described in this paper is to allow an IC
 
 In order to support a high level of description, it must be possible to describe the implementation of particular Euclidean domains, and to describe algorithms which apply generically to all Euclidean domain instances. We do this by deciding which functions are expected of all Euclidean domain implementations (say, div, mod, + and -), and then implementing a "dispatch" version of each of these. The "dispatch" div function inspects the type of its argument (say, integer, polynomial, quotient domain element or modular domain element), and then calls the associated div function in the domain implementation (say divjnteger, dlv_poly, dlv_Q or dlv_mod). 
 
-The ability to test the run-time environment is a feature of ICON. Given a string, say "X", and an integer corresponding to a number of formal parameters, say 3, proc("X", 3) will return a procedure (a first-class value in ICON, assignable to variables) if the identifier X is globally to a procedure which is defined to take 3 arguments. Otherwise proc fails. To test for the procedure $`\otimes_{Z}`$, we evaluate `proc("times" || "_Z", 2)`, and in general, for some string value X which corresponds to a procedure name, Y a domain name, and i a number of formal parameters, we evaluate `proc(X || "_" || Y, i)`, where `||` is the ICON string concatenation operator. For example, here is the code for the "generic" division operation:
+The ability to test the run-time environment is a feature of ICON. Given a string, say "X", and an integer corresponding to a number of formal parameters, say 3, proc("X", 3) will return a procedure (a first-class value in ICON, assignable to variables) if the identifier X is globally to a procedure which is defined to take 3 arguments. Otherwise proc fails. To test for the procedure `\otimes_Z`, we evaluate `proc("times" || "_Z", 2)`, and in general, for some string value X which corresponds to a procedure name, Y a domain name, and i a number of formal parameters, we evaluate `proc(X || "_" || Y, i)`, where `||` is the ICON string concatenation operator. For example, here is the code for the "generic" division operation:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\mathbin{⨸}(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div\_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare
-\end{aligned}
+```icon
+
+
+⨸(a, b) ← ↑ proc("div_" || type(a), 2)(a, b) ■
 ```
 
 
@@ -142,13 +142,15 @@ Icon variables (simple names for single items, and procedure names) may appear a
 
 | **Original ICON** | **Fancy Notation** |
 |:--|:--|
-| `one_base_B` | `1_{base_B}` |
-| `delta_i_minus_1` | `\delta_{i-1}` |
-| `plus_poly` | `\oplus_{poly}` |
+| `one_base_B` | `1_base_B` |
+| `delta_i_minus_1` | `\delta_i-1` |
+| `plus_poly` | `\oplus_poly` |
 
 For procedure definitions, instead of the obvious
 
 ```icon
+
+
 procedure F (a, b. c)
   code
 end
@@ -158,7 +160,7 @@ we use the logical-looking
 
 $$\text{F}(a, b, c) \Leftarrow \text{code} \ \blacksquare$$
 
-For `return x` we use $`\Uparrow x`$, and for `return` we use $`\Uparrow`$. Instead of `fail` we use $`\bot`$. All other ICON reserved words are bold-faced.
+For `return x` we use `\Uparrow x`, and for `return` we use `\Uparrow`. Instead of `fail` we use `\bot`. All other ICON reserved words are bold-faced.
 
 
 ### 1.4. Afterthoughts
@@ -180,11 +182,11 @@ As an exercise, the author believes that the code addresses some of the essentia
 
 Lipson’s book, p. 203, contains a significant proviso:
 
-> We assume that our (Algol-like) language allows for the manipulation of values from an arbitrary Euclidean domain *D* with degree function *d*. In particular we assume that our language provides a *Division Algorithm* in the form of two operations “div” and $`mod`$ which return, respectively, a preferred quotient and remainder in accordance with the Division Property of a Euclidean domain...
+> We assume that our (Algol-like) language allows for the manipulation of values from an arbitrary Euclidean domain *D* with degree function *d*. In particular we assume that our language provides a *Division Algorithm* in the form of two operations “div” and `mod` which return, respectively, a preferred quotient and remainder in accordance with the Division Property of a Euclidean domain...
 
  The purpose of this package is to partially implement this proviso. The package implements several primitive domains and *domain constructors*,which are classes of domains composed from other domains. 
  
- When a procedure like $`\mathbin{⨸}`$ or $`mod`$ is applied to an object which is an instance of a Euclidean domain, the type of the object is determined by inspection. This is either the primitive type, in the case of an instance of a primitive domain, or the type of the “outermost” constructor, in the case of an instance of a composite domain. In the case of required and optional procedures, the run-time environment is then tested to determine whether the domain implementation supplies an operation of this type. If the name of the domain is $`D`$, and the procedure name is $`P`$, then the run-time environment is tested for a procedure named $`P_{D}`$. For example, $`\mathbin{⨸}`$ applied to a quotient will look up the procedure $`\mathbin{⨸}_{Q}`$. Required procedures must be defined by the domain implementation, otherwise the operation fails. Implementation-optional procedures will synthesize their values if a more domain-specific implementation does not exist. 
+ When a procedure like `\mathbin{⨸}` or `mod` is applied to an object which is an instance of a Euclidean domain, the type of the object is determined by inspection. This is either the primitive type, in the case of an instance of a primitive domain, or the type of the “outermost” constructor, in the case of an instance of a composite domain. In the case of required and optional procedures, the run-time environment is then tested to determine whether the domain implementation supplies an operation of this type. If the name of the domain is `D`, and the procedure name is `P`, then the run-time environment is tested for a procedure named `P_D`. For example, `\mathbin{⨸}` applied to a quotient will look up the procedure `\mathbin{⨸}_Q`. Required procedures must be defined by the domain implementation, otherwise the operation fails. Implementation-optional procedures will synthesize their values if a more domain-specific implementation does not exist. 
  
 **Constants.**
  
@@ -192,11 +194,11 @@ Lipson’s book, p. 203, contains a significant proviso:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\mathbf{0}(a) \Leftarrow \Uparrow \text{proc}(\text{"zero\_"}\mathrel{\texttt{||}}\text{type}(a), 1)(a) \ \blacksquare \\
-&\mathbf{1}(a) \Leftarrow \Uparrow \text{proc}(\text{"one\_"}\mathrel{\texttt{||}}\text{type}(a), 1)(a) \ \blacksquare
-\end{aligned}
+```icon
+
+
+mathbf{0}(a) ← ↑ proc("zero_"}type(a), 1)(a) ■
+mathbf{1}(a) ← ↑ proc("one_"}type(a), 1)(a) ■
 ```
 
 
@@ -204,27 +206,27 @@ Lipson’s book, p. 203, contains a significant proviso:
 
 **Operators.**
 
-The following procedures define the basic arithmetic operations for domains. As noted in Table 1, every domain must supply Abs, $`\oplus`$, $`-`$, $`\otimes`$ and $`\mathbin{⨸}`$. $`mod`$, rem and normalize are optional, and $`\ominus`$ and exp are synthesized.
+The following procedures define the basic arithmetic operations for domains. As noted in Table 1, every domain must supply Abs, `\oplus`, `-`, `\otimes` and `\mathbin{⨸}`. `mod`, rem and normalize are optional, and `\ominus` and exp are synthesized.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\text{Abs}(a) \Leftarrow \Uparrow \text{proc}(\text{"Abs\_"}\mathrel{\texttt{||}}\,\text{type}(a), 1)(a) \ \blacksquare \\
-&\oplus(a, b) \Leftarrow \Uparrow \text{proc}(\text{"plus\_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
-&\ominus(a, b) \Leftarrow \Uparrow \oplus(a, -(b)) \ \blacksquare \\
-&- (x) \Leftarrow \Uparrow \text{proc}(\text{"minus\_"}\mathrel{\texttt{||}}\,\text{type}(x), 2)(x) \ \blacksquare \\
-&\otimes(a, b) \Leftarrow \Uparrow \text{proc}(\text{"times\_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
-&\mathbin{⨸}(a, b) \Leftarrow \Uparrow \text{proc}(\text{"div\_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b) \ \blacksquare \\
-&\text{mod}(a, b) \Leftarrow \\
-&\quad \textbf{if } (x := \text{proc}(\text{"mod\_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b)) \textbf{ then } \Uparrow x \\
-&\quad \textbf{if } <(b, \mathbf{0}(b)) \textbf{ then } \Uparrow \text{mod}(a, -(b)) \\
-&\quad \Uparrow \text{normalize}( \\
-&\quad\quad \textbf{if } <(a, \mathbf{0}(a)) \\
-&\quad\quad \textbf{then } \oplus(a, \otimes(b, \oplus(\ominus(-(a), b), \mathbf{1}(a)))) \\
-&\quad\quad \textbf{else } \oplus(a, -(\otimes(b, \mathbin{⨸}(a, b)))) \\
-&\quad ) \ \blacksquare
-\end{aligned}
+```icon
+
+
+Abs(a) ← ↑ proc("Abs_"},type(a), 1)(a) ■
+⊕(a, b) ← ↑ proc("plus_"},type(a), 2)(a, b) ■
+⊖(a, b) ← ↑ ⊕(a, -(b)) ■
+- (x) ← ↑ proc("minus_"},type(x), 2)(x) ■
+⊗(a, b) ← ↑ proc("times_"},type(a), 2)(a, b) ■
+⨸(a, b) ← ↑ proc("div_" || type(a), 2)(a, b) ■
+mod(a, b) ←
+if (x := proc("mod_"},type(a), 2)(a, b)) then ↑ x
+if <(b, mathbf{0}(b)) then ↑ mod(a, -(b))
+↑ normalize(
+if <(a, mathbf{0}(a))
+then ⊕(a, ⊗(b, ⊕(⊖(-(a), b), mathbf{1}(a))))
+else ⊕(a, -(⊗(b, ⨸(a, b))))
+) ■
 ```
 
 
@@ -241,11 +243,11 @@ in the domain of quotients of machine-word integers are denoted within ICON by t
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textit{ax} := \text{poly}([\text{term}(\mathcal{Q}(-2,1), 0), \text{term}(\mathcal{Q}(1,1), 3)]) \\
-&\textit{bx} := \text{poly}([\text{term}(\mathcal{Q}(-3,1), 0), \text{term}(\mathcal{Q}(2,1), 2)])
-\end{aligned}
+```icon
+
+
+textit{ax} := poly([term(mathcal{Q}(-2,1), 0), term(mathcal{Q}(1,1), 3)])
+textit{bx} := poly([term(mathcal{Q}(-3,1), 0), term(mathcal{Q}(2,1), 2)])
 ```
 
 
@@ -255,14 +257,14 @@ in the domain of quotients of machine-word integers are denoted within ICON by t
 
 $$(-2)q + 1q \cdot X^3 \bmod (-3)q + 2q \cdot X^2 = (-2)q + \tfrac{3}{2}q \cdot X$$
 
-Similarly, given $`c(x)=\tfrac{3}{2}x - 2`$, represented as
+Similarly, given `c(x)=\tfrac{3}{2}x - 2`, represented as
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textit{cx} := \text{poly}([\text{term}(\mathcal{Q}(-2,1), 0), \text{term}(\mathcal{Q}(3,2), 1)])
-\end{aligned}
+```icon
+
+
+textit{cx} := poly([term(mathcal{Q}(-2,1), 0), term(mathcal{Q}(3,2), 1)])
 ```
 
 
@@ -274,12 +276,12 @@ $$(-3)q + 2q \cdot X^2 \bmod (-2)q + \tfrac{3}{2}q \cdot X = \tfrac{5}{9}q$$
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\text{rem}(a, b) \Leftarrow \\
-&\quad \Uparrow (\textbf{if } (x := \text{proc}(\text{"rem\_"}\mathrel{\texttt{||}}\,\text{type}(a), 2)(a, b)) \textbf{ then } x \\
-&\quad\quad \textbf{else } \ominus(a, \otimes(\mathbin{⨸}(a, b), b))) \ \blacksquare
-\end{aligned}
+```icon
+
+
+rem(a, b) ←
+↑ (if (x := proc("rem_"},type(a), 2)(a, b)) then x
+else ⊖(a, ⊗(⨸(a, b), b))) ■
 ```
 
 
@@ -296,11 +298,11 @@ in the domain of quotients of machine-word integers are denoted with ICON by
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textit{ax} := \text{poly}([\text{term}(\mathcal{Q}(5,1), 0), \text{term}(\mathcal{Q}(-2,1), 1), \text{term}(\mathcal{Q}(1,1), 2)]) \\
-&\textit{bx} := \text{poly\_of}(\mathcal{Q}(2,1))
-\end{aligned}
+```icon
+
+
+textit{ax} := poly([term(mathcal{Q}(5,1), 0), term(mathcal{Q}(-2,1), 1), term(mathcal{Q}(1,1), 2)])
+textit{bx} := poly_of(mathcal{Q}(2,1))
 ```
 
 
@@ -314,11 +316,11 @@ Similarly, given the equations over the integral domain of polynomials over mach
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textit{ax} := \text{poly}([\text{term}(8, 0), \text{term}(-9, 1), \text{term}(6, 2)]) \\
-&\textit{bx} := \text{poly\_of}(3)
-\end{aligned}
+```icon
+
+
+textit{ax} := poly([term(8, 0), term(-9, 1), term(6, 2)])
+textit{bx} := poly_of(3)
 ```
 
 
@@ -332,12 +334,12 @@ $$8 + (-9)X + 6X^2 \mathbin{\text{rem}} 3 = 2$$
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\text{normalize}(a) \Leftarrow \\
-&\quad \textbf{if } (x := \text{proc}(\text{"normalize\_"}\mathrel{\texttt{||}}\text{type}(a), 1)(a)) \textbf{ then } \Uparrow x \\
-&\quad \Uparrow a \ \blacksquare
-\end{aligned}
+```icon
+
+
+normalize(a) ←
+if (x := proc("normalize_"}type(a), 1)(a)) then ↑ x
+↑ a ■
 ```
 
 
@@ -348,19 +350,19 @@ from R.B.K. Dewar’s SETL implementation of arithmetic for the NYU Ada/Ed syste
 [Dewar81a,Kruch83a].
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\text{exp}(x, p) \Leftarrow \\
-&\quad \textbf{if } p = 1 \textbf{ then } \Uparrow x \\
-&\quad \textbf{else } \{ \text{result} := \mathbf{1}(x) \\
-&\quad\quad u := \text{copy}(x); \ v := p \\
-&\quad\quad \text{running} := u \\
-&\quad\quad \textbf{while } v \neq 0 \textbf{ do} \\
-&\quad\quad \{ \textbf{if } v \bmod 2 = 1 \textbf{ then result} := \otimes(\text{result}, \text{running}) \\
-&\quad\quad\quad \text{running} := \otimes(\text{running}, \text{running}) \\
-&\quad\quad\quad v := v / 2 \} \\
-&\quad\quad \Uparrow \text{result} \} \ \blacksquare
-\end{aligned}
+```icon
+
+
+exp(x, p) ←
+if p = 1 then ↑ x
+else { result := mathbf{1}(x)
+u := copy(x); v := p
+running := u
+while v ≠q 0 do
+{ if v bmod 2 = 1 then result := ⊗(result, running)
+running := ⊗(running, running)
+v := v / 2 }
+↑ result } ■
 ```
 
 
@@ -372,27 +374,27 @@ All of the predicates defined below except | are required to be defined by a dom
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&= (a, b) \Leftarrow \Uparrow \text{proc}(\text{"equal\_"}\mathrel{\texttt{||}}\text{type}(a), 2)(a, b) \ \blacksquare \\
-&< (a, b) \Leftarrow \Uparrow ((\text{proc}(\text{"less\_"}\mathrel{\texttt{||}}\text{type}(a), 2)(a, b)) \mathrel{|} <0(\ominus(a, b))) \ \blacksquare \\
-&<0 (x) \Leftarrow \Uparrow \text{proc}(\text{"negative\_"}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare \\
-&\mathit{unit}\,(x) \Leftarrow \Uparrow \text{proc}(\text{"unit\_"}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare \\
-&=0 (x) \Leftarrow \Uparrow \text{proc}(\text{"is\_zero\_"}\mathrel{\texttt{||}}\text{type}(x), 1)(x) \ \blacksquare
-\end{aligned}
+```icon
+
+
+= (a, b) ← ↑ proc("equal_"}type(a), 2)(a, b) ■
+< (a, b) ← ↑ ((proc("less_"}type(a), 2)(a, b)) <0(⊖(a, b))) ■
+<0 (x) ← ↑ proc("negative_"}type(x), 1)(x) ■
+mathit{unit},(x) ← ↑ proc("unit_"}type(x), 1)(x) ■
+=0 (x) ← ↑ proc("is_zero_"}type(x), 1)(x) ■
 ```
 
 
 </div>
 
-$`a \mid c`$ (a divides c) if c is a multiple of a, that is, if $`\text{rem}(c, a) = 0`$.
+`a \mid c` (a divides c) if c is a multiple of a, that is, if `\text{rem}(c, a) = 0`.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&{|} (a, c) \Leftarrow \Uparrow =0(\text{rem}(c, a)) \ \blacksquare
-\end{aligned}
+```icon
+
+
+{|} (a, c) ← ↑ =0(rem(c, a)) ■
 ```
 
 
@@ -400,29 +402,27 @@ $`a \mid c`$ (a divides c) if c is a multiple of a, that is, if $`\text{rem}(c, 
 
 **Commands.**
 
-Every domain instance $`D`$ implementation should define a preferred method of printing values in the domain, $`print_{D}`$. On top of this, we supply printing control structures *pr* and *prs*. *pr* takes a list of arguments enclosed in braces, and prints them, using the printing procedure appropriate for the type of each argument, followed by a carriage return. *prs* is the same, omitting the carriage return.
+Every domain instance `D` implementation should define a preferred method of printing values in the domain, `print_D`. On top of this, we supply printing control structures *pr* and *prs*. *pr* takes a list of arguments enclosed in braces, and prints them, using the printing procedure appropriate for the type of each argument, followed by a carriage return. *prs* is the same, omitting the carriage return.
 
 *prs* and *pr* are defined using the user-defined control operation features of ICON 5.10. [Grisw85a, Grisw83a] When *pr* or *prs* is called with a sequence of expressions in braces, the expressions are passed as unactivated co-expressions, which are then activated with the ICON @ operator.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\text{prs}\,(x) \Leftarrow \text{every } y := \texttt{!x} \textbf{ do } \text{print}(\texttt{@y}) \ \blacksquare \\
-&\\
-&\text{pr}\,(x) \Leftarrow \\
-&\quad (\text{every } y := \texttt{!x} \textbf{ do } \text{print}(\texttt{@y})) \\
-&\quad \text{write}() \ \blacksquare \\
-&\\
-&\text{print}\,(x) \Leftarrow \\
-&\quad \textbf{if } \text{type}(x) \mathrel{==} \text{"list"} \\
-&\quad \textbf{then } \{ \text{writes}(\text{"["}) \\
-&\quad\quad \text{every } y := \texttt{!x}[1:\texttt{*x}] \textbf{ do } \{ \text{print}(y); \text{ writes}(\text{", "}) \} \\
-&\quad\quad \text{print}(x[\texttt{*x}]); \text{ writes}(\text{"]"}) \} \\
-&\quad \textbf{else if } pp := \text{proc}(\text{"print\_"}\mathrel{\texttt{||}}\,\text{type}(x), 1) \textbf{ then } pp(x) \\
-&\quad \textbf{else if } \text{type}(x) \mathrel{==} \text{"string"} \textbf{ then writes}(x) \\
-&\quad \textbf{else writes}(\text{image}(x)) \ \blacksquare
-\end{aligned}
+```icon
+
+
+prs,(x) ← every y := !x do print(@y) ■
+pr,(x) ←
+(every y := !x do print(@y))
+write() ■
+print,(x) ←
+if type(x) "list"
+then { writes("[")
+every y := !x[1:*x] do { print(y); writes(", ") }
+print(x[*x]); writes("]") }
+else if pp := proc("print_"},type(x), 1) then pp(x)
+else if type(x) "string" then writes(x)
+else writes(image(x)) ■
 ```
 
 
@@ -446,24 +446,24 @@ The latter are best unused: ICON does not notify the user of integer multiplicat
 
 | | |
 |:--|:--|
-| **Data structures** | `base_{\mathbf{B}}`; `set_{base}` |
+| **Data structures** | `base_{\mathbf{B}}`; `set_base` |
 | **Constants** | `0_{base_{\mathbf{B}}}`, `1_{base_{\mathbf{B}}}`, `k_{base_{\mathbf{B}}}` |
 | **Operators** | `\oplus_{base_{\mathbf{B}}}`, `\ominus_{base_{\mathbf{B}}}`, `\otimes_{base_{\mathbf{B}}}`, `\mathbin{⨸}_{base_{\mathbf{B}}}`, `normalize_{base_{\mathbf{B}}}` |
 | **Predicates** | `<_{base_{\mathbf{B}}}`, `=_{base_{\mathbf{B}}}` |
 | **Commands** | `print_{base_{\mathbf{B}}}` |
 
-**Data structures.** *base* is a number $`B`$ such that 1 is less than the maximum machine word integer. Then *digits* is a list of machine word integers less than *base* and greater than 0. Width is the printing width of digits of the base, in terms of decimal digits.
+**Data structures.** *base* is a number `B` such that 1 is less than the maximum machine word integer. Then *digits* is a list of machine word integers less than *base* and greater than 0. Width is the printing width of digits of the base, in terms of decimal digits.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textbf{record } base_{\mathbf{B}}\ (base, digits) \\
-&\textbf{global } Base, Width \\
-&set_{base}(b, w) \Leftarrow \\
-&\quad Base \mathrel{:=} b \\
-&\quad Width \mathrel{:=} \texttt{*}(b \ \mathrel{\texttt{||}} \ "") - 1 \ \blacksquare
-\end{aligned}
+```icon
+
+
+record base_B (base, digits)
+global Base, Width
+set_base(b, w) ←
+Base := b
+Width := *(b || "") - 1 ■
 ```
 
 
@@ -473,13 +473,13 @@ The latter are best unused: ICON does not notify the user of integer multiplicat
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&0_{base_{\mathbf{B}}}(x) \Leftarrow \Uparrow base_{\mathbf{B}}(x.base, [0]) \ \blacksquare \\
-&1_{base_{\mathbf{B}}}(x) \Leftarrow \Uparrow base_{\mathbf{B}}(x.base, [1]) \ \blacksquare \\
-&k_{base_{\mathbf{B}}}(x) \Leftarrow \Uparrow base_{\mathbf{B}}(\text{Base}, digits\_of(abs(x), \text{Base})) \ \blacksquare \\
-&digits\_of(x, B) \Leftarrow \textbf{if } x < B \textbf{ then } \Uparrow [x] \textbf{ else } \Uparrow digits\_of(x/B, B) \mathrel{\texttt{|||}} \ [mod_{integer}(x, B)] \ \blacksquare
-\end{aligned}
+```icon
+
+
+0_base_B(x) ← ↑ base_B(x.base, [0]) ■
+1_base_B(x) ← ↑ base_B(x.base, [1]) ■
+k_base_B(x) ← ↑ base_B(Base, digits_of(abs(x), Base)) ■
+digits_of(x, B) ← if x < B then ↑ [x] else ↑ digits_of(x/B, B) ||| [mod_integer(x, B)] ■
 ```
 
 
@@ -487,16 +487,16 @@ The latter are best unused: ICON does not notify the user of integer multiplicat
 
 **Operators.**
 
-The base $`B`$ addition algorithm is that of Lipson, p. 199. For input it takes $`a`$, $`b`$, lists of integers $`\leq B`$, of length $`m`$ returning $`a + b`$.
+The base `B` addition algorithm is that of Lipson, p. 199. For input it takes `a`, `b`, lists of integers `\leq B`, of length `m` returning `a + b`.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\oplus_{base_{\mathbf{B}}}(a, b) \Leftarrow \\
-&\quad B \mathrel{:=} a.base \\
-&\quad \Uparrow base_{\mathbf{B}}(B, \oplus_{digits}(a.digits, b.digits, B)) \ \blacksquare
-\end{aligned}
+```icon
+
+
+⊕_base_B(a, b) ←
+B := a.base
+↑ base_B(B, ⊕_digits(a.digits, b.digits, B)) ■
 ```
 
 
@@ -504,24 +504,23 @@ The base $`B`$ addition algorithm is that of Lipson, p. 199. For input it takes 
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\oplus_{digits}(ad, bd, B) \Leftarrow \\
-&\quad m \mathrel{:=} \texttt{*}ad;\ n \mathrel{:=} \texttt{*}bd \\
-&\quad \textbf{if } m < n \textbf{ then } \{ a \mathrel{:=} (list(n - m, 0) \mathrel{\texttt{|||}} \ ad);\ b \mathrel{:=} bd \} \\
-&\quad \textbf{else if } m > n \textbf{ then } \{ a \mathrel{:=} ad;\ b \mathrel{:=} list(m - n, 0) \mathrel{\texttt{|||}} \ bd \} \\
-&\quad \textbf{else } \{ a \mathrel{:=} ad;\ b \mathrel{:=} bd \} \\
-&\quad m \mathrel{:=} \texttt{*}a; \\
-&\quad c\_digits \mathrel{:=} list(m + 1, 0); \\
-&\quad gamma \mathrel{:=} 0 \\
-&\quad \textbf{every } i \mathrel{:=} m \textbf{ to } 1 \textbf{ by } -1 \textbf{ do } \\
-&\quad \{ t \mathrel{:=} a[i] + b[i] + gamma \\
-&\quad\quad c\_digits[i + 1] \mathrel{:=} mod_{integer}(t, B) \\
-&\quad\quad gamma \mathrel{:=} t / B \} \\
-&\quad c\_digits[1] \mathrel{:=} gamma \\
-&\\
-&\quad \Uparrow normalize_{digits}(c\_digits) \ \blacksquare
-\end{aligned}
+```icon
+
+
+⊕_digits(ad, bd, B) ←
+m := *ad; n := *bd
+if m < n then { a := (list(n - m, 0) ||| ad); b := bd }
+else if m > n then { a := ad; b := list(m - n, 0) ||| bd }
+else { a := ad; b := bd }
+m := *a;
+c_digits := list(m + 1, 0);
+gamma := 0
+every i := m to 1 by -1 do
+{ t := a[i] + b[i] + gamma
+c_digits[i + 1] := mod_integer(t, B)
+gamma := t / B }
+c_digits[1] := gamma
+↑ normalize_digits(c_digits) ■
 ```
 
 
@@ -531,11 +530,11 @@ Example. The result of evaluating
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&x \mathrel{:=} base_{\mathbf{B}}(8, [1]);\ y \mathrel{:=} base_{\mathbf{B}}(8, [7, 7, 7]) \\
-&\text{pr}\{x,\ \text{" + "},\ y,\ \text{" = "},\ \oplus_{base_{\mathbf{B}}}(x, y)\}
-\end{aligned}
+```icon
+
+
+x := base_B(8, [1]); y := base_B(8, [7, 7, 7])
+pr{x, " + ", y, " = ", ⊕_base_B(x, y)}
 ```
 
 
@@ -545,21 +544,21 @@ is
 
 1 #8# + 7 7 7 #8# = 1 0 0 0 #8#
 
-The base B subtraction algorithm is Knuth Algorithm 4.3.1 S, transliterated from a SETL implementation of Robert Dewar. Assume $`a\geq b`$ are lists of integers $`\leq B`$. Returns $`a-b`$. 
+The base B subtraction algorithm is Knuth Algorithm 4.3.1 S, transliterated from a SETL implementation of Robert Dewar. Assume `a\geq b` are lists of integers `\leq B`. Returns `a-b`. 
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\ominus_{base_{\mathbf{B}}}(a, bb) \Leftarrow \\
-&\quad b \mathrel{:=} copy(bb);\ B \mathrel{:=} a.base;\ m \mathrel{:=} \texttt{*}a.digits \\
-&\quad \textbf{repeat } \\
-&\quad \{ n \mathrel{:=} \texttt{*}b.digits \\
-&\quad\quad \textbf{if } m < n \textbf{ then } \text{pr}\{\text{"ERROR: } base_{\mathbf{B}} \text{ integer subtraction underflow"}\} \\
-&\quad\quad \textbf{else if } m > n \\
-&\quad\quad \textbf{then } b \mathrel{:=} base_{\mathbf{B}}(B, list(m - n, 0) \mathrel{\texttt{|||}} \ b.digits) \\
-&\quad\quad \textbf{else } \Uparrow base_{\mathbf{B}}(b.base, \ominus_{digits}(a.digits, b.digits, b.base)) \} \ \blacksquare
-\end{aligned}
+```icon
+
+
+⊖_base_B(a, bb) ←
+b := copy(bb); B := a.base; m := *a.digits
+repeat
+{ n := *b.digits
+if m < n then pr{"ERROR: base_B integer subtraction underflow"}
+else if m > n
+then b := base_B(B, list(m - n, 0) ||| b.digits)
+else ↑ base_B(b.base, ⊖_digits(a.digits, b.digits, b.base)) } ■
 ```
 
 
@@ -567,18 +566,17 @@ The base B subtraction algorithm is Knuth Algorithm 4.3.1 S, transliterated from
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\ominus_{digits}(a, b, B) \Leftarrow \\
-&\quad u \mathrel{:=} copy(a) \\
-&\quad v \mathrel{:=} list(\texttt{*}a - \texttt{*}b, 0) \mathrel{\texttt{|||}} \ copy(b) \\
-&\quad k \mathrel{:=} 0 \\
-&\quad \textbf{every } j \mathrel{:=} \texttt{*}u \textbf{ to } 1 \textbf{ by } -1 \textbf{ do } \\
-&\quad \{ u[j] \mathrel{:=} u[j] - v[j] + k \\
-&\quad\quad \textbf{if } u[j] < 0 \textbf{ then } \{ u[j] \mathrel{+{=}} B;\ k \mathrel{:=} -1 \} \textbf{ else } k \mathrel{:=} 0 \} \\
-&\\
-&\quad \Uparrow normalize_{digits}(u) \ \blacksquare
-\end{aligned}
+```icon
+
+
+⊖_digits(a, b, B) ←
+u := copy(a)
+v := list(*a - *b, 0) ||| copy(b)
+k := 0
+every j := *u to 1 by -1 do
+{ u[j] := u[j] - v[j] + k
+if u[j] < 0 then { u[j] } B; k := -1 } else k := 0 }
+↑ normalize_digits(u) ■
 ```
 
 
@@ -590,15 +588,15 @@ The result of evaluating
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&x \mathrel{:=} base_{\mathbf{B}}(10, [1,0,0,5,6,3]);\ y \mathrel{:=} base_{\mathbf{B}}(10, [5,3,3,5]) \\
-&\text{pr}\{x,\ \text{" - "},\ y,\ \text{" = "},\ \ominus_{base_{\mathbf{B}}}(x,y)\} \\
-&x \mathrel{:=} base_{\mathbf{B}}(10,[2,1,2]);\ y \mathrel{:=} base_{\mathbf{B}}(10, [9,9]) \\
-&\text{pr}\{x,\ \text{" - "},\ y,\ \text{" = "},\ \ominus_{base_{\mathbf{B}}}(x, y)\} \\
-&y \mathrel{:=} base_{\mathbf{B}}(10, [1,9,9]) \\
-&\text{pr}\{x,\ \text{" - "},\ y,\ \text{" = "},\ \ominus_{base_{\mathbf{B}}}(x, y)\}
-\end{aligned}
+```icon
+
+
+x := base_B(10, [1,0,0,5,6,3]); y := base_B(10, [5,3,3,5])
+pr{x, " - ", y, " = ", ⊖_base_B(x,y)}
+x := base_B(10,[2,1,2]); y := base_B(10, [9,9])
+pr{x, " - ", y, " = ", ⊖_base_B(x, y)}
+y := base_B(10, [1,9,9])
+pr{x, " - ", y, " = ", ⊖_base_B(x, y)}
 ```
 
 
@@ -612,29 +610,28 @@ is
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&normalize_{base_{\mathbf{B}}}(r) \Leftarrow \\
-&\quad d \mathrel{:=} normalize_{digits}(r.digits) \\
-&\quad \Uparrow base_{\mathbf{B}}(r.base, d) \ \blacksquare \\
-&\\
-&normalize_{digits}(d) \Leftarrow \\
-&\quad \textbf{while } (\texttt{*}d > 1) \ \& \ (d[1] = 0) \textbf{ do } pop(d) \\
-&\quad \Uparrow d \ \blacksquare
-\end{aligned}
+```icon
+
+
+normalize_base_B(r) ←
+d := normalize_digits(r.digits)
+↑ base_B(r.base, d) ■
+normalize_digits(d) ←
+while (*d > 1) & (d[1] = 0) do pop(d)
+↑ d ■
 ```
 
 
 </div>
 
-The base $`B`$ multiplication algorithm is that of Lipson, p. 200. As input it takes $`a`$, $`b`$, lists of integers $`\leq B`$, of length $`m`$ and $`n`$. It outputs $`a \otimes b`$. 
+The base `B` multiplication algorithm is that of Lipson, p. 200. As input it takes `a`, `b`, lists of integers `\leq B`, of length `m` and `n`. It outputs `a \otimes b`. 
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\otimes_{base_{\mathbf{B}}}(a, b) \Leftarrow \Uparrow base_{\mathbf{B}}(a.base, \otimes_{digits}(a.digits, b.digits, a.base)) \ \blacksquare
-\end{aligned}
+```icon
+
+
+⊗_base_B(a, b) ← ↑ base_B(a.base, ⊗_digits(a.digits, b.digits, a.base)) ■
 ```
 
 
@@ -642,28 +639,27 @@ The base $`B`$ multiplication algorithm is that of Lipson, p. 200. As input it t
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\otimes_{digits}(a, b, B) \Leftarrow \\
-&\quad m \mathrel{:=} \texttt{*}a \\
-&\quad n \mathrel{:=} \texttt{*}b \\
-&\quad c \mathrel{:=} list(m + n, 0) \\
-&\quad \textbf{every } k \mathrel{:=} 0 \textbf{ to } n - 1 \textbf{ by } 1 \textbf{ do } \\
-&\quad \{ \\
-&\quad\quad gamma \mathrel{:=} 0 \\
-&\quad\quad \textbf{every } l \mathrel{:=} 0 \textbf{ to } m - 1 \textbf{ by } 1 \textbf{ do } \\
-&\quad\quad \{ \\
-&\quad\quad\quad t \mathrel{:=} a[m - l] * b[n - k] + c[m + n - k - l] + gamma \\
-&\quad\quad\quad \textbf{if } t < 0 \\
-&\quad\quad\quad \textbf{then } \text{pr}\{\text{"ERROR: Integer overflow in } \otimes_{base_{\mathbf{B}}}\text{, base = "},\ B\} \\
-&\quad\quad\quad c[m + n - k - l] \mathrel{:=} mod_{integer}(t, B) \\
-&\quad\quad\quad gamma \mathrel{:=} t / B \\
-&\quad\quad \} \\
-&\quad\quad c[n - k] \mathrel{:=} gamma \\
-&\quad \} \\
-&\\
-&\quad \Uparrow normalize_{digits}(c) \ \blacksquare
-\end{aligned}
+```icon
+
+
+⊗_digits(a, b, B) ←
+m := *a
+n := *b
+c := list(m + n, 0)
+every k := 0 to n - 1 by 1 do
+{
+gamma := 0
+every l := 0 to m - 1 by 1 do
+{
+t := a[m - l] * b[n - k] + c[m + n - k - l] + gamma
+if t < 0
+then pr{"ERROR: Integer overflow in ⊗_base_B, base = ", B}
+c[m + n - k - l] := mod_integer(t, B)
+gamma := t / B
+}
+c[n - k] := gamma
+}
+↑ normalize_digits(c) ■
 ```
 
 
@@ -675,15 +671,15 @@ The result of evaluating
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&x \mathrel{:=} k_{base_{\mathbf{B}}}(28107324);\ y \mathrel{:=} k_{base_{\mathbf{B}}}(75625) \\
-&\text{pr}\{x,\ \text{" * "},\ y,\ \text{" = "},\ \otimes_{base_{\mathbf{B}}}(x,y)\} \\
-&x \mathrel{:=} k_{base_{\mathbf{B}}}(28107324);\ y \mathrel{:=} k_{base_{\mathbf{B}}}(75625) \\
-&\text{pr}\{x,\ \text{" * "},\ y,\ \text{" = "},\ \otimes_{base_{\mathbf{B}}}(x,y)\} \\
-&x \mathrel{:=} k_{base_{\mathbf{B}}}(7478);\ y \mathrel{:=} k_{base_{\mathbf{B}}}(4625) \\
-&\text{pr}\{x,\ \text{" * "},\ y,\ \text{" = "},\ \otimes_{base_{\mathbf{B}}}(x, y)\}
-\end{aligned}
+```icon
+
+
+x := k_base_B(28107324); y := k_base_B(75625)
+pr{x, " * ", y, " = ", ⊗_base_B(x,y)}
+x := k_base_B(28107324); y := k_base_B(75625)
+pr{x, " * ", y, " = ", ⊗_base_B(x,y)}
+x := k_base_B(7478); y := k_base_B(4625)
+pr{x, " * ", y, " = ", ⊗_base_B(x, y)}
 ```
 
 
@@ -696,43 +692,42 @@ is
 7 4 7 8 #10# * 4 6 2 5 #10# = 3 4 5 8 5 7 5 0 #10#
 
 
-The following algorithm computes $`a\over b`$ by long division. The design is that of Knuth Algorithm 4.3.1 D [Knuth73a], and the implementation is largely borrowed from a SETL implementation of Robert Dewar [NYU 84a]. Most of the following comments are lifted from the Dewar implementation. 
+The following algorithm computes `a\over b` by long division. The design is that of Knuth Algorithm 4.3.1 D [Knuth73a], and the implementation is largely borrowed from a SETL implementation of Robert Dewar [NYU 84a]. Most of the following comments are lifted from the Dewar implementation. 
 
 This is by far the most difficult of the four basic operations. This is because the paper and pencil algorithm involves certain amounts of guess work which cannot be programmed directly. The approach (analyzed in detail by Knuth) is to reduce the guess work by computing a rather good guess at each digit of the result, and then correcting if the guess is wrong. 
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\mathbin{⨸}_{base_{\mathbf{B}}}(a, b) \Leftarrow \Uparrow normalize_{base_{\mathbf{B}}}(base_{\mathbf{B}}(a.base, \mathbin{⨸}_{digits}(a.digits, b.digits, a.base))) \ \blacksquare \\
-&\\
-&\mathbin{⨸}_{digits}(a, b, B) \Leftarrow \\
-&\quad \textbf{If the divisor is 0, then fail.} \\
-&\quad \textbf{if } (\texttt{*}b = 1) \ \& \ (b[1] = 0) \textbf{ then } \{ \text{pr}\{\text{"ERROR: divide by 0 in } base_{\mathbf{B}}\text{"}\};\ \bot \} \\
-&\quad \textbf{If } a \textbf{ is shorter than } b, \textbf{ return } 0. \\
-&\quad \textbf{if } \texttt{*}a < \texttt{*}b \textbf{ then } \Uparrow [0]
-\end{aligned}
+```icon
+
+
+⨸_base_B(a, b) ← ↑ normalize_base_B(base_B(a.base, ⨸_digits(a.digits, b.digits, a.base))) ■
+⨸_digits(a, b, B) ←
+If the divisor is 0, then fail.
+if (*b = 1) & (b[1] = 0) then { pr{"ERROR: divide by 0 in base_B"}; ⊥ }
+If a is shorter than b, return 0.
+if *a < *b then ↑ [0]
 ```
 
 
 </div>
 
 
-The case of a one digit divisor is treated specially. Not only is this more efficient, but the general algorithm assumes that the divisor contains at least two digits. Basically dividing by a single digit is straightforward. Since we can represent numbers up to $`B*B— 1`$, we can do the steps of the division exactly without any need for guess work. The division is then done left to right.
+The case of a one digit divisor is treated specially. Not only is this more efficient, but the general algorithm assumes that the divisor contains at least two digits. Basically dividing by a single digit is straightforward. Since we can represent numbers up to `B*B— 1`, we can do the steps of the division exactly without any need for guess work. The division is then done left to right.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textbf{if } \texttt{*}b = 1 \textbf{ then } \\
-&\{ q \mathrel{:=} list(\texttt{*}a, 0) \\
-&\quad rr \mathrel{:=} 0 \\
-&\quad \textbf{every } j \mathrel{:=} 1 \textbf{ to } \texttt{*}a \textbf{ do } \\
-&\quad \{ du \mathrel{:=} rr * B + a[j] \\
-&\quad\quad q[j] \mathrel{:=} du / b[1] \\
-&\quad\quad rr \mathrel{:=} du \% b[1] \} \\
-&\quad \Uparrow normalize_{digits}(q) \}
-\end{aligned}
+```icon
+
+
+if *b = 1 then
+{ q := list(*a, 0)
+rr := 0
+every j := 1 to *a do
+{ du := rr * B + a[j]
+q[j] := du / b[1]
+rr := du % b[1] }
+↑ normalize_digits(q) }
 ```
 
 
@@ -742,45 +737,45 @@ Otherwise we must commence with the full long division algorithm.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&u \mathrel{:=} copy(a) \\
-&v \mathrel{:=} copy(b) \\
-&n \mathrel{:=} \texttt{*}v \\
-&m \mathrel{:=} \texttt{*}u - n \\
-&q \mathrel{:=} list(m + 1, 0)
-\end{aligned}
+```icon
+
+
+u := copy(a)
+v := copy(b)
+n := *v
+m := *u - n
+q := list(m + 1, 0)
 ```
 
 
 </div>
 
 
-Knuth Step D1. [Normalize] The first step is to multiply both the divisor and dividend by a scale factor. Obviously such scaling does not affect the quotient. The purpose of this scaling is to ensure that the first digit of the divisor is at least $`B/2`$. This condition is required for the proper operation of the quotient estimation algorithm used in the division loop. Note that we added an extra digit at the front of the dividend above.
+Knuth Step D1. [Normalize] The first step is to multiply both the divisor and dividend by a scale factor. Obviously such scaling does not affect the quotient. The purpose of this scaling is to ensure that the first digit of the divisor is at least `B/2`. This condition is required for the proper operation of the quotient estimation algorithm used in the division loop. Note that we added an extra digit at the front of the dividend above.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&d \mathrel{:=} B / (v[1] + 1) \\
-&u \mathrel{:=} \otimes_{digits}(u, [d], B) \\
-&\textbf{if } \texttt{*}u = m + n \textbf{ then } u \mathrel{:=} [0] \ \mathrel{\texttt{||}} \ u \\
-&v \mathrel{:=} \otimes_{digits}(v, [d], B)
-\end{aligned}
+```icon
+
+
+d := B / (v[1] + 1)
+u := ⊗_digits(u, [d], B)
+if *u = m + n then u := [0] } u
+v := ⊗_digits(v, [d], B)
 ```
 
 
 </div>
 
-Knuth Step D2. [Initialize $`j`$] This is the major loop, corresponding to long division steps.
+Knuth Step D2. [Initialize `j`] This is the major loop, corresponding to long division steps.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textbf{every } j \mathrel{:=} 1 \textbf{ to } m + 1 \textbf{ do } \\
-&\{
-\end{aligned}
+```icon
+
+
+every j := 1 to m + 1 do
+{
 ```
 
 
@@ -790,10 +785,10 @@ Knuth Step D3. [Calculate q_hat] Guess the next quotient digit by doing a divisi
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textbf{if } u[j] = v[1] \textbf{ then } qe \mathrel{:=} B - 1 \textbf{ else } qe \mathrel{:=} ((u[j] * B) + u[j + 1]) / v[1]
-\end{aligned}
+```icon
+
+
+if u[j] = v[1] then qe := B - 1 else qe := ((u[j] * B) + u[j + 1]) / v[1]
 ```
 
 
@@ -803,10 +798,10 @@ The following loop refines this guess so that it is almost always correct and is
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textbf{while } (v[2] * qe) > (((u[j] * B) + u[j + 1] - (qe * v[1])) * B + u[j + 2]) \textbf{ do } qe \mathrel{{-}{:=}} 1
-\end{aligned}
+```icon
+
+
+while (v[2] * qe) > (((u[j] * B) + u[j + 1] - (qe * v[1])) * B + u[j + 2]) do qe {:=}} 1
 ```
 
 
@@ -816,39 +811,39 @@ Knuth Step D4. [Multiply and subtract] Now (for the moment accepting the estimat
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&c \mathrel{:=} 0 \\
-&\textbf{every } k \mathrel{:=} n \textbf{ to } 1 \textbf{ by } -1 \textbf{ do } \\
-&\{ du \mathrel{:=} u[j + k] - (qe * v[k]) + c \\
-&\quad u[j + k] \mathrel{:=} du \% B \\
-&\quad c \mathrel{:=} du / B \\
-&\quad \textbf{if } u[j + k] < 0 \textbf{ then } \{ u[j + k] \mathrel{+{=}} B;\ c \mathrel{{-}{:=}} 1 \} \} \\
-&u[j] \mathrel{+{=}} c
-\end{aligned}
+```icon
+
+
+c := 0
+every k := n to 1 by -1 do
+{ du := u[j + k] - (qe * v[k]) + c
+u[j + k] := du % B
+c := du / B
+if u[j + k] < 0 then { u[j + k] } B; c {:=}} 1 } }
+u[j] } c
 ```
 
 
 </div>
 
-Knuth Step D5,D6. [Test remainder. Add back] If the estimate was one off, then $`u[j]`$ went negative when the final carry was added above. In this case, we add back the divisor once, and adjust the quotient digit.
+Knuth Step D5,D6. [Test remainder. Add back] If the estimate was one off, then `u[j]` went negative when the final carry was added above. In this case, we add back the divisor once, and adjust the quotient digit.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&q[j] \mathrel{:=} qe \\
-&\textbf{if } u[j] < 0 \textbf{ then } \\
-&\{ qe \mathrel{{-}{:=}} 1 \\
-&\quad c \mathrel{:=} 0 \\
-&\quad \textbf{every } k \mathrel{:=} n \textbf{ to } 1 \textbf{ by } -1 \textbf{ do } \\
-&\quad \{ u[j + k] \mathrel{+{=}} v[k] + c \\
-&\quad\quad \textbf{if } u[j + k] \geq B \textbf{ then } \{ u[j + k] \mathrel{{-}{:=}} B;\ c \mathrel{:=} 1 \} \\
-&\quad\quad \textbf{else } c \mathrel{:=} 0 \} \\
-&\quad u[j] \mathrel{+{=}} c \} \\
-&\} \\
-&\Uparrow normalize_{digits}(q) \ \blacksquare
-\end{aligned}
+```icon
+
+
+q[j] := qe
+if u[j] < 0 then
+{ qe {:=}} 1
+c := 0
+every k := n to 1 by -1 do
+{ u[j + k] } v[k] + c
+if u[j + k] geq B then { u[j + k] {:=}} B; c := 1 }
+else c := 0 }
+u[j] } c }
+}
+↑ normalize_digits(q) ■
 ```
 
 
@@ -858,15 +853,15 @@ Knuth Step D5,D6. [Test remainder. Add back] If the estimate was one off, then $
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textbf{every } xy \mathrel{:=} ![[10, 1], [4,2], [27, 9], [42,2], [90,1], \\
-&\quad\quad [188175, 325], [188175, 579], [188175, 580], \\
-&\quad\quad [188175, 578], [121903, 5335], \\
-&\quad\quad [212, 99], [115668, 75625]] \\
-&\textbf{do } \{ x \mathrel{:=} k_{base_{\mathbf{B}}}(xy[1]);\ y \mathrel{:=} k_{base_{\mathbf{B}}}(xy[2]) \\
-&\quad \text{pr}\{x,\ \text{" / "},\ y,\ \text{" = "},\ \mathbin{⨸}_{base_{\mathbf{B}}}(x, y)\} \}
-\end{aligned}
+```icon
+
+
+every xy := ![[10, 1], [4,2], [27, 9], [42,2], [90,1],
+[188175, 325], [188175, 579], [188175, 580],
+[188175, 578], [121903, 5335],
+[212, 99], [115668, 75625]]
+do { x := k_base_B(xy[1]); y := k_base_B(xy[2])
+pr{x, " / ", y, " = ", ⨸_base_B(x, y)} }
 ```
 
 
@@ -891,54 +886,51 @@ is
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&print_{base_{\mathbf{B}}}(b) \Leftarrow \\
-&\quad \textbf{local } digits \\
-&\quad writes(b.digits[1],\ \text{" "}) \\
-&\quad \textbf{every } writes(right(\texttt{!}rest(b.digits),\ Width,\ \text{"0"}),\ \text{" "}) \\
-&\quad writes(\texttt{"\#"},\ b.base,\ \texttt{"\#"}) \ \blacksquare
-\end{aligned}
+```icon
+
+
+print_base_B(b) ←
+local digits
+writes(b.digits[1], " ")
+every writes(right(!rest(b.digits), Width, "0"), " ")
+writes("#", b.base, "#") ■
 ```
 
 
 </div>
 
-**Predicates.** We supply two predicates, $`<_{base_{\mathbf{B}}}`$ and $`=_{base_{\mathbf{B}}}`$.
+**Predicates.** We supply two predicates, `<_{base_{\mathbf{B}}}` and `=_{base_{\mathbf{B}}}`.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&<_{base_{\mathbf{B}}}(a, b) \Leftarrow \Uparrow <_{digits}(a.digits, b.digits) \ \blacksquare \\
-&\\
-&<_{digits}(a, b) \Leftarrow \\
-&\quad \textbf{if } \texttt{*}a < \texttt{*}b \textbf{ then } \Uparrow \\
-&\quad \textbf{else if } (\texttt{*}a > \texttt{*}b) \textbf{ then } \bot \\
-&\quad \textbf{else if } \texttt{*}a = 0 \textbf{ then } \bot \\
-&\quad \textbf{else if } (a[1] > b[1]) \textbf{ then } \bot \\
-&\quad \textbf{else if } (a[1] < b[1]) \textbf{ then } \Uparrow \\
-&\quad \textbf{else } \Uparrow <_{digits}(rest(a), rest(b)) \ \blacksquare \\
-&\\
-&=_{base_{\mathbf{B}}}(a, b) \Leftarrow \Uparrow =_{digits}(a.digits, b.digits) \ \blacksquare \\
-&\\
-&=_{digits}(a, b) \Leftarrow \\
-&\quad \textbf{if } \texttt{*}a < \texttt{*}b \textbf{ then } \bot \\
-&\quad \textbf{else if } (\texttt{*}a > \texttt{*}b) \textbf{ then } \bot \\
-&\quad \textbf{else if } \texttt{*}a = 0 \textbf{ then } \Uparrow \\
-&\quad \textbf{else if } (a[1] \neq b[1]) \textbf{ then } \bot \\
-&\quad \textbf{else } \Uparrow =_{digits}(rest(a), rest(b)) \ \blacksquare
-\end{aligned}
+```icon
+
+
+<_base_B(a, b) ← ↑ <_digits(a.digits, b.digits) ■
+<_digits(a, b) ←
+if *a < *b then ↑
+else if (*a > *b) then ⊥
+else if *a = 0 then ⊥
+else if (a[1] > b[1]) then ⊥
+else if (a[1] < b[1]) then ↑
+else ↑ <_digits(rest(a), rest(b)) ■
+=_base_B(a, b) ← ↑ =_digits(a.digits, b.digits) ■
+=_digits(a, b) ←
+if *a < *b then ⊥
+else if (*a > *b) then ⊥
+else if *a = 0 then ↑
+else if (a[1] ≠q b[1]) then ⊥
+else ↑ =_digits(rest(a), rest(b)) ■
 ```
 
 
 </div>
 <div class="math-left">
 
-```math
-\begin{aligned}
-&rest(x) \Leftarrow \textbf{if } \texttt{*}x < 2 \textbf{ then } \Uparrow []\ \textbf{else } \Uparrow x[2:\texttt{*}x + 1] \ \blacksquare
-\end{aligned}
+```icon
+
+
+rest(x) ← if *x < 2 then ↑ [] else ↑ x[2:*x + 1] ■
 ```
 
 
@@ -951,19 +943,19 @@ is
 | | |
 |:--|:--|
 | **Data structures** | `Z` |
-| **Constants** | `0_{Z}`, `1_{Z}`, `k_{Z}` |
-| **Operators** | `\oplus_{Z}`, `-_{Z}`, `\otimes_{Z}`, `\mathbin{⨸}_{Z}`, `mod_{Z}`, `abs_{Z}`, `deg_{Z}`, `normalize_{Z}` |
-| **Predicates** | `=_{Z}`, `<_{Z}`, `unit_{Z}`, `>0_{Z}`, `<0_{Z}`, `=0_{Z}` |
-| **Commands** | `print_{Z}` |
+| **Constants** | `0_Z`, `1_Z`, `k_Z` |
+| **Operators** | `\oplus_Z`, `-_Z`, `\otimes_Z`, `\mathbin{⨸}_Z`, `mod_Z`, `abs_Z`, `deg_Z`, `normalize_Z` |
+| **Predicates** | `=_Z`, `<_Z`, `unit_Z`, `>0_Z`, `<0_Z`, `=0_Z` |
+| **Commands** | `print_Z` |
 
-**Data structures.** *sign* is 1 or $`-1`$. *mantissa* is a base $`Base`$ integer, where the $`Base`$ is set by $`k_{Z}`$.
+**Data structures.** *sign* is 1 or `-1`. *mantissa* is a base `Base` integer, where the `Base` is set by `k_Z`.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textbf{record } Z\ (sign, mantissa)
-\end{aligned}
+```icon
+
+
+record Z (sign, mantissa)
 ```
 
 
@@ -973,27 +965,27 @@ is
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&0_Z(a) \Leftarrow \Uparrow Z(1, 0_{base_{\mathbf{B}}}(a.mantissa)) \ \blacksquare \\
-&1_Z(a) \Leftarrow \Uparrow Z(1, 1_{base_{\mathbf{B}}}(a.mantissa)) \ \blacksquare
-\end{aligned}
+```icon
+
+
+0_Z(a) ← ↑ Z(1, 0_base_B(a.mantissa)) ■
+1_Z(a) ← ↑ Z(1, 1_base_B(a.mantissa)) ■
 ```
 
 
 </div>
 
-$`k_{Z}`$ takes an ICON integer and transforms it into a $`Z`$ constant.
+`k_Z` takes an ICON integer and transforms it into a `Z` constant.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&k_Z(x) \Leftarrow \\
-&\quad \textbf{initial } set_{base}(10000) \\
-&\quad \Uparrow Z(\textbf{if } x = 0 \textbf{ then } 1 \textbf{ else } x/abs(x), \\
-&\quad\quad base_{\mathbf{B}}(Base, digits\_of(abs(x), Base))) \ \blacksquare
-\end{aligned}
+```icon
+
+
+k_Z(x) ←
+initial set_base(10000)
+↑ Z(if x = 0 then 1 else x/abs(x),
+base_B(Base, digits_of(abs(x), Base))) ■
 ```
 
 
@@ -1003,21 +995,21 @@ $`k_{Z}`$ takes an ICON integer and transforms it into a $`Z`$ constant.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\oplus_Z(a, b) \Leftarrow \\
-&\quad \textbf{if } <0_Z(a) \ \& \ >0_Z(b) \textbf{ then } \Uparrow \oplus_Z(b, a) \\
-&\quad \Uparrow normalize_Z( \\
-&\quad\quad \textbf{if } =0_Z(a) \textbf{ then } b \\
-&\quad\quad \textbf{else if } =0_Z(b) \textbf{ then } a \\
-&\quad\quad \textbf{else if } (>0_Z(a) \ \& \ >0_Z(b)) \ | \ (<0_Z(a) \ \& \ <0_Z(b)) \\
-&\quad\quad \textbf{then } Z(a.sign, \oplus_{base_{\mathbf{B}}}(a.mantissa, b.mantissa)) \\
-&\quad\quad \textbf{else } \{ \texttt{\#}a > 0 \textbf{ and } b < 0,\ \textbf{so...} \\
-&\quad\quad\quad \textbf{if } <_{base_{\mathbf{B}}}(a.mantissa, b.mantissa) \\
-&\quad\quad\quad \textbf{then } Z(-1, \ominus_{base_{\mathbf{B}}}(b.mantissa, a.mantissa)) \\
-&\quad\quad\quad \textbf{else } Z(1, \ominus_{base_{\mathbf{B}}}(a.mantissa, b.mantissa)) \} \\
-&\quad ) \ \blacksquare
-\end{aligned}
+```icon
+
+
+⊕_Z(a, b) ←
+if <0_Z(a) & >0_Z(b) then ↑ ⊕_Z(b, a)
+↑ normalize_Z(
+if =0_Z(a) then b
+else if =0_Z(b) then a
+else if (>0_Z(a) & >0_Z(b)) | (<0_Z(a) & <0_Z(b))
+then Z(a.sign, ⊕_base_B(a.mantissa, b.mantissa))
+else { #a > 0 and b < 0, so...
+if <_base_B(a.mantissa, b.mantissa)
+then Z(-1, ⊖_base_B(b.mantissa, a.mantissa))
+else Z(1, ⊖_base_B(a.mantissa, b.mantissa)) }
+) ■
 ```
 
 
@@ -1027,11 +1019,11 @@ $`k_{Z}`$ takes an ICON integer and transforms it into a $`Z`$ constant.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&x \mathrel{:=} k_Z(1);\ y \mathrel{:=} k_Z(-999) \\
-&\text{pr}\{x,\ \text{" + "},\ y,\ \text{" = "},\ \oplus_Z(x, y)\}
-\end{aligned}
+```icon
+
+
+x := k_Z(1); y := k_Z(-999)
+pr{x, " + ", y, " = ", ⊕_Z(x, y)}
 ```
 
 
@@ -1039,14 +1031,14 @@ $`k_{Z}`$ takes an ICON integer and transforms it into a $`Z`$ constant.
 
 is
 
-$`1z + (-999z) = (-998z)`$
+`1z + (-999z) = (-998z)`
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&-_Z(x) \Leftarrow \Uparrow normalize_Z(Z(-x.sign, x.mantissa)) \ \blacksquare
-\end{aligned}
+```icon
+
+
+-_Z(x) ← ↑ normalize_Z(Z(-x.sign, x.mantissa)) ■
 ```
 
 
@@ -1056,12 +1048,12 @@ $`1z + (-999z) = (-998z)`$
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&x \mathrel{:=} k_Z(212);\ y \mathrel{:=} k_Z(-99) \\
-&\text{pr}\{\text{"-"},\ x,\ \text{" = "},\ -_Z(x)\} \\
-&\text{pr}\{\text{"-"},\ y,\ \text{" = "},\ -_Z(y)\}
-\end{aligned}
+```icon
+
+
+x := k_Z(212); y := k_Z(-99)
+pr{"-", x, " = ", -_Z(x)}
+pr{"-", y, " = ", -_Z(y)}
 ```
 
 
@@ -1069,15 +1061,15 @@ $`1z + (-999z) = (-998z)`$
 
 is
 
-$`-212z = (-212z)`$  
-$`-(-99z) = 99z`$
+`-212z = (-212z)`  
+`-(-99z) = 99z`
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\otimes_Z(a, b) \Leftarrow \Uparrow normalize_Z(Z(a.sign * b.sign, \otimes_{base_{\mathbf{B}}}(a.mantissa, b.mantissa))) \ \blacksquare
-\end{aligned}
+```icon
+
+
+⊗_Z(a, b) ← ↑ normalize_Z(Z(a.sign * b.sign, ⊗_base_B(a.mantissa, b.mantissa))) ■
 ```
 
 
@@ -1087,12 +1079,12 @@ $`-(-99z) = 99z`$
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textbf{every } xy \mathrel{:=} ![[10, 1], [121903, 5335], [115668, 75625]] \\
-&\textbf{do } \{ x \mathrel{:=} k_Z(xy[1]);\ y \mathrel{:=} k_Z(xy[2]); \\
-&\quad \text{pr}\{x,\ \text{" / "},\ y,\ \text{" = "},\ \mathbin{⨸}_Z(x, y)\} \}
-\end{aligned}
+```icon
+
+
+every xy := ![[10, 1], [121903, 5335], [115668, 75625]]
+do { x := k_Z(xy[1]); y := k_Z(xy[2]);
+pr{x, " / ", y, " = ", ⨸_Z(x, y)} }
 ```
 
 
@@ -1100,20 +1092,20 @@ $`-(-99z) = 99z`$
 
 is
 
-$`10z / 1z = 10z`$  
-$`121903z / 5335z = 22z`$  
-$`115668z / 75625z = 1z`$
+`10z / 1z = 10z`  
+`121903z / 5335z = 22z`  
+`115668z / 75625z = 1z`
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&mod_Z(a, b) \Leftarrow \\
-&\Uparrow (\textbf{if } <_Z(b, 0_Z(b)) \textbf{ then } mod_Z(a, -_Z(b)) \\
-&\quad \textbf{else if } <_Z(a, 0_Z(a)) \\
-&\quad \textbf{then } \oplus_Z(a, -_Z(\otimes_Z(b, \oplus_Z(-_Z(1_Z(a)), \mathbin{⨸}_Z(a, b)))) \\
-&\quad \textbf{else } \oplus_Z(a, -_Z(\otimes_Z(b, \mathbin{⨸}_Z(a, b)))) )
-\end{aligned}
+```icon
+
+
+mod_Z(a, b) ←
+↑ (if <_Z(b, 0_Z(b)) then mod_Z(a, -_Z(b))
+else if <_Z(a, 0_Z(a))
+then ⊕_Z(a, -_Z(⊗_Z(b, ⊕_Z(-_Z(1_Z(a)), ⨸_Z(a, b))))
+else ⊕_Z(a, -_Z(⊗_Z(b, ⨸_Z(a, b)))) )
 ```
 
 
@@ -1123,11 +1115,11 @@ $`115668z / 75625z = 1z`$
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&x \mathrel{:=} k_Z(121903);\ y \mathrel{:=} k_Z(5335) \\
-&\text{pr}\{x,\ \text{" mod "},\ y,\ \text{" = "},\ mod_Z(x, y)\}
-\end{aligned}
+```icon
+
+
+x := k_Z(121903); y := k_Z(5335)
+pr{x, " mod ", y, " = ", mod_Z(x, y)}
 ```
 
 
@@ -1135,14 +1127,14 @@ $`115668z / 75625z = 1z`$
 
 is
 
-$`121903z \bmod 5335z = 4533z`$
+`121903z \bmod 5335z = 4533z`
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&abs_Z(x) \Leftarrow \Uparrow Z(1, x.mantissa) \ \blacksquare
-\end{aligned}
+```icon
+
+
+abs_Z(x) ← ↑ Z(1, x.mantissa) ■
 ```
 
 
@@ -1150,11 +1142,11 @@ $`121903z \bmod 5335z = 4533z`$
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&deg_Z(x) \Leftarrow \Uparrow x \ \blacksquare \\
-&normalize_Z(x) \Leftarrow \Uparrow (\textbf{if } =0_Z(x) \textbf{ then } Z(1, x.mantissa) \textbf{ else } x) \ \blacksquare
-\end{aligned}
+```icon
+
+
+deg_Z(x) ← ↑ x ■
+normalize_Z(x) ← ↑ (if =0_Z(x) then Z(1, x.mantissa) else x) ■
 ```
 
 
@@ -1164,24 +1156,22 @@ $`121903z \bmod 5335z = 4533z`$
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&=_Z(a, b) \Leftarrow \\
-&\quad \textbf{if } =0_Z(a) \ \& \ =0_Z(b) \textbf{ then } \Uparrow \\
-&\quad \textbf{else if } a.sign \neq b.sign \textbf{ then } \bot \\
-&\quad \textbf{else } \Uparrow =_{base_{\mathbf{B}}}(a.mantissa, b.mantissa) \ \blacksquare \\
-&\\
-&<_Z(a, b) \Leftarrow \\
-&\quad \textbf{if } a.sign < b.sign \textbf{ then } \Uparrow \\
-&\quad \textbf{if } a.sign > b.sign \textbf{ then } \bot \\
-&\quad \textbf{if } a.sign = 1 \textbf{ then } \Uparrow <_{base_{\mathbf{B}}}(a.mantissa, b.mantissa) \\
-&\quad \textbf{if } a.sign = -1 \textbf{ then } \Uparrow <_{base_{\mathbf{B}}}(b.mantissa, a.mantissa) \ \blacksquare \\
-&\\
-&unit_Z(x) \Leftarrow \Uparrow (=_Z(x, 1_Z(x)) \ | \ =_Z(x, Z(-1, 1_{base_{\mathbf{B}}}(x.mantissa)))) \ \blacksquare \\
-&>0_Z(x) \Leftarrow \Uparrow ((x.sign = 1) \ \& \ \textbf{not } =0_Z(x)) \ \blacksquare \\
-&<0_Z(x) \Leftarrow \Uparrow ((x.sign = -1) \ \& \ \textbf{not } =0_Z(x)) \ \blacksquare \\
-&=0_Z(x) \Leftarrow \Uparrow =_{base_{\mathbf{B}}}(x.mantissa, 0_{base_{\mathbf{B}}}(x.mantissa)) \ \blacksquare
-\end{aligned}
+```icon
+
+
+=_Z(a, b) ←
+if =0_Z(a) & =0_Z(b) then ↑
+else if a.sign ≠q b.sign then ⊥
+else ↑ =_base_B(a.mantissa, b.mantissa) ■
+<_Z(a, b) ←
+if a.sign < b.sign then ↑
+if a.sign > b.sign then ⊥
+if a.sign = 1 then ↑ <_base_B(a.mantissa, b.mantissa)
+if a.sign = -1 then ↑ <_base_B(b.mantissa, a.mantissa) ■
+unit_Z(x) ← ↑ (=_Z(x, 1_Z(x)) | =_Z(x, Z(-1, 1_base_B(x.mantissa)))) ■
+>0_Z(x) ← ↑ ((x.sign = 1) & not =0_Z(x)) ■
+<0_Z(x) ← ↑ ((x.sign = -1) & not =0_Z(x)) ■
+=0_Z(x) ← ↑ =_base_B(x.mantissa, 0_base_B(x.mantissa)) ■
 ```
 
 
@@ -1191,16 +1181,16 @@ $`121903z \bmod 5335z = 4533z`$
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&print_Z(a) \Leftarrow \\
-&\quad \textbf{local } digits \\
-&\quad \textbf{if } a.sign < 0 \textbf{ then } writes(\text{"(-"}) \\
-&\quad digits \mathrel{:=} a.mantissa.digits \\
-&\quad \textbf{every } ch \mathrel{:=} \texttt{!}digits \textbf{ do } writes(right(ch,\ Width,\ \text{"0"})) \\
-&\quad writes(\text{"z"}) \\
-&\quad \textbf{if } a.sign < 0 \textbf{ then } writes(\text{")"}) \ \blacksquare
-\end{aligned}
+```icon
+
+
+print_Z(a) ←
+local digits
+if a.sign < 0 then writes("(-")
+digits := a.mantissa.digits
+every ch := !digits do writes(right(ch, Width, "0"))
+writes("z")
+if a.sign < 0 then writes(")") ■
 ```
 
 
@@ -1215,21 +1205,21 @@ We provide the following machine integer arithmetic facilities:
 
 | | |
 |:--|:--|
-| **Constants** | `0_{integer}`, `1_{integer}` |
-| **Operators** | `\oplus`, `-_{integer}`, `\odot_{integer}`, `\mathit{circleslash}_{integer}`, `rem_{integer}`, `mod_{integer}`, `deg_{integer}`, `abs_{integer}` |
-| **Predicates** | `=0_{integer}`, `<0_{integer}`, `=_{integer}`, `unit_{integer}` |
-| **Commands** | `print_{integer}` |
+| **Constants** | `0_integer`, `1_integer` |
+| **Operators** | `\oplus`, `-_integer`, `\odot_integer`, `\mathit{circleslash}_integer`, `rem_integer`, `mod_integer`, `deg_integer`, `abs_integer` |
+| **Predicates** | `=0_integer`, `<0_integer`, `=_integer`, `unit_integer` |
+| **Commands** | `print_integer` |
 
 
 **Constants.** We provide constants 0 and 1, as follows:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&0_{integer}(x) \Leftarrow \Uparrow 0 \ \blacksquare \\
-&1_{integer}(x) \Leftarrow \Uparrow 1 \ \blacksquare
-\end{aligned}
+```icon
+
+
+0_integer(x) ← ↑ 0 ■
+1_integer(x) ← ↑ 1 ■
 ```
 
 
@@ -1239,18 +1229,17 @@ We provide the following machine integer arithmetic facilities:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\oplus(a, b) \Leftarrow \Uparrow a + b \ \blacksquare \\
-&-_integer(x) \Leftarrow \Uparrow -x \ \blacksquare \\
-&\odot_{integer}(a, b) \Leftarrow \Uparrow a * b \ \blacksquare \\
-&\mathit{circleslash}_{integer}(a, b) \Leftarrow \Uparrow a / b \ \blacksquare \\
-&\\
-&mod_{integer}(a, m) \Leftarrow \\
-&\quad \textbf{if } m < 0 \textbf{ then } m \mathrel{:=} -m \\
-&\quad \textbf{repeat } \\
-&\quad \textbf{if } a < 0 \textbf{ then } a \mathrel{:=} a + (abs(a/m) + 1) * m \textbf{ else } \Uparrow a \% m \ \blacksquare
-\end{aligned}
+```icon
+
+
+⊕(a, b) ← ↑ a + b ■
+-_integer(x) ← ↑ -x ■
+odot_integer(a, b) ← ↑ a * b ■
+mathit{circleslash}_integer(a, b) ← ↑ a / b ■
+mod_integer(a, m) ←
+if m < 0 then m := -m
+repeat
+if a < 0 then a := a + (abs(a/m) + 1) * m else ↑ a % m ■
 ```
 
 
@@ -1260,10 +1249,10 @@ We provide the following machine integer arithmetic facilities:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&rem_{integer}(a, b) \Leftarrow \Uparrow a \% b \ \blacksquare
-\end{aligned}
+```icon
+
+
+rem_integer(a, b) ← ↑ a % b ■
 ```
 
 
@@ -1271,11 +1260,11 @@ We provide the following machine integer arithmetic facilities:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&deg_{integer}(x) \Leftarrow \Uparrow x \ \blacksquare \\
-&abs_{integer}(x) \Leftarrow \Uparrow abs(x) \ \blacksquare
-\end{aligned}
+```icon
+
+
+deg_integer(x) ← ↑ x ■
+abs_integer(x) ← ↑ abs(x) ■
 ```
 
 
@@ -1285,13 +1274,13 @@ We provide the following machine integer arithmetic facilities:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&=0_{integer}(x) \Leftarrow \Uparrow (x = 0) \ \blacksquare \\
-&<0_{integer}(x) \Leftarrow \Uparrow x < 0 \ \blacksquare \\
-&=_{integer}(a, b) \Leftarrow \Uparrow a = b \ \blacksquare \\
-&unit_{integer}(x) \Leftarrow \textbf{if } ((x = 1) \ | \ (x = -1)) \textbf{ then } \Uparrow x \ \blacksquare
-\end{aligned}
+```icon
+
+
+=0_integer(x) ← ↑ (x = 0) ■
+<0_integer(x) ← ↑ x < 0 ■
+=_integer(a, b) ← ↑ a = b ■
+unit_integer(x) ← if ((x = 1) | (x = -1)) then ↑ x ■
 ```
 
 
@@ -1301,10 +1290,10 @@ We provide the following machine integer arithmetic facilities:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&print_{integer}(x) \Leftarrow \textbf{if } x < 0 \textbf{ then } writes(\text{"("},\ x,\ \text{")"}) \textbf{ else } writes(x) \ \blacksquare
-\end{aligned}
+```icon
+
+
+print_integer(x) ← if x < 0 then writes("(", x, ")") else writes(x) ■
 ```
 
 
@@ -1313,10 +1302,10 @@ We provide the following machine integer arithmetic facilities:
 
 ### 2.3. Domain constructors
 
-EUCLID provides three classes of domain constructions: quotient domains $`Q_{D}`$, modular domains $`D/(e)`$, polynomials $`D[x]`$ and truncated power series `T(D[[x]])_n`.
+EUCLID provides three classes of domain constructions: quotient domains `Q_D`, modular domains `D/(e)`, polynomials `D[x]` and truncated power series `T(D[[x]])_n`.
 
 
-#### 2.3.1. Quotient Euclidean domain $`\mathcal{Q}`$
+#### 2.3.1. Quotient Euclidean domain `\mathcal{Q}`
 
 <p align="center"><strong>Quotient Domain Arithmetic Facilities</strong></p>
 
@@ -1328,14 +1317,14 @@ EUCLID provides three classes of domain constructions: quotient domains $`Q_{D}`
 | **Predicates** | `=_{\mathcal{Q}}`, `unit_{\mathcal{Q}}` |
 | **Commands** | `print_{\mathcal{Q}}` |
 
-**Data structures.** The domains $`\mathcal{Q}`$ are of the form $`\mathcal{Q}=\{\frac{m}{n} \mid m, n \in D, n \neq 0\}`$, for some Euclidean domain $`D`$. Elements of such a domain $`\mathcal{Q}`$ are quotients with a dividend and a divisor:
+**Data structures.** The domains `\mathcal{Q}` are of the form `\mathcal{Q}=\{\frac{m}{n} \mid m, n \in D, n \neq 0\}`, for some Euclidean domain `D`. Elements of such a domain `\mathcal{Q}` are quotients with a dividend and a divisor:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textbf{record } Q\ (dividend, divisor)
-\end{aligned}
+```icon
+
+
+record Q (dividend, divisor)
 ```
 
 
@@ -1345,30 +1334,30 @@ EUCLID provides three classes of domain constructions: quotient domains $`Q_{D}`
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&0_{\mathcal{Q}}(x) \Leftarrow \Uparrow Q(0(x.dividend), 1(x.dividend)) \ \blacksquare \\
-&1_{\mathcal{Q}}(x) \Leftarrow \Uparrow Q(1(x.dividend), 1(x.dividend)) \ \blacksquare \\
-&k_{i\mathcal{Q}_x}(l, j) \Leftarrow \Uparrow term(Q(l, 1(l)), j) \ \blacksquare
-\end{aligned}
+```icon
+
+
+0_Q(x) ← ↑ Q(0(x.dividend), 1(x.dividend)) ■
+1_Q(x) ← ↑ Q(1(x.dividend), 1(x.dividend)) ■
+k_{imathcal{Q}_x}(l, j) ← ↑ term(Q(l, 1(l)), j) ■
 ```
 
 
 </div>
 
-**Operators.** Let $`a = \frac{p}{q}`$, $`b = \frac{p'}{q'}`$. Then $`a + b = \frac{x}{y}`$ where $`x = pq' \oplus p'q`$, $`y = qq'`$.
+**Operators.** Let `a = \frac{p}{q}`, `b = \frac{p'}{q'}`. Then `a + b = \frac{x}{y}` where `x = pq' \oplus p'q`, `y = qq'`.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\oplus_{\mathcal{Q}}(a, b) \Leftarrow \\
-&\quad \textbf{local } zz,\ top \\
-&\quad top \mathrel{:=} \oplus(\otimes(a.dividend, b.divisor), \otimes(b.dividend, a.divisor)) \\
-&\quad zz \mathrel{:=} 0(a.dividend) \\
-&\quad \Uparrow \textbf{if } =_{\mathcal{Q}}(top, zz) \textbf{ then } Q(zz, 1(a.dividend)) \\
-&\quad \textbf{else } normalize_{\mathcal{Q}}(Q(top, \otimes(a.divisor, b.divisor))) \ \blacksquare
-\end{aligned}
+```icon
+
+
+⊕_Q(a, b) ←
+local zz, top
+top := ⊕(⊗(a.dividend, b.divisor), ⊗(b.dividend, a.divisor))
+zz := 0(a.dividend)
+↑ if =_Q(top, zz) then Q(zz, 1(a.dividend))
+else normalize_Q(Q(top, ⊗(a.divisor, b.divisor))) ■
 ```
 
 
@@ -1376,19 +1365,17 @@ EUCLID provides three classes of domain constructions: quotient domains $`Q_{D}`
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&-_{\mathcal{Q}}(x) \Leftarrow \Uparrow Q(-(x.dividend), x.divisor) \ \blacksquare \\
-&\\
-&\otimes_{\mathcal{Q}}(a, b) \Leftarrow \Uparrow normalize_{\mathcal{Q}}(Q(\otimes(a.dividend, b.dividend), \otimes(a.divisor, b.divisor))) \ \blacksquare \\
-&\\
-&\mathbin{⨸}_{\mathcal{Q}}(a, b) \Leftarrow \\
-&\quad \textbf{local } zz \\
-&\quad zz \mathrel{:=} 0(b.dividend) \\
-&\quad \textbf{if } =(b.dividend, zz) \textbf{ then } \text{pr}\{\text{"ERROR: divide by 0 in } \mathcal{Q}\text{"}\} \\
-&\quad \textbf{else } \Uparrow (\textbf{if } =(a.divisor, zz) \textbf{ then } 0_{\mathcal{Q}}(a) \\
-&\quad\quad \textbf{else } normalize_{\mathcal{Q}}(Q(\otimes(a.dividend, b.divisor), \otimes(b.dividend, a.divisor)))) \ \blacksquare
-\end{aligned}
+```icon
+
+
+-_Q(x) ← ↑ Q(-(x.dividend), x.divisor) ■
+⊗_Q(a, b) ← ↑ normalize_Q(Q(⊗(a.dividend, b.dividend), ⊗(a.divisor, b.divisor))) ■
+⨸_Q(a, b) ←
+local zz
+zz := 0(b.dividend)
+if =(b.dividend, zz) then pr{"ERROR: divide by 0 in mathcal{Q}"}
+else ↑ (if =(a.divisor, zz) then 0_Q(a)
+else normalize_Q(Q(⊗(a.dividend, b.divisor), ⊗(b.dividend, a.divisor)))) ■
 ```
 
 
@@ -1398,29 +1385,29 @@ There are no remainders in quotient division.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&mod_{\mathcal{Q}}(a, m) \Leftarrow \Uparrow 0_{\mathcal{Q}}(a) \ \blacksquare
-\end{aligned}
+```icon
+
+
+mod_Q(a, m) ← ↑ 0_Q(a) ■
 ```
 
 
 </div>
 
-$`normalize_{\mathcal{Q}}(x)`$ reduces the size of the dividend and divisor, and ensures that any negative sign is in the dividend. Let $`g = GCD(x, y)`$. Then $`normalize_{\mathcal{Q}}(\frac{x}{y}) = \frac{x \mathbin{⨸} g}{y \mathbin{⨸} g}`$.
+`normalize_{\mathcal{Q}}(x)` reduces the size of the dividend and divisor, and ensures that any negative sign is in the dividend. Let `g = GCD(x, y)`. Then `normalize_{\mathcal{Q}}(\frac{x}{y}) = \frac{x \mathbin{⨸} g}{y \mathbin{⨸} g}`.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&normalize_{\mathcal{Q}}(x) \Leftarrow \\
-&\quad \textbf{local } g,\ top,\ bottom \\
-&\quad g \mathrel{:=} GCD(x.dividend, x.divisor) \\
-&\quad top \mathrel{:=} \mathbin{⨸}(x.dividend, g) \\
-&\quad bottom \mathrel{:=} \mathbin{⨸}(x.divisor, g) \\
-&\quad \Uparrow (\textbf{if } <0(bottom) \textbf{ then } Q(-(top), -(bottom)) \\
-&\quad\quad \textbf{else } Q(top, bottom)) \ \blacksquare
-\end{aligned}
+```icon
+
+
+normalize_Q(x) ←
+local g, top, bottom
+g := GCD(x.dividend, x.divisor)
+top := ⨸(x.dividend, g)
+bottom := ⨸(x.divisor, g)
+↑ (if <0(bottom) then Q(-(top), -(bottom))
+else Q(top, bottom)) ■
 ```
 
 
@@ -1428,32 +1415,34 @@ $`normalize_{\mathcal{Q}}(x)`$ reduces the size of the dividend and divisor, and
 
 ```icon
 
+
+
 d8g_Q (X) 4= it X ■
 ```
 
 **Predicates.**
 
-$`\frac{p}{q} = \frac{p'}{q'}`$ if and only if $`pq' = qp'`$.
+`\frac{p}{q} = \frac{p'}{q'}` if and only if `pq' = qp'`.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&=_{\mathcal{Q}}(a, b) \Leftarrow \Uparrow (=(\otimes(a.divisor, b.dividend), \otimes(b.divisor, a.dividend))) \ \blacksquare
-\end{aligned}
+```icon
+
+
+=_Q(a, b) ← ↑ (=(⊗(a.divisor, b.dividend), ⊗(b.divisor, a.dividend))) ■
 ```
 
 
 </div>
 
-Everything is a unit in $`\mathcal{Q}`$.
+Everything is a unit in `\mathcal{Q}`.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&unit_{\mathcal{Q}}(x) \Leftarrow \Uparrow \ \blacksquare
-\end{aligned}
+```icon
+
+
+unit_Q(x) ← ↑ ■
 ```
 
 
@@ -1463,41 +1452,41 @@ Everything is a unit in $`\mathcal{Q}`$.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&print_{\mathcal{Q}}(x) \Leftarrow \\
-&\quad \textbf{if } =(x.divisor, 1(x.divisor)) \\
-&\quad \textbf{then } prs\{x.dividend,\ \text{"q"}\} \\
-&\quad \textbf{else } prs\{\text{"("},\ x.dividend,\ \text{"/"},\ x.divisor,\ \text{")q"}\} \ \blacksquare
-\end{aligned}
+```icon
+
+
+print_Q(x) ←
+if =(x.divisor, 1(x.divisor))
+then prs{x.dividend, "q"}
+else prs{"(", x.dividend, "/", x.divisor, ")q"} ■
 ```
 
 
 </div>
 
 
-#### 2.3.2. Modular Euclidean domain $`D/(x)`$
+#### 2.3.2. Modular Euclidean domain `D/(x)`
 
 <p align="center"><strong>Modular Domain Arithmetic Facilities</strong></p>
 
 | | |
 |:--|:--|
 | **Data structures** | `modulo` |
-| **Constants** | `0_{modulo}`, `1_{modulo}` |
-| **Operators** | `\oplus_{modulo}`, `-_{modulo}`, `\otimes_{modulo}`, `\mathbin{⨸}_{modulo}`, `normalize_{modulo}`, `deg_{modulo}` |
-| **Predicates** | `=_{modulo}`, `unit_{modulo}`, `<0_{modulo}` |
-| **Commands** | `print_{modulo}` |
+| **Constants** | `0_modulo`, `1_modulo` |
+| **Operators** | `\oplus_modulo`, `-_modulo`, `\otimes_modulo`, `\mathbin{⨸}_modulo`, `normalize_modulo`, `deg_modulo` |
+| **Predicates** | `=_modulo`, `unit_modulo`, `<0_modulo` |
+| **Commands** | `print_modulo` |
 
 **Data structures.**
 
-An item from a modular domain, say $`Z_{5}`$, is specified by the item in the “base” domain, plus the modulus.
+An item from a modular domain, say `Z_5`, is specified by the item in the “base” domain, plus the modulus.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textbf{record } modulo\ (item, modulus)
-\end{aligned}
+```icon
+
+
+record modulo (item, modulus)
 ```
 
 
@@ -1507,11 +1496,11 @@ An item from a modular domain, say $`Z_{5}`$, is specified by the item in the �
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&0_{modulo}(a) \Leftarrow \Uparrow modulo(0(a.item), a.modulus) \ \blacksquare \\
-&1_{modulo}(a) \Leftarrow \Uparrow modulo(1(a.item), a.modulus) \ \blacksquare
-\end{aligned}
+```icon
+
+
+0_modulo(a) ← ↑ modulo(0(a.item), a.modulus) ■
+1_modulo(a) ← ↑ modulo(1(a.item), a.modulus) ■
 ```
 
 
@@ -1521,16 +1510,15 @@ An item from a modular domain, say $`Z_{5}`$, is specified by the item in the �
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\oplus_{modulo}(a, b) \Leftarrow \Uparrow normalize_{modulo}(modulo(\oplus(a.item, b.item), a.modulus)) \ \blacksquare \\
-&-_{modulo}(x) \Leftarrow \Uparrow normalize_{modulo}(modulo(-(x.item), x.modulus)) \ \blacksquare \\
-&\otimes_{modulo}(a, b) \Leftarrow \Uparrow normalize_{modulo}(modulo(\otimes(a.item, b.item), a.modulus)) \ \blacksquare \\
-&\mathbin{⨸}_{modulo}(a, b) \Leftarrow \Uparrow normalize_{modulo}(modulo(\otimes(a.item, INVERSE(b.item, b.modulus)), a.modulus)) \ \blacksquare \\
-&\\
-&normalize_{modulo}(x) \Leftarrow \Uparrow modulo(mod(x.item, x.modulus), x.modulus) \ \blacksquare \\
-&deg_{modulo}(x) \Leftarrow \Uparrow mod(x.item, x.modulus) \ \blacksquare
-\end{aligned}
+```icon
+
+
+⊕_modulo(a, b) ← ↑ normalize_modulo(modulo(⊕(a.item, b.item), a.modulus)) ■
+-_modulo(x) ← ↑ normalize_modulo(modulo(-(x.item), x.modulus)) ■
+⊗_modulo(a, b) ← ↑ normalize_modulo(modulo(⊗(a.item, b.item), a.modulus)) ■
+⨸_modulo(a, b) ← ↑ normalize_modulo(modulo(⊗(a.item, INVERSE(b.item, b.modulus)), a.modulus)) ■
+normalize_modulo(x) ← ↑ modulo(mod(x.item, x.modulus), x.modulus) ■
+deg_modulo(x) ← ↑ mod(x.item, x.modulus) ■
 ```
 
 
@@ -1540,11 +1528,11 @@ An item from a modular domain, say $`Z_{5}`$, is specified by the item in the �
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&=_{modulo}(a, b) \Leftarrow \Uparrow (=(mod(a.item, a.modulus), mod(b.item, b.modulus))) \ \blacksquare \\
-&unit_{modulo}(a) \Leftarrow \Uparrow (=(\$mod\$(a.item, a.modulus), 1)) \ \blacksquare
-\end{aligned}
+```icon
+
+
+=_modulo(a, b) ← ↑ (=(mod(a.item, a.modulus), mod(b.item, b.modulus))) ■
+unit_modulo(a) ← ↑ (=($mod$(a.item, a.modulus), 1)) ■
 ```
 
 
@@ -1554,10 +1542,10 @@ Nothing is negative in a modular domain.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&<0_{modulo}(a) \Leftarrow \bot \ \blacksquare
-\end{aligned}
+```icon
+
+
+<0_modulo(a) ← ⊥ ■
 ```
 
 
@@ -1567,57 +1555,57 @@ Nothing is negative in a modular domain.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&print_{modulo}(x) \Leftarrow prs\{\text{"("},\ x.item,\ \text{" mod "},\ x.modulus,\ \text{")"}\} \ \blacksquare
-\end{aligned}
+```icon
+
+
+print_modulo(x) ← prs{"(", x.item, " mod ", x.modulus, ")"} ■
 ```
 
 
 </div>
 
 
-#### 2.3.3. Polynomial Euclidean domain $`D[x]`$
+#### 2.3.3. Polynomial Euclidean domain `D[x]`
 
 <p align="center"><strong>Polynomial Domain Arithmetic Facilities</strong></p>
 
 | | |
 |:--|:--|
 | **Data structures** | `poly`, `term`; `poly\_of`, `0th\_coef`, `lead\_coef` |
-| **Constants** | `0_{poly}`, `1_{poly}`, `k_{Z_Q}`, `k_{Z_{Qx}}`, `k_{Z_x}` |
-| **Operators** | `\oplus_{poly}`, `-_{poly}`, `\otimes_{poly}`, `\mathbin{⨸}_{poly}`, `mod_{poly}`, `eval_{poly}`, `deg_{poly}`, `-_{deg}`, `\oplus_{deg}`, `normalize_{poly}` |
-| **Predicates** | `<_{degree}`, `=_{poly}`, `unit_{poly}` |
-| **Commands** | `print_{poly}` |
+| **Constants** | `0_poly`, `1_poly`, `k_Z_Q`, `k_Z_Qx`, `k_Z_x` |
+| **Operators** | `\oplus_poly`, `-_poly`, `\otimes_poly`, `\mathbin{⨸}_poly`, `mod_poly`, `eval_poly`, `deg_poly`, `-_deg`, `\oplus_deg`, `normalize_poly` |
+| **Predicates** | `<_degree`, `=_poly`, `unit_poly` |
+| **Commands** | `print_poly` |
 
-**Data structures.** Polynomials $`a(x) \in D[x]`$ are finite sums of the form
+**Data structures.** Polynomials `a(x) \in D[x]` are finite sums of the form
 
-$$a(x) = \sum_{i=0}^{m} a_i x^i$$
+$$a(x) = \sum_i=0^{m} a_i x^i$$
 
 They are represented as lists of terms, in increasing order of power, such that there is always at least one term, 0, if the polynomial is zero. Otherwise the least term may be of any degree.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textbf{record } poly\ (terms) \\
-&poly\_of(x) \Leftarrow \Uparrow poly([term(x, 0)]) \ \blacksquare
-\end{aligned}
+```icon
+
+
+record poly (terms)
+poly_of(x) ← ↑ poly([term(x, 0)]) ■
 ```
 
 
 </div>
 
-The coefficient of the constant term as an element of $`D`$, if there is a constant term, otherwise 0, may be obtained with:
+The coefficient of the constant term as an element of `D`, if there is a constant term, otherwise 0, may be obtained with:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&0th\_coef(fx) \Leftarrow \\
-&\quad \textbf{local } a \\
-&\quad a \mathrel{:=} fx.terms[1] \\
-&\quad \Uparrow (\textbf{if } a.power = 0 \textbf{ then } a.coef \textbf{ else } 0(a.coef)) \ \blacksquare
-\end{aligned}
+```icon
+
+
+0th_coef(fx) ←
+local a
+a := fx.terms[1]
+↑ (if a.power = 0 then a.coef else 0(a.coef)) ■
 ```
 
 
@@ -1627,23 +1615,23 @@ The coefficient of the term with the highest degree may be obtained with:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&lead\_coef(ax) \Leftarrow \Uparrow (ax.terms[\texttt{*}ax.terms]).coef \ \blacksquare
-\end{aligned}
+```icon
+
+
+lead_coef(ax) ← ↑ (ax.terms[*ax.terms]).coef ■
 ```
 
 
 </div>
 
-A term, say $`ax^n`$, is represented as $`coef \cdot X^{power}`$. It is assumed that coefficient and indeterminate range over the same base domain, and that the power ranges over $`\mathcal{N}`$.
+A term, say `ax^n`, is represented as `coef \cdot X^{power}`. It is assumed that coefficient and indeterminate range over the same base domain, and that the power ranges over `\mathcal{N}`.
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\textbf{record } term\ (coef, power)
-\end{aligned}
+```icon
+
+
+record term (coef, power)
 ```
 
 
@@ -1655,12 +1643,12 @@ The zero of the base domain of a coefficient of the polynomial is obtained via:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&0_{poly}(p) \Leftarrow \\
-&\quad z \mathrel{:=} 0(p.terms[1].coef) \\
-&\quad \Uparrow poly([term(z, 0)]) \ \blacksquare
-\end{aligned}
+```icon
+
+
+0_poly(p) ←
+z := 0(p.terms[1].coef)
+↑ poly([term(z, 0)]) ■
 ```
 
 
@@ -1670,11 +1658,11 @@ The zero of the base domain of a coefficient of the polynomial is obtained via:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\text{pr}\{\text{"Q:    0 = "},\ 0_{poly}(poly([term(Q(-2,1), 0)]))\} \\
-&\text{pr}\{\text{"QZ:   0 = "},\ 0_{poly}(poly([term(k_{Z_{Qx}}(-2, 0)]))\}
-\end{aligned}
+```icon
+
+
+pr{"Q: 0 = ", 0_poly(poly([term(Q(-2,1), 0)]))}
+pr{"QZ: 0 = ", 0_poly(poly([term(k_Z_Qx(-2, 0)]))}
 ```
 
 
@@ -1682,19 +1670,19 @@ The zero of the base domain of a coefficient of the polynomial is obtained via:
 
 is
 
-$`Q\text{:    0 = }0_{q}`$  
-$`QZ\text{:   0 = }0_{zq}`$
+`Q\text{:    0 = }0_q`  
+`QZ\text{:   0 = }0_zq`
 
 The one of the base domain of a coefficient of the polynomial may be obtained with: 
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&1_{poly}(p) \Leftarrow \\
-&\quad z \mathrel{:=} 1(p.terms[1].coef) \\
-&\quad \Uparrow poly([term(z, 0)]) \ \blacksquare
-\end{aligned}
+```icon
+
+
+1_poly(p) ←
+z := 1(p.terms[1].coef)
+↑ poly([term(z, 0)]) ■
 ```
 
 
@@ -1704,38 +1692,38 @@ An arbitrary-precision rational whole number is obtained with:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&k_{Z_Q}(e) \Leftarrow \\
-&\quad top \mathrel{:=} k_Z(e) \\
-&\quad \Uparrow Q(top, 1_Z(top)) \ \blacksquare
-\end{aligned}
+```icon
+
+
+k_Z_Q(e) ←
+top := k_Z(e)
+↑ Q(top, 1_Z(top)) ■
 ```
 
 
 </div>
 
-An arbitrary-precision rational whole number-coefficient indeterminate $`e x^y`$ is obtained with:
+An arbitrary-precision rational whole number-coefficient indeterminate `e x^y` is obtained with:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&k_{Z_{Qx}}(e, y) \Leftarrow \Uparrow term(k_{Z_Q}(e), y) \ \blacksquare
-\end{aligned}
+```icon
+
+
+k_Z_Qx(e, y) ← ↑ term(k_Z_Q(e), y) ■
 ```
 
 
 </div>
 
-An arbitrary-precision integer-coefficient indeterminate $`e x^y`$ is obtained with:
+An arbitrary-precision integer-coefficient indeterminate `e x^y` is obtained with:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&k_{Z_x}(e, y) \Leftarrow \Uparrow term(k_Z(e), y) \ \blacksquare
-\end{aligned}
+```icon
+
+
+k_Z_x(e, y) ← ↑ term(k_Z(e), y) ■
 ```
 
 
@@ -1745,15 +1733,15 @@ An arbitrary-precision integer-coefficient indeterminate $`e x^y`$ is obtained w
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\oplus_{poly}(a, b) \Leftarrow \\
-&\quad \textbf{local } Terms,\ T,\ z \\
-&\quad Terms \mathrel{:=} \oplus_{terms}(a.terms, b.terms) \\
-&\quad T \mathrel{:=} [];\ z \mathrel{:=} 0(a.terms[1].coef) \\
-&\quad \textbf{every } t \mathrel{:=} \texttt{!}Terms \textbf{ do if not } =(t.coef, z) \textbf{ then } T \mathrel{\texttt{|||}}\mathrel{:=} \ [t] \\
-&\quad \Uparrow (\textbf{if } \texttt{*}T > 0 \textbf{ then } poly(T) \textbf{ else } 0(a)) \ \blacksquare
-\end{aligned}
+```icon
+
+
+⊕_poly(a, b) ←
+local Terms, T, z
+Terms := ⊕_terms(a.terms, b.terms)
+T := []; z := 0(a.terms[1].coef)
+every t := !Terms do if not =(t.coef, z) then T |||:= [t]
+↑ (if *T > 0 then poly(T) else 0(a)) ■
 ```
 
 
@@ -1761,30 +1749,30 @@ An arbitrary-precision integer-coefficient indeterminate $`e x^y`$ is obtained w
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\oplus_{terms}(a, b) \Leftarrow \\
-&\quad \textbf{local } c\_coef,\ at,\ ap,\ ac,\ bt,\ bp,\ bc \\
-&\quad \Uparrow ( \\
-&\quad\quad \textbf{if } \texttt{*}a = 0 \textbf{ then } b \\
-&\quad\quad \textbf{else if } \texttt{*}b = 0 \textbf{ then } a \\
-&\quad\quad \textbf{else } \{ \\
-&\quad\quad\quad at \mathrel{:=} a[1];\ ap \mathrel{:=} at.power;\ ac \mathrel{:=} at.coef \\
-&\quad\quad\quad bt \mathrel{:=} b[1];\ bp \mathrel{:=} bt.power;\ bc \mathrel{:=} bt.coef \\
-&\quad\quad\quad \textbf{if } less(ap, bp) \\
-&\quad\quad\quad \textbf{then } \{ \\
-&\quad\quad\quad\quad \textbf{if } =(ac, 0(ac)) \\
-&\quad\quad\quad\quad \textbf{then } \oplus_{terms}(rest(a), b) \\
-&\quad\quad\quad\quad \textbf{else } [at] \ \mathrel{\texttt{||}} \ \oplus_{terms}(rest(a), b) \} \\
-&\quad\quad\quad \textbf{else if } =(ap, bp) \\
-&\quad\quad\quad \textbf{then } \{ \\
-&\quad\quad\quad\quad c\_coef \mathrel{:=} \oplus(ac, bc) \\
-&\quad\quad\quad\quad \textbf{if } =(c\_coef, 0(c\_coef)) \\
-&\quad\quad\quad\quad \textbf{then } \oplus_{terms}(rest(a), rest(b)) \\
-&\quad\quad\quad\quad \textbf{else } [term(c\_coef, ap)] \ \mathrel{\texttt{||}} \ \oplus_{terms}(rest(a), rest(b)) \} \\
-&\quad\quad\quad \textbf{else } \oplus_{terms}(b, a) \} \\
-&\quad ) \ \blacksquare
-\end{aligned}
+```icon
+
+
+⊕_terms(a, b) ←
+local c_coef, at, ap, ac, bt, bp, bc
+↑ (
+if *a = 0 then b
+else if *b = 0 then a
+else {
+at := a[1]; ap := at.power; ac := at.coef
+bt := b[1]; bp := bt.power; bc := bt.coef
+if less(ap, bp)
+then {
+if =(ac, 0(ac))
+then ⊕_terms(rest(a), b)
+else [at] } ⊕_terms(rest(a), b) }
+else if =(ap, bp)
+then {
+c_coef := ⊕(ac, bc)
+if =(c_coef, 0(c_coef))
+then ⊕_terms(rest(a), rest(b))
+else [term(c_coef, ap)] } ⊕_terms(rest(a), rest(b)) }
+else ⊕_terms(b, a) }
+) ■
 ```
 
 
@@ -1794,15 +1782,15 @@ An arbitrary-precision integer-coefficient indeterminate $`e x^y`$ is obtained w
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&ax \mathrel{:=} poly([term(Q(-2,1), 0), term(Q(1,1), 3)]) \\
-&bx \mathrel{:=} poly([term(Q(-3,1), 0), term(Q(2,1), 3)]) \\
-&fx \mathrel{:=} poly([k_{Z_{Qx}}(-2, 0), k_{Z_{Qx}}(1,3)]) \\
-&gx \mathrel{:=} poly([k_{Z_{Qx}}(-3, 0), k_{Z_{Qx}}(2,3)]) \\
-&\text{pr}\{\text{"Q: ("},\ ax,\ \text{") + ("},\ bx,\ \text{") = "},\ \oplus_{poly}(ax, bx)\} \\
-&\text{pr}\{\text{"QZ: ("},\ fx,\ \text{") + ("},\ gx,\ \text{") = "},\ \oplus_{poly}(fx, gx)\}
-\end{aligned}
+```icon
+
+
+ax := poly([term(Q(-2,1), 0), term(Q(1,1), 3)])
+bx := poly([term(Q(-3,1), 0), term(Q(2,1), 3)])
+fx := poly([k_Z_Qx(-2, 0), k_Z_Qx(1,3)])
+gx := poly([k_Z_Qx(-3, 0), k_Z_Qx(2,3)])
+pr{"Q: (", ax, ") + (", bx, ") = ", ⊕_poly(ax, bx)}
+pr{"QZ: (", fx, ") + (", gx, ") = ", ⊕_poly(fx, gx)}
 ```
 
 
@@ -1810,21 +1798,20 @@ An arbitrary-precision integer-coefficient indeterminate $`e x^y`$ is obtained w
 
 is
 
-$`Q\text{: }(-2)q + 1q \cdot X^3) + ((-3)q + 2q \cdot X^3) = (-5)q + 3q \cdot X^3`$  
-$`QZ\text{: }((-2z)q + 1zq \cdot X^3) + ((-3z)q + 2zq \cdot X^3) = (-5z)q + 3zq \cdot X^3`$
+`Q\text{: }(-2)q + 1q \cdot X^3) + ((-3)q + 2q \cdot X^3) = (-5)q + 3q \cdot X^3`  
+`QZ\text{: }((-2z)q + 1zq \cdot X^3) + ((-3z)q + 2zq \cdot X^3) = (-5z)q + 3zq \cdot X^3`
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&-_{poly}(x) \Leftarrow \\
-&\quad \textbf{local } c \\
-&\quad c \mathrel{:=} [] \\
-&\quad \textbf{every } t \mathrel{:=} \texttt{!}x.terms \textbf{ do } c \mathrel{\texttt{|||}}\mathrel{:=} \ [-_{term}(t)] \\
-&\quad \Uparrow poly(c) \ \blacksquare \\
-&\\
-&-_{term}(t) \Leftarrow \Uparrow term(-(t.coef), t.power) \ \blacksquare
-\end{aligned}
+```icon
+
+
+-_poly(x) ←
+local c
+c := []
+every t := !x.terms do c |||:= [-_term(t)]
+↑ poly(c) ■
+-_term(t) ← ↑ term(-(t.coef), t.power) ■
 ```
 
 
@@ -1834,13 +1821,13 @@ $`QZ\text{: }((-2z)q + 1zq \cdot X^3) + ((-3z)q + 2zq \cdot X^3) = (-5z)q + 3zq 
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&ax \mathrel{:=} poly([term(Q(-2,1), 0), term(Q(1,1), 3)]) \\
-&fx \mathrel{:=} poly([k_{Z_{Qx}}(-2, 0), k_{Z_{Qx}}(1,3)]) \\
-&\text{pr}\{\text{"Q:  - ("},\ ax,\ \text{") = "},\ -_{poly}(ax)\} \\
-&\text{pr}\{\text{"QZ: - ("},\ fx,\ \text{") = "},\ -_{poly}(fx)\}
-\end{aligned}
+```icon
+
+
+ax := poly([term(Q(-2,1), 0), term(Q(1,1), 3)])
+fx := poly([k_Z_Qx(-2, 0), k_Z_Qx(1,3)])
+pr{"Q: - (", ax, ") = ", -_poly(ax)}
+pr{"QZ: - (", fx, ") = ", -_poly(fx)}
 ```
 
 
@@ -1848,20 +1835,19 @@ $`QZ\text{: }((-2z)q + 1zq \cdot X^3) + ((-3z)q + 2zq \cdot X^3) = (-5z)q + 3zq 
 
 is
 
-$`Q\text{:  - }((-2)q + 1q \cdot X^3) = 2q + (-1)q \cdot X^3`$  
-$`QZ\text{: - }((-2z)q + 1zq \cdot X^3) = 2zq + (-1z)q \cdot X^3`$
+`Q\text{:  - }((-2)q + 1q \cdot X^3) = 2q + (-1)q \cdot X^3`  
+`QZ\text{: - }((-2z)q + 1zq \cdot X^3) = 2zq + (-1z)q \cdot X^3`
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\otimes_{poly}(a, b) \Leftarrow \Uparrow \otimes_{poly\_terms}(a, b.terms) \ \blacksquare \\
-&\\
-&\otimes_{poly\_terms}(a, b\_terms) \Leftarrow \\
-&\quad \Uparrow (\textbf{if } \texttt{*}b\_terms = 0 \textbf{ then } 0(a) \\
-&\quad\quad \textbf{else } \oplus_{poly}(\otimes_{poly\_term}(a, b\_terms[1]), \\
-&\quad\quad\quad \otimes_{poly\_terms}(a, rest(b\_terms)))) \ \blacksquare
-\end{aligned}
+```icon
+
+
+⊗_poly(a, b) ← ↑ ⊗_poly_terms(a, b.terms) ■
+⊗_poly_terms(a, b_terms) ←
+↑ (if *b_terms = 0 then 0(a)
+else ⊕_poly(⊗_poly_term(a, b_terms[1]),
+⊗_poly_terms(a, rest(b_terms)))) ■
 ```
 
 
@@ -1869,17 +1855,16 @@ $`QZ\text{: - }((-2z)q + 1zq \cdot X^3) = 2zq + (-1z)q \cdot X^3`$
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\otimes_{poly\_term}(a, b\_term) \Leftarrow \\
-&\quad \Uparrow (\textbf{if } \texttt{*}a.terms < 2 \\
-&\quad\quad \textbf{then } poly([\otimes_{term\_term}(a.terms[1], b\_term)]) \\
-&\quad\quad \textbf{else } \oplus_{poly}(poly([\otimes_{term\_term}(a.terms[1], b\_term)]), \\
-&\quad\quad\quad \otimes_{poly\_term}(poly(rest(a.terms)), b\_term))) \ \blacksquare \\
-&\\
-&\otimes_{term\_term}(a\_term, b\_term) \Leftarrow \\
-&\quad \Uparrow term(\otimes(a\_term.coef, b\_term.coef), a\_term.power + b\_term.power) \ \blacksquare
-\end{aligned}
+```icon
+
+
+⊗_poly_term(a, b_term) ←
+↑ (if *a.terms < 2
+then poly([⊗_term_term(a.terms[1], b_term)])
+else ⊕_poly(poly([⊗_term_term(a.terms[1], b_term)]),
+⊗_poly_term(poly(rest(a.terms)), b_term))) ■
+⊗_term_term(a_term, b_term) ←
+↑ term(⊗(a_term.coef, b_term.coef), a_term.power + b_term.power) ■
 ```
 
 
@@ -1889,15 +1874,15 @@ $`QZ\text{: - }((-2z)q + 1zq \cdot X^3) = 2zq + (-1z)q \cdot X^3`$
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&ax \mathrel{:=} poly([term(Q(-2,1), 0), term(Q(1,1), 3)]) \\
-&bx \mathrel{:=} poly([term(Q(-3,1), 0), term(Q(2,1), 3)]) \\
-&fx \mathrel{:=} poly([k_{Z_{Qx}}(-2, 0), k_{Z_{Qx}}(1,3)]) \\
-&gx \mathrel{:=} poly([k_{Z_{Qx}}(-3, 0), k_{Z_{Qx}}(2,3)]) \\
-&\text{pr}\{\text{"Q:    ("},\ ax,\ \text{") * ("},\ bx,\ \text{") = "},\ \otimes_{poly}(ax, bx)\} \\
-&\text{pr}\{\text{"QZ:   ("},\ fx,\ \text{") * ("},\ gx,\ \text{") = "},\ \otimes_{poly}(fx, gx)\}
-\end{aligned}
+```icon
+
+
+ax := poly([term(Q(-2,1), 0), term(Q(1,1), 3)])
+bx := poly([term(Q(-3,1), 0), term(Q(2,1), 3)])
+fx := poly([k_Z_Qx(-2, 0), k_Z_Qx(1,3)])
+gx := poly([k_Z_Qx(-3, 0), k_Z_Qx(2,3)])
+pr{"Q: (", ax, ") * (", bx, ") = ", ⊗_poly(ax, bx)}
+pr{"QZ: (", fx, ") * (", gx, ") = ", ⊗_poly(fx, gx)}
 ```
 
 
@@ -1905,29 +1890,29 @@ $`QZ\text{: - }((-2z)q + 1zq \cdot X^3) = 2zq + (-1z)q \cdot X^3`$
 
 is
 
-$`Q\text{:    }((-2)q + 1q \cdot X^3) * ((-3)q + 2q \cdot X^3) = 6q + (-7)q \cdot X^3 + 2q \cdot X^6`$  
-$`QZ\text{:   }((-2z)q + 1zq \cdot X^3) * ((-3z)q + 2zq \cdot X^3) = 6zq + (-7z)q \cdot X^3 + 2zq \cdot X^6`$
+`Q\text{:    }((-2)q + 1q \cdot X^3) * ((-3)q + 2q \cdot X^3) = 6q + (-7)q \cdot X^3 + 2q \cdot X^6`  
+`QZ\text{:   }((-2z)q + 1zq \cdot X^3) * ((-3z)q + 2zq \cdot X^3) = 6zq + (-7z)q \cdot X^3 + 2zq \cdot X^6`
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&\mathbin{⨸}_{poly}(a, b) \Leftarrow \\
-&\quad \textbf{local } n,\ m,\ r,\ q,\ quotient \\
-&\quad n \mathrel{:=} deg_{poly}(b) \\
-&\quad r \mathrel{:=} copy(a) \\
-&\quad quotient \mathrel{:=} 0_{poly}(r) \\
-&\quad \textbf{repeat } \{ \\
-&\quad\quad m \mathrel{:=} deg_{poly}(r) \\
-&\quad\quad \textbf{if } <_{degree}(m, n) \\
-&\quad\quad \textbf{then } \Uparrow quotient \\
-&\quad\quad \textbf{else } \{ q \mathrel{:=} poly([term(\mathbin{⨸}(lead\_coef(r), lead\_coef(b)), m - n)]) \\
-&\quad\quad\quad \textbf{if } m = 0 \\
-&\quad\quad\quad \textbf{then } \Uparrow \oplus_{poly}(quotient, q) \\
-&\quad\quad\quad \textbf{else } \{ subtrahend \mathrel{:=} -_{poly}(\otimes_{poly}(q, b)) \\
-&\quad\quad\quad\quad r \mathrel{:=} \oplus_{poly}(r, subtrahend) \\
-&\quad\quad\quad\quad quotient \mathrel{:=} \oplus_{poly}(quotient, q) \} \} \} \ \blacksquare
-\end{aligned}
+```icon
+
+
+⨸_poly(a, b) ←
+local n, m, r, q, quotient
+n := deg_poly(b)
+r := copy(a)
+quotient := 0_poly(r)
+repeat {
+m := deg_poly(r)
+if <_degree(m, n)
+then ↑ quotient
+else { q := poly([term(⨸(lead_coef(r), lead_coef(b)), m - n)])
+if m = 0
+then ↑ ⊕_poly(quotient, q)
+else { subtrahend := -_poly(⊗_poly(q, b))
+r := ⊕_poly(r, subtrahend)
+quotient := ⊕_poly(quotient, q) } } } ■
 ```
 
 
@@ -1937,20 +1922,20 @@ $`QZ\text{:   }((-2z)q + 1zq \cdot X^3) * ((-3z)q + 2zq \cdot X^3) = 6zq + (-7z)
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&ax \mathrel{:=} poly\_of(1);\ bx \mathrel{:=} poly\_of(3) \\
-&\text{pr}\{\text{"integers: "},\ ax,\ \text{"/"},\ bx,\ \text{" = "},\ \mathbin{⨸}_{poly}(ax, bx)\} \\
-&ax \mathrel{:=} poly([term(Q(5,9), 0)]) \\
-&bx \mathrel{:=} poly([term(Q(-2,1), 0), term(Q(3,2), 1)]) \\
-&fx \mathrel{:=} poly([term(Q(k_Z(5), k_Z(9)), 0)]) \\
-&gx \mathrel{:=} poly([term(Q(k_Z(-2), k_Z(1)), 0), term(Q(k_Z(3), k_Z(2)), 1)]) \\
-&\text{pr}\{\text{"Q: ("},\ ax,\ \text{") / ("},\ bx,\ \text{") = "},\ \mathbin{⨸}_{poly}(ax, bx)\} \\
-&\text{pr}\{\text{"QZ: ("},\ gx,\ \text{") / ("},\ fx,\ \text{") = "},\ \mathbin{⨸}_{poly}(gx, fx)\} \\
-&ax \mathrel{:=} poly([term(Q(k_Z(166), k_Z(243)), 0), term(Q(k_Z(-275), k_Z(243)), 1)]) \\
-&bx \mathrel{:=} poly([term(Q(k_Z(115668), k_Z(75625)), 0)]) \\
-&\text{pr}\{\text{"QZ[x]: ("},\ ax,\ \text{"/ "},\ bx,\ \text{") = "},\ \mathbin{⨸}(ax, bx)\}
-\end{aligned}
+```icon
+
+
+ax := poly_of(1); bx := poly_of(3)
+pr{"integers: ", ax, "/", bx, " = ", ⨸_poly(ax, bx)}
+ax := poly([term(Q(5,9), 0)])
+bx := poly([term(Q(-2,1), 0), term(Q(3,2), 1)])
+fx := poly([term(Q(k_Z(5), k_Z(9)), 0)])
+gx := poly([term(Q(k_Z(-2), k_Z(1)), 0), term(Q(k_Z(3), k_Z(2)), 1)])
+pr{"Q: (", ax, ") / (", bx, ") = ", ⨸_poly(ax, bx)}
+pr{"QZ: (", gx, ") / (", fx, ") = ", ⨸_poly(gx, fx)}
+ax := poly([term(Q(k_Z(166), k_Z(243)), 0), term(Q(k_Z(-275), k_Z(243)), 1)])
+bx := poly([term(Q(k_Z(115668), k_Z(75625)), 0)])
+pr{"QZ[x]: (", ax, "/ ", bx, ") = ", ⨸(ax, bx)}
 ```
 
 
@@ -1958,47 +1943,47 @@ $`QZ\text{:   }((-2z)q + 1zq \cdot X^3) * ((-3z)q + 2zq \cdot X^3) = 6zq + (-7z)
 
 is
 
-$`\text{integers: }1/3 = 0`$  
-$`Q\text{: }((5/9)q) / ((-2)q + (3/2)q \cdot X) = 0q`$  
-$`QZ\text{: }((-2z)q + (3z/2z)q \cdot X) / ((5z/9z)q) = ((-18z)/5z)q + (27z/10z)q \cdot X`$  
-$`QZ[x]\text{: }((166z/243z)q + ((-275z)/243z)q \cdot X) / ((115668z/75625z)q) = (6276875z/14053662z)q + ((-20796875z)/28107324z)q \cdot X`$
+`\text{integers: }1/3 = 0`  
+`Q\text{: }((5/9)q) / ((-2)q + (3/2)q \cdot X) = 0q`  
+`QZ\text{: }((-2z)q + (3z/2z)q \cdot X) / ((5z/9z)q) = ((-18z)/5z)q + (27z/10z)q \cdot X`  
+`QZ[x]\text{: }((166z/243z)q + ((-275z)/243z)q \cdot X) / ((115668z/75625z)q) = (6276875z/14053662z)q + ((-20796875z)/28107324z)q \cdot X`
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&mod_{poly}(a, b) \Leftarrow \Uparrow \ominus(a, \otimes(b, \mathbin{⨸}(a, b))) \ \blacksquare
-\end{aligned}
+```icon
+
+
+mod_poly(a, b) ← ↑ ⊖(a, ⊗(b, ⨸(a, b))) ■
 ```
 
 
 </div>
 
-Evaluate $`f(x)`$ at $`a`$, that is evaluate $`f(a)`$:
+Evaluate `f(x)` at `a`, that is evaluate `f(a)`:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&eval_{poly}(fx, a) \Leftarrow \\
-&\quad \textbf{local } r \\
-&\quad r \mathrel{:=} 0(a) \\
-&\quad \textbf{every } x \mathrel{:=} \texttt{!}fx.terms \textbf{ do } r \mathrel{:=} \oplus(r, eval_{term}(x, a)) \\
-&\quad \Uparrow r \ \blacksquare
-\end{aligned}
+```icon
+
+
+eval_poly(fx, a) ←
+local r
+r := 0(a)
+every x := !fx.terms do r := ⊕(r, eval_term(x, a))
+↑ r ■
 ```
 
 
 </div>
 
-Evaluate $`cx^p`$ at $`x=a`$:
+Evaluate `cx^p` at `x=a`:
 
 <div class="math-left">
 
-```math
-\begin{aligned}
-&eval_{term}(t, a) \Leftarrow \Uparrow \otimes(t.coef, exp(a, t.power)) \ \blacksquare
-\end{aligned}
+```icon
+
+
+eval_term(t, a) ← ↑ ⊗(t.coef, exp(a, t.power)) ■
 ```
 
 
@@ -2009,12 +1994,16 @@ Degrees of polynomials are values which may be integers, or the string `"- infin
 <div class="math-left">
 
 ```icon
+
+
 deg_poly(x) ←
     if =_poly(x, 0_poly(x)) then ↑ "- infinity"
     else ↑ x.terms[*x.terms].power  ■
 ```
 
 ```icon
+
+
 -_deg(a, b) ← ↑ (
     if type(a) == "string" then b
     else if type(b) == "string" then a
@@ -2022,6 +2011,8 @@ deg_poly(x) ←
 ```
 
 ```icon
+
+
 ⊕_deg(a, b) ← ↑ (
     if type(a) == "string" then b
     else if type(b) == "string" then a
@@ -2035,6 +2026,8 @@ A normal-form polynomial is one whose terms are in normal form (and in ascending
 <div class="math-left">
 
 ```icon
+
+
 normalize_poly(x) ←
     local ts
     ts := []
@@ -2049,6 +2042,8 @@ normalize_poly(x) ←
 <div class="math-left">
 
 ```icon
+
+
 <_degree(a, b) ←
     if type(a) == "string"
     then ↑ not(type(b) == "string")
@@ -2056,10 +2051,14 @@ normalize_poly(x) ←
 ```
 
 ```icon
+
+
 =_poly(a, b) ← ↑ =_terms(a.terms, b.terms)  ■
 ```
 
 ```icon
+
+
 =_terms(a, b) ←
     if *a ≠ *b then ⊥
     if *a = 0 then ↑
@@ -2067,10 +2066,14 @@ normalize_poly(x) ←
 ```
 
 ```icon
+
+
 =_term(a, b) ← ↑ (=(a.coef, b.coef) & =(a.power, b.power))  ■
 ```
 
 ```icon
+
+
 unit_poly(x) ← ↑ ((*x.terms = 1) & (x.terms[1].power = 0) & unit(x.terms[1].coef))  ■
 ```
 
@@ -2081,6 +2084,8 @@ unit_poly(x) ← ↑ ((*x.terms = 1) & (x.terms[1].power = 0) & unit(x.terms[1].
 <div class="math-left">
 
 ```icon
+
+
 print_poly(x) ←
     print_term(x.terms[1])
     every t := !rest(x.terms) do { writes("+ "); print_term(t) }  ■
@@ -2111,6 +2116,8 @@ print_term(x) ←
 <div class="math-left">
 
 ```icon
+
+
 record tpower (Poly, N)
 ```
 
@@ -2123,6 +2130,8 @@ The zero of the base domain of a coefficient of the polynomial:
 <div class="math-left">
 
 ```icon
+
+
 0_tpower(x) ← ↑ tpower(0_poly(x.Poly), x.N)  ■
 ```
 
@@ -2133,6 +2142,8 @@ The one of the base domain of a coefficient of the polynomial:
 <div class="math-left">
 
 ```icon
+
+
 1_tpower(x) ← ↑ tpower(1_poly(x.Poly), x.N)  ■
 ```
 
@@ -2143,6 +2154,8 @@ The one of the base domain of a coefficient of the polynomial:
 <div class="math-left">
 
 ```icon
+
+
 ⊕_tpower(a, b) ← ↑ tpower(⊕_poly(a.Poly, b.Poly), a.N)  ■
 
 -_tpower(x) ← ↑ tpower(-_poly(x.Poly), x.N)  ■
@@ -2163,6 +2176,8 @@ normalize_tpower(x) ← ↑ tpower(normalize_poly(x.Poly), x.N)  ■
 <div class="math-left">
 
 ```icon
+
+
 =_tpower(a, b) ← ↑ (a.N = b.N) & =_poly(a.Poly, b.Poly)  ■
 
 unit_tpower(x) ← ↑ unit_poly(x.Poly)  ■
@@ -2175,6 +2190,8 @@ unit_tpower(x) ← ↑ unit_poly(x.Poly)  ■
 <div class="math-left">
 
 ```icon
+
+
 print_tpower(x) ← print_poly(x.Poly)  ■
 ```
 
@@ -2197,21 +2214,23 @@ In addition, we provide a simple timer facility.
 We provide algorithms for the following applications:
 
 - Euclid's algorithm for greatest common divisor, in simple and extended versions.
-- Inverse of $`a \bmod m`$.
-- The Chinese Remainder for 1, 2, or $`N`$ congruences.
-- The solutions to the Diophantine equation $`ax + by = c`$.
+- Inverse of `a \bmod m`.
+- The Chinese Remainder for 1, 2, or `N` congruences.
+- The solutions to the Diophantine equation `ax + by = c`.
 
 #### 3.1.1. Greatest Common Divisor
 
 We have two versions of Euclid's Algorithm over a Euclidean domain `D`, from Lipson, p. 226 and p. 209.
 
 **GCD**(a, b, D)  
-Input: $`a, b \in D`$, not both zero.  
+Input: `a, b \in D`, not both zero.  
 Output: a gcd of `a`, `b`.
 
 <div class="math-left">
 
 ```icon
+
+
 GCD(a, b) ←
     ↑ (if =(b, 0(b)) then normalize(a)
     else GCD(b, mod(a, b)))  ■
@@ -2229,18 +2248,20 @@ The following is a table of expressions and their gcd's, as computed via GCD:
 | $`Z`$ | $`-18z`$ | $`5z`$ | $`1z`$ |
 | $`Z`$ | $`228z`$ | $`612z`$ | $`12z`$ |
 | $`Q[x]`$ | $`(-2)q + 1q \cdot X^3`$ | $`(-3)q + 2q \cdot X^2`$ | $`(5/9)q`$ |
-| $`Z_{5}`$ | $`((-2) \bmod 5)`$ | $`((-3) \bmod 5)`$ | $`(2 \bmod 5)`$ |
-| $`Z_{5}[x]`$ | $`((-2) \bmod 5) + (1 \bmod 5) \cdot X^3`$ | $`((-3) \bmod 5) + (2 \bmod 5) \cdot X^2`$ | $`(3 \bmod 5) + (4 \bmod 5) \cdot X`$ |
+| $`Z_5`$ | $`((-2) \bmod 5)`$ | $`((-3) \bmod 5)`$ | $`(2 \bmod 5)`$ |
+| $`Z_5[x]`$ | $`((-2) \bmod 5) + (1 \bmod 5) \cdot X^3`$ | $`((-3) \bmod 5) + (2 \bmod 5) \cdot X^2`$ | $`(3 \bmod 5) + (4 \bmod 5) \cdot X`$ |
 | $`QZ[x]`$ | $`(166z/243z)q + ((-275z)/243z)q \cdot X`$ | $`(115668z/75625z)q`$ | $`(115668z/75625z)q`$ |
 | $`QZ[x]`$ | $`(-2z)q + 1zq \cdot X^3`$ | $`(-3z)q + 2zq \cdot X^2`$ | $`(5z/9z)q`$ |
 
 **EUCLID**(a, b)  
-Input: $`a, b \in D`$, not both zero.  
+Input: `a, b \in D`, not both zero.  
 Output: `g, s, t` such that `g` is a gcd of `a`, `b` and `g = sa + tb`.
 
 <div class="math-left">
 
 ```icon
+
+
 EUCLID(A, B) ←
 local q, a, s, t
 a := [copy(A), copy(B)]
@@ -2273,13 +2294,15 @@ The following is a table of expressions and their extended *gcd*'s, as computed 
 
 Our modular inverse algorithm is that of Lipson, p. 214.
 
-**INVERSE**(a, m): Computation of $`a^{-1} \bmod m`$  
-Input: $`a, m \in D`$, where `D` is a Euclidean domain.  
-Output: If `(m, a) = 1`, then $`a^{-1} \bmod m`$; otherwise error.
+**INVERSE**(a, m): Computation of `a^{-1} \bmod m`  
+Input: `a, m \in D`, where `D` is a Euclidean domain.  
+Output: If `(m, a) = 1`, then `a^{-1} \bmod m`; otherwise error.
 
 <div class="math-left">
 
 ```icon
+
+
 INVERSE(a, m) ←
 local gst
 gst := EUCLID(m, a)
@@ -2303,21 +2326,23 @@ A table of modular inverses as computed by INVERSE is as follows:
 
 #### 3.1.3. Chinese Remainders and Single-Variable Linear Congruential Systems
 
-We provide three algorithms, **CRA1** for solving equations of the form $`ax \equiv b \pmod m`$, and **CRA2** and **CRA** for solving systems of two or more congruences of the form $`X \equiv a \pmod m`$.
+We provide three algorithms, **CRA1** for solving equations of the form `ax \equiv b \pmod m`, and **CRA2** and **CRA** for solving systems of two or more congruences of the form `X \equiv a \pmod m`.
 
 **CRA1**(a, b, m): Solution of a single linear congruence relation.  
-Input: `a, b, m` such that $`ax \equiv b \pmod m`$.  
-Output: a particular solution $`x_{1}`$.
+Input: `a, b, m` such that `ax \equiv b \pmod m`.  
+Output: a particular solution `x_1`.
 
-Niven and Zuckerman [Niven80a], in their section 2.3 note that, given a congruence $`ax \equiv b \pmod m`$, we can reduce it to $`my \equiv -b \pmod a`$. If $`y_{0}`$ is a solution of the reduced congruence, then
+Niven and Zuckerman [Niven80a], in their section 2.3 note that, given a congruence `ax \equiv b \pmod m`, we can reduce it to `my \equiv -b \pmod a`. If `y_0` is a solution of the reduced congruence, then
 
 $$x_0 = \frac{my_0 + b}{a}$$
 
-is a solution for the original congruence. They apply the reduction until the congruence is solvable "by inspection". This we do not do. They also have some tricks for size reduction (on p. 43) we will not apply (due to laziness). Our "by inspection" termination condition will be to perform the reduction until $`a \bmod m = 1`$ or `b = 0`. Then we return $`b \bmod a`$, in a recursive setting which builds up the original $`x_{1}`$.
+is a solution for the original congruence. They apply the reduction until the congruence is solvable "by inspection". This we do not do. They also have some tricks for size reduction (on p. 43) we will not apply (due to laziness). Our "by inspection" termination condition will be to perform the reduction until `a \bmod m = 1` or `b = 0`. Then we return `b \bmod a`, in a recursive setting which builds up the original `x_1`.
 
 <div class="math-left">
 
 ```icon
+
+
 CRA1(aa, bb, m) ←
 local a, b, g
 g := GCD(aa, m)
@@ -2335,19 +2360,21 @@ else ↑ ⨸(⊕(⊗(m, CRA1(m, -(b), a)), b), a) } ■
 
 **Example.** The following results were obtained from executing CRA (the examples are from Niven and Zuckerman [Niven80a], Sect. 2.3):
 
-- CRA(7, 1432, 5317): `x` such that $`7x \equiv 1432 \bmod 5317`$ is 4762.
-- CRA(863, 880, 2151): `x` such that $`863x \equiv 880 \bmod 2151`$ is 173.
-- CRA(589, 509, 817): There is no `x` such that $`589x \equiv 509 \bmod 817`$.
+- CRA(7, 1432, 5317): `x` such that `7x \equiv 1432 \bmod 5317` is 4762.
+- CRA(863, 880, 2151): `x` such that `863x \equiv 880 \bmod 2151` is 173.
+- CRA(589, 509, 817): There is no `x` such that `589x \equiv 509 \bmod 817`.
 
 CRA2 and CRA are from Lipson, p. 254 and p. 257.
 
 **CRA2**(r, m, s, n): Two-congruence Chinese Remainder Algorithm for `Z`  
-Input: $`r, m, s, n \in Z`$, where `m`, `n` are relatively prime.  
-Output: $`U \in Z`$ such that $`U \equiv r \pmod m`$ and $`U \equiv s \pmod n`$.
+Input: `r, m, s, n \in Z`, where `m`, `n` are relatively prime.  
+Output: `U \in Z` such that `U \equiv r \pmod m` and `U \equiv s \pmod n`.
 
 <div class="math-left">
 
 ```icon
+
+
 CRA2(r, m, s, n) ←
 local c, sigma, U
 c := INVERSE(m, n)
@@ -2358,15 +2385,17 @@ U := ⊕(r, ⊗(sigma, m))
 
 </div>
 
-**Example.** The `x` such that $`x \equiv 6 \pmod 7`$ and $`x \equiv 3 \pmod 9`$ is 48, as obtained by evaluating CRA2(6, 7, 3, 9).
+**Example.** The `x` such that `x \equiv 6 \pmod 7` and `x \equiv 3 \pmod 9` is 48, as obtained by evaluating CRA2(6, 7, 3, 9).
 
 **CRA**(rm\_list): `N`-congruence Chinese Remainder Algorithm for `Z`  
-Input: $`[[r_{k}, m_{k}]] \in Z`$, where the $`m_{k}`$ are relatively prime.  
-Output: $`U \in Z`$ such that $`U \equiv r_{i} \pmod{m_i}`$.
+Input: `[[r_k, m_k]] \in Z`, where the `m_k` are relatively prime.  
+Output: `U \in Z` such that `U \equiv r_i \pmod{m_i}`.
 
 <div class="math-left">
 
 ```icon
+
+
 CRA(rm_list) ←
 local rms, rm, M, U, c, sigma
 rms := copy(rm_list)
@@ -2386,16 +2415,18 @@ U := ⊕(U, ⊗(sigma, M)) }
 
 **Example.** The problem is to find `u(x)` in `Z[x]` such that
 
-$`u(x) \bmod 3 = x`$,  
-$`u(x) \bmod 7 = 1`$,  
-$`u(x) \bmod 4 = 2x + 3`$, and  
-$`u(x) \bmod 5 = 3x + 3`$.
+`u(x) \bmod 3 = x`,  
+`u(x) \bmod 7 = 1`,  
+`u(x) \bmod 4 = 2x + 3`, and  
+`u(x) \bmod 5 = 3x + 3`.
 
 Let `u(x) = ax + b`. Then
 
 <div class="math-left">
 
 ```icon
+
+
 a bmod 3 = 1 & b bmod 3 = 0
 a bmod 7 = 0 & b bmod 7 = 1
 a bmod 4 = 2 & b bmod 4 = 3
@@ -2409,6 +2440,8 @@ We can solve for `a` and `b` individually using the `n`-congruence CRA algorithm
 <div class="math-left">
 
 ```icon
+
+
 a_congruences := [[1, 3], [0, 7], [2, 4], [3, 5]]
 b_congruences := [[0, 3], [1, 7], [3, 4], [3, 5]]
 a := CRA(a_congruences)
@@ -2421,20 +2454,22 @@ pr{"u(x) = ", ux}
 
 we discover (final term due to Yap) that
 
-$$u(x) = 183 + 238 \cdot X + 3 \cdot 7 \cdot 4 \cdot 5 \sum_{i=0}^{\infty} t_i x^i.$$
+$$u(x) = 183 + 238 \cdot X + 3 \cdot 7 \cdot 4 \cdot 5 \sum_i=0^{\infty} t_i x^i.$$
 
 **Example.** Another example, from Lipson, p. 258, is to compute `u` such that
 
-$`u \equiv 1 \pmod 3`$,  
-$`u \equiv 3 \pmod 5`$,  
-$`u \equiv 0 \pmod 7`$,  
-$`u \equiv 10 \pmod{11}`$.
+`u \equiv 1 \pmod 3`,  
+`u \equiv 3 \pmod 5`,  
+`u \equiv 0 \pmod 7`,  
+`u \equiv 10 \pmod{11}`.
 
 Executing the following code
 
 <div class="math-left">
 
 ```icon
+
+
 pr{CRA([[1, 3], [3, 5], [0, 7], [10, 11]])}
 ```
 
@@ -2445,23 +2480,25 @@ yields a value of 868 for `U`.
 
 #### 3.1.4. Linear Diophantine Equations in Two Variables
 
-According to Niven, sect. 5.2, `ax + by = c` is solvable iff $`g \mid c`$ where $`g = \gcd(a, b)`$. If $`g \mid c`$ then all solutions are of the form
+According to Niven, sect. 5.2, `ax + by = c` is solvable iff `g \mid c` where `g = \gcd(a, b)`. If `g \mid c` then all solutions are of the form
 
 $$x = x_1 + \frac{b}{g} t, \quad y = y_1 - \frac{a}{g} t$$
 
-where `t` is an arbitrary integer and $`x = x_{1}`$, $`y = y_{1}`$ is any particular solution of the equation. Particular solutions are obtained by solving one of the linear congruences
+where `t` is an arbitrary integer and `x = x_1`, `y = y_1` is any particular solution of the equation. Particular solutions are obtained by solving one of the linear congruences
 
 $$ax \equiv c \pmod{|b|} \quad \text{or} \quad by \equiv c \pmod{|a|}$$
 
-for $`x_{1}`$ or $`y_{1}`$, then substituting $`y_{1}`$ or $`x_{1}`$ into `ax + by = c` to obtain a particular $`y_{1}`$ or $`x_{1}`$. For computational convenience, if $`|b| \le |a|`$, we solve the first congruence, otherwise we solve the second.
+for `x_1` or `y_1`, then substituting `y_1` or `x_1` into `ax + by = c` to obtain a particular `y_1` or `x_1`. For computational convenience, if `|b| \le |a|`, we solve the first congruence, otherwise we solve the second.
 
 **DIOPHANTINE**(a, b, c) solves linear Diophantine equations in 2 variables.  
 Input: `a, b, c` such that `ax + by = c`.  
-Output: `g`, $`x_{1}`$, $`y_{1}`$, described above.
+Output: `g`, `x_1`, `y_1`, described above.
 
 <div class="math-left">
 
 ```icon
+
+
 DIOPHANTINE(a, b, c) ←
 local gst, g, x_1, y_1
 gst := EUCLID(a, b)
@@ -2499,24 +2536,28 @@ The simplest polynomial remainder sequence is simply that of Euclid's algorithm.
 <div class="math-left">
 
 ```icon
-MOD_RS(a, b) ← ↑ [a] ||| := (if =(b, 0(b)) then [b] else MOD_RS(b, mod(a, b))) ■
+
+
+MOD_RS(a, b) ← ↑ [a] |||:= (if =(b, 0(b)) then [b] else MOD_RS(b, mod(a, b))) ■
 ```
 
 </div>
 
 **Example.** In `QZ[x]`, the remainder sequence of
 
-$`a(x) = x^5 + 2x^4 + 3x^2 - x + 2`$  
-$`b(x) = 3x^3 - x + 2`$
+`a(x) = x^5 + 2x^4 + 3x^2 - x + 2`  
+`b(x) = 3x^3 - x + 2`
 
 as encoded in ICON by
 
 <div class="math-left">
 
 ```icon
+
+
 settime()
-ax := poly([k_{Z_{Qx}}(2, 0), k_{Z_{Qx}}(-1, 1), k_{Z_{Qx}}(3, 2), k_{Z_{Qx}}(2, 4), k_{Z_{Qx}}(1, 5)])
-bx := poly([k_{Z_{Qx}}(2, 0), k_{Z_{Qx}}(-1, 1), k_{Z_{Qx}}(3, 3)])
+ax := poly([k_Z_Qx(2, 0), k_Z_Qx(-1, 1), k_Z_Qx(3, 2), k_Z_Qx(2, 4), k_Z_Qx(1, 5)])
+bx := poly([k_Z_Qx(2, 0), k_Z_Qx(-1, 1), k_Z_Qx(3, 3)])
 pr{"QZ[x]: MOD_RS(", ax, ", ", bx, ") = ", MOD_RS(ax, bx)}
 showtime()
 ```
@@ -2525,8 +2566,8 @@ showtime()
 
 is
 
-$`QZ[x]\text{: MOD\_RS}(2zq + (-1z)q \cdot X + 3zq \cdot X^2 + 2zq \cdot X^4 + 1zq \cdot X^5,\ 2zq + (-1z)q \cdot X + 3zq \cdot X^3)`$  
-$`= [2zq + (-1z)q \cdot X + 3zq \cdot X^2 + 2zq \cdot X^4 + 1zq \cdot X^5,\ 2zq + (-1z)q \cdot X + 3zq \cdot X^3,\ (16z/9z)q + ((-20z)/9z)q \cdot X + 3zq \cdot X^2,\ (166z/243z)q + ((-275z)/243z)q \cdot X,\ (115668z/75625z)q,\ 0zq]`$
+`QZ[x]\text{: MOD\_RS}(2zq + (-1z)q \cdot X + 3zq \cdot X^2 + 2zq \cdot X^4 + 1zq \cdot X^5,\ 2zq + (-1z)q \cdot X + 3zq \cdot X^3)`  
+`= [2zq + (-1z)q \cdot X + 3zq \cdot X^2 + 2zq \cdot X^4 + 1zq \cdot X^5,\ 2zq + (-1z)q \cdot X + 3zq \cdot X^3,\ (16z/9z)q + ((-20z)/9z)q \cdot X + 3zq \cdot X^2,\ (166z/243z)q + ((-275z)/243z)q \cdot X,\ (115668z/75625z)q,\ 0zq]`
 
 [221033 msecs]
 
@@ -2536,18 +2577,20 @@ PREM(px, qx): Pseudo-remainder of `px/qx` in `I[x]`, where `I[x]` is an integral
 
 **Method:**
 
-1. Let $`d = \deg(p) - \deg(q)`$
+1. Let `d = \deg(p) - \deg(q)`
 2. Let `b` = lead coefficient of `q(x)`
-3. Return $`\text{rem}(b^{d+1} \cdot px, qx)`$
+3. Return `\text{rem}(b^{d+1} \cdot px, qx)`
 
 <div class="math-left">
 
 ```icon
+
+
 PREM(px, qx) ←
 local d, b
-d := -_{deg}(deg_{poly}(px), deg_{poly}(qx))
+d := -_deg(deg_poly(px), deg_poly(qx))
 b := poly_of(lead_coef(qx))
-↑ rem(⊗_{poly}(exp(b, d + 1), px), qx) ■
+↑ rem(⊗_poly(exp(b, d + 1), px), qx) ■
 ```
 
 </div>
@@ -2565,7 +2608,9 @@ I.e., a trace of the steps of Euclid's algorithm modified to use PREM.
 <div class="math-left">
 
 ```icon
-E_PRS(a, b) ← ↑ [a] ||| := (if =(b, 0(b)) then [b] else E_PRS(b, PREM(a, b))) ■
+
+
+E_PRS(a, b) ← ↑ [a] |||:= (if =(b, 0(b)) then [b] else E_PRS(b, PREM(a, b))) ■
 ```
 
 </div>
@@ -2575,33 +2620,35 @@ E_PRS(a, b) ← ↑ [a] ||| := (if =(b, 0(b)) then [b] else E_PRS(b, PREM(a, b))
 The following algorithm is the Collins-Brown subresultant PRS algorithm, as presented in Yap [Yap85a].
 
 **S_PRS**: Subresultant polynomial remainder sequence.  
-Input: polynomials $`p_{0}, p_{1} \in I[x]`$ for some integral domain `I`.  
-Output: Subresultant PRS $`(p_{0}, p_{1}, \ldots, p_{k})`$ such that $`p_{k+1} = 0`$.
+Input: polynomials `p_0, p_1 \in I[x]` for some integral domain `I`.  
+Output: Subresultant PRS `(p_0, p_1, \ldots, p_k)` such that `p_k+1 = 0`.
 
-Let $`\delta_{i} = \deg(p_{i}) - \deg(p_{i+1})`$. Let $`c_{i} = \text{lead}(p_{i})`$.
+Let `\delta_i = \deg(p_i) - \deg(p_i+1)`. Let `c_i = \text{lead}(p_i)`.
 
-Let $`(R_{1}, R_{2}, \ldots, R_{k})`$ be a sequence of length `k` defined by
+Let `(R_1, R_2, \ldots, R_k)` be a sequence of length `k` defined by
 
 $$R_1 = c_1^{\delta_0}$$
-$$R_i = c_i^{\delta_{i-1}} R_{i-1}^{1-\delta_{i-1}}, \quad i = 2, \ldots, k$$
+$$R_i = c_i^{\delta_i-1} R_i-1^{1-\delta_i-1}, \quad i = 2, \ldots, k$$
 
-Let $`(\beta_{2}, \beta_{3}, \ldots, \beta_{k})`$ be a sequence of length `k-1` defined by
+Let `(\beta_2, \beta_3, \ldots, \beta_k)` be a sequence of length `k-1` defined by
 
 $$\beta_2 = (-1)^{\delta_0 + 1}$$
-$$\beta_i = (-1)^{1 + \delta_{i-2}} c_{i-2} (R_{i-2})^{\delta_{i-2}}, \quad i = 3, \ldots, k$$
+$$\beta_i = (-1)^{1 + \delta_i-2} c_i-2 (R_i-2)^{\delta_i-2}, \quad i = 3, \ldots, k$$
 
-Then we wish to compute the sequence $`(p_{0}, p_{1}, \ldots, p_{k})`$ of length `k+1` such that $`p_{0}`$ and $`p_{1}`$ are the given polynomials, and
+Then we wish to compute the sequence `(p_0, p_1, \ldots, p_k)` of length `k+1` such that `p_0` and `p_1` are the given polynomials, and
 
-$$p_i = \frac{\text{PREM}(p_{i-2}, p_{i-1})}{\beta_i}, \quad i = 2, \ldots, k$$
+$$p_i = \frac{\text{PREM}(p_i-2, p_i-1)}{\beta_i}, \quad i = 2, \ldots, k$$
 
 
 
 <div class="math-left">
 
 ```icon
+
+
 S_PRS(p_0, p_1) ←
 local delta_0, beta_2, p_2, x, P, R_1,
-delta_{i-2}, c_{i-2}, R_{i-2}, p_{i-2}, p_{i-1}, beta_i, p_i, l, z
+delta_i-2, c_i-2, R_i-2, p_i-2, p_i-1, beta_i, p_i, l, z
 delta_0 := delta_i(p_0, p_1)
 c_0 := c_i(p_0)
 beta_2 := poly_of(exp(-(1(c_0)), delta_0 + 1))
@@ -2609,29 +2656,29 @@ p_2 := P_i(p_0, p_1, beta_2); z := 0(p_2)
 if =(p_2, z) then ↑ [p_0, p_1]
 P := [p_0, p_1, p_2]
 R_1 := exp(c_i(p_1), delta_0)
-delta_{i-2} := delta_i(p_1, p_2)
-c_{i-2} := c_i(p_1)
-R_{i-2} := R_1
-p_{i-2} := p_1
-p_{i-1} := p_2
+delta_i-2 := delta_i(p_1, p_2)
+c_i-2 := c_i(p_1)
+R_i-2 := R_1
+p_i-2 := p_1
+p_i-1 := p_2
 l := 3
 repeat {
-beta_i := beta_i(delta_{i-2}, c_{i-2}, R_{i-2})
-p_i := P_i(p_{i-2}, p_{i-1}, beta_i)
+beta_i := beta_i(delta_i-2, c_i-2, R_i-2)
+p_i := P_i(p_i-2, p_i-1, beta_i)
 if =(p_i, z) then ↑ P
-else P ||| := [p_i]
-p_{i-2} := p_{i-1}
-p_{i-1} := p_i
-c_{i-2} := c_i(p_{i-2})
-R_{i-2} := R_i(c_{i-2}, delta_{i-2}, R_{i-2})
-delta_{i-2} := delta_i(p_{i-2}, p_{i-1}) } blacksquare
-delta_i(p_i, p_{i+1}) ← ↑ -_{deg}(deg_{poly}(p_i), deg_{poly}(p_{i+1})) blacksquare
-c_i(p_i) ← ↑ lead_coef(p_i) blacksquare
-R_i(c_i, delta_{i-1}, R_{i-1}) ←
-↑ ⊗(exp(c_i, delta_{i-1}), exp(R_{i-1}, -_{deg}(delta_{i-1}, 1))) blacksquare
-beta_i(delta_{i-2}, c_{i-2}, R_{i-2}) ←
-↑ poly_of(⊗(⊗(exp(-(1(c_{i-2})), 1 + delta_{i-2}), exp(R_{i-2}, delta_{i-2})))) blacksquare
-P_i(p_{i-2}, p_{i-1}, beta_i) ← ↑ ⨸(PREM(p_{i-2}, p_{i-1}), beta_i) ■
+else P |||:= [p_i]
+p_i-2 := p_i-1
+p_i-1 := p_i
+c_i-2 := c_i(p_i-2)
+R_i-2 := R_i(c_i-2, delta_i-2, R_i-2)
+delta_i-2 := delta_i(p_i-2, p_i-1) } ■
+delta_i(p_i, p_i+1) ← ↑ -_deg(deg_poly(p_i), deg_poly(p_i+1)) ■
+c_i(p_i) ← ↑ lead_coef(p_i) ■
+R_i(c_i, delta_i-1, R_i-1) ←
+↑ ⊗(exp(c_i, delta_i-1), exp(R_i-1, -_deg(delta_i-1, 1))) ■
+beta_i(delta_i-2, c_i-2, R_i-2) ←
+↑ poly_of(⊗(⊗(exp(-(1(c_i-2)), 1 + delta_i-2), exp(R_i-2, delta_i-2)))) ■
+P_i(p_i-2, p_i-1, beta_i) ← ↑ ⨸(PREM(p_i-2, p_i-1), beta_i) ■
 ```
 
 </div>
@@ -2647,12 +2694,14 @@ Under this heading we provide the following facilities:
 #### 3.3.1 Newton's method for construction of polynomials by interpolation
 
 **NIA**(ab_list): Newton's Interpolation Algorithm (CRA for `F[x]`)  
-Input: $`[[a_{k}, b_{k}]]`$ such that $`U(a_{k}) = b_{k}`$, $`U(x) \in F[x]`$  
+Input: `[[a_k, b_k]]` such that `U(a_k) = b_k`, `U(x) \in F[x]`  
 Output: `U(x)`
 
 <div class="math-left">
 
 ```icon
+
+
 NIA(ab_list) ←
 local ab_s, ab, a, b, Ux, Mx, c, sigma
 ab_s := copy(ab_list)
@@ -2662,8 +2711,8 @@ Mx := 1(Ux)
 every k := 1 to *ab_s do {
 Mx := ⊗(Mx, ⊖(poly([term(1(b), 1)]), poly_of(a)))
 ab := pop(ab_s); a := ab[1]; b := ab[2]
-c := ⨸(1(a), eval_{poly}(Mx, a))
-sigma := ⨸(⊖(poly_of(b), poly_of(eval_{poly}(Ux, a))), poly_of(c))
+c := ⨸(1(a), eval_poly(Mx, a))
+sigma := ⨸(⊖(poly_of(b), poly_of(eval_poly(Ux, a))), poly_of(c))
 Ux := ⊕(Ux, ⊗(sigma, Mx)) }
 ↑ Ux ■
 ```
@@ -2673,17 +2722,19 @@ Ux := ⊕(Ux, ⊗(sigma, Mx)) }
 ### 3.3.2 Fast Fourier Transform (FFT) and Interpolation (FFI)
 
 **FFT**(N, a(x), ω, A): Fast Fourier Transform  
-Input: integer $`N = 2^m`$, polynomial $`a(x) = \sum_{i=0}^{N-1} a_i x^i`$, primitive $`N`$th root of unity $`\omega`$  
-Output: array $`A = (A_0, \ldots, A_{N-1})`$ where $`A_k = a(\omega^k)`$
+Input: integer `N = 2^m`, polynomial `a(x) = Σ_{i=0}^{N−1} a_i x^i`, primitive `N`th root of unity `ω`  
+Output: array `A = (A₀, …, A_{N−1})` where `A_k = a(ω^k)`
 
 <div class="math-left">
 
 ```icon
+
+
 FFT(N, ax, omega) ←
 local A, n, bx, cx, omega^2, B, C, omega^k
 A := list(N, [])
 if N = 1 * basis
-then A[1] := 0th_{coef}(ax)
+then A[1] := 0th_coef(ax)
 else { n := N/2 * binary split
 bx := poly_of_even_powered_terms(ax)
 cx := poly_of_odd_powered_terms(ax)
@@ -2704,11 +2755,13 @@ Even powered terms.
 <div class="math-left">
 
 ```icon
+
+
 poly_of_even_powered_terms(ax) ←
 local r
 r := []
 every t := !ax.terms
-do if mod_{integer}(t.power, 2) = 0 then r ||| := [term(t.coef, t.power/2)]
+do if mod_integer(t.power, 2) = 0 then r |||:= [term(t.coef, t.power/2)]
 ↑ poly(r) ■
 ```
 
@@ -2719,28 +2772,32 @@ Odd powered terms.
 <div class="math-left">
 
 ```icon
+
+
 poly_of_odd_powered_terms(ax) ←
 local r
 r := []
 every t := !ax.terms
-do if mod_{integer}(t.power, 2) = 1 then r ||| := [term(t.coef, (t.power - 1)/2)]
+do if mod_integer(t.power, 2) = 1 then r |||:= [term(t.coef, (t.power - 1)/2)]
 if *r > 0 then ↑ poly(r) else ↑ 0(ax.terms[1]) ■
 ```
 
 </div>
 
 **FFI**(N, B, ω): Fast Fourier Interpolation  
-Input: integer $`N = 2^m`$, sample values $`B = (b_0, \ldots, b_{N-1})`$, primitive $`N`$th root of unity $`\omega`$  
-Output: $`a(x) = \sum_{i=0}^{N-1} a_i x^i`$ where $`a(\omega^k) = b_k`$ for $`k = 0, \ldots, N-1`$
+Input: integer `N = 2^m`, sample values `B = (b₀, …, b_{N−1})`, primitive `N`th root of unity `ω`  
+Output: `a(x) = Σ_{i=0}^{N−1} a_i x^i` where `a(ω^k) = b_k` for `k = 0, …, N−1`
 
 <div class="math-left">
 
 ```icon
+
+
 FFI(N, B, omega) ←
 local bx, C, ax
 bx := polynomialize(B)
 C := FFT(N, bx, ⨸(1(omega), omega))
-ax := polynomialize(⊗_{vector scalar}(C, ⨸(1(N), N)))
+ax := polynomialize(⊗_vector_scalar(C, ⨸(1(N), N)))
 ↑ ax ■
 ```
 
@@ -2749,6 +2806,8 @@ ax := polynomialize(⊗_{vector scalar}(C, ⨸(1(N), N)))
 <div class="math-left">
 
 ```icon
+
+
 polynomialize(B) ←
 local r, i
 r := []; i := 0
@@ -2763,7 +2822,9 @@ i +:= 1 }
 <div class="math-left">
 
 ```icon
-⊗_{vector scalar}(V, x) ←
+
+
+⊗_vector_scalar(V, x) ←
 local R, i
 R := list(*V); i := 1
 every v := !V do { R[i] := ⊗(V[i], x); i +:= 1 }
@@ -2775,20 +2836,22 @@ every v := !V do { R[i] := ⊗(V[i], x); i +:= 1 }
 #### 3.3.3 Newton’s method for truncated power series inversion
 
 **NPSI**(): Newton's Power Series Inversion Method  
-Input: $`a(t) \bmod t^{2^n} = \sum_{i=0}^{2^n-1} a_i t^i`$, $`a_0 \neq 0`$  
-Output: $`x^{(n)}(t) = a(t)^{-1} \bmod t^{2^n}`$
+Input: `a(t) mod t^{2^n} = Σ_{i=0}^{2^n−1} a_i t^i`, `a₀ ≠ 0`  
+Output: `x^(n)(t) = a(t)^{−1} mod t^{2^n}`
 
 <div class="math-left">
 
 ```icon
+
+
 NPSI(at) ←
 local ax, xt, n
 ax := at.Poly
-xt := poly_of(0th_{coef}(ax))
+xt := poly_of(0th_coef(ax))
 n := log2(*ax.terms)
 every k := 0 to n-1
 do xt := ⊕(⊕(xt, xt),
--(⊗_{poly}(truncate(ax, 2^{k+1}), ⊗(xt, xt))))
+-(⊗_poly(truncate(ax, 2^{k+1}), ⊗(xt, xt))))
 ↑ tpower(truncate(xt, at.N), at.N) ■
 ```
 
@@ -2797,6 +2860,8 @@ do xt := ⊕(⊕(xt, xt),
 <div class="math-left">
 
 ```icon
+
+
 log2(x) ←
 local l
 l := 0
@@ -2815,8 +2880,10 @@ A call to `showtime()` prints the elapsed time since `settime()` was invoked.
 <div class="math-left">
 
 ```icon
+
+
 global timer
-showtime() ← pr{"[", &time - timer, " msecs]"} blacksquare
+showtime() ← pr{"[", &time - timer, " msecs]"} ■
 settime() ← timer := &time ■
 ```
 
@@ -2831,6 +2898,8 @@ Blocks of comments are compiled as paragraphs. Paragraphs are demarcated by blan
 <div class="math-left">
 
 ```icon
+
+
 global command_line, last_line, cur_files, read_now, words
 main(x) ←
 local fn
@@ -2841,12 +2910,12 @@ words["±"] := "±"
 command_line := x
 if *command_line > 0
 then { fn := command_line[1]
-load_user_keywords(fn mathrel{||} ".keys")
-cur_files := [read_now := open(fn mathrel{||} ".icn", "r")] }
+load_user_keywords(fn || ".keys")
+cur_files := [read_now := open(fn || ".icn", "r")] }
 else cur_files := [read_now := &input]
 last_line := &null
 write(".so /usr2/ericson/euclid/lpp/std.me")
-process() blacksquare
+process() ■
 get_line() ←
 local x
 x := &null
@@ -2861,19 +2930,21 @@ Reads lines until encountering end of file or `##end` or `##end command`.
 <div class="math-left">
 
 ```icon
+
+
 process(command) ←
 local line
-while line := get_line() do if not process_line(line, command) then break blacksquare
+while line := get_line() do if not process_line(line, command) then break ■
 process_line(line, command) ←
-if line[1:3] mathrel{==} "##"
-then { if line[3:6] mathrel{==} "■"
+if line[1:3] == "##"
+then { if line[3:6] == "■"
 then { end_command(command, line[7:*line + 1]); ⊥ }
 else do_command(line[3:*line + 1]) }
-else if line[1] mathrel{==} "#" then write_line(line[2:*line + 1])
+else if line[1] == "#" then write_line(line[2:*line + 1])
 else pretty_print(line, command)
-↑ blacksquare
+↑ ■
 end_command(command, line) ←
-if command mathrel{sim}== line then write(&errout, "ERROR: Mismatched END, wanted ", command, ", got ", line) ■
+if command ~== line then write(&errout, "ERROR: Mismatched END, wanted ", command, ", got ", line) ■
 ```
 
 </div>
@@ -2885,12 +2956,14 @@ For interpreting `##` commands
 <div class="math-left">
 
 ```icon
+
+
 do_command(line) ←
 local command, args
-x := (upto(mathord{sim}&lcase, line) | (*line + 1))
+x := (upto(~&lcase, line) | (*line + 1))
 command := line[1:x]
 args := line[x + 1:*line + 1]
-if not(y := proc("do_" mathrel{||} command, 2))
+if not(y := proc("do_" || command, 2))
 then write(&errout, "ERROR: Unknown command: ", command)
 else y(args) ■
 ```
@@ -2902,15 +2975,17 @@ else y(args) ■
 <div class="math-left">
 
 ```icon
+
+
 do_list(args) ←
 local line
 write(".(l I F")
 while line := get_line()
-do if line[1:3] mathrel{==} "##"
-then { if line[3:6] mathrel{==} "■"
+do if line[1:3] == "##"
+then { if line[3:6] == "■"
 then { write(".)l"); end_command(command, line[7:*line + 1]); ⊥ }
 else do_command(line[3:*line + 1]) }
-else if line[1] mathrel{==} "#"
+else if line[1] == "#"
 then { line := line[2:*line + 1]
 repeat if upto(' ', line[1])
 then line := line[2:*line + 1] else break
@@ -2928,13 +3003,15 @@ Section nestings are relative to the file, from 1 on up. An `##include` file's n
 <div class="math-left">
 
 ```icon
+
+
 do_section(args) ←
-x := (upto(mathord{sim}('0123456789'), args) | (*args + 1))
+x := (upto(~('0123456789'), args) | (*args + 1))
 level := args[1:x] + 0
 title := args[x + 1:*args + 1]
 write(".sh ", level, " ", title)
 write(".sp 2v0lp")
-process("section " mathrel{||} level) ■
+process("section " || level) ■
 ```
 
 </div>
@@ -2946,11 +3023,13 @@ Deletes *everything* between skip and end skip.
 <div class="math-left">
 
 ```icon
+
+
 do_skip(x) ←
 local line
 while line := get_line()
-do if line[1:3] mathrel{==} "##"
-then if line[3:6] mathrel{==} "■"
+do if line[1:3] == "##"
+then if line[3:6] == "■"
 then { end_command(command, line[7:*line + 1]); break } ■
 ```
 
@@ -2963,14 +3042,16 @@ Includes file. Home directory for includes within included file is home director
 <div class="math-left">
 
 ```icon
+
+
 do_include(arg) ←
 local new_file
 cur_file := arg
-new_file := open(cur_file mathrel{||} ".icn", "r")
+new_file := open(cur_file || ".icn", "r")
 if /new_file then write("ERROR: couldn't open ", cur_file, ".icn")
 else { read_now := new_file
 push(cur_files, read_now)
-load_user_keywords(cur_file mathrel{||} ".keys")
+load_user_keywords(cur_file || ".keys")
 process("include") * until ■ of file
 close(pop(cur_files))
 read_now := cur_files[1] } ■
@@ -2984,6 +3065,8 @@ Example paragraphs are left-justified and preceded by an appropriately numbered 
 <div class="math-left">
 
 ```icon
+
+
 do_example(arg) ←
 writes("textbackslash fB Example.textbackslash fR ")
 process("example") ■
@@ -2998,11 +3081,13 @@ Code is unjustified and Helveticized. Uncommented lines are processed as code. C
 <div class="math-left">
 
 ```icon
+
+
 do_code(arg) ←
 local line
 write(".nf0fH")
 while line := get_line()
-do if line[1:6] mathrel{==} "##■" then break
+do if line[1:6] == "##■" then break
 else pretty_print_line(line[2:*line + 1])
 write(".fi0fR") ■
 ```
@@ -3016,6 +3101,8 @@ Typeset with TBL, one `.EQ` and `.EN.` per line, except that if the line is term
 <div class="math-left">
 
 ```icon
+
+
 do_equations(arg) ←
 write(".EQ")
 process("equations")
@@ -3031,6 +3118,8 @@ These are typeset with `.(q` and `.)q`.
 <div class="math-left">
 
 ```icon
+
+
 do_quote(arg) ←
 write(".(q")
 process("quote")
@@ -3046,6 +3135,8 @@ Outputs `.TS` and `.TE` commands. Body is straight TBL.
 <div class="math-left">
 
 ```icon
+
+
 do_table(args) ←
 write(".sp 4v0(c0TS")
 process("table")
@@ -3059,6 +3150,8 @@ For printing documentation lines. If the text following the `#` is white space, 
 <div class="math-left">
 
 ```icon
+
+
 write_line(line) ←
 repeat if upto(' ', line[1]) then line := line[2:*line + 1] else break
 if *line = 0 then write(".lp") else write(line) ■
@@ -3071,6 +3164,8 @@ For printing list lines.
 <div class="math-left">
 
 ```icon
+
+
 plain_write_line(line) ←
 repeat if upto(' ', line[1]) then line := line[2:*line + 1] else break
 write(line) ■
@@ -3083,12 +3178,14 @@ write(line) ■
 <div class="math-left">
 
 ```icon
+
+
 pretty_print(l, command) ←
 local line
 write(".nf0fH ")
 pretty_print_line(l)
 while line := get_line()
-do if line[1:2] mathrel{==} "#"
+do if line[1:2] == "#"
 then { write(".fi0fR ")
 write(".lp"); last_line := line; ⊥ }
 else pretty_print_line(line)
@@ -3109,16 +3206,18 @@ If the `-U<filename>` option is present, then keywords are read into the words t
 <div class="math-left">
 
 ```icon
+
+
 pretty_print_line(line) ←
 local first, last, key, x, y
-{ x := (upto((&lcase mathrel{+{+}} &ucase mathrel{+{+}} '_0123456789'), line) | (*line + 1))
+{ x := (upto((&lcase || &ucase || '_0123456789'), line) | (*line + 1))
 if x = *line + 1 then { writes(line); break }
-y := (upto(mathord{sim}(&lcase mathrel{+{+}} &ucase mathrel{+{+}} '_0123456789'), line) | (*line + 1))
+y := (upto(~(&lcase || &ucase || '_0123456789'), line) | (*line + 1))
 key := (line[1:y] | "")
 first := (line[1:x] | "")
 line := (line[x:*line + 1] | "")
 while *line > 0 do {
-if words[key] mathrel{sim}= "" then key := words[key]
+if words[key] ~= "" then key := words[key]
 last := line[y:*line + 1]
 writes(first, key)
 line := last }
@@ -3130,6 +3229,8 @@ write() } ■
 <div class="math-left">
 
 ```icon
+
+
 load_user_keywords(fname) ←
 local w, a, x
 if not(w := open(fname, 'r')) then ⊥
@@ -3155,6 +3256,8 @@ we use the logical-looking
 <div class="math-left">
 
 ```icon
+
+
 F (a, b, c) ← code ■
 ```
 
@@ -3163,9 +3266,11 @@ F (a, b, c) ← code ■
 <div class="math-left">
 
 ```icon
-if z mathrel{==} "■" then pretty_print_line(line mathrel{||} y mathrel{||} " ■")
+
+
+if z == "■" then pretty_print_line(line || y || " ■")
 else { pretty_print_line(line)
-if y mathrel{==} "■" then pretty_print_line(line mathrel{||} " ⊥ ■")
+if y == "■" then pretty_print_line(line || " ⊥ ■")
 else { z := get_line()
 local y
 y := get_line()
