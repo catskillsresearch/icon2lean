@@ -77,9 +77,8 @@ def fix_github_operators(body: str) -> str:
 
 
 def fix_underscore_joins(body: str) -> str:
-    """GitHub eats \\_; use \\char137 (octal for '_') inside \\texttt."""
-    body = body.replace(r"\mathord{\texttt{\_}}", r"\mathord{\texttt{\char137}}")
-    return body.replace(r"\_\text{", r"\mathord{\texttt{\char137}}\text{")
+    """Inside $$ blocks only; prefer ```math fences (see convert_math_fences.py)."""
+    return body.replace(r"\_\text{", r"\mathord{\texttt{\_}}\text{")
 
 
 def fix_underscores(body: str) -> str:
