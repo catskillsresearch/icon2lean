@@ -1,0 +1,7 @@
+procedure main()
+  local T
+  T := []
+  push(T, 1)
+  push(T, 2)
+  write(image(T))
+end

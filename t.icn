@@ -1,0 +1,7 @@
+link "code"
+procedure main()
+  set_base(8,1)
+  write("Width=", Width, "\n")
+  writes("x", right(0, Width, "0"), "y")
+  write()
+end

@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MD = ROOT / "Courant_Ericson_1986.md"
-OUT_CODE = ROOT / "code.icon"
+OUT_CODE = ROOT / "code.icn"
 OUT_TESTS = ROOT / "tests.icon"
 OUT_MANIFEST = ROOT / "tests_manifest.json"
 OUT_COMPARE = ROOT / "compare_tests.py"
@@ -401,16 +401,25 @@ def main() -> None:
 
     code_header = """# EUCLID package extracted from Courant_Ericson_1986.md
 # Fancy notation un-mathified per Section 1.3.
-# Link: link "code.icon"  (or include in your Icon program)
+# Link: link "code.icn"  (or include in your Icon program)
+
+procedure main()
+  # Library module: applications link "code.icn" and call EUCLID procedures.
+end
 
 """
     tests_header = """# Tests and examples from Courant_Ericson_1986.md
 # Expected outputs are in # EXPECT: comments and tests_manifest.json
-link "code.icon"
+link "code.icn"
 
 """
 
-    OUT_CODE.write_text(code_header + "\n".join(procedures))
+    import sys
+
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from fix_icon_compiler import fix_code
+
+    OUT_CODE.write_text(fix_code(code_header + "\n".join(procedures)))
     OUT_TESTS.write_text(tests_header + "\n".join(tests))
 
     lean_golden = {
@@ -461,7 +470,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 MANIFEST = ROOT / "{manifest_path}"
 TESTS_ICON = ROOT / "tests.icon"
-CODE_ICON = ROOT / "code.icon"
+CODE_ICON = ROOT / "code.icn"
 
 
 def load_manifest() -> dict:

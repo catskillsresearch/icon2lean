@@ -1,0 +1,12 @@
+link "code"
+invocable all
+
+procedure pr(args)
+  every x := !args do if type(x) == "string" then writes(x) else writes(image(x))
+  write()
+end
+
+procedure main()
+  set_base(10, 1)
+  pr{"hello "}
+end

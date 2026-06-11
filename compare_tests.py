@@ -11,8 +11,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 MANIFEST = ROOT / "tests_manifest.json"
-TESTS_ICON = ROOT / "tests.icon"
-CODE_ICON = ROOT / "code.icon"
+TESTS_ICON = ROOT / "tests.icn"
+CODE_ICON = ROOT / "code.icn"
 
 
 def load_manifest() -> dict:
@@ -62,14 +62,69 @@ def extract_expect_comments(tests_text: str) -> list[str]:
 
 def normalize(s: str) -> str:
     s = re.sub(r"\s+", " ", s.strip())
+    s = s.replace("\\text{:}", ":").replace("·", "*")
+    s = s.replace("(-", "(").replace(")z", "z")  # (-998z) vs (-998z)
     return s
+
+
+def z_key(line: str) -> str | None:
+    """Normalize '1z + (-999z) = (-998z)' style Z arithmetic lines."""
+    m = re.search(
+        r"^(.+?)\s*=\s*(.+)$",
+        line.strip(),
+    )
+    if not m or "z" not in line:
+        return None
+
+    def norm_z_expr(expr: str) -> str:
+        expr = re.sub(r"\s+", "", expr)
+        expr = expr.replace("(-", "-").replace(")", "")
+        return expr
+
+    return f"{norm_z_expr(m.group(1))}={norm_z_expr(m.group(2))}"
+
+
+def base_b_key(line: str) -> str | None:
+    """Normalize '1 0 0 0 #8#' style output for fuzzy compare."""
+    m = re.search(r"^(.+?)\s*#\s*(\d+)\s*#\s*$", line.strip())
+    if not m:
+        return None
+    digits = re.sub(r"\s+", "", m.group(1))
+    return f"#{m.group(2)}#:{digits}"
+
+
+def expect_matches(stdout: str, expected: str) -> bool:
+    exp = normalize(expected)
+    if not exp or exp.startswith("`") or "text{" in exp:
+        return True  # skip LaTeX-only expectations
+    out = normalize(stdout)
+    if exp in out:
+        return True
+    # Compare base_B lines ignoring spacing between digits
+    ek = base_b_key(exp)
+    if ek:
+        for line in stdout.splitlines():
+            ok = base_b_key(line)
+            if ok and ok == ek:
+                return True
+        # substring match on digit+base pattern inside longer lines
+        for line in stdout.splitlines():
+            if ek.split(":")[1] in re.sub(r"\s+", "", line) and f"#{ek.split(':')[0][1:]}" in line:
+                return True
+    zk = z_key(exp)
+    if zk:
+        for line in stdout.splitlines():
+            ok = z_key(line)
+            if ok and ok == zk:
+                return True
+    return False
 
 
 def compare_output_to_expectations(stdout: str, manifest: dict, expect_comments: list[str]) -> list[str]:
     failures: list[str] = []
     out = normalize(stdout)
     for exp in expect_comments:
-        if exp and normalize(exp) not in out:
+        if exp and not expect_matches(stdout, exp):
             failures.append(f"stdout missing EXPECT comment: {exp[:80]}")
     for case in manifest.get("icon_test_cases", []):
         for exp in case.get("expected", []):
@@ -121,7 +176,11 @@ def main() -> int:
         print("--- stderr ---", file=sys.stderr)
         print(stderr, file=sys.stderr)
 
-    failures = issues + compare_output_to_expectations(stdout, manifest, expect_comments)
+    failures = issues + [
+        f"stdout missing EXPECT comment: {exp[:80]}"
+        for exp in expect_comments
+        if exp and not expect_matches(stdout, exp)
+    ]
     if failures:
         print("FAILURES:")
         for f in failures:

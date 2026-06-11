@@ -36,13 +36,13 @@ n := N/2
 b(x) := sum_i=0^{n-1} a_2i x^i
 c(x) := sum_i=0^{n-1} a_2i+1 x^i
 { Recursive calls. }
-FFT(n, b(x), omega^2, B)
-FFT(n, c(x), omega^2, C)
+FFT(n, b(x), omega2, B)
+FFT(n, c(x), omega2, C)
 { Combine. }
 for k := 0 until n - 1 do
 begin
-A_k := B_k + omega^k ⊗ C_k
-A_k+n := B_k - omega^k ⊗ C_k
+A_k := B_k + omega_k ⊗ C_k
+A_k+n := B_k - omega_k ⊗ C_k
 end
 end
 ```
@@ -143,7 +143,7 @@ Icon variables (simple names for single items, and procedure names) may appear a
 | **Original ICON** | **Fancy Notation** |
 |:--|:--|
 | `one_base_B` | `1_base_B` |
-| `delta_i_minus_1` | `\delta_i-1` |
+| `delta_i_minus_1` | `\delta_i_minus_1` |
 | `plus_poly` | `\oplus_poly` |
 
 For procedure definitions, instead of the obvious
@@ -358,7 +358,7 @@ if p = 1 then ↑ x
 else { result := mathbf{1}(x)
 u := copy(x); v := p
 running := u
-while v ≠q 0 do
+while v != 0 do
 { if v bmod 2 = 1 then result := ⊗(result, running)
 running := ⊗(running, running)
 v := v / 2 }
@@ -459,11 +459,14 @@ The latter are best unused: ICON does not notify the user of integer multiplicat
 ```icon
 
 
-record base_B (base, digits)
+record base_B(base, digits)
+
 global Base, Width
-set_base(b, w) ←
-Base := b
-Width := *(b || "") - 1 ■
+
+procedure set_base(b, w)
+  Base := b
+  Width := if integer(w) > 0 then w else max(1, *("" || b) - 1)
+end
 ```
 
 
@@ -479,7 +482,7 @@ Width := *(b || "") - 1 ■
 0_base_B(x) ← ↑ base_B(x.base, [0]) ■
 1_base_B(x) ← ↑ base_B(x.base, [1]) ■
 k_base_B(x) ← ↑ base_B(Base, digits_of(abs(x), Base)) ■
-digits_of(x, B) ← if x < B then ↑ [x] else ↑ digits_of(x/B, B) ||| [mod_integer(x, B)] ■
+digits_of(x, B) ← if x < B then ↑ [x] else ↑ digits_of(x/B, B) || [mod_integer(x, B)] ■
 ```
 
 
@@ -509,8 +512,8 @@ B := a.base
 
 ⊕_digits(ad, bd, B) ←
 m := *ad; n := *bd
-if m < n then { a := (list(n - m, 0) ||| ad); b := bd }
-else if m > n then { a := ad; b := list(m - n, 0) ||| bd }
+if m < n then { a := (list(n - m, 0) || ad); b := bd }
+else if m > n then { a := ad; b := list(m - n, 0) || bd }
 else { a := ad; b := bd }
 m := *a;
 c_digits := list(m + 1, 0);
@@ -557,7 +560,7 @@ repeat
 { n := *b.digits
 if m < n then pr{"ERROR: base_B integer subtraction underflow"}
 else if m > n
-then b := base_B(B, list(m - n, 0) ||| b.digits)
+then b := base_B(B, list(m - n, 0) || b.digits)
 else ↑ base_B(b.base, ⊖_digits(a.digits, b.digits, b.base)) } ■
 ```
 
@@ -571,11 +574,11 @@ else ↑ base_B(b.base, ⊖_digits(a.digits, b.digits, b.base)) } ■
 
 ⊖_digits(a, b, B) ←
 u := copy(a)
-v := list(*a - *b, 0) ||| copy(b)
+v := list(*a - *b, 0) || copy(b)
 k := 0
 every j := *u to 1 by -1 do
 { u[j] := u[j] - v[j] + k
-if u[j] < 0 then { u[j] } B; k := -1 } else k := 0 }
+if u[j] < 0 then { u[j] +:= B; k := -1 } else k := 0 }
 ↑ normalize_digits(u) ■
 ```
 
@@ -703,9 +706,9 @@ This is by far the most difficult of the four basic operations. This is because 
 
 ⨸_base_B(a, b) ← ↑ normalize_base_B(base_B(a.base, ⨸_digits(a.digits, b.digits, a.base))) ■
 ⨸_digits(a, b, B) ←
-If the divisor is 0, then fail.
+# # # If the divisor is 0, then fail.
 if (*b = 1) & (b[1] = 0) then { pr{"ERROR: divide by 0 in base_B"}; ⊥ }
-If a is shorter than b, return 0.
+# # # If a is shorter than b, return 0.
 if *a < *b then ↑ [0]
 ```
 
@@ -760,7 +763,7 @@ Knuth Step D1. [Normalize] The first step is to multiply both the divisor and di
 
 d := B / (v[1] + 1)
 u := ⊗_digits(u, [d], B)
-if *u = m + n then u := [0] } u
+if *u = m + n then u := [0] || u
 v := ⊗_digits(v, [d], B)
 ```
 
@@ -801,7 +804,7 @@ The following loop refines this guess so that it is almost always correct and is
 ```icon
 
 
-while (v[2] * qe) > (((u[j] * B) + u[j + 1] - (qe * v[1])) * B + u[j + 2]) do qe {:=}} 1
+while (v[2] * qe) > (((u[j] * B) + u[j + 1] - (qe * v[1])) * B + u[j + 2]) do qe -:= 1
 ```
 
 
@@ -819,7 +822,7 @@ every k := n to 1 by -1 do
 { du := u[j + k] - (qe * v[k]) + c
 u[j + k] := du % B
 c := du / B
-if u[j + k] < 0 then { u[j + k] } B; c {:=}} 1 } }
+if u[j + k] < 0 then { u[j + k] +:= B; c -:= 1 } }
 u[j] } c
 ```
 
@@ -835,11 +838,11 @@ Knuth Step D5,D6. [Test remainder. Add back] If the estimate was one off, then `
 
 q[j] := qe
 if u[j] < 0 then
-{ qe {:=}} 1
+{ qe -:= 1
 c := 0
 every k := n to 1 by -1 do
 { u[j + k] } v[k] + c
-if u[j + k] geq B then { u[j + k] {:=}} B; c := 1 }
+if u[j + k] geq B then { u[j + k] -:= B; c := 1 }
 else c := 0 }
 u[j] } c }
 }
@@ -892,7 +895,7 @@ is
 print_base_B(b) ←
 local digits
 writes(b.digits[1], " ")
-every writes(right(!rest(b.digits), Width, "0"), " ")
+  every i := 2 to *b.digits do writes(" ", right(b.digits[i], Width, "0"))
 writes("#", b.base, "#") ■
 ```
 
@@ -919,7 +922,7 @@ else ↑ <_digits(rest(a), rest(b)) ■
 if *a < *b then ⊥
 else if (*a > *b) then ⊥
 else if *a = 0 then ↑
-else if (a[1] ≠q b[1]) then ⊥
+else if (a[1] != b[1]) then fail
 else ↑ =_digits(rest(a), rest(b)) ■
 ```
 
@@ -945,7 +948,7 @@ rest(x) ← if *x < 2 then ↑ [] else ↑ x[2:*x + 1] ■
 | **Data structures** | `Z` |
 | **Constants** | `0_Z`, `1_Z`, `k_Z` |
 | **Operators** | `\oplus_Z`, `-_Z`, `\otimes_Z`, `\mathbin{⨸}_Z`, `mod_Z`, `abs_Z`, `deg_Z`, `normalize_Z` |
-| **Predicates** | `=_Z`, `<_Z`, `unit_Z`, `>0_Z`, `<0_Z`, `=0_Z` |
+| **Predicates** | `=_Z`, `<_Z`, `unit_Z`, `gt0_Z`, `<0_Z`, `=0_Z` |
 | **Commands** | `print_Z` |
 
 **Data structures.** *sign* is 1 or `-1`. *mantissa* is a base `Base` integer, where the `Base` is set by `k_Z`.
@@ -983,7 +986,7 @@ record Z (sign, mantissa)
 
 
 k_Z(x) ←
-initial set_base(10000)
+initial set_base(10000, 4)
 ↑ Z(if x = 0 then 1 else x/abs(x),
 base_B(Base, digits_of(abs(x), Base))) ■
 ```
@@ -999,11 +1002,11 @@ base_B(Base, digits_of(abs(x), Base))) ■
 
 
 ⊕_Z(a, b) ←
-if <0_Z(a) & >0_Z(b) then ↑ ⊕_Z(b, a)
+if <0_Z(a) & gt0_Z(b) then ↑ ⊕_Z(b, a)
 ↑ normalize_Z(
 if =0_Z(a) then b
 else if =0_Z(b) then a
-else if (>0_Z(a) & >0_Z(b)) | (<0_Z(a) & <0_Z(b))
+else if (gt0_Z(a) & gt0_Z(b)) | (<0_Z(a) & <0_Z(b))
 then Z(a.sign, ⊕_base_B(a.mantissa, b.mantissa))
 else { #a > 0 and b < 0, so...
 if <_base_B(a.mantissa, b.mantissa)
@@ -1161,7 +1164,7 @@ normalize_Z(x) ← ↑ (if =0_Z(x) then Z(1, x.mantissa) else x) ■
 
 =_Z(a, b) ←
 if =0_Z(a) & =0_Z(b) then ↑
-else if a.sign ≠q b.sign then ⊥
+else if a.sign != b.sign then fail
 else ↑ =_base_B(a.mantissa, b.mantissa) ■
 <_Z(a, b) ←
 if a.sign < b.sign then ↑
@@ -1169,7 +1172,7 @@ if a.sign > b.sign then ⊥
 if a.sign = 1 then ↑ <_base_B(a.mantissa, b.mantissa)
 if a.sign = -1 then ↑ <_base_B(b.mantissa, a.mantissa) ■
 unit_Z(x) ← ↑ (=_Z(x, 1_Z(x)) | =_Z(x, Z(-1, 1_base_B(x.mantissa)))) ■
->0_Z(x) ← ↑ ((x.sign = 1) & not =0_Z(x)) ■
+gt0_Z(x) ← ↑ ((x.sign = 1) & not =0_Z(x)) ■
 <0_Z(x) ← ↑ ((x.sign = -1) & not =0_Z(x)) ■
 =0_Z(x) ← ↑ =_base_B(x.mantissa, 0_base_B(x.mantissa)) ■
 ```
@@ -1232,7 +1235,7 @@ We provide the following machine integer arithmetic facilities:
 ```icon
 
 
-⊕(a, b) ← ↑ a + b ■
+plus_integer(a, b) ← ↑ a + b ■
 -_integer(x) ← ↑ -x ■
 odot_integer(a, b) ← ↑ a * b ■
 mathit{circleslash}_integer(a, b) ← ↑ a / b ■
@@ -1339,7 +1342,7 @@ record Q (dividend, divisor)
 
 0_Q(x) ← ↑ Q(0(x.dividend), 1(x.dividend)) ■
 1_Q(x) ← ↑ Q(1(x.dividend), 1(x.dividend)) ■
-k_{imathcal{Q}_x}(l, j) ← ↑ term(Q(l, 1(l)), j) ■
+k_iQ_x(l, j) ← ↑ term(Q(l, 1(l)), j) ■
 ```
 
 
@@ -1356,7 +1359,7 @@ k_{imathcal{Q}_x}(l, j) ← ↑ term(Q(l, 1(l)), j) ■
 local zz, top
 top := ⊕(⊗(a.dividend, b.divisor), ⊗(b.dividend, a.divisor))
 zz := 0(a.dividend)
-↑ if =_Q(top, zz) then Q(zz, 1(a.dividend))
+↑ if =(top, zz) then Q(zz, 1(a.dividend))
 else normalize_Q(Q(top, ⊗(a.divisor, b.divisor))) ■
 ```
 
@@ -1532,7 +1535,7 @@ deg_modulo(x) ← ↑ mod(x.item, x.modulus) ■
 
 
 =_modulo(a, b) ← ↑ (=(mod(a.item, a.modulus), mod(b.item, b.modulus))) ■
-unit_modulo(a) ← ↑ (=($mod$(a.item, a.modulus), 1)) ■
+unit_modulo(a) ← ↑ (=(a.item % a.modulus, 1)) ■
 ```
 
 
@@ -1588,7 +1591,8 @@ They are represented as lists of terms, in increasing order of power, such that 
 ```icon
 
 
-record poly (terms)
+record poly(terms)
+
 poly_of(x) ← ↑ poly([term(x, 0)]) ■
 ```
 
@@ -1602,7 +1606,7 @@ The coefficient of the constant term as an element of `D`, if there is a constan
 ```icon
 
 
-0th_coef(fx) ←
+zeroth_coef(fx) ←
 local a
 a := fx.terms[1]
 ↑ (if a.power = 0 then a.coef else 0(a.coef)) ■
@@ -1740,7 +1744,7 @@ k_Z_x(e, y) ← ↑ term(k_Z(e), y) ■
 local Terms, T, z
 Terms := ⊕_terms(a.terms, b.terms)
 T := []; z := 0(a.terms[1].coef)
-every t := !Terms do if not =(t.coef, z) then T |||:= [t]
+every t := !Terms do if not =(t.coef, z) then T ||:= [t]
 ↑ (if *T > 0 then poly(T) else 0(a)) ■
 ```
 
@@ -1764,13 +1768,13 @@ if less(ap, bp)
 then {
 if =(ac, 0(ac))
 then ⊕_terms(rest(a), b)
-else [at] } ⊕_terms(rest(a), b) }
+else [at] || ⊕_terms(rest(a), b) }
 else if =(ap, bp)
 then {
 c_coef := ⊕(ac, bc)
 if =(c_coef, 0(c_coef))
 then ⊕_terms(rest(a), rest(b))
-else [term(c_coef, ap)] } ⊕_terms(rest(a), rest(b)) }
+else [term(c_coef, ap)] || ⊕_terms(rest(a), rest(b)) }
 else ⊕_terms(b, a) }
 ) ■
 ```
@@ -1809,9 +1813,9 @@ is
 -_poly(x) ←
 local c
 c := []
-every t := !x.terms do c |||:= [-_term(t)]
+every t := !x.terms do c ||:= [-_term(t)]
 ↑ poly(c) ■
--_term(t) ← ↑ term(-(t.coef), t.power) ■
+-_term(t) ← ↑ term(minus(t.coef), t.power) ■
 ```
 
 
@@ -2031,7 +2035,7 @@ A normal-form polynomial is one whose terms are in normal form (and in ascending
 normalize_poly(x) ←
     local ts
     ts := []
-    every t := !x.terms do ts |||:= [term(normalize(t.coef), t.power)]
+    every t := !x.terms do ts ||:= [term(normalize(t.coef), t.power)]
     ↑ poly(ts)  ■
 ```
 
@@ -2060,7 +2064,7 @@ normalize_poly(x) ←
 
 
 =_terms(a, b) ←
-    if *a ≠ *b then ⊥
+    if *a != *b then fail
     if *a = 0 then ↑
     if =_term(a[1], b[1]) then ↑ =_terms(rest(a), rest(b))  ■
 ```
@@ -2307,7 +2311,7 @@ INVERSE(a, m) ←
 local gst
 gst := EUCLID(m, a)
 if unit(gst[1]) then ↑ mod(⨸(gst[3], gst[1]), m)
-else pr{"ERROR: ", a, "^{-1 "}, " mod ", m, " does not exist"} ■
+else pr{"ERROR: ", a, " inverse mod ", m, " does not exist"} ■
 ```
 
 </div>
@@ -2397,7 +2401,7 @@ Output: `U \in Z` such that `U \equiv r_i \pmod{m_i}`.
 
 
 CRA(rm_list) ←
-local rms, rm, M, U, c, sigma
+local rms, rm, M, U, c, sigma, r, m
 rms := copy(rm_list)
 rm := pop(rms); r := rm[1]; m := rm[2]
 M := 1(m)
@@ -2406,7 +2410,7 @@ every k := 1 to *rms do {
 M := ⊗(M, m)
 rm := pop(rms); r := rm[1]; m := rm[2]
 c := INVERSE(M, m)
-sigma := mod(⊗(⊖(mod(U, m), r), c), m)
+sigma := mod(⊗(⊖(r, mod(U, m)), c), m)
 U := ⊕(U, ⊗(sigma, M)) }
 ↑ U ■
 ```
@@ -2538,7 +2542,7 @@ The simplest polynomial remainder sequence is simply that of Euclid's algorithm.
 ```icon
 
 
-MOD_RS(a, b) ← ↑ [a] |||:= (if =(b, 0(b)) then [b] else MOD_RS(b, mod(a, b))) ■
+MOD_RS(a, b) ← ↑ [a] ||:= (if =(b, 0(b)) then [b] else MOD_RS(b, mod(a, b))) ■
 ```
 
 </div>
@@ -2610,7 +2614,7 @@ I.e., a trace of the steps of Euclid's algorithm modified to use PREM.
 ```icon
 
 
-E_PRS(a, b) ← ↑ [a] |||:= (if =(b, 0(b)) then [b] else E_PRS(b, PREM(a, b))) ■
+E_PRS(a, b) ← ↑ [a] ||:= (if =(b, 0(b)) then [b] else E_PRS(b, PREM(a, b))) ■
 ```
 
 </div>
@@ -2623,21 +2627,21 @@ The following algorithm is the Collins-Brown subresultant PRS algorithm, as pres
 Input: polynomials `p_0, p_1 \in I[x]` for some integral domain `I`.  
 Output: Subresultant PRS `(p_0, p_1, \ldots, p_k)` such that `p_k+1 = 0`.
 
-Let `\delta_i = \deg(p_i) - \deg(p_i+1)`. Let `c_i = \text{lead}(p_i)`.
+Let `\delta_i = \deg(p_i) - \deg(p_i_plus_1)`. Let `c_i = \text{lead}(p_i)`.
 
 Let `(R_1, R_2, \ldots, R_k)` be a sequence of length `k` defined by
 
 $$R_1 = c_1^{\delta_0}$$
-$$R_i = c_i^{\delta_i-1} R_i-1^{1-\delta_i-1}, \quad i = 2, \ldots, k$$
+$$R_i = c_i^{\delta_i_minus_1} R_i-1^{1-\delta_i_minus_1}, \quad i = 2, \ldots, k$$
 
 Let `(\beta_2, \beta_3, \ldots, \beta_k)` be a sequence of length `k-1` defined by
 
 $$\beta_2 = (-1)^{\delta_0 + 1}$$
-$$\beta_i = (-1)^{1 + \delta_i-2} c_i-2 (R_i-2)^{\delta_i-2}, \quad i = 3, \ldots, k$$
+$$\beta_i = (-1)^{1 + \delta_i_minus_2} c_i_minus_2 (R_i_minus_2)^{\delta_i_minus_2}, \quad i = 3, \ldots, k$$
 
 Then we wish to compute the sequence `(p_0, p_1, \ldots, p_k)` of length `k+1` such that `p_0` and `p_1` are the given polynomials, and
 
-$$p_i = \frac{\text{PREM}(p_i-2, p_i-1)}{\beta_i}, \quad i = 2, \ldots, k$$
+$$p_i = \frac{\text{PREM}(p_i_minus_2, p_i_minus_1)}{\beta_i}, \quad i = 2, \ldots, k$$
 
 
 
@@ -2648,7 +2652,7 @@ $$p_i = \frac{\text{PREM}(p_i-2, p_i-1)}{\beta_i}, \quad i = 2, \ldots, k$$
 
 S_PRS(p_0, p_1) ←
 local delta_0, beta_2, p_2, x, P, R_1,
-delta_i-2, c_i-2, R_i-2, p_i-2, p_i-1, beta_i, p_i, l, z
+delta_i_minus_2, c_i_minus_2, R_i_minus_2, p_i_minus_2, p_i_minus_1, beta_i, p_i, l, z
 delta_0 := delta_i(p_0, p_1)
 c_0 := c_i(p_0)
 beta_2 := poly_of(exp(-(1(c_0)), delta_0 + 1))
@@ -2656,29 +2660,29 @@ p_2 := P_i(p_0, p_1, beta_2); z := 0(p_2)
 if =(p_2, z) then ↑ [p_0, p_1]
 P := [p_0, p_1, p_2]
 R_1 := exp(c_i(p_1), delta_0)
-delta_i-2 := delta_i(p_1, p_2)
-c_i-2 := c_i(p_1)
-R_i-2 := R_1
-p_i-2 := p_1
-p_i-1 := p_2
+delta_i_minus_2 := delta_i(p_1, p_2)
+c_i_minus_2 := c_i(p_1)
+R_i_minus_2 := R_1
+p_i_minus_2 := p_1
+p_i_minus_1 := p_2
 l := 3
 repeat {
-beta_i := beta_i(delta_i-2, c_i-2, R_i-2)
-p_i := P_i(p_i-2, p_i-1, beta_i)
+beta_i := beta_i(delta_i_minus_2, c_i_minus_2, R_i_minus_2)
+p_i := P_i(p_i_minus_2, p_i_minus_1, beta_i)
 if =(p_i, z) then ↑ P
-else P |||:= [p_i]
-p_i-2 := p_i-1
-p_i-1 := p_i
-c_i-2 := c_i(p_i-2)
-R_i-2 := R_i(c_i-2, delta_i-2, R_i-2)
-delta_i-2 := delta_i(p_i-2, p_i-1) } ■
-delta_i(p_i, p_i+1) ← ↑ -_deg(deg_poly(p_i), deg_poly(p_i+1)) ■
+else P ||:= [p_i]
+p_i_minus_2 := p_i_minus_1
+p_i_minus_1 := p_i
+c_i_minus_2 := c_i(p_i_minus_2)
+R_i_minus_2 := R_i(c_i_minus_2, delta_i_minus_2, R_i_minus_2)
+delta_i_minus_2 := delta_i(p_i_minus_2, p_i_minus_1) } ■
+delta_i(p_i, p_i_plus_1) ← ↑ -_deg(deg_poly(p_i), deg_poly(p_i_plus_1)) ■
 c_i(p_i) ← ↑ lead_coef(p_i) ■
-R_i(c_i, delta_i-1, R_i-1) ←
-↑ ⊗(exp(c_i, delta_i-1), exp(R_i-1, -_deg(delta_i-1, 1))) ■
-beta_i(delta_i-2, c_i-2, R_i-2) ←
-↑ poly_of(⊗(⊗(exp(-(1(c_i-2)), 1 + delta_i-2), exp(R_i-2, delta_i-2)))) ■
-P_i(p_i-2, p_i-1, beta_i) ← ↑ ⨸(PREM(p_i-2, p_i-1), beta_i) ■
+R_i(c_i, delta_i_minus_1, R_i_minus_1) ←
+↑ ⊗(exp(c_i, delta_i_minus_1), exp(R_i_minus_1, -_deg(delta_i_minus_1, 1))) ■
+beta_i(delta_i_minus_2, c_i_minus_2, R_i_minus_2) ←
+↑ poly_of(⊗(⊗(exp(-(1(c_i_minus_2)), 1 + delta_i_minus_2), exp(R_i_minus_2, delta_i_minus_2)))) ■
+P_i(p_i_minus_2, p_i_minus_1, beta_i) ← ↑ ⨸(PREM(p_i_minus_2, p_i_minus_1), beta_i) ■
 ```
 
 </div>
@@ -2731,21 +2735,25 @@ Output: array `A = (A₀, …, A_{N−1})` where `A_k = a(ω^k)`
 
 
 FFT(N, ax, omega) ←
-local A, n, bx, cx, omega^2, B, C, omega^k
+local A, n, bx, cx, omega2, B, C, omega_k
 A := list(N, [])
-if N = 1 * basis
-then A[1] := 0th_coef(ax)
-else { n := N/2 * binary split
-bx := poly_of_even_powered_terms(ax)
-cx := poly_of_odd_powered_terms(ax)
-omega^2 := exp(omega, 2)
-B := FFT(n, bx, omega^2) * recursive calls
-C := FFT(n, cx, omega^2)
-every k := 1 to n do {
-omega^k := exp(omega, k-1)
-A[k] := ⊕(B[k], ⊗(omega^k, C[k]))
-A[k+n] := ⊖(B[k], ⊗(omega^k, C[k])) } }
-↑ A ■
+if N = 1 then {
+  A[1] := zeroth_coef(ax)
+  ↑ A
+} else {
+  n := N/2
+  bx := poly_of_even_powered_terms(ax)
+  cx := poly_of_odd_powered_terms(ax)
+  omega2 := exp(omega, 2)
+  B := FFT(n, bx, omega2)
+  C := FFT(n, cx, omega2)
+  every k := 1 to n do {
+    omega_k := exp(omega, k - 1)
+    A[k] := ⊕(B[k], ⊗(omega_k, C[k]))
+    A[k+n] := ⊖(B[k], ⊗(omega_k, C[k]))
+  }
+  ↑ A
+} ■
 ```
 
 </div>
@@ -2761,7 +2769,7 @@ poly_of_even_powered_terms(ax) ←
 local r
 r := []
 every t := !ax.terms
-do if mod_integer(t.power, 2) = 0 then r |||:= [term(t.coef, t.power/2)]
+do if mod_integer(t.power, 2) = 0 then r ||:= [term(t.coef, t.power/2)]
 ↑ poly(r) ■
 ```
 
@@ -2778,7 +2786,7 @@ poly_of_odd_powered_terms(ax) ←
 local r
 r := []
 every t := !ax.terms
-do if mod_integer(t.power, 2) = 1 then r |||:= [term(t.coef, (t.power - 1)/2)]
+do if mod_integer(t.power, 2) = 1 then r ||:= [term(t.coef, (t.power - 1)/2)]
 if *r > 0 then ↑ poly(r) else ↑ 0(ax.terms[1]) ■
 ```
 
@@ -2812,7 +2820,7 @@ polynomialize(B) ←
 local r, i
 r := []; i := 0
 every b := !B do {
-if not(=(b, 0(b))) then r |||:= [term(b, i)]
+if not(=(b, 0(b))) then r ||:= [term(b, i)]
 i +:= 1 }
 ↑ poly(r) ■
 ```
@@ -2847,7 +2855,7 @@ Output: `x^(n)(t) = a(t)^{−1} mod t^{2^n}`
 NPSI(at) ←
 local ax, xt, n
 ax := at.Poly
-xt := poly_of(0th_coef(ax))
+xt := poly_of(zeroth_coef(ax))
 n := log2(*ax.terms)
 every k := 0 to n-1
 do xt := ⊕(⊕(xt, xt),

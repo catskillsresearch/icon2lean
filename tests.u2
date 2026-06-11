@@ -1,0 +1,16 @@
+version	U9.0.00
+impl	local
+link	code.u1
+global	12
+	0,000001,timer,0
+	1,000005,settime,0
+	2,000005,showtime,0
+	3,000005,test_base_B_add,0
+	4,000005,test_base_B_sub,0
+	5,000005,test_base_B_mul,0
+	6,000005,test_base_B_div,0
+	7,000005,test_Z_ops,0
+	8,000005,test_Q_poly,0
+	9,000005,test_CRA,0
+	10,000005,test_MOD_RS,0
+	11,000005,main,0

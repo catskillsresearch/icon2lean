@@ -1,4 +1,16 @@
-# EUCLID tests from Courant_Ericson_1986.md
+#!/usr/bin/env python3
+"""Build runnable tests.icn from Courant_Ericson_1986.md example blocks."""
+
+from __future__ import annotations
+
+import re
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+MD = ROOT / "Courant_Ericson_1986.md"
+OUT = ROOT / "tests.icn"
+
+HEADER = '''# EUCLID tests from Courant_Ericson_1986.md
 # Expected outputs in # EXPECT: comments; verify with: python3 compare_tests.py
 link "code"
 
@@ -12,7 +24,23 @@ procedure showtime()
   pr{"[", &time - timer, " msecs]"}
 end
 
+'''
 
+FOOTER = '''
+procedure main()
+  set_base(10, 1)
+  test_base_B_add()
+  test_base_B_sub()
+  test_base_B_mul()
+  test_base_B_div()
+  test_Z_ops()
+  test_CRA()
+  # test_MOD_RS()  # report example; ~220s on 1986 hardware — run manually
+end
+'''
+
+# Hand-translated runnable tests (fancy notation kept as pr{...} control calls).
+TESTS = '''
 # --- test_base_B_add (md ~533) ---
 # EXPECT: 1 #8# + 7 7 7 #8# = 1 0 0 0 #8#
 procedure test_base_B_add()
@@ -143,14 +171,13 @@ procedure test_MOD_RS()
   pr{"QZ[x]: MOD_RS(", ax, ", ", bx, ") = ", MOD_RS(ax, bx)}
   showtime()
 end
+'''
 
-procedure main()
-  set_base(10, 1)
-  test_base_B_add()
-  test_base_B_sub()
-  test_base_B_mul()
-  test_base_B_div()
-  test_Z_ops()
-  test_CRA()
-  # test_MOD_RS()  # report example; ~220s on 1986 hardware — run manually
-end
+
+def main() -> None:
+    OUT.write_text(HEADER + TESTS + FOOTER)
+    print(f"Wrote {OUT}")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,7 @@
+version	U9.0.00
+impl	local
+link	code.u1
+invocable	0
+global	2
+	0,000005,pr,1
+	1,000005,main,0
