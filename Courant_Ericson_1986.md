@@ -897,7 +897,7 @@ is
 &\quad \textbf{local } digits \\
 &\quad writes(b.digits[1],\ \text{" "}) \\
 &\quad \textbf{every } writes(right(\texttt{!}rest(b.digits),\ Width,\ \text{"0"}),\ \text{" "}) \\
-&\quad writes(\texttt{"#"},\ b.base,\ \texttt{"#"}) \ \blacksquare
+&\quad writes(\texttt{"\#"},\ b.base,\ \texttt{"\#"}) \ \blacksquare
 \end{aligned}
 ```
 
@@ -2980,11 +2980,11 @@ Reads lines until encountering end of file or `##end` or `##end command`.
 &\quad \textbf{while } line \mathrel{:=} get\_line() \textbf{ do if } not\ process\_line(line, command) \textbf{ then break} \ \blacksquare \\
 &\\
 &process\_line(line, command) \Leftarrow \\
-&\quad \textbf{if } line[1:3] \mathrel{==} \texttt{"##"} \\
+&\quad \textbf{if } line[1:3] \mathrel{==} \texttt{"\#\#"} \\
 &\quad \textbf{then } \{ \textbf{if } line[3:6] \mathrel{==} \text{"■"} \\
 &\quad\quad \textbf{then } \{ end\_command(command, line[7:\texttt{*}line + 1]);\ \bot \} \\
 &\quad\quad \textbf{else } do\_command(line[3:\texttt{*}line + 1]) \} \\
-&\quad \textbf{else if } line[1] \mathrel{==} \texttt{"#"} \textbf{ then } write\_line(line[2:\texttt{*}line + 1]) \\
+&\quad \textbf{else if } line[1] \mathrel{==} \texttt{"\#"} \textbf{ then } write\_line(line[2:\texttt{*}line + 1]) \\
 &\quad \textbf{else } pretty\_print(line, command) \\
 &\Uparrow \ \blacksquare \\
 &\\
@@ -3028,11 +3028,11 @@ For interpreting `##` commands
 &\quad \textbf{local } line \\
 &\quad write(\text{".(l I F"}) \\
 &\quad \textbf{while } line \mathrel{:=} get\_line() \\
-&\quad \textbf{do if } line[1:3] \mathrel{==} \texttt{"##"} \\
+&\quad \textbf{do if } line[1:3] \mathrel{==} \texttt{"\#\#"} \\
 &\quad\quad \textbf{then } \{ \textbf{if } line[3:6] \mathrel{==} \text{"■"} \\
 &\quad\quad\quad \textbf{then } \{ write(\text{".)l"});\ end\_command(command, line[7:\texttt{*}line + 1]);\ \bot \} \\
 &\quad\quad\quad \textbf{else } do\_command(line[3:\texttt{*}line + 1]) \} \\
-&\quad\quad \textbf{else if } line[1] \mathrel{==} \texttt{"#"} \\
+&\quad\quad \textbf{else if } line[1] \mathrel{==} \texttt{"\#"} \\
 &\quad\quad \textbf{then } \{ line \mathrel{:=} line[2:\texttt{*}line + 1] \\
 &\quad\quad\quad\quad \textbf{repeat if } upto(\text{' '}, line[1]) \\
 &\quad\quad\quad\quad \textbf{then } line \mathrel{:=} line[2:\texttt{*}line + 1] \textbf{ else break} \\
@@ -3077,7 +3077,7 @@ Deletes *everything* between skip and end skip.
 &do\_skip(x) \Leftarrow \\
 &\quad \textbf{local } line \\
 &\quad \textbf{while } line \mathrel{:=} get\_line() \\
-&\quad \textbf{do if } line[1:3] \mathrel{==} \texttt{"##"} \\
+&\quad \textbf{do if } line[1:3] \mathrel{==} \texttt{"\#\#"} \\
 &\quad\quad \textbf{then if } line[3:6] \mathrel{==} \text{"■"} \\
 &\quad\quad\quad \textbf{then } \{ end\_command(command, line[7:\texttt{*}line + 1]);\ break \} \ \blacksquare
 \end{aligned}
@@ -3139,7 +3139,7 @@ Code is unjustified and Helveticized. Uncommented lines are processed as code. C
 &\quad \textbf{local } line \\
 &\quad write(\text{".nf0fH"}) \\
 &\quad \textbf{while } line \mathrel{:=} get\_line() \\
-&\quad \textbf{do if } line[1:6] \mathrel{==} \texttt{"##■"} \textbf{ then break} \\
+&\quad \textbf{do if } line[1:6] \mathrel{==} \texttt{"\#\#■"} \textbf{ then break} \\
 &\quad\quad \textbf{else } pretty\_print\_line(line[2:\texttt{*}line + 1]) \\
 &\quad write(\text{".fi0fR"}) \ \blacksquare
 \end{aligned}
@@ -3243,7 +3243,7 @@ For printing list lines.
 &\quad write(\text{".nf0fH "}) \\
 &\quad pretty\_print\_line(l) \\
 &\quad \textbf{while } line \mathrel{:=} get\_line() \\
-&\quad \textbf{do if } line[1:2] \mathrel{==} \texttt{"#"} \\
+&\quad \textbf{do if } line[1:2] \mathrel{==} \texttt{"\#"} \\
 &\quad\quad \textbf{then } \{ write(\text{".fi0fR "}) \\
 &\quad\quad\quad\quad write(\text{".lp"});\ last\_line \mathrel{:=} line;\ \bot \} \\
 &\quad\quad \textbf{else } pretty\_print\_line(line) \\
