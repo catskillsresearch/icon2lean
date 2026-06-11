@@ -18,6 +18,18 @@ MATH_FENCE = re.compile(r"```math\n(.*?)\n```", re.DOTALL)
 CHAR137 = r"\mathord{\texttt{\char137}}"
 
 
+def escape_hash_in_texttt(body: str) -> str:
+    def repl(m: re.Match[str]) -> str:
+        inner = re.sub(r"(?<!\\)#", r"\\#", m.group(1))
+        return r"\texttt{" + inner + "}"
+
+    prev = None
+    while prev != body:
+        prev = body
+        body = re.sub(r"\\texttt\{([^{}]*)\}", repl, body)
+    return body
+
+
 def escape_text_underscores(body: str) -> str:
     def repl(m: re.Match[str]) -> str:
         inner = re.sub(r"(?<!\\)_", r"\\_", m.group(1))
@@ -56,6 +68,7 @@ def convert_math_left_blocks(text: str) -> str:
         body = match.group(2).strip("\n")
         body = simplify_underscores(body)
         body = escape_text_underscores(body)
+        body = escape_hash_in_texttt(body)
         return match.group(1) + "```math\n" + body + "\n```\n" + match.group(3)
 
     return MATH_LEFT.sub(repl, text)
@@ -64,6 +77,7 @@ def convert_math_left_blocks(text: str) -> str:
 def fix_math_fence_blocks(text: str) -> str:
     def repl(match: re.Match[str]) -> str:
         body = escape_text_underscores(match.group(1))
+        body = escape_hash_in_texttt(body)
         return "```math\n" + body + "\n```"
 
     return MATH_FENCE.sub(repl, text)

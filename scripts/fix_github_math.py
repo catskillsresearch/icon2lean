@@ -81,6 +81,18 @@ def fix_underscore_joins(body: str) -> str:
     return body.replace(r"\_\text{", r"\mathord{\texttt{\_}}\text{")
 
 
+def escape_hash_in_texttt(body: str) -> str:
+    def repl(m: re.Match[str]) -> str:
+        inner = re.sub(r"(?<!\\)#", r"\\#", m.group(1))
+        return r"\texttt{" + inner + "}"
+
+    prev = None
+    while prev != body:
+        prev = body
+        body = re.sub(r"\\texttt\{([^{}]*)\}", repl, body)
+    return body
+
+
 def escape_text_underscores(body: str) -> str:
     def repl(m: re.Match[str]) -> str:
         inner = re.sub(r"(?<!\\)_", r"\\_", m.group(1))
@@ -203,6 +215,7 @@ def normalize_math_body(body: str) -> str:
     body = fix_math_operators(body)
     body = fix_github_operators(body)
     body = fix_underscores(body)
+    body = escape_hash_in_texttt(body)
     body = array_to_aligned(body)
     return body
 
