@@ -17,6 +17,18 @@ MATH_LEFT = re.compile(
 CHAR137 = r"\mathord{\texttt{\char137}}"
 
 
+def escape_text_underscores(body: str) -> str:
+    def repl(m: re.Match[str]) -> str:
+        inner = re.sub(r"(?<!\\)_", r"\\_", m.group(1))
+        return r"\text{" + inner + "}"
+
+    prev = None
+    while prev != body:
+        prev = body
+        body = re.sub(r"\\text\{([^{}]*)\}", repl, body)
+    return body
+
+
 def simplify_underscores(body: str) -> str:
     body = body.replace(
         r'\text{"is"}' + CHAR137 + r'\text{"zero"}' + CHAR137 + r'\text{""}',
@@ -42,6 +54,7 @@ def convert_math_left_blocks(text: str) -> str:
     def repl(match: re.Match[str]) -> str:
         body = match.group(2).strip("\n")
         body = simplify_underscores(body)
+        body = escape_text_underscores(body)
         return match.group(1) + "```math\n" + body + "\n```\n" + match.group(3)
 
     return MATH_LEFT.sub(repl, text)
