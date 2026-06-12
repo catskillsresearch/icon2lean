@@ -1,4 +1,4 @@
-# From 1986 Icon to Modern Lean 4: A 40-Year Journey in Formalized Computer Algebra
+# Translating Euclidean domain algorithms from 1986 Icon to 2026 Lean 4
 
 In August 1986, at New York University’s Courant Institute of Mathematical Sciences, I authored NYU Computer Science Technical Report #232: **"An ICON Package for Experimenting with Euclidean Domains"** [1]. The goal was to responsibly implement algorithms over mathematical structures like integers, quotient rings, polynomials, and power series, following John Lipson’s text, *Elements of Algebra and Algebraic Computing* [1, 2].
 

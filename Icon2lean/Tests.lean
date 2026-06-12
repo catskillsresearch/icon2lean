@@ -118,6 +118,9 @@ def invQxB : CompPoly := ofInts [-2, 0, 0, 1]
 def invQx := CompPoly.inverse invQxA invQxB
 
 example : invQx.isSome := by native_decide
+example : getCoeff invQx.get! 0 = crat 9 5 := by native_decide
+example : getCoeff invQx.get! 1 = crat 8 5 := by native_decide
+example : getCoeff invQx.get! 2 = crat 6 5 := by native_decide
 
 end Inverse
 
@@ -156,7 +159,7 @@ def modRsAx : CompPoly := ofInts [2, -1, 3, 0, 2, 1]
 def modRsBx : CompPoly := ofInts [2, -1, 0, 3]
 def modRsSeq : List CompPoly := modRS modRsAx modRsBx
 
-example : modRsSeq.length = 5 := by native_decide
+example : modRsSeq.length = 6 := by native_decide
 example : modRsSeq[0]! = modRsAx := by native_decide
 example : modRsSeq[1]! = modRsBx := by native_decide
 example : modRsSeq.getLast!.isZero := by native_decide
@@ -165,6 +168,7 @@ example : getCoeff modRsSeq[2]! 1 = c20_9 := by native_decide
 example : getCoeff modRsSeq[2]! 2 = CRat.ofInt 3 := by native_decide
 example : getCoeff modRsSeq[3]! 0 = c166_243 := by native_decide
 example : getCoeff modRsSeq[3]! 1 = c275_243 := by native_decide
+example : getCoeff modRsSeq[4]! 0 = c115668_75625 := by native_decide
 
 def premP : CompPoly := ofInts [2, -1, 3, 0, 2, 0, 1]
 def premQ : CompPoly := ofInts [2, -1, 0, 3]

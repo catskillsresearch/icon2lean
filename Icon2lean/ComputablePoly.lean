@@ -123,22 +123,34 @@ def mul (p q : CompPoly) : CompPoly :=
     else build (fuel - 1) (k + 1) (coeffAt k :: acc)
   trim { coeffs := build (n + 1) 0 [] }
 
-def mod (p q : CompPoly) : CompPoly :=
-  let rec loop (fuel : Nat) (r : CompPoly) : CompPoly :=
-    if fuel = 0 then r.trim
-    else if isZero q || isZero r || degree r < degree q then r.trim
-    else
-      let dq := degree q
-      let dr := degree r
-      let lcQ := getCoeff q dq
-      if lcQ = CRat.zero then r.trim
+/-- Icon `div_poly`: quotient of `a` by `b`; when both are constants (`m = n = 0`), one step and return. -/
+partial def div (a b : CompPoly) : CompPoly :=
+  if isZero b then ofInts []
+  else if isZero (trim a) then ofInts [0]
+  else
+    let fuel := degree a + degree b + 20
+    let rec loop (fuel : Nat) (r acc : CompPoly) : CompPoly :=
+      if fuel = 0 || isZero r then acc.trim
       else
-        let k := dr - dq
-        let lcR := getCoeff r dr
-        let factor := CRat.div lcR lcQ
-        let shifted := { coeffs := (List.replicate k CRat.zero) ++ q.coeffs }
-        loop (fuel - 1) (sub r (scale factor shifted))
-  loop (degree p + degree q + 2) (trim p)
+        let n := degree b
+        let m := degree r
+        if m < n then acc.trim
+        else
+          let lcR := getCoeff r m
+          let lcQ := getCoeff b n
+          if lcQ = CRat.zero then acc.trim
+          else
+            let k := m - n
+            let factor := CRat.div lcR lcQ
+            let qterm := { coeffs := (List.replicate k CRat.zero) ++ [factor] }
+            let subtrahend := mul qterm b
+            if m = 0 then (add acc qterm).trim
+            else loop (fuel - 1) (sub r subtrahend) (add acc qterm)
+    loop fuel (trim a) (ofInts [])
+
+/-- Icon `mod_poly`: `a - b * div(a, b)`. -/
+def mod (p q : CompPoly) : CompPoly :=
+  (sub (trim p) (mul q (div p q))).trim
 
 def prem (p q : CompPoly) : CompPoly :=
   if isZero q then p
@@ -147,12 +159,11 @@ def prem (p q : CompPoly) : CompPoly :=
     let b := getCoeff q (degree q)
     mod (scale (CRat.pow b (d + 1)) p) q
 
-def modRS (a b : CompPoly) : List CompPoly :=
-  let rec go (fuel : Nat) (a b : CompPoly) : List CompPoly :=
-    if fuel = 0 then [b]
-    else if isZero b then [b]
-    else a :: go (fuel - 1) b (mod a b)
-  go (degree a + degree b + 10) a b
+partial def modRS (a b : CompPoly) : List CompPoly :=
+  let rec go (a b : CompPoly) : List CompPoly :=
+    if isZero b then [a, b]
+    else a :: go b (mod a b)
+  go a b
 
 /-- Euclidean gcd in the computable layer (report §3.1.1 on `ℚ[x]`). -/
 def gcd (p q : CompPoly) : CompPoly :=

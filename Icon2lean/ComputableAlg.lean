@@ -18,49 +18,32 @@ open CompPoly CRat CompTPS
 
 namespace CompPoly
 
-partial def div (p q : CompPoly) : CompPoly :=
-  let rec loop (fuel : Nat) (r acc : CompPoly) : CompPoly :=
-    if fuel = 0 || q.isZero || degree r < degree q then acc.trim
+/-- Icon `EUCLID`: extended gcd `(g, s, t)` with `g = s * A + t * B`. -/
+partial def euclid (A B : CompPoly) : CompPoly × CompPoly × CompPoly :=
+  let fuel := degree A + degree B + 30
+  let rec go (fuel : Nat) (a1 a2 s1 s2 t1 t2 : CompPoly) : CompPoly × CompPoly × CompPoly :=
+    if fuel = 0 || a2.isZero then (a1.trim, s1.trim, t1.trim)
     else
-      let dq := degree q
-      let dr := degree r
-      let lcR := getCoeff r dr
-      let lcQ := getCoeff q dq
-      if lcQ = CRat.zero then acc.trim
-      else
-        let k := dr - dq
-        let factor := CRat.div lcR lcQ
-        let term := scale factor { coeffs := (List.replicate k CRat.zero) ++ q.coeffs }
-        loop (fuel - 1) (sub r term) (add acc term)
-  loop (degree p + degree q + 10) (trim p) (ofInts [])
-
-/-- Extended gcd `(g, s, t)` with `g = s * a + t * b` (report `EUCLID` on polynomials). -/
-partial def euclid (a b : CompPoly) : CompPoly × CompPoly × CompPoly :=
-  let rec go (fuel : Nat) (r s t r' s' t' : CompPoly) : CompPoly × CompPoly × CompPoly :=
-    if fuel = 0 then (r'.trim, s'.trim, t'.trim)
-    else if r.isZero then (r'.trim, s'.trim, t'.trim)
-    else
-      let q := div r' r
-      go (fuel - 1) (mod r' r) (sub s' (mul q s)) (sub t' (mul q t)) r s t
-  go (degree a + degree b + 20) a (ofInts [1]) (ofInts []) b (ofInts []) (ofInts [1])
+      let q := div a1 a2
+      go (fuel - 1) a2 (sub a1 (mul a2 q)) s2 (sub s1 (mul s2 q)) t2 (sub t1 (mul t2 q))
+  go fuel A B (ofInts [1]) (ofInts []) (ofInts []) (ofInts [1])
 
 /-- Polynomial inverse when `gcd(a, b)` is a unit (report `INVERSE` on `ℚ[x]` / `GF(2)[x]`). -/
 def inverse (a b : CompPoly) : Option CompPoly :=
   let (g, _, t) := euclid b a
   let g0 := getCoeff g.trim 0
   if g.trim.coeffs.length = 1 && g0 ≠ CRat.zero then
-    some (scale (CRat.div CRat.one g0) (mod b t.trim))
+    some (mod (scale (CRat.div CRat.one g0) t.trim) b)
   else none
 
-def ePRS (a b : CompPoly) : List CompPoly :=
-  let rec go (fuel : Nat) (a b : CompPoly) : List CompPoly :=
-    if fuel = 0 then [b]
-    else if b.isZero then [b]
+partial def ePRS (a b : CompPoly) : List CompPoly :=
+  let rec go (a b : CompPoly) : List CompPoly :=
+    if b.isZero then [a, b]
     else
       let r := prem a b
       if r.isZero then [a, b, r]
-      else a :: go (fuel - 1) b r
-  go (degree a + degree b + 10) a b
+      else a :: go b r
+  go a b
 
 private def subDelta (p q : CompPoly) : Nat :=
   if degree p ≥ degree q then degree p - degree q else 0
@@ -70,8 +53,10 @@ private def subBeta (p q : CompPoly) : CRat :=
 
 private def subReduce (p q : CompPoly) : CompPoly :=
   let r := prem p q
-  let β := subBeta p q
-  if β = CRat.zero then r else div r (scale β (ofInts [1]))
+  if r.isZero then r
+  else
+    let β := subBeta p q
+    if β = CRat.zero then r else div r (scale β (ofInts [1]))
 
 def sPRS (a b : CompPoly) : List CompPoly :=
   if b.isZero then [a] else
