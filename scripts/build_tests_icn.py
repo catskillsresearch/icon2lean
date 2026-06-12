@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
-"""Build runnable tests.icn from Courant_Ericson_1986.md example blocks."""
+"""Build runnable tests.icn from all **Example.** sections in Courant_Ericson_1986.md."""
 
 from __future__ import annotations
 
-import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MD = ROOT / "Courant_Ericson_1986.md"
 OUT = ROOT / "tests.icn"
 
-HEADER = '''# EUCLID tests from Courant_Ericson_1986.md
-# Expected outputs in # EXPECT: comments; verify with: python3 compare_tests.py
+HEADER = '''# EUCLID tests — every **Example.** in Courant_Ericson_1986.md
+# Verify: python3 compare_tests.py
 link "code"
 
 global timer
@@ -26,22 +24,24 @@ end
 
 '''
 
-FOOTER = '''
-procedure main()
-  set_base(10, 1)
-  test_base_B_add()
-  test_base_B_sub()
-  test_base_B_mul()
-  test_base_B_div()
-  test_Z_ops()
-  test_CRA()
-  # test_MOD_RS()  # report example; ~220s on 1986 hardware — run manually
-end
-'''
-
-# Hand-translated runnable tests (fancy notation kept as pr{...} control calls).
 TESTS = '''
-# --- test_base_B_add (md ~533) ---
+# --- Example ~235,290: mod/rem on Q and integer polynomials ---
+procedure test_mod_rem_examples()
+  local ax, bx, cx
+  ax := poly([term(Q(-2,1), 0), term(Q(1,1), 3)])
+  bx := poly([term(Q(-3,1), 0), term(Q(2,1), 2)])
+  pr{ax, " mod ", bx, " = ", mod(ax, bx)}
+  cx := poly([term(Q(-2,1), 0), term(Q(3,2), 1)])
+  pr{bx, " mod ", cx, " = ", mod(bx, cx)}
+  ax := poly([term(Q(5,1), 0), term(Q(-2,1), 1), term(Q(1,1), 2)])
+  bx := poly_of(Q(2,1))
+  pr{ax, " rem ", bx, " = ", rem(ax, bx)}
+  ax := poly([term(8, 0), term(-9, 1), term(6, 2)])
+  bx := poly_of(3)
+  pr{ax, " rem ", bx, " = ", rem(ax, bx)}
+end
+
+# --- Example ~533: base_B addition ---
 # EXPECT: 1 #8# + 7 7 7 #8# = 1 0 0 0 #8#
 procedure test_base_B_add()
   local x, y
@@ -50,7 +50,7 @@ procedure test_base_B_add()
   pr{x, " + ", y, " = ", plus_base_B(x, y)}
 end
 
-# --- test_base_B_sub (md ~591) ---
+# --- Example ~591: base_B subtraction ---
 # EXPECT: 1 0 0 5 6 3 #10# - 5 3 3 5 #10# = 9 5 2 2 8 #10#
 # EXPECT: 2 1 2 #10# - 9 9 #10# = 1 1 3 #10#
 # EXPECT: 2 1 2 #10# - 1 9 9 #10# = 1 3 #10#
@@ -65,7 +65,7 @@ procedure test_base_B_sub()
   pr{x, " - ", y, " = ", ominus_base_B(x, y)}
 end
 
-# --- test_base_B_mul (md ~674) ---
+# --- Example ~674: base_B multiplication ---
 # EXPECT: 2 8 1 0 7 3 2 4 #10# * 7 5 6 2 5 #10# = 2 1 2 5 6 1 6 3 7 7 5 0 0 #10#
 # EXPECT: 7 4 7 8 #10# * 4 6 2 5 #10# = 3 4 5 8 5 7 5 0 #10#
 procedure test_base_B_mul()
@@ -77,7 +77,7 @@ procedure test_base_B_mul()
   pr{x, " * ", y, " = ", times_base_B(x, y)}
 end
 
-# --- test_base_B_div (md ~856) ---
+# --- Example ~856: base_B division ---
 # EXPECT: 1 0 #10# / 1 #10# = 1 0 #10#
 # EXPECT: 4 #10# / 2 #10# = 2 #10#
 # EXPECT: 2 7 #10# / 9 #10# = 3 #10#
@@ -102,7 +102,7 @@ procedure test_base_B_div()
   }
 end
 
-# --- test_Z_ops (md ~1022) ---
+# --- Example ~1022: Z arithmetic ---
 # EXPECT: 1z + (-999z) = (-998z)
 # EXPECT: -212z = (-212z)
 # EXPECT: -(-99z) = 99z
@@ -126,20 +126,39 @@ procedure test_Z_ops()
   pr{x, " mod ", y, " = ", mod_Z(x, y)}
 end
 
-# --- test_Q_poly (md ~1661) ---
-procedure test_Q_poly()
+# --- Example ~1665: polynomial zero ---
+procedure test_Q_poly_zero()
+  set_base(10000, 4)
+  pr{"Q: 0 = ", zero_poly(poly([term(Q(-2,1), 0)]))}
+  pr{"QZ: 0 = ", zero_poly(poly([k_Z_Qx(-2, 0)]))}
+end
+
+# --- Example ~1789: polynomial addition ---
+procedure test_Q_poly_add()
   local ax, bx, fx, gx
   set_base(10000, 4)
-  pr{"Q: 0 = ", zero_poly(poly([term(Q(zero_integer(0), one_integer(0)), 0)]))}
-  pr{"QZ: 0 = ", zero_poly(poly([term(k_Z_Qx(-2, 0))]))}
   ax := poly([term(Q(-2,1), 0), term(Q(1,1), 3)])
   bx := poly([term(Q(-3,1), 0), term(Q(2,1), 3)])
   fx := poly([k_Z_Qx(-2, 0), k_Z_Qx(1,3)])
   gx := poly([k_Z_Qx(-3, 0), k_Z_Qx(2,3)])
   pr{"Q: (", ax, ") + (", bx, ") = ", plus_poly(ax, bx)}
   pr{"QZ: (", fx, ") + (", gx, ") = ", plus_poly(fx, gx)}
+end
+
+# --- Example ~1828: polynomial negation ---
+procedure test_Q_poly_neg()
+  local ax, fx
+  set_base(10000, 4)
+  ax := poly([term(Q(-2,1), 0), term(Q(1,1), 3)])
+  fx := poly([k_Z_Qx(-2, 0), k_Z_Qx(1,3)])
   pr{"Q: - (", ax, ") = ", minus_poly(ax)}
   pr{"QZ: - (", fx, ") = ", minus_poly(fx)}
+end
+
+# --- Example ~1881: polynomial multiplication ---
+procedure test_Q_poly_mul()
+  local ax, bx, fx, gx
+  set_base(10000, 4)
   ax := poly([term(Q(-2,1), 0), term(Q(1,1), 3)])
   bx := poly([term(Q(-3,1), 0), term(Q(2,1), 3)])
   fx := poly([k_Z_Qx(-2, 0), k_Z_Qx(1,3)])
@@ -148,20 +167,57 @@ procedure test_Q_poly()
   pr{"QZ: (", fx, ") * (", gx, ") = ", times_poly(fx, gx)}
 end
 
-# --- test_CRA (md ~2442) ---
+# --- Example ~1929: polynomial division ---
+procedure test_Q_poly_div()
+  local ax, bx, fx, gx
+  set_base(10000, 4)
+  ax := poly_of(1); bx := poly_of(3)
+  pr{"integers: ", ax, "/", bx, " = ", div_poly(ax, bx)}
+  ax := poly([term(Q(5,9), 0)])
+  bx := poly([term(Q(-2,1), 0), term(Q(3,2), 1)])
+  fx := poly([term(Q(k_Z(5), k_Z(9)), 0)])
+  gx := poly([term(Q(k_Z(-2), k_Z(1)), 0), term(Q(k_Z(3), k_Z(2)), 1)])
+  pr{"Q: (", ax, ") / (", bx, ") = ", div_poly(ax, bx)}
+  pr{"QZ: (", gx, ") / (", fx, ") = ", div_poly(gx, fx)}
+  ax := poly([term(Q(k_Z(166), k_Z(243)), 0), term(Q(k_Z(-275), k_Z(243)), 1)])
+  bx := poly([term(Q(k_Z(115668), k_Z(75625)), 0)])
+  pr{"QZ[x]: (", ax, "/ ", bx, ") = ", div(ax, bx)}
+end
+
+# --- Example ~2365: CRA1 linear congruences ---
+procedure test_CRA1()
+  pr{"CRA1(7, 1432, 5317) = ", CRA1(7, 1432, 5317)}
+  pr{"CRA1(863, 880, 2151) = ", CRA1(863, 880, 2151)}
+  pr{"CRA1(589, 509, 817) = ", CRA1(589, 509, 817)}
+end
+
+# --- Example ~2392: CRA2 two congruences ---
+# EXPECT: 48
+procedure test_CRA2()
+  pr{CRA2(6, 7, 3, 9)}
+end
+
+# --- Example ~2446,2474: CRA and u(x) ---
 # EXPECT: 868
 procedure test_CRA()
   local a, b, ux, a_congruences, b_congruences
-  pr{CRA([[1, 3], [3, 5], [0, 7], [10, 11]])}
   a_congruences := [[1, 3], [0, 7], [2, 4], [3, 5]]
   b_congruences := [[0, 3], [1, 7], [3, 4], [3, 5]]
   a := CRA(a_congruences)
   b := CRA(b_congruences)
   ux := poly([term(b, 0), term(a, 1)])
   pr{"u(x) = ", ux}
+  pr{CRA([[1, 3], [3, 5], [0, 7], [10, 11]])}
 end
 
-# --- test_MOD_RS (md ~2555) ---
+# --- Example ~2521-2525: DIOPHANTINE ---
+procedure test_DIOPHANTINE()
+  pr{"DIOPHANTINE(84, 54, -24) = ", DIOPHANTINE(84, 54, -24)}
+  pr{"DIOPHANTINE(999, -49, 5000) = ", DIOPHANTINE(999, -49, 5000)}
+  pr{"DIOPHANTINE(247, 589, 817) = ", DIOPHANTINE(247, 589, 817)}
+end
+
+# --- Example ~2559: MOD_RS remainder sequence ---
 procedure test_MOD_RS()
   local ax, bx
   set_base(10000, 4)
@@ -170,6 +226,28 @@ procedure test_MOD_RS()
   bx := poly([k_Z_Qx(2, 0), k_Z_Qx(-1, 1), k_Z_Qx(3, 3)])
   pr{"QZ[x]: MOD_RS(", ax, ", ", bx, ") = ", MOD_RS(ax, bx)}
   showtime()
+end
+'''
+
+FOOTER = '''
+procedure main()
+  test_mod_rem_examples()
+  set_base(10, 1)
+  test_base_B_add()
+  test_base_B_sub()
+  test_base_B_mul()
+  test_base_B_div()
+  test_Z_ops()
+  test_Q_poly_zero()
+  test_Q_poly_add()
+  test_Q_poly_neg()
+  test_Q_poly_mul()
+  test_Q_poly_div()
+  test_CRA1()
+  test_CRA2()
+  test_CRA()
+  test_DIOPHANTINE()
+  test_MOD_RS()
 end
 '''
 

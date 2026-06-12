@@ -820,9 +820,8 @@ Knuth Step D4. [Multiply and subtract] Now (for the moment accepting the estimat
 c := 0
 every k := n to 1 by -1 do
 { du := u[j + k] - (qe * v[k]) + c
-u[j + k] := du % B
-c := du / B
-if u[j + k] < 0 then { u[j + k] +:= B; c -:= 1 } }
+u[j + k] := mod_integer(du, B)
+c := du / B }
 u[j] } c
 ```
 
@@ -1409,7 +1408,7 @@ local g, top, bottom
 g := GCD(x.dividend, x.divisor)
 top := ⨸(x.dividend, g)
 bottom := ⨸(x.divisor, g)
-↑ (if <0(bottom) then Q(-(top), -(bottom))
+↑ (if <0(bottom) then Q(minus(top), minus(bottom))
 else Q(top, bottom)) ■
 ```
 
@@ -1744,7 +1743,7 @@ k_Z_x(e, y) ← ↑ term(k_Z(e), y) ■
 local Terms, T, z
 Terms := ⊕_terms(a.terms, b.terms)
 T := []; z := 0(a.terms[1].coef)
-every t := !Terms do if not =(t.coef, z) then T ||:= [t]
+every t := !Terms do if not =(t.coef, z) then T := catlist(T, [t])
 ↑ (if *T > 0 then poly(T) else 0(a)) ■
 ```
 
@@ -1813,7 +1812,7 @@ is
 -_poly(x) ←
 local c
 c := []
-every t := !x.terms do c ||:= [-_term(t)]
+every t := !x.terms do c := catlist(c, [minus_term(t)])
 ↑ poly(c) ■
 -_term(t) ← ↑ term(minus(t.coef), t.power) ■
 ```

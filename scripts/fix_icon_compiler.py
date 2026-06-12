@@ -255,6 +255,41 @@ def fix_code(text: str) -> str:
 
     text = text.replace("≠", "~==")
     text = text.replace("!=", "~==")
+    text = re.sub(
+        r"every t := !Terms do if not equal\(t\.coef, z\) then push\(T, t\)",
+        "every t := !Terms do if not equal(t.coef, z) then T := catlist(T, [t])",
+        text,
+    )
+    text = re.sub(
+        r"every t := !x\.terms do push\(c, minus_term\(t\)\)",
+        "every t := !x.terms do c := catlist(c, [minus_term(t)])",
+        text,
+    )
+    text = re.sub(
+        r"every t := !x\.terms do push\(ts, term\(normalize\(t\.coef\), t\.power\)\)",
+        "every t := !x.terms do ts := catlist(ts, [term(normalize(t.coef), t.power)])",
+        text,
+    )
+    text = re.sub(
+        r"return \(if negative\(bottom\) then Q\(-\(top\), -\(bottom\)\)",
+        "return (if negative(bottom) then Q(minus(top), minus(bottom))",
+        text,
+    )
+    text = re.sub(
+        r'procedure minus\(x\)\n  return proc\("minus_" \|\| type\(x\), 2\)\(x\)',
+        'procedure minus(x)\n  return proc("minus_" || type(x), 1)(x)',
+        text,
+    )
+    text = re.sub(
+        r"procedure ominus\(a, b\)\n  return plus\(a, -\(b\)\)",
+        "procedure ominus(a, b)\n  return plus(a, minus(b))",
+        text,
+    )
+    text = re.sub(
+        r"procedure minus_Q\(x\)\n  return Q\(-\(x\.dividend\), x\.divisor\)",
+        "procedure minus_Q(x)\n  return Q(minus(x.dividend), x.divisor)",
+        text,
+    )
     text = re.sub(r"R_i-1", "R_i_minus_1", text)
     text = re.sub(
         r'else pr\{"ERROR: ", a, "\^\{-1 "\}, " mod ", m, " does not exist"\}',

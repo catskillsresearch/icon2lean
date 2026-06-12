@@ -296,9 +296,8 @@ procedure div_digits(a, b, B)
     c := 0
     every k := n to 1 by -1 do {
       du := u[j + k] - (qe * v[k]) + c
-      if du < 0 then { u[j + k] := du + B; c := -1 }
-      else if du >= B then { u[j + k] := du - B; c := 1 }
-      else { u[j + k] := du; c := 0 }
+      u[j + k] := mod_integer(du, B)
+      c := du / B
     }
     u[j] +:= c
     q[j] := qe
@@ -628,7 +627,7 @@ procedure normalize_Q(x)
   g := GCD(x.dividend, x.divisor)
   top := div(x.dividend, g)
   bottom := div(x.divisor, g)
-  return (if negative(bottom) then Q(-(top), -(bottom))
+  return (if negative(bottom) then Q(minus(top), minus(bottom))
   else Q(top, bottom))
 end
 
@@ -736,12 +735,14 @@ end
 
 # --- zero_poly (md line 1650) ---
 procedure zero_poly(p)
+  local z
   z := zero(p.terms[1].coef)
   return poly([term(z, 0)])
 end
 
 # --- one_poly (md line 1684) ---
 procedure one_poly(p)
+  local z
   z := one(p.terms[1].coef)
   return poly([term(z, 0)])
 end
@@ -767,7 +768,7 @@ procedure plus_poly(a, b)
   local Terms, T, z
   Terms := plus_terms(a.terms, b.terms)
   T := []; z := zero(a.terms[1].coef)
-  every t := !Terms do if not equal(t.coef, z) then push(T, t)
+  every t := !Terms do if not equal(t.coef, z) then T := catlist(T, [t])
   return (if *T > 0 then poly(T) else zero(a))
 end
 
@@ -799,7 +800,7 @@ end
 procedure minus_poly(x)
   local c
   c := []
-  every t := !x.terms do push(c, minus_term(t))
+  every t := !x.terms do c := catlist(c, [minus_term(t)])
   return poly(c)
 end
 
@@ -895,7 +896,7 @@ end
 procedure normalize_poly(x)
   local ts
   ts := []
-  every t := !x.terms do push(ts, term(normalize(t.coef), t.power))
+  every t := !x.terms do ts := catlist(ts, [term(normalize(t.coef), t.power)])
   return poly(ts)
 end
 

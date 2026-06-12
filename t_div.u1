@@ -1,0 +1,127 @@
+proc main
+	filen	t_div.icn
+	local	0,000000,set_base
+	local	1,000000,pr
+	local	2,000000,k_base_B
+	local	3,000000,div_base_B
+	con	0,002000,2,10
+	con	1,002000,1,1
+	con	2,002000,6,188175
+	con	3,010000,3,040,057,040
+	con	4,002000,3,325
+	con	5,010000,3,040,075,040
+	declend
+	line	2
+	colm	11
+	mark	L1
+	var	0
+	int	0
+	int	1
+	line	3
+	colm	11
+	invoke	2
+	unmark
+lab L1
+	mark	L2
+	var	1
+	pnull
+	goto	L5
+lab L3
+	pop
+	mark	L4
+	var	2
+	int	2
+	line	4
+	colm	14
+	invoke	1
+	coret
+	efail
+lab L4
+	cofail
+	goto	L4
+lab L5
+	create	L3
+	goto	L8
+lab L6
+	pop
+	mark	L7
+	str	3
+	line	4
+	colm	22
+	coret
+	efail
+lab L7
+	cofail
+	goto	L7
+lab L8
+	create	L6
+	goto	L11
+lab L9
+	pop
+	mark	L10
+	var	2
+	int	4
+	line	4
+	colm	39
+	invoke	1
+	line	4
+	colm	29
+	coret
+	efail
+lab L10
+	cofail
+	goto	L10
+lab L11
+	create	L9
+	goto	L14
+lab L12
+	pop
+	mark	L13
+	str	5
+	line	4
+	colm	44
+	coret
+	efail
+lab L13
+	cofail
+	goto	L13
+lab L14
+	create	L12
+	goto	L17
+lab L15
+	pop
+	mark	L16
+	var	3
+	var	2
+	int	2
+	line	4
+	colm	72
+	invoke	1
+	var	2
+	int	4
+	line	4
+	colm	90
+	invoke	1
+	line	4
+	colm	63
+	invoke	2
+	line	4
+	colm	51
+	coret
+	efail
+lab L16
+	cofail
+	goto	L16
+lab L17
+	create	L15
+	line	4
+	colm	5
+	llist	5
+	invoke	1
+	unmark
+lab L2
+	pnull
+	line	5
+	colm	1
+	pfail
+	end
