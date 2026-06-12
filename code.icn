@@ -56,7 +56,6 @@ end
 # --- mod (md line 213) ---
 procedure mod(a, b)
   local x
-  if type(a) == "modulo" then return modulo(mod(a.item, a.modulus), a.modulus)
   if (x := proc("mod_" || type(a), 2)(a, b)) then return x
   if less(b, zero(b)) then return mod(a, -(b))
   return normalize(
@@ -689,7 +688,7 @@ end
 
 # --- mod_modulo (Euclidean remainder in D/(m)) ---
 procedure mod_modulo(a, b)
-  return normalize_modulo(modulo(mod(a.item, a.modulus), a.modulus))
+  return normalize_modulo(modulo(mod(a.item, b.item), a.modulus))
 end
 
 # --- normalize_modulo (md line 1516) ---

@@ -1,8 +1,11 @@
-# EUCLID tests — every **Example.** in Courant_Ericson_1986.md
+# EUCLID tests — bundled with code.icn by compare_tests.py / run_tests.sh
 # Verify: python3 compare_tests.py
-link "code"
 
 global timer
+
+procedure mZ(n, m)
+  return modulo(n, m)
+end
 
 procedure settime()
   timer := &time
@@ -10,25 +13,6 @@ end
 
 procedure showtime()
   pr{"[", &time - timer, " msecs]"}
-end
-
-# §3.3.2 FFI: scale by Q(1,N); div(one(N),N) is 0 in Z.
-procedure micro_FFI(N, B, omega)
-  return polynomialize(times_vector_scalar(
-    FFT(N, polynomialize(B), div(one(omega), omega)),
-    Q(1, N)))
-end
-
-# §3.3.3 NPSI: ominus form (unary - on poly fails in linked ucode).
-procedure micro_NPSI(at)
-  local ax, xt, n, k
-  ax := at.Poly
-  xt := poly_of(zeroth_coef(ax))
-  n := log2(*ax.terms)
-  every k := 0 to n-1 do
-    xt := ominus(plus(xt, xt),
-      times_poly(truncate(ax, 2 ^ (k + 1)), times_poly(xt, xt)))
-  return tpower(truncate(xt, at.N), at.N)
 end
 
 
@@ -227,6 +211,8 @@ end
 # --- §3.1.1 GCD table (md lines 2251-2260) ---
 # EXPECT: GCD Z 228,612 = 12z
 # EXPECT: GCD Q[x] = (5/9)q
+# EXPECT: GCD Z5 = (1 mod 5)
+# EXPECT: GCD Z5[x] = (3 mod 5)+ (4 mod 5)*X
 # EXPECT: GCD QZ[x] row7 = (115668z/75625z)q
 # EXPECT: GCD QZ[x] row8 = (5z/9z)q
 procedure test_GCD_table()
@@ -238,6 +224,10 @@ procedure test_GCD_table()
   ax := poly([term(Q(-2,1), 0), term(Q(1,1), 3)])
   bx := poly([term(Q(-3,1), 0), term(Q(2,1), 2)])
   pr{"GCD Q[x] = ", GCD(ax, bx)}
+  pr{"GCD Z5 = ", GCD(mZ(-2, 5), mZ(-3, 5))}
+  ax := poly([term(mZ(-2,5), 0), term(mZ(1,5), 3)])
+  bx := poly([term(mZ(-3,5), 0), term(mZ(2,5), 2)])
+  pr{"GCD Z5[x] = ", GCD(ax, bx)}
   ax := poly([term(Q(k_Z(166), k_Z(243)), 0), term(Q(k_Z(-275), k_Z(243)), 1)])
   bx := poly([term(Q(k_Z(115668), k_Z(75625)), 0)])
   pr{"GCD QZ[x] row7 = ", GCD(ax, bx)}
@@ -250,6 +240,7 @@ end
 # EXPECT: EUCLID 2,4 = [2, 1, 0]
 # EXPECT: EUCLID 228,612 = [12, (-8), 3]
 # EXPECT: EUCLID 59,24 = [1, 11, (-27)]
+# EXPECT: EUCLID Z5[x] = [(3 mod 5)+ (4 mod 5)*X, (1 mod 5), (2 mod 5)*X]
 procedure test_EUCLID_table()
   local pA, pB
   pr{"EUCLID 2,4 = ", EUCLID(2, 4)}
@@ -258,12 +249,16 @@ procedure test_EUCLID_table()
   pA := poly([term(Q(-2,1), 0), term(Q(1,1), 3)])
   pB := poly([term(Q(-3,1), 0), term(Q(2,1), 2)])
   pr{"EUCLID Q[x] = ", EUCLID(pA, pB)}
+  pA := poly([term(mZ(-2,5), 0), term(mZ(1,5), 3)])
+  pB := poly([term(mZ(-3,5), 0), term(mZ(2,5), 2)])
+  pr{"EUCLID Z5[x] = ", EUCLID(pA, pB)}
 end
 
 # --- §3.1.2 INVERSE table (md lines 2323-2330) ---
 # EXPECT: INVERSE 30,197 = 46
 # EXPECT: INVERSE 16,21 = 4
 # EXPECT: INVERSE 24,59 = 32
+# EXPECT: INVERSE GF2[x] = (1 mod 2)+ (1 mod 2)*X+ (1 mod 2)*X^2+ (1 mod 2)*X^4
 # EXPECT: INVERSE Q[x] = (9/5)q+ (8/5)q*X+ (6/5)q*X^2
 procedure test_INVERSE_table()
   local ax, bx
@@ -272,6 +267,9 @@ procedure test_INVERSE_table()
   write("INVERSE 18,21: ")
   INVERSE(18, 21)
   pr{"INVERSE 24,59 = ", INVERSE(24, 59)}
+  ax := poly([term(mZ(1,2), 0), term(mZ(1,2), 2)])
+  bx := poly([term(mZ(1,2), 0), term(mZ(1,2), 2), term(mZ(1,2), 5)])
+  pr{"INVERSE GF2[x] = ", INVERSE(ax, bx)}
   ax := poly([term(Q(-3,1), 0), term(Q(2,1), 2)])
   bx := poly([term(Q(-2,1), 0), term(Q(1,1), 3)])
   pr{"INVERSE Q[x] = ", INVERSE(ax, bx)}
@@ -348,7 +346,7 @@ procedure test_FFT_FFI()
   ax := poly([term(Q(1,1), 0), term(Q(2,1), 1)])
   A := FFT(2, ax, Q(-1,1))
   pr{"FFT Q: ", A}
-  pr{"FFI: ", micro_FFI(2, A, Q(-1,1))}
+  pr{"FFI: ", FFI(2, A, Q(-1,1))}
 end
 
 # --- §3.3.3 NPSI: (1+t)^{-1} mod t^2 ---
@@ -357,7 +355,7 @@ end
 procedure test_NPSI()
   local at, inv, prod
   at := tpower(poly([term(1, 0), term(1, 1)]), 2)
-  inv := micro_NPSI(at)
+  inv := NPSI(at)
   pr{"NPSI: ", inv.Poly}
   prod := truncate(times_poly(at.Poly, inv.Poly), 1)
   pr{"NPSI verify: ", prod}

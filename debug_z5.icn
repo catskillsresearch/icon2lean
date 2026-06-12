@@ -1,0 +1,21 @@
+# Minimal repro for Z5 modular GCD (§3.1.1).
+# Run: cat code.icn debug_z5.icn > /tmp/d.icn && icon /tmp/d.icn
+#
+# Bug was mod() ignoring the divisor for type "modulo" (infinite GCD loop / segfault).
+# Fix: mod_modulo uses mod(a.item, b.item), not mod(a.item, a.modulus).
+
+procedure step(s)
+  writes("[step] "); writes(s); write("\n")
+end
+
+procedure main()
+  local a, b, r, g
+  a := modulo(-2, 5)
+  b := modulo(-3, 5)
+  step("mod(a,b) must be (1 mod 5), not a unchanged")
+  r := mod(a, b)
+  pr{"  mod=", r}
+  step("GCD(a,b) must terminate")
+  g := GCD(a, b)
+  pr{"  GCD=", g}
+end

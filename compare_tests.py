@@ -13,6 +13,20 @@ ROOT = Path(__file__).resolve().parent
 MANIFEST = ROOT / "tests_manifest.json"
 TESTS_ICON = ROOT / "tests.icn"
 CODE_ICON = ROOT / "code.icn"
+BUNDLE_ICON = ROOT / ".euclid_bundle.icn"
+
+
+def bundle_icon() -> Path:
+    """Concatenate code.icn + tests.icn into one runnable file (no .u1 link)."""
+    code = CODE_ICON.read_text()
+    lines = TESTS_ICON.read_text().splitlines()
+    start = 0
+    for i, line in enumerate(lines):
+        if line.startswith("link "):
+            start = i + 1
+            break
+    BUNDLE_ICON.write_text(code + "\n\n" + "\n".join(lines[start:]) + "\n")
+    return BUNDLE_ICON
 
 
 def load_manifest() -> dict:
@@ -157,7 +171,8 @@ def main() -> int:
     report_manifest_coverage(manifest)
     print(f"Manifest: {len(manifest.get('procedures', []))} procedures")
 
-    rc, stdout, stderr = run_icon(TESTS_ICON)
+    bundle = bundle_icon()
+    rc, stdout, stderr = run_icon(bundle)
     if rc == -1:
         print("NOTE: Icon not installed; running static checks only.")
         print("Static issues:", issues or "none")
