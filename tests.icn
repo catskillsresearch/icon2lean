@@ -216,6 +216,31 @@ procedure test_MOD_RS()
   showtime()
 end
 
+# --- Example ~2601: PREM table (md table recovered from PDF) ---
+# EXPECT: QZ[x] prem row2 = (-59535z)q+ 30375zq*X+ 15795zq*X^2
+# EXPECT: QZ[x] prem row3 = 198zq+ (-225z)q*X+ 306zq*X^2
+# EXPECT: QZ[x] prem row4 = 10497862440zq
+# EXPECT: integers[x] prem row5 = 2863877380z
+procedure test_PREM()
+  local p, q
+  set_base(10000, 4)
+  p := poly([k_Z_Qx(2042542724, 0), k_Z_Qx(17851334, 1)])
+  q := poly([k_Z_Qx(5851259279846738252460, 0)])
+  pr{"QZ[x] prem row1 = ", PREM(p, q)}
+  p := poly([k_Z_Qx(21, 0), k_Z_Qx(-9, 1), k_Z_Qx(-4, 2), k_Z_Qx(5, 4), k_Z_Qx(3, 6)])
+  q := poly([k_Z_Qx(-9, 0), k_Z_Qx(3, 2), k_Z_Qx(-15, 4)])
+  pr{"QZ[x] prem row2 = ", PREM(p, q)}
+  p := poly([k_Z_Qx(2, 0), k_Z_Qx(-1, 1), k_Z_Qx(3, 2), k_Z_Qx(2, 4), k_Z_Qx(1, 6)])
+  q := poly([k_Z_Qx(2, 0), k_Z_Qx(-1, 1), k_Z_Qx(3, 3)])
+  pr{"QZ[x] prem row3 = ", PREM(p, q)}
+  p := poly([k_Z_Qx(198, 0), k_Z_Qx(-225, 1), k_Z_Qx(306, 3)])
+  q := poly([k_Z_Qx(18, 0), k_Z_Qx(369, 1)])
+  pr{"QZ[x] prem row4 = ", PREM(p, q)}
+  p := poly([k_Z_x(-245, 0), k_Z_x(125, 1), k_Z_x(65, 2)])
+  q := poly([k_Z_x(-12300, 0), k_Z_x(9326, 1)])
+  pr{"integers[x] prem row5 = ", PREM(p, q)}
+end
+
 procedure main()
   test_mod_rem_examples()
   set_base(10, 1)
@@ -234,4 +259,5 @@ procedure main()
   test_CRA()
   test_DIOPHANTINE()
   test_MOD_RS()
+  test_PREM()
 end

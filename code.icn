@@ -297,7 +297,7 @@ procedure div_digits(a, b, B)
     every k := n to 1 by -1 do {
       du := u[j + k] - (qe * v[k]) + c
       u[j + k] := mod_integer(du, B)
-      c := du / B
+      c := (du - u[j + k]) / B
     }
     u[j] +:= c
     q[j] := qe

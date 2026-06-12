@@ -3049,6 +3049,7 @@ proc div_digits
 	local	18,000000,copy
 	local	19,000000,times_digits
 	local	20,000000,catlist
+	local	21,000000,mod_integer
 	con	0,002000,1,1
 	con	1,002000,1,0
 	con	2,010000,28,105,122,122,117,122,072,040,144,151,166,151,144,145,040,142,171,040,060,040,151,156,040,142,141,163,145,137,102
@@ -3728,77 +3729,42 @@ lab L40
 	line	299
 	colm	8
 	subsc
-	pnull
+	var	21
 	var	5
 	var	2
 	line	299
-	colm	22
-	mod
+	colm	30
+	invoke	2
 	line	299
 	colm	16
 	asgn
 	unmark
 lab L41
-	mark	L42
 	pnull
 	var	13
 	pnull
+	pnull
 	var	5
+	pnull
+	var	6
+	pnull
+	var	11
+	var	14
+	line	300
+	colm	22
+	plus
+	line	300
+	colm	19
+	subsc
+	line	300
+	colm	16
+	minus
 	var	2
 	line	300
-	colm	15
+	colm	28
 	div
 	line	300
 	colm	9
-	asgn
-	unmark
-lab L42
-	mark0
-	pnull
-	pnull
-	var	6
-	pnull
-	var	11
-	var	14
-	line	301
-	colm	14
-	plus
-	line	301
-	colm	11
-	subsc
-	int	1
-	line	301
-	colm	19
-	numlt
-	unmark
-	mark	L43
-	pnull
-	pnull
-	var	6
-	pnull
-	var	11
-	var	14
-	line	301
-	colm	34
-	plus
-	line	301
-	colm	31
-	subsc
-	dup
-	var	2
-	line	301
-	colm	39
-	plus
-	asgn
-	unmark
-lab L43
-	pnull
-	var	13
-	dup
-	int	0
-	line	301
-	colm	48
-	minus
 	asgn
 	unmark
 lab L38
@@ -3806,70 +3772,70 @@ lab L38
 lab L39
 	unmark
 lab L37
-	mark	L44
+	mark	L42
 	pnull
 	pnull
 	var	6
 	var	11
-	line	303
+	line	302
 	colm	6
 	subsc
 	dup
 	var	13
-	line	303
+	line	302
 	colm	10
 	plus
 	asgn
 	unmark
-lab L44
-	mark	L45
+lab L42
+	mark	L43
 	pnull
 	pnull
 	var	3
 	var	11
-	line	304
+	line	303
 	colm	6
 	subsc
 	var	12
-	line	304
+	line	303
 	colm	10
 	asgn
 	unmark
-lab L45
+lab L43
 	mark0
 	pnull
 	pnull
 	var	6
 	var	11
-	line	305
+	line	304
 	colm	9
 	subsc
 	int	1
-	line	305
+	line	304
 	colm	13
 	numlt
 	unmark
-	mark	L46
+	mark	L44
 	pnull
 	var	12
 	dup
 	int	0
-	line	306
+	line	305
 	colm	10
 	minus
 	asgn
 	unmark
-lab L46
-	mark	L47
+lab L44
+	mark	L45
 	pnull
 	var	13
 	int	1
-	line	307
+	line	306
 	colm	9
 	asgn
 	unmark
-lab L47
-	mark	L48
+lab L45
+	mark	L46
 	mark0
 	pnull
 	var	14
@@ -3878,28 +3844,28 @@ lab L47
 	int	0
 	pnull
 	int	0
-	line	308
+	line	307
 	colm	28
 	neg
-	line	308
+	line	307
 	colm	20
 	toby
-	line	308
+	line	307
 	colm	15
 	asgn
 	pop
 	mark0
-	mark	L51
+	mark	L49
 	pnull
 	pnull
 	var	6
 	pnull
 	var	11
 	var	14
-	line	309
+	line	308
 	colm	13
 	plus
-	line	309
+	line	308
 	colm	10
 	subsc
 	dup
@@ -3907,19 +3873,37 @@ lab L47
 	pnull
 	var	7
 	var	14
-	line	309
+	line	308
 	colm	23
 	subsc
 	var	13
-	line	309
+	line	308
 	colm	27
 	plus
-	line	309
+	line	308
 	colm	18
 	plus
 	asgn
 	unmark
-lab L51
+lab L49
+	mark	L50
+	pnull
+	pnull
+	var	6
+	pnull
+	var	11
+	var	14
+	line	309
+	colm	16
+	plus
+	line	309
+	colm	13
+	subsc
+	var	2
+	line	309
+	colm	21
+	numge
+	unmark
 	mark	L52
 	pnull
 	pnull
@@ -3927,69 +3911,51 @@ lab L51
 	pnull
 	var	11
 	var	14
-	line	310
-	colm	16
-	plus
-	line	310
-	colm	13
-	subsc
-	var	2
-	line	310
-	colm	21
-	numge
-	unmark
-	mark	L54
-	pnull
-	pnull
-	var	6
-	pnull
-	var	11
-	var	14
-	line	310
+	line	309
 	colm	37
 	plus
-	line	310
+	line	309
 	colm	34
 	subsc
 	dup
 	var	2
-	line	310
+	line	309
 	colm	42
 	minus
 	asgn
 	unmark
-lab L54
-	pnull
-	var	13
-	int	0
-	line	310
-	colm	51
-	asgn
-	goto	L53
 lab L52
 	pnull
 	var	13
+	int	0
+	line	309
+	colm	51
+	asgn
+	goto	L51
+lab L50
+	pnull
+	var	13
 	int	1
-	line	311
+	line	310
 	colm	16
 	asgn
-lab L53
+lab L51
 	unmark
-lab L49
+lab L47
 	efail
-lab L50
-	unmark
 lab L48
+	unmark
+lab L46
 	pnull
 	pnull
 	var	6
 	var	11
-	line	313
+	line	312
 	colm	8
 	subsc
 	dup
 	var	13
-	line	313
+	line	312
 	colm	12
 	plus
 	asgn
@@ -3999,22 +3965,22 @@ lab L27
 lab L28
 	unmark
 lab L26
-	mark	L55
-	mark	L56
+	mark	L53
+	mark	L54
 	var	17
 	var	3
-	line	316
+	line	315
 	colm	26
 	invoke	1
-	line	316
+	line	315
 	colm	3
 	pret
-lab L56
+lab L54
 	pfail
 	unmark
-lab L55
+lab L53
 	pnull
-	line	317
+	line	316
 	colm	1
 	pfail
 	end
@@ -4031,21 +3997,21 @@ proc print_base_B
 	con	4,010000,2,040,043
 	con	5,010000,1,043
 	declend
-	line	320
+	line	319
 	colm	11
 	mark	L1
 	var	1
 	pnull
 	pnull
 	var	0
-	line	321
+	line	320
 	colm	11
 	field	digits
 	int	0
-	line	321
+	line	320
 	colm	18
 	subsc
-	line	321
+	line	320
 	colm	9
 	invoke	1
 	unmark
@@ -4059,17 +4025,17 @@ lab L1
 	pnull
 	pnull
 	var	0
-	line	322
+	line	321
 	colm	21
 	field	digits
-	line	322
+	line	321
 	colm	19
 	size
 	push1
-	line	322
+	line	321
 	colm	16
 	toby
-	line	322
+	line	321
 	colm	11
 	asgn
 	pop
@@ -4080,19 +4046,19 @@ lab L1
 	pnull
 	pnull
 	var	0
-	line	322
+	line	321
 	colm	51
 	field	digits
 	var	2
-	line	322
+	line	321
 	colm	58
 	subsc
 	var	4
 	str	3
-	line	322
+	line	321
 	colm	49
 	invoke	3
-	line	322
+	line	321
 	colm	38
 	invoke	2
 	unmark
@@ -4106,17 +4072,17 @@ lab L2
 	str	4
 	pnull
 	var	0
-	line	323
+	line	322
 	colm	17
 	field	base
 	str	5
-	line	323
+	line	322
 	colm	9
 	invoke	3
 	unmark
 lab L5
 	pnull
-	line	324
+	line	323
 	colm	1
 	pfail
 	end
@@ -4125,25 +4091,25 @@ proc less_base_B
 	local	1,001000,b
 	local	2,000000,less_digits
 	declend
-	line	327
+	line	326
 	colm	11
 	mark	L1
 	mark	L2
 	var	2
 	pnull
 	var	0
-	line	328
+	line	327
 	colm	23
 	field	digits
 	pnull
 	var	1
-	line	328
+	line	327
 	colm	33
 	field	digits
-	line	328
+	line	327
 	colm	21
 	invoke	2
-	line	328
+	line	327
 	colm	3
 	pret
 lab L2
@@ -4151,7 +4117,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	329
+	line	328
 	colm	1
 	pfail
 	end
@@ -4163,28 +4129,28 @@ proc less_digits
 	con	0,002000,1,0
 	con	1,002000,1,1
 	declend
-	line	332
+	line	331
 	colm	11
 	mark	L1
 	mark	L2
 	pnull
 	pnull
 	var	0
-	line	333
+	line	332
 	colm	6
 	size
 	pnull
 	var	1
-	line	333
+	line	332
 	colm	11
 	size
-	line	333
+	line	332
 	colm	9
 	numlt
 	unmark
 	mark	L4
 	pnull
-	line	333
+	line	332
 	colm	19
 	pret
 lab L4
@@ -4195,19 +4161,19 @@ lab L2
 	pnull
 	pnull
 	var	0
-	line	334
+	line	333
 	colm	12
 	size
 	pnull
 	var	1
-	line	334
+	line	333
 	colm	17
 	size
-	line	334
+	line	333
 	colm	15
 	numgt
 	unmark
-	line	334
+	line	333
 	colm	26
 	pfail
 	goto	L6
@@ -4216,15 +4182,15 @@ lab L5
 	pnull
 	pnull
 	var	0
-	line	335
+	line	334
 	colm	11
 	size
 	int	0
-	line	335
+	line	334
 	colm	14
 	numeq
 	unmark
-	line	335
+	line	334
 	colm	23
 	pfail
 	goto	L8
@@ -4234,20 +4200,20 @@ lab L7
 	pnull
 	var	0
 	int	1
-	line	336
+	line	335
 	colm	13
 	subsc
 	pnull
 	var	1
 	int	1
-	line	336
+	line	335
 	colm	20
 	subsc
-	line	336
+	line	335
 	colm	17
 	numgt
 	unmark
-	line	336
+	line	335
 	colm	30
 	pfail
 	goto	L10
@@ -4257,22 +4223,22 @@ lab L9
 	pnull
 	var	0
 	int	1
-	line	337
+	line	336
 	colm	13
 	subsc
 	pnull
 	var	1
 	int	1
-	line	337
+	line	336
 	colm	20
 	subsc
-	line	337
+	line	336
 	colm	17
 	numlt
 	unmark
 	mark	L13
 	pnull
-	line	337
+	line	336
 	colm	30
 	pret
 lab L13
@@ -4283,18 +4249,18 @@ lab L11
 	var	2
 	var	3
 	var	0
-	line	338
+	line	337
 	colm	31
 	invoke	1
 	var	3
 	var	1
-	line	338
+	line	337
 	colm	40
 	invoke	1
-	line	338
+	line	337
 	colm	26
 	invoke	2
-	line	338
+	line	337
 	colm	8
 	pret
 lab L14
@@ -4307,7 +4273,7 @@ lab L3
 	unmark
 lab L1
 	pnull
-	line	339
+	line	338
 	colm	1
 	pfail
 	end
@@ -4316,25 +4282,25 @@ proc equal_base_B
 	local	1,001000,b
 	local	2,000000,equal_digits
 	declend
-	line	342
+	line	341
 	colm	11
 	mark	L1
 	mark	L2
 	var	2
 	pnull
 	var	0
-	line	343
+	line	342
 	colm	24
 	field	digits
 	pnull
 	var	1
-	line	343
+	line	342
 	colm	34
 	field	digits
-	line	343
+	line	342
 	colm	22
 	invoke	2
-	line	343
+	line	342
 	colm	3
 	pret
 lab L2
@@ -4342,7 +4308,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	344
+	line	343
 	colm	1
 	pfail
 	end
@@ -4354,26 +4320,26 @@ proc equal_digits
 	con	0,002000,1,0
 	con	1,002000,1,1
 	declend
-	line	347
+	line	346
 	colm	11
 	mark	L1
 	mark	L2
 	pnull
 	pnull
 	var	0
-	line	348
+	line	347
 	colm	6
 	size
 	pnull
 	var	1
-	line	348
+	line	347
 	colm	11
 	size
-	line	348
+	line	347
 	colm	9
 	numlt
 	unmark
-	line	348
+	line	347
 	colm	19
 	pfail
 	goto	L3
@@ -4382,19 +4348,19 @@ lab L2
 	pnull
 	pnull
 	var	0
-	line	349
+	line	348
 	colm	12
 	size
 	pnull
 	var	1
-	line	349
+	line	348
 	colm	17
 	size
-	line	349
+	line	348
 	colm	15
 	numgt
 	unmark
-	line	349
+	line	348
 	colm	26
 	pfail
 	goto	L5
@@ -4403,17 +4369,17 @@ lab L4
 	pnull
 	pnull
 	var	0
-	line	350
+	line	349
 	colm	11
 	size
 	int	0
-	line	350
+	line	349
 	colm	14
 	numeq
 	unmark
 	mark	L8
 	pnull
-	line	350
+	line	349
 	colm	23
 	pret
 lab L8
@@ -4425,20 +4391,20 @@ lab L6
 	pnull
 	var	0
 	int	1
-	line	351
+	line	350
 	colm	12
 	subsc
 	pnull
 	var	1
 	int	1
-	line	351
+	line	350
 	colm	21
 	subsc
-	line	351
+	line	350
 	colm	16
 	lexne
 	unmark
-	line	351
+	line	350
 	colm	30
 	pfail
 	goto	L10
@@ -4447,18 +4413,18 @@ lab L9
 	var	2
 	var	3
 	var	0
-	line	352
+	line	351
 	colm	32
 	invoke	1
 	var	3
 	var	1
-	line	352
+	line	351
 	colm	41
 	invoke	1
-	line	352
+	line	351
 	colm	27
 	invoke	2
-	line	352
+	line	351
 	colm	8
 	pret
 lab L11
@@ -4470,7 +4436,7 @@ lab L3
 	unmark
 lab L1
 	pnull
-	line	353
+	line	352
 	colm	1
 	pfail
 	end
@@ -4479,27 +4445,27 @@ proc rest
 	con	0,002000,1,2
 	con	1,002000,1,1
 	declend
-	line	356
+	line	355
 	colm	11
 	mark	L1
 	mark	L2
 	pnull
 	pnull
 	var	0
-	line	357
+	line	356
 	colm	6
 	size
 	int	0
-	line	357
+	line	356
 	colm	9
 	numlt
 	unmark
 	mark	L4
 	pnull
-	line	357
+	line	356
 	colm	25
 	llist	0
-	line	357
+	line	356
 	colm	18
 	pret
 lab L4
@@ -4513,17 +4479,17 @@ lab L2
 	pnull
 	pnull
 	var	0
-	line	357
+	line	356
 	colm	44
 	size
 	int	1
-	line	357
+	line	356
 	colm	47
 	plus
-	line	357
+	line	356
 	colm	43
 	sect
-	line	357
+	line	356
 	colm	33
 	pret
 lab L5
@@ -4532,7 +4498,7 @@ lab L3
 	unmark
 lab L1
 	pnull
-	line	358
+	line	357
 	colm	1
 	pfail
 	end
@@ -4542,7 +4508,7 @@ proc zero_Z
 	local	2,000000,zero_base_B
 	con	0,002000,1,1
 	declend
-	line	363
+	line	362
 	colm	11
 	mark	L1
 	mark	L2
@@ -4551,16 +4517,16 @@ proc zero_Z
 	var	2
 	pnull
 	var	0
-	line	364
+	line	363
 	colm	28
 	field	mantissa
-	line	364
+	line	363
 	colm	26
 	invoke	1
-	line	364
+	line	363
 	colm	11
 	invoke	2
-	line	364
+	line	363
 	colm	3
 	pret
 lab L2
@@ -4568,7 +4534,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	365
+	line	364
 	colm	1
 	pfail
 	end
@@ -4578,7 +4544,7 @@ proc one_Z
 	local	2,000000,one_base_B
 	con	0,002000,1,1
 	declend
-	line	368
+	line	367
 	colm	11
 	mark	L1
 	mark	L2
@@ -4587,16 +4553,16 @@ proc one_Z
 	var	2
 	pnull
 	var	0
-	line	369
+	line	368
 	colm	27
 	field	mantissa
-	line	369
+	line	368
 	colm	25
 	invoke	1
-	line	369
+	line	368
 	colm	11
 	invoke	2
-	line	369
+	line	368
 	colm	3
 	pret
 lab L2
@@ -4604,7 +4570,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	370
+	line	369
 	colm	1
 	pfail
 	end
@@ -4621,14 +4587,14 @@ proc k_Z
 	con	2,002000,1,0
 	con	3,002000,1,1
 	declend
-	line	373
+	line	372
 	colm	11
 	init	L1
 	mark	L1
 	var	1
 	int	0
 	int	1
-	line	374
+	line	373
 	colm	19
 	invoke	2
 	unmark
@@ -4640,7 +4606,7 @@ lab L1
 	pnull
 	var	0
 	int	2
-	line	375
+	line	374
 	colm	17
 	numeq
 	unmark
@@ -4651,10 +4617,10 @@ lab L4
 	var	0
 	var	3
 	var	0
-	line	375
+	line	374
 	colm	38
 	invoke	1
-	line	375
+	line	374
 	colm	34
 	div
 lab L5
@@ -4663,20 +4629,20 @@ lab L5
 	var	6
 	var	3
 	var	0
-	line	376
+	line	375
 	colm	29
 	invoke	1
 	var	5
-	line	376
+	line	375
 	colm	25
 	invoke	2
-	line	376
+	line	375
 	colm	9
 	invoke	2
-	line	375
+	line	374
 	colm	11
 	invoke	2
-	line	375
+	line	374
 	colm	3
 	pret
 lab L3
@@ -4684,7 +4650,7 @@ lab L3
 	unmark
 lab L2
 	pnull
-	line	377
+	line	376
 	colm	1
 	pfail
 	end
@@ -4702,19 +4668,19 @@ proc plus_Z
 	local	10,000000,ominus_base_B
 	con	0,002000,1,1
 	declend
-	line	380
+	line	379
 	colm	11
 	mark	L1
 	mark0
 	var	2
 	var	0
-	line	381
+	line	380
 	colm	16
 	invoke	1
 	pop
 	var	3
 	var	1
-	line	381
+	line	380
 	colm	27
 	invoke	1
 	unmark
@@ -4722,10 +4688,10 @@ proc plus_Z
 	var	4
 	var	1
 	var	0
-	line	381
+	line	380
 	colm	49
 	invoke	2
-	line	381
+	line	380
 	colm	36
 	pret
 lab L2
@@ -4736,17 +4702,17 @@ lab L1
 	mark0
 	var	5
 	var	0
-	line	382
+	line	381
 	colm	15
 	invoke	1
 	unmark
 	mark	L4
 	var	6
 	var	1
-	line	382
+	line	381
 	colm	42
 	invoke	1
-	line	382
+	line	381
 	colm	24
 	pret
 lab L4
@@ -4757,17 +4723,17 @@ lab L3
 	mark0
 	var	5
 	var	1
-	line	383
+	line	382
 	colm	15
 	invoke	1
 	unmark
 	mark	L6
 	var	6
 	var	0
-	line	383
+	line	382
 	colm	42
 	invoke	1
-	line	383
+	line	382
 	colm	24
 	pret
 lab L6
@@ -4778,13 +4744,13 @@ lab L5
 	mark0
 	var	3
 	var	0
-	line	384
+	line	383
 	colm	11
 	invoke	1
 	pop
 	var	3
 	var	1
-	line	384
+	line	383
 	colm	22
 	invoke	1
 	unmark
@@ -4793,30 +4759,30 @@ lab L5
 	var	7
 	pnull
 	var	0
-	line	384
+	line	383
 	colm	53
 	field	sign
 	var	8
 	pnull
 	var	0
-	line	384
+	line	383
 	colm	73
 	field	mantissa
 	pnull
 	var	1
-	line	384
+	line	383
 	colm	85
 	field	mantissa
-	line	384
+	line	383
 	colm	71
 	invoke	2
-	line	384
+	line	383
 	colm	51
 	invoke	2
-	line	384
+	line	383
 	colm	49
 	invoke	1
-	line	384
+	line	383
 	colm	31
 	pret
 lab L8
@@ -4827,13 +4793,13 @@ lab L7
 	mark0
 	var	2
 	var	0
-	line	385
+	line	384
 	colm	16
 	invoke	1
 	pop
 	var	2
 	var	1
-	line	385
+	line	384
 	colm	32
 	invoke	1
 	unmark
@@ -4842,30 +4808,30 @@ lab L7
 	var	7
 	pnull
 	var	0
-	line	385
+	line	384
 	colm	63
 	field	sign
 	var	8
 	pnull
 	var	0
-	line	385
+	line	384
 	colm	83
 	field	mantissa
 	pnull
 	var	1
-	line	385
+	line	384
 	colm	95
 	field	mantissa
-	line	385
+	line	384
 	colm	81
 	invoke	2
-	line	385
+	line	384
 	colm	61
 	invoke	2
-	line	385
+	line	384
 	colm	59
 	invoke	1
-	line	385
+	line	384
 	colm	41
 	pret
 lab L10
@@ -4876,13 +4842,13 @@ lab L9
 	mark0
 	var	3
 	var	0
-	line	386
+	line	385
 	colm	11
 	invoke	1
 	pop
 	var	2
 	var	1
-	line	386
+	line	385
 	colm	27
 	invoke	1
 	unmark
@@ -4890,15 +4856,15 @@ lab L9
 	var	9
 	pnull
 	var	0
-	line	387
+	line	386
 	colm	21
 	field	mantissa
 	pnull
 	var	1
-	line	387
+	line	386
 	colm	33
 	field	mantissa
-	line	387
+	line	386
 	colm	19
 	invoke	2
 	unmark
@@ -4907,30 +4873,30 @@ lab L9
 	var	7
 	pnull
 	int	0
-	line	388
+	line	387
 	colm	31
 	neg
 	var	10
 	pnull
 	var	1
-	line	388
+	line	387
 	colm	50
 	field	mantissa
 	pnull
 	var	0
-	line	388
+	line	387
 	colm	62
 	field	mantissa
-	line	388
+	line	387
 	colm	48
 	invoke	2
-	line	388
+	line	387
 	colm	30
 	invoke	2
-	line	388
+	line	387
 	colm	28
 	invoke	1
-	line	388
+	line	387
 	colm	10
 	pret
 lab L14
@@ -4944,24 +4910,24 @@ lab L12
 	var	10
 	pnull
 	var	0
-	line	389
+	line	388
 	colm	49
 	field	mantissa
 	pnull
 	var	1
-	line	389
+	line	388
 	colm	61
 	field	mantissa
-	line	389
+	line	388
 	colm	47
 	invoke	2
-	line	389
+	line	388
 	colm	30
 	invoke	2
-	line	389
+	line	388
 	colm	28
 	invoke	1
-	line	389
+	line	388
 	colm	10
 	pret
 lab L15
@@ -4974,10 +4940,10 @@ lab L11
 	var	4
 	var	1
 	var	0
-	line	390
+	line	389
 	colm	16
 	invoke	2
-	line	390
+	line	389
 	colm	3
 	pret
 lab L17
@@ -4985,7 +4951,7 @@ lab L17
 	unmark
 lab L16
 	pnull
-	line	391
+	line	390
 	colm	1
 	pfail
 	end
@@ -4994,7 +4960,7 @@ proc minus_Z
 	local	1,000000,normalize_Z
 	local	2,000000,Z
 	declend
-	line	394
+	line	393
 	colm	11
 	mark	L1
 	mark	L2
@@ -5003,24 +4969,24 @@ proc minus_Z
 	pnull
 	pnull
 	var	0
-	line	395
+	line	394
 	colm	26
 	field	sign
-	line	395
+	line	394
 	colm	24
 	neg
 	pnull
 	var	0
-	line	395
+	line	394
 	colm	34
 	field	mantissa
-	line	395
+	line	394
 	colm	23
 	invoke	2
-	line	395
+	line	394
 	colm	21
 	invoke	1
-	line	395
+	line	394
 	colm	3
 	pret
 lab L2
@@ -5028,7 +4994,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	396
+	line	395
 	colm	1
 	pfail
 	end
@@ -5039,7 +5005,7 @@ proc times_Z
 	local	3,000000,Z
 	local	4,000000,times_base_B
 	declend
-	line	399
+	line	398
 	colm	11
 	mark	L1
 	mark	L2
@@ -5048,38 +5014,38 @@ proc times_Z
 	pnull
 	pnull
 	var	0
-	line	400
+	line	399
 	colm	25
 	field	sign
 	pnull
 	var	1
-	line	400
+	line	399
 	colm	34
 	field	sign
-	line	400
+	line	399
 	colm	31
 	mult
 	var	4
 	pnull
 	var	0
-	line	400
+	line	399
 	colm	55
 	field	mantissa
 	pnull
 	var	1
-	line	400
+	line	399
 	colm	67
 	field	mantissa
-	line	400
+	line	399
 	colm	53
 	invoke	2
-	line	400
+	line	399
 	colm	23
 	invoke	2
-	line	400
+	line	399
 	colm	21
 	invoke	1
-	line	400
+	line	399
 	colm	3
 	pret
 lab L2
@@ -5087,7 +5053,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	401
+	line	400
 	colm	1
 	pfail
 	end
@@ -5098,7 +5064,7 @@ proc div_Z
 	local	3,000000,Z
 	local	4,000000,div_base_B
 	declend
-	line	404
+	line	403
 	colm	11
 	mark	L1
 	mark	L2
@@ -5107,38 +5073,38 @@ proc div_Z
 	pnull
 	pnull
 	var	0
-	line	405
+	line	404
 	colm	25
 	field	sign
 	pnull
 	var	1
-	line	405
+	line	404
 	colm	34
 	field	sign
-	line	405
+	line	404
 	colm	31
 	mult
 	var	4
 	pnull
 	var	0
-	line	405
+	line	404
 	colm	53
 	field	mantissa
 	pnull
 	var	1
-	line	405
+	line	404
 	colm	65
 	field	mantissa
-	line	405
+	line	404
 	colm	51
 	invoke	2
-	line	405
+	line	404
 	colm	23
 	invoke	2
-	line	405
+	line	404
 	colm	21
 	invoke	1
-	line	405
+	line	404
 	colm	3
 	pret
 lab L2
@@ -5146,7 +5112,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	406
+	line	405
 	colm	1
 	pfail
 	end
@@ -5162,7 +5128,7 @@ proc mod_Z
 	local	8,000000,one_Z
 	local	9,000000,div_Z
 	declend
-	line	409
+	line	408
 	colm	11
 	mark	L1
 	mark	L2
@@ -5171,10 +5137,10 @@ proc mod_Z
 	var	1
 	var	3
 	var	1
-	line	410
+	line	409
 	colm	30
 	invoke	1
-	line	410
+	line	409
 	colm	20
 	invoke	2
 	unmark
@@ -5182,10 +5148,10 @@ proc mod_Z
 	var	0
 	var	5
 	var	1
-	line	410
+	line	409
 	colm	56
 	invoke	1
-	line	410
+	line	409
 	colm	45
 	invoke	2
 	goto	L4
@@ -5195,10 +5161,10 @@ lab L3
 	var	0
 	var	3
 	var	0
-	line	411
+	line	410
 	colm	27
 	invoke	1
-	line	411
+	line	410
 	colm	17
 	invoke	2
 	unmark
@@ -5211,28 +5177,28 @@ lab L3
 	var	5
 	var	8
 	var	0
-	line	412
+	line	411
 	colm	57
 	invoke	1
-	line	412
+	line	411
 	colm	51
 	invoke	1
 	var	9
 	var	0
 	var	1
-	line	412
+	line	411
 	colm	68
 	invoke	2
-	line	412
+	line	411
 	colm	43
 	invoke	2
-	line	412
+	line	411
 	colm	33
 	invoke	2
-	line	412
+	line	411
 	colm	25
 	invoke	1
-	line	412
+	line	411
 	colm	14
 	invoke	2
 	goto	L6
@@ -5245,21 +5211,21 @@ lab L5
 	var	9
 	var	0
 	var	1
-	line	413
+	line	412
 	colm	42
 	invoke	2
-	line	413
+	line	412
 	colm	33
 	invoke	2
-	line	413
+	line	412
 	colm	25
 	invoke	1
-	line	413
+	line	412
 	colm	14
 	invoke	2
 lab L6
 lab L4
-	line	410
+	line	409
 	colm	3
 	pret
 lab L2
@@ -5267,7 +5233,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	415
+	line	414
 	colm	1
 	pfail
 	end
@@ -5276,7 +5242,7 @@ proc abs_Z
 	local	1,000000,Z
 	con	0,002000,1,1
 	declend
-	line	418
+	line	417
 	colm	11
 	mark	L1
 	mark	L2
@@ -5284,13 +5250,13 @@ proc abs_Z
 	int	0
 	pnull
 	var	0
-	line	419
+	line	418
 	colm	16
 	field	mantissa
-	line	419
+	line	418
 	colm	11
 	invoke	2
-	line	419
+	line	418
 	colm	3
 	pret
 lab L2
@@ -5298,19 +5264,19 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	420
+	line	419
 	colm	1
 	pfail
 	end
 proc deg_Z
 	local	0,001000,x
 	declend
-	line	423
+	line	422
 	colm	11
 	mark	L1
 	mark	L2
 	var	0
-	line	424
+	line	423
 	colm	3
 	pret
 lab L2
@@ -5318,7 +5284,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	425
+	line	424
 	colm	1
 	pfail
 	end
@@ -5328,13 +5294,13 @@ proc normalize_Z
 	local	2,000000,Z
 	con	0,002000,1,1
 	declend
-	line	428
+	line	427
 	colm	11
 	mark	L1
 	mark0
 	var	1
 	var	0
-	line	429
+	line	428
 	colm	15
 	invoke	1
 	unmark
@@ -5343,13 +5309,13 @@ proc normalize_Z
 	int	0
 	pnull
 	var	0
-	line	429
+	line	428
 	colm	37
 	field	mantissa
-	line	429
+	line	428
 	colm	32
 	invoke	2
-	line	429
+	line	428
 	colm	24
 	pret
 lab L2
@@ -5359,7 +5325,7 @@ lab L1
 	mark	L3
 	mark	L4
 	var	0
-	line	430
+	line	429
 	colm	3
 	pret
 lab L4
@@ -5367,7 +5333,7 @@ lab L4
 	unmark
 lab L3
 	pnull
-	line	431
+	line	430
 	colm	1
 	pfail
 	end
@@ -5377,25 +5343,25 @@ proc equal_Z
 	local	2,000000,is_zero_Z
 	local	3,000000,equal_base_B
 	declend
-	line	434
+	line	433
 	colm	11
 	mark	L1
 	mark	L2
 	var	2
 	var	0
-	line	435
+	line	434
 	colm	15
 	invoke	1
 	pop
 	var	2
 	var	1
-	line	435
+	line	434
 	colm	30
 	invoke	1
 	unmark
 	mark	L4
 	pnull
-	line	435
+	line	434
 	colm	39
 	pret
 lab L4
@@ -5406,19 +5372,19 @@ lab L2
 	pnull
 	pnull
 	var	0
-	line	436
+	line	435
 	colm	12
 	field	sign
 	pnull
 	var	1
-	line	436
+	line	435
 	colm	23
 	field	sign
-	line	436
+	line	435
 	colm	18
 	lexne
 	unmark
-	line	436
+	line	435
 	colm	34
 	pfail
 	goto	L6
@@ -5427,18 +5393,18 @@ lab L5
 	var	3
 	pnull
 	var	0
-	line	437
+	line	436
 	colm	29
 	field	mantissa
 	pnull
 	var	1
-	line	437
+	line	436
 	colm	41
 	field	mantissa
-	line	437
+	line	436
 	colm	27
 	invoke	2
-	line	437
+	line	436
 	colm	8
 	pret
 lab L7
@@ -5448,7 +5414,7 @@ lab L3
 	unmark
 lab L1
 	pnull
-	line	438
+	line	437
 	colm	1
 	pfail
 	end
@@ -5458,28 +5424,28 @@ proc less_Z
 	local	2,000000,less_base_B
 	con	0,002000,1,1
 	declend
-	line	441
+	line	440
 	colm	11
 	mark	L1
 	mark0
 	pnull
 	pnull
 	var	0
-	line	442
+	line	441
 	colm	7
 	field	sign
 	pnull
 	var	1
-	line	442
+	line	441
 	colm	16
 	field	sign
-	line	442
+	line	441
 	colm	13
 	numlt
 	unmark
 	mark	L2
 	pnull
-	line	442
+	line	441
 	colm	27
 	pret
 lab L2
@@ -5491,19 +5457,19 @@ lab L1
 	pnull
 	pnull
 	var	0
-	line	443
+	line	442
 	colm	7
 	field	sign
 	pnull
 	var	1
-	line	443
+	line	442
 	colm	16
 	field	sign
-	line	443
+	line	442
 	colm	13
 	numgt
 	unmark
-	line	443
+	line	442
 	colm	27
 	pfail
 	unmark
@@ -5513,11 +5479,11 @@ lab L3
 	pnull
 	pnull
 	var	0
-	line	444
+	line	443
 	colm	7
 	field	sign
 	int	0
-	line	444
+	line	443
 	colm	13
 	numeq
 	unmark
@@ -5525,18 +5491,18 @@ lab L3
 	var	2
 	pnull
 	var	0
-	line	444
+	line	443
 	colm	42
 	field	mantissa
 	pnull
 	var	1
-	line	444
+	line	443
 	colm	54
 	field	mantissa
-	line	444
+	line	443
 	colm	40
 	invoke	2
-	line	444
+	line	443
 	colm	22
 	pret
 lab L5
@@ -5548,15 +5514,15 @@ lab L4
 	pnull
 	pnull
 	var	0
-	line	445
+	line	444
 	colm	7
 	field	sign
 	pnull
 	int	0
-	line	445
+	line	444
 	colm	15
 	neg
-	line	445
+	line	444
 	colm	13
 	numeq
 	unmark
@@ -5564,18 +5530,18 @@ lab L4
 	var	2
 	pnull
 	var	1
-	line	445
+	line	444
 	colm	43
 	field	mantissa
 	pnull
 	var	0
-	line	445
+	line	444
 	colm	55
 	field	mantissa
-	line	445
+	line	444
 	colm	41
 	invoke	2
-	line	445
+	line	444
 	colm	23
 	pret
 lab L7
@@ -5583,7 +5549,7 @@ lab L7
 	unmark
 lab L6
 	pnull
-	line	446
+	line	445
 	colm	1
 	pfail
 	end
@@ -5595,7 +5561,7 @@ proc unit_Z
 	local	4,000000,one_base_B
 	con	0,002000,1,1
 	declend
-	line	449
+	line	448
 	colm	11
 	mark	L1
 	mark	L2
@@ -5604,10 +5570,10 @@ proc unit_Z
 	var	0
 	var	2
 	var	0
-	line	450
+	line	449
 	colm	27
 	invoke	1
-	line	450
+	line	449
 	colm	18
 	invoke	2
 	esusp
@@ -5618,26 +5584,26 @@ lab L3
 	var	3
 	pnull
 	int	0
-	line	450
+	line	449
 	colm	47
 	neg
 	var	4
 	pnull
 	var	0
-	line	450
+	line	449
 	colm	63
 	field	mantissa
-	line	450
+	line	449
 	colm	61
 	invoke	1
-	line	450
+	line	449
 	colm	46
 	invoke	2
-	line	450
+	line	449
 	colm	41
 	invoke	2
 lab L4
-	line	450
+	line	449
 	colm	3
 	pret
 lab L2
@@ -5645,7 +5611,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	451
+	line	450
 	colm	1
 	pfail
 	end
@@ -5654,22 +5620,22 @@ proc gt0_Z
 	local	1,000000,is_zero_Z
 	con	0,002000,1,1
 	declend
-	line	454
+	line	453
 	colm	11
 	mark	L1
 	mark0
 	pnull
 	pnull
 	var	0
-	line	455
+	line	454
 	colm	7
 	field	sign
 	int	0
-	line	455
+	line	454
 	colm	13
 	lexne
 	unmark
-	line	455
+	line	454
 	colm	24
 	pfail
 	unmark
@@ -5678,11 +5644,11 @@ lab L1
 	mark0
 	var	1
 	var	0
-	line	456
+	line	455
 	colm	15
 	invoke	1
 	unmark
-	line	456
+	line	455
 	colm	24
 	pfail
 	unmark
@@ -5690,7 +5656,7 @@ lab L2
 	mark	L3
 	mark	L4
 	pnull
-	line	457
+	line	456
 	colm	3
 	pret
 lab L4
@@ -5698,7 +5664,7 @@ lab L4
 	unmark
 lab L3
 	pnull
-	line	458
+	line	457
 	colm	1
 	pfail
 	end
@@ -5707,26 +5673,26 @@ proc negative_Z
 	local	1,000000,is_zero_Z
 	con	0,002000,1,1
 	declend
-	line	461
+	line	460
 	colm	11
 	mark	L1
 	mark0
 	pnull
 	pnull
 	var	0
-	line	462
+	line	461
 	colm	7
 	field	sign
 	pnull
 	int	0
-	line	462
+	line	461
 	colm	17
 	neg
-	line	462
+	line	461
 	colm	13
 	lexne
 	unmark
-	line	462
+	line	461
 	colm	25
 	pfail
 	unmark
@@ -5735,11 +5701,11 @@ lab L1
 	mark0
 	var	1
 	var	0
-	line	463
+	line	462
 	colm	15
 	invoke	1
 	unmark
-	line	463
+	line	462
 	colm	24
 	pfail
 	unmark
@@ -5747,7 +5713,7 @@ lab L2
 	mark	L3
 	mark	L4
 	pnull
-	line	464
+	line	463
 	colm	3
 	pret
 lab L4
@@ -5755,7 +5721,7 @@ lab L4
 	unmark
 lab L3
 	pnull
-	line	465
+	line	464
 	colm	1
 	pfail
 	end
@@ -5764,29 +5730,29 @@ proc is_zero_Z
 	local	1,000000,equal_base_B
 	local	2,000000,zero_base_B
 	declend
-	line	468
+	line	467
 	colm	11
 	mark	L1
 	mark	L2
 	var	1
 	pnull
 	var	0
-	line	469
+	line	468
 	colm	24
 	field	mantissa
 	var	2
 	pnull
 	var	0
-	line	469
+	line	468
 	colm	48
 	field	mantissa
-	line	469
+	line	468
 	colm	46
 	invoke	1
-	line	469
+	line	468
 	colm	22
 	invoke	2
-	line	469
+	line	468
 	colm	3
 	pret
 lab L2
@@ -5794,7 +5760,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	470
+	line	469
 	colm	1
 	pfail
 	end
@@ -5813,24 +5779,24 @@ proc print_Z
 	con	5,010000,1,172
 	con	6,010000,1,051
 	declend
-	line	473
+	line	472
 	colm	11
 	mark	L1
 	mark0
 	pnull
 	pnull
 	var	0
-	line	475
+	line	474
 	colm	7
 	field	sign
 	int	0
-	line	475
+	line	474
 	colm	13
 	numlt
 	unmark
 	var	3
 	str	1
-	line	475
+	line	474
 	colm	28
 	invoke	1
 	unmark
@@ -5841,13 +5807,13 @@ lab L1
 	pnull
 	pnull
 	var	0
-	line	476
+	line	475
 	colm	14
 	field	mantissa
-	line	476
+	line	475
 	colm	23
 	field	digits
-	line	476
+	line	475
 	colm	10
 	asgn
 	unmark
@@ -5857,10 +5823,10 @@ lab L2
 	pnull
 	var	1
 	int	2
-	line	477
+	line	476
 	colm	16
 	subsc
-	line	477
+	line	476
 	colm	9
 	invoke	1
 	unmark
@@ -5873,14 +5839,14 @@ lab L3
 	int	3
 	pnull
 	var	1
-	line	478
+	line	477
 	colm	19
 	size
 	push1
-	line	478
+	line	477
 	colm	16
 	toby
-	line	478
+	line	477
 	colm	11
 	asgn
 	pop
@@ -5890,15 +5856,15 @@ lab L3
 	pnull
 	var	1
 	var	2
-	line	478
+	line	477
 	colm	49
 	subsc
 	var	5
 	str	4
-	line	478
+	line	477
 	colm	42
 	invoke	3
-	line	478
+	line	477
 	colm	36
 	invoke	1
 	unmark
@@ -5910,7 +5876,7 @@ lab L4
 	mark	L7
 	var	3
 	str	5
-	line	479
+	line	478
 	colm	9
 	invoke	1
 	unmark
@@ -5920,23 +5886,23 @@ lab L7
 	pnull
 	pnull
 	var	0
-	line	480
+	line	479
 	colm	7
 	field	sign
 	int	0
-	line	480
+	line	479
 	colm	13
 	numlt
 	unmark
 	var	3
 	str	6
-	line	480
+	line	479
 	colm	28
 	invoke	1
 	unmark
 lab L8
 	pnull
-	line	481
+	line	480
 	colm	1
 	pfail
 	end
@@ -5944,12 +5910,12 @@ proc zero_integer
 	local	0,001000,x
 	con	0,002000,1,0
 	declend
-	line	484
+	line	483
 	colm	11
 	mark	L1
 	mark	L2
 	int	0
-	line	485
+	line	484
 	colm	3
 	pret
 lab L2
@@ -5957,7 +5923,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	486
+	line	485
 	colm	1
 	pfail
 	end
@@ -5965,12 +5931,12 @@ proc one_integer
 	local	0,001000,x
 	con	0,002000,1,1
 	declend
-	line	489
+	line	488
 	colm	11
 	mark	L1
 	mark	L2
 	int	0
-	line	490
+	line	489
 	colm	3
 	pret
 lab L2
@@ -5978,7 +5944,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	491
+	line	490
 	colm	1
 	pfail
 	end
@@ -5986,17 +5952,17 @@ proc plus_integer
 	local	0,001000,a
 	local	1,001000,b
 	declend
-	line	494
+	line	493
 	colm	11
 	mark	L1
 	mark	L2
 	pnull
 	var	0
 	var	1
-	line	495
+	line	494
 	colm	12
 	plus
-	line	495
+	line	494
 	colm	3
 	pret
 lab L2
@@ -6004,23 +5970,23 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	496
+	line	495
 	colm	1
 	pfail
 	end
 proc minus_integer
 	local	0,001000,x
 	declend
-	line	499
+	line	498
 	colm	11
 	mark	L1
 	mark	L2
 	pnull
 	var	0
-	line	500
+	line	499
 	colm	10
 	neg
-	line	500
+	line	499
 	colm	3
 	pret
 lab L2
@@ -6028,7 +5994,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	501
+	line	500
 	colm	1
 	pfail
 	end
@@ -6036,17 +6002,17 @@ proc times_integer
 	local	0,001000,a
 	local	1,001000,b
 	declend
-	line	504
+	line	503
 	colm	11
 	mark	L1
 	mark	L2
 	pnull
 	var	0
 	var	1
-	line	505
+	line	504
 	colm	12
 	mult
-	line	505
+	line	504
 	colm	3
 	pret
 lab L2
@@ -6054,7 +6020,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	506
+	line	505
 	colm	1
 	pfail
 	end
@@ -6062,17 +6028,17 @@ proc div_integer
 	local	0,001000,a
 	local	1,001000,b
 	declend
-	line	509
+	line	508
 	colm	11
 	mark	L1
 	mark	L2
 	pnull
 	var	0
 	var	1
-	line	510
+	line	509
 	colm	12
 	div
-	line	510
+	line	509
 	colm	3
 	pret
 lab L2
@@ -6080,7 +6046,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	511
+	line	510
 	colm	1
 	pfail
 	end
@@ -6088,17 +6054,17 @@ proc odot_integer
 	local	0,001000,a
 	local	1,001000,b
 	declend
-	line	514
+	line	513
 	colm	11
 	mark	L1
 	mark	L2
 	pnull
 	var	0
 	var	1
-	line	515
+	line	514
 	colm	12
 	mult
-	line	515
+	line	514
 	colm	3
 	pret
 lab L2
@@ -6106,7 +6072,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	516
+	line	515
 	colm	1
 	pfail
 	end
@@ -6114,17 +6080,17 @@ proc odiv_integer
 	local	0,001000,a
 	local	1,001000,b
 	declend
-	line	519
+	line	518
 	colm	11
 	mark	L1
 	mark	L2
 	pnull
 	var	0
 	var	1
-	line	520
+	line	519
 	colm	12
 	div
-	line	520
+	line	519
 	colm	3
 	pret
 lab L2
@@ -6132,7 +6098,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	521
+	line	520
 	colm	1
 	pfail
 	end
@@ -6143,14 +6109,14 @@ proc mod_integer
 	con	0,002000,1,0
 	con	1,002000,1,1
 	declend
-	line	524
+	line	523
 	colm	11
 	mark	L1
 	mark0
 	pnull
 	var	1
 	int	0
-	line	525
+	line	524
 	colm	8
 	numlt
 	unmark
@@ -6158,10 +6124,10 @@ proc mod_integer
 	var	1
 	pnull
 	var	1
-	line	525
+	line	524
 	colm	22
 	neg
-	line	525
+	line	524
 	colm	19
 	asgn
 	unmark
@@ -6173,7 +6139,7 @@ lab L3
 	pnull
 	var	0
 	int	0
-	line	527
+	line	526
 	colm	8
 	numlt
 	unmark
@@ -6187,24 +6153,24 @@ lab L3
 	pnull
 	var	0
 	var	1
-	line	527
+	line	526
 	colm	32
 	div
-	line	527
+	line	526
 	colm	30
 	invoke	1
 	int	1
-	line	527
+	line	526
 	colm	36
 	plus
 	var	1
-	line	527
+	line	526
 	colm	41
 	mult
-	line	527
+	line	526
 	colm	24
 	plus
-	line	527
+	line	526
 	colm	19
 	asgn
 	goto	L7
@@ -6213,10 +6179,10 @@ lab L6
 	pnull
 	var	0
 	var	1
-	line	527
+	line	526
 	colm	59
 	mod
-	line	527
+	line	526
 	colm	50
 	pret
 lab L8
@@ -6229,7 +6195,7 @@ lab L5
 	unmark
 lab L2
 	pnull
-	line	528
+	line	527
 	colm	1
 	pfail
 	end
@@ -6237,17 +6203,17 @@ proc rem_integer
 	local	0,001000,a
 	local	1,001000,b
 	declend
-	line	531
+	line	530
 	colm	11
 	mark	L1
 	mark	L2
 	pnull
 	var	0
 	var	1
-	line	532
+	line	531
 	colm	12
 	mod
-	line	532
+	line	531
 	colm	3
 	pret
 lab L2
@@ -6255,19 +6221,19 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	533
+	line	532
 	colm	1
 	pfail
 	end
 proc deg_integer
 	local	0,001000,x
 	declend
-	line	536
+	line	535
 	colm	11
 	mark	L1
 	mark	L2
 	var	0
-	line	537
+	line	536
 	colm	3
 	pret
 lab L2
@@ -6275,7 +6241,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	538
+	line	537
 	colm	1
 	pfail
 	end
@@ -6283,16 +6249,16 @@ proc abs_integer
 	local	0,001000,x
 	local	1,000000,abs
 	declend
-	line	541
+	line	540
 	colm	11
 	mark	L1
 	mark	L2
 	var	1
 	var	0
-	line	542
+	line	541
 	colm	13
 	invoke	1
-	line	542
+	line	541
 	colm	3
 	pret
 lab L2
@@ -6300,7 +6266,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	543
+	line	542
 	colm	1
 	pfail
 	end
@@ -6308,17 +6274,17 @@ proc is_zero_integer
 	local	0,001000,x
 	con	0,002000,1,0
 	declend
-	line	546
+	line	545
 	colm	11
 	mark	L1
 	mark	L2
 	pnull
 	var	0
 	int	0
-	line	547
+	line	546
 	colm	13
 	numeq
-	line	547
+	line	546
 	colm	3
 	pret
 lab L2
@@ -6326,7 +6292,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	548
+	line	547
 	colm	1
 	pfail
 	end
@@ -6334,20 +6300,20 @@ proc less_integer
 	local	0,001000,a
 	local	1,001000,b
 	declend
-	line	551
+	line	550
 	colm	11
 	mark	L1
 	mark0
 	pnull
 	var	0
 	var	1
-	line	552
+	line	551
 	colm	8
 	numlt
 	unmark
 	mark	L2
 	pnull
-	line	552
+	line	551
 	colm	17
 	pret
 lab L2
@@ -6355,7 +6321,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	553
+	line	552
 	colm	1
 	pfail
 	end
@@ -6363,20 +6329,20 @@ proc negative_integer
 	local	0,001000,x
 	con	0,002000,1,0
 	declend
-	line	556
+	line	555
 	colm	11
 	mark	L1
 	mark0
 	pnull
 	var	0
 	int	0
-	line	557
+	line	556
 	colm	8
 	numlt
 	unmark
 	mark	L2
 	pnull
-	line	557
+	line	556
 	colm	17
 	pret
 lab L2
@@ -6384,7 +6350,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	558
+	line	557
 	colm	1
 	pfail
 	end
@@ -6392,17 +6358,17 @@ proc equal_integer
 	local	0,001000,a
 	local	1,001000,b
 	declend
-	line	561
+	line	560
 	colm	11
 	mark	L1
 	mark	L2
 	pnull
 	var	0
 	var	1
-	line	562
+	line	561
 	colm	12
 	numeq
-	line	562
+	line	561
 	colm	3
 	pret
 lab L2
@@ -6410,7 +6376,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	563
+	line	562
 	colm	1
 	pfail
 	end
@@ -6418,7 +6384,7 @@ proc unit_integer
 	local	0,001000,x
 	con	0,002000,1,1
 	declend
-	line	566
+	line	565
 	colm	11
 	mark	L1
 	mark0
@@ -6426,7 +6392,7 @@ proc unit_integer
 	pnull
 	var	0
 	int	0
-	line	567
+	line	566
 	colm	10
 	numeq
 	esusp
@@ -6436,17 +6402,17 @@ lab L2
 	var	0
 	pnull
 	int	0
-	line	567
+	line	566
 	colm	22
 	neg
-	line	567
+	line	566
 	colm	20
 	numeq
 lab L3
 	unmark
 	mark	L4
 	var	0
-	line	567
+	line	566
 	colm	32
 	pret
 lab L4
@@ -6454,7 +6420,7 @@ lab L4
 	unmark
 lab L1
 	pnull
-	line	568
+	line	567
 	colm	1
 	pfail
 	end
@@ -6465,14 +6431,14 @@ proc print_integer
 	con	1,010000,1,050
 	con	2,010000,1,051
 	declend
-	line	571
+	line	570
 	colm	11
 	mark	L1
 	mark	L2
 	pnull
 	var	0
 	int	0
-	line	572
+	line	571
 	colm	8
 	numlt
 	unmark
@@ -6480,21 +6446,21 @@ proc print_integer
 	str	1
 	var	0
 	str	2
-	line	572
+	line	571
 	colm	23
 	invoke	3
 	goto	L3
 lab L2
 	var	1
 	var	0
-	line	572
+	line	571
 	colm	48
 	invoke	1
 lab L3
 	unmark
 lab L1
 	pnull
-	line	573
+	line	572
 	colm	1
 	pfail
 	end
@@ -6504,7 +6470,7 @@ proc zero_Q
 	local	2,000000,zero
 	local	3,000000,one
 	declend
-	line	578
+	line	577
 	colm	11
 	mark	L1
 	mark	L2
@@ -6512,25 +6478,25 @@ proc zero_Q
 	var	2
 	pnull
 	var	0
-	line	579
+	line	578
 	colm	18
 	field	dividend
-	line	579
+	line	578
 	colm	16
 	invoke	1
 	var	3
 	pnull
 	var	0
-	line	579
+	line	578
 	colm	35
 	field	dividend
-	line	579
+	line	578
 	colm	33
 	invoke	1
-	line	579
+	line	578
 	colm	11
 	invoke	2
-	line	579
+	line	578
 	colm	3
 	pret
 lab L2
@@ -6538,7 +6504,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	580
+	line	579
 	colm	1
 	pfail
 	end
@@ -6547,7 +6513,7 @@ proc one_Q
 	local	1,000000,Q
 	local	2,000000,one
 	declend
-	line	583
+	line	582
 	colm	11
 	mark	L1
 	mark	L2
@@ -6555,25 +6521,25 @@ proc one_Q
 	var	2
 	pnull
 	var	0
-	line	584
+	line	583
 	colm	17
 	field	dividend
-	line	584
+	line	583
 	colm	15
 	invoke	1
 	var	2
 	pnull
 	var	0
-	line	584
+	line	583
 	colm	34
 	field	dividend
-	line	584
+	line	583
 	colm	32
 	invoke	1
-	line	584
+	line	583
 	colm	11
 	invoke	2
-	line	584
+	line	583
 	colm	3
 	pret
 lab L2
@@ -6581,7 +6547,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	585
+	line	584
 	colm	1
 	pfail
 	end
@@ -6592,7 +6558,7 @@ proc k_iQ_x
 	local	3,000000,Q
 	local	4,000000,one
 	declend
-	line	588
+	line	587
 	colm	11
 	mark	L1
 	mark	L2
@@ -6601,17 +6567,17 @@ proc k_iQ_x
 	var	0
 	var	4
 	var	0
-	line	589
+	line	588
 	colm	23
 	invoke	1
-	line	589
+	line	588
 	colm	16
 	invoke	2
 	var	1
-	line	589
+	line	588
 	colm	14
 	invoke	2
-	line	589
+	line	588
 	colm	3
 	pret
 lab L2
@@ -6619,7 +6585,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	590
+	line	589
 	colm	1
 	pfail
 	end
@@ -6636,7 +6602,7 @@ proc plus_Q
 	local	9,000000,one
 	local	10,000000,normalize_Q
 	declend
-	line	593
+	line	592
 	colm	11
 	mark	L1
 	pnull
@@ -6645,35 +6611,35 @@ proc plus_Q
 	var	5
 	pnull
 	var	0
-	line	595
+	line	594
 	colm	22
 	field	dividend
 	pnull
 	var	1
-	line	595
+	line	594
 	colm	34
 	field	divisor
-	line	595
+	line	594
 	colm	20
 	invoke	2
 	var	5
 	pnull
 	var	1
-	line	595
+	line	594
 	colm	52
 	field	dividend
 	pnull
 	var	0
-	line	595
+	line	594
 	colm	64
 	field	divisor
-	line	595
+	line	594
 	colm	50
 	invoke	2
-	line	595
+	line	594
 	colm	14
 	invoke	2
-	line	595
+	line	594
 	colm	7
 	asgn
 	unmark
@@ -6684,13 +6650,13 @@ lab L1
 	var	6
 	pnull
 	var	0
-	line	596
+	line	595
 	colm	15
 	field	dividend
-	line	596
+	line	595
 	colm	13
 	invoke	1
-	line	596
+	line	595
 	colm	6
 	asgn
 	unmark
@@ -6701,7 +6667,7 @@ lab L2
 	var	7
 	var	3
 	var	2
-	line	597
+	line	596
 	colm	18
 	invoke	2
 	unmark
@@ -6710,13 +6676,13 @@ lab L2
 	var	9
 	pnull
 	var	0
-	line	597
+	line	596
 	colm	44
 	field	dividend
-	line	597
+	line	596
 	colm	42
 	invoke	1
-	line	597
+	line	596
 	colm	34
 	invoke	2
 	goto	L6
@@ -6727,25 +6693,25 @@ lab L5
 	var	5
 	pnull
 	var	0
-	line	598
+	line	597
 	colm	34
 	field	divisor
 	pnull
 	var	1
-	line	598
+	line	597
 	colm	45
 	field	divisor
-	line	598
+	line	597
 	colm	32
 	invoke	2
-	line	598
+	line	597
 	colm	21
 	invoke	2
-	line	598
+	line	597
 	colm	19
 	invoke	1
 lab L6
-	line	597
+	line	596
 	colm	3
 	pret
 lab L4
@@ -6753,7 +6719,7 @@ lab L4
 	unmark
 lab L3
 	pnull
-	line	599
+	line	598
 	colm	1
 	pfail
 	end
@@ -6762,7 +6728,7 @@ proc minus_Q
 	local	1,000000,Q
 	local	2,000000,minus
 	declend
-	line	602
+	line	601
 	colm	11
 	mark	L1
 	mark	L2
@@ -6770,21 +6736,21 @@ proc minus_Q
 	var	2
 	pnull
 	var	0
-	line	603
+	line	602
 	colm	19
 	field	dividend
-	line	603
+	line	602
 	colm	17
 	invoke	1
 	pnull
 	var	0
-	line	603
+	line	602
 	colm	32
 	field	divisor
-	line	603
+	line	602
 	colm	11
 	invoke	2
-	line	603
+	line	602
 	colm	3
 	pret
 lab L2
@@ -6792,7 +6758,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	604
+	line	603
 	colm	1
 	pfail
 	end
@@ -6803,7 +6769,7 @@ proc times_Q
 	local	3,000000,Q
 	local	4,000000,times
 	declend
-	line	607
+	line	606
 	colm	11
 	mark	L1
 	mark	L2
@@ -6812,38 +6778,38 @@ proc times_Q
 	var	4
 	pnull
 	var	0
-	line	608
+	line	607
 	colm	31
 	field	dividend
 	pnull
 	var	1
-	line	608
+	line	607
 	colm	43
 	field	dividend
-	line	608
+	line	607
 	colm	29
 	invoke	2
 	var	4
 	pnull
 	var	0
-	line	608
+	line	607
 	colm	62
 	field	divisor
 	pnull
 	var	1
-	line	608
+	line	607
 	colm	73
 	field	divisor
-	line	608
+	line	607
 	colm	60
 	invoke	2
-	line	608
+	line	607
 	colm	23
 	invoke	2
-	line	608
+	line	607
 	colm	21
 	invoke	1
-	line	608
+	line	607
 	colm	3
 	pret
 lab L2
@@ -6851,7 +6817,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	609
+	line	608
 	colm	1
 	pfail
 	end
@@ -6868,7 +6834,7 @@ proc div_Q
 	local	9,000000,times
 	con	0,010000,23,105,122,122,117,122,072,040,144,151,166,151,144,145,040,142,171,040,060,040,151,156,040,121
 	declend
-	line	612
+	line	611
 	colm	11
 	mark	L1
 	pnull
@@ -6876,13 +6842,13 @@ proc div_Q
 	var	3
 	pnull
 	var	1
-	line	614
+	line	613
 	colm	15
 	field	dividend
-	line	614
+	line	613
 	colm	13
 	invoke	1
-	line	614
+	line	613
 	colm	6
 	asgn
 	unmark
@@ -6892,11 +6858,11 @@ lab L1
 	var	4
 	pnull
 	var	1
-	line	615
+	line	614
 	colm	13
 	field	dividend
 	var	2
-	line	615
+	line	614
 	colm	11
 	invoke	2
 	unmark
@@ -6907,7 +6873,7 @@ lab L5
 	pop
 	mark	L6
 	str	0
-	line	615
+	line	614
 	colm	36
 	coret
 	efail
@@ -6916,7 +6882,7 @@ lab L6
 	goto	L6
 lab L7
 	create	L5
-	line	615
+	line	614
 	colm	35
 	llist	1
 	invoke	1
@@ -6927,17 +6893,17 @@ lab L3
 	var	4
 	pnull
 	var	0
-	line	616
+	line	615
 	colm	26
 	field	divisor
 	var	2
-	line	616
+	line	615
 	colm	24
 	invoke	2
 	unmark
 	var	6
 	var	0
-	line	616
+	line	615
 	colm	51
 	invoke	1
 	goto	L10
@@ -6947,39 +6913,39 @@ lab L9
 	var	9
 	pnull
 	var	0
-	line	617
+	line	616
 	colm	29
 	field	dividend
 	pnull
 	var	1
-	line	617
+	line	616
 	colm	41
 	field	divisor
-	line	617
+	line	616
 	colm	27
 	invoke	2
 	var	9
 	pnull
 	var	1
-	line	617
+	line	616
 	colm	59
 	field	dividend
 	pnull
 	var	0
-	line	617
+	line	616
 	colm	71
 	field	divisor
-	line	617
+	line	616
 	colm	57
 	invoke	2
-	line	617
+	line	616
 	colm	21
 	invoke	2
-	line	617
+	line	616
 	colm	19
 	invoke	1
 lab L10
-	line	616
+	line	615
 	colm	8
 	pret
 lab L8
@@ -6988,7 +6954,7 @@ lab L4
 	unmark
 lab L2
 	pnull
-	line	618
+	line	617
 	colm	1
 	pfail
 	end
@@ -6997,16 +6963,16 @@ proc mod_Q
 	local	1,001000,m
 	local	2,000000,zero_Q
 	declend
-	line	621
+	line	620
 	colm	11
 	mark	L1
 	mark	L2
 	var	2
 	var	0
-	line	622
+	line	621
 	colm	16
 	invoke	1
-	line	622
+	line	621
 	colm	3
 	pret
 lab L2
@@ -7014,7 +6980,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	623
+	line	622
 	colm	1
 	pfail
 	end
@@ -7029,7 +6995,7 @@ proc normalize_Q
 	local	7,000000,Q
 	local	8,000000,minus
 	declend
-	line	626
+	line	625
 	colm	11
 	mark	L1
 	pnull
@@ -7037,18 +7003,18 @@ proc normalize_Q
 	var	4
 	pnull
 	var	0
-	line	628
+	line	627
 	colm	13
 	field	dividend
 	pnull
 	var	0
-	line	628
+	line	627
 	colm	25
 	field	divisor
-	line	628
+	line	627
 	colm	11
 	invoke	2
-	line	628
+	line	627
 	colm	5
 	asgn
 	unmark
@@ -7059,14 +7025,14 @@ lab L1
 	var	5
 	pnull
 	var	0
-	line	629
+	line	628
 	colm	15
 	field	dividend
 	var	1
-	line	629
+	line	628
 	colm	13
 	invoke	2
-	line	629
+	line	628
 	colm	7
 	asgn
 	unmark
@@ -7077,14 +7043,14 @@ lab L2
 	var	5
 	pnull
 	var	0
-	line	630
+	line	629
 	colm	18
 	field	divisor
 	var	1
-	line	630
+	line	629
 	colm	16
 	invoke	2
-	line	630
+	line	629
 	colm	10
 	asgn
 	unmark
@@ -7094,22 +7060,22 @@ lab L3
 	mark	L6
 	var	6
 	var	3
-	line	631
+	line	630
 	colm	22
 	invoke	1
 	unmark
 	var	7
 	var	8
 	var	2
-	line	631
+	line	630
 	colm	43
 	invoke	1
 	var	8
 	var	3
-	line	631
+	line	630
 	colm	55
 	invoke	1
-	line	631
+	line	630
 	colm	37
 	invoke	2
 	goto	L7
@@ -7117,11 +7083,11 @@ lab L6
 	var	7
 	var	2
 	var	3
-	line	632
+	line	631
 	colm	9
 	invoke	2
 lab L7
-	line	631
+	line	630
 	colm	3
 	pret
 lab L5
@@ -7129,7 +7095,7 @@ lab L5
 	unmark
 lab L4
 	pnull
-	line	633
+	line	632
 	colm	1
 	pfail
 	end
@@ -7139,7 +7105,7 @@ proc equal_Q
 	local	2,000000,equal
 	local	3,000000,times
 	declend
-	line	636
+	line	635
 	colm	11
 	mark	L1
 	mark	L2
@@ -7147,35 +7113,35 @@ proc equal_Q
 	var	3
 	pnull
 	var	0
-	line	637
+	line	636
 	colm	24
 	field	divisor
 	pnull
 	var	1
-	line	637
+	line	636
 	colm	35
 	field	dividend
-	line	637
+	line	636
 	colm	22
 	invoke	2
 	var	3
 	pnull
 	var	1
-	line	637
+	line	636
 	colm	54
 	field	divisor
 	pnull
 	var	0
-	line	637
+	line	636
 	colm	65
 	field	dividend
-	line	637
+	line	636
 	colm	52
 	invoke	2
-	line	637
+	line	636
 	colm	16
 	invoke	2
-	line	637
+	line	636
 	colm	3
 	pret
 lab L2
@@ -7183,19 +7149,19 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	638
+	line	637
 	colm	1
 	pfail
 	end
 proc unit_Q
 	local	0,001000,x
 	declend
-	line	641
+	line	640
 	colm	11
 	mark	L1
 	mark	L2
 	pnull
-	line	642
+	line	641
 	colm	3
 	pret
 lab L2
@@ -7203,7 +7169,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	643
+	line	642
 	colm	1
 	pfail
 	end
@@ -7217,26 +7183,26 @@ proc print_Q
 	con	2,010000,1,057
 	con	3,010000,2,051,161
 	declend
-	line	646
+	line	645
 	colm	11
 	mark	L1
 	mark	L2
 	var	1
 	pnull
 	var	0
-	line	647
+	line	646
 	colm	13
 	field	divisor
 	var	2
 	pnull
 	var	0
-	line	647
+	line	646
 	colm	28
 	field	divisor
-	line	647
+	line	646
 	colm	26
 	invoke	1
-	line	647
+	line	646
 	colm	11
 	invoke	2
 	unmark
@@ -7248,7 +7214,7 @@ lab L4
 	mark	L5
 	pnull
 	var	0
-	line	648
+	line	647
 	colm	13
 	field	dividend
 	coret
@@ -7263,7 +7229,7 @@ lab L7
 	pop
 	mark	L8
 	str	0
-	line	648
+	line	647
 	colm	22
 	coret
 	efail
@@ -7272,7 +7238,7 @@ lab L8
 	goto	L8
 lab L9
 	create	L7
-	line	648
+	line	647
 	colm	11
 	llist	2
 	invoke	1
@@ -7285,7 +7251,7 @@ lab L10
 	pop
 	mark	L11
 	str	1
-	line	649
+	line	648
 	colm	12
 	coret
 	efail
@@ -7300,10 +7266,10 @@ lab L13
 	mark	L14
 	pnull
 	var	0
-	line	649
+	line	648
 	colm	18
 	field	dividend
-	line	649
+	line	648
 	colm	15
 	coret
 	efail
@@ -7317,7 +7283,7 @@ lab L16
 	pop
 	mark	L17
 	str	2
-	line	649
+	line	648
 	colm	27
 	coret
 	efail
@@ -7332,10 +7298,10 @@ lab L19
 	mark	L20
 	pnull
 	var	0
-	line	649
+	line	648
 	colm	35
 	field	divisor
-	line	649
+	line	648
 	colm	32
 	coret
 	efail
@@ -7349,7 +7315,7 @@ lab L22
 	pop
 	mark	L23
 	str	3
-	line	649
+	line	648
 	colm	43
 	coret
 	efail
@@ -7358,7 +7324,7 @@ lab L23
 	goto	L23
 lab L24
 	create	L22
-	line	649
+	line	648
 	colm	11
 	llist	5
 	invoke	1
@@ -7366,7 +7332,7 @@ lab L3
 	unmark
 lab L1
 	pnull
-	line	650
+	line	649
 	colm	1
 	pfail
 	end
@@ -7375,7 +7341,7 @@ proc zero_modulo
 	local	1,000000,modulo
 	local	2,000000,zero
 	declend
-	line	655
+	line	654
 	colm	11
 	mark	L1
 	mark	L2
@@ -7383,21 +7349,21 @@ proc zero_modulo
 	var	2
 	pnull
 	var	0
-	line	656
+	line	655
 	colm	23
 	field	item
-	line	656
+	line	655
 	colm	21
 	invoke	1
 	pnull
 	var	0
-	line	656
+	line	655
 	colm	32
 	field	modulus
-	line	656
+	line	655
 	colm	16
 	invoke	2
-	line	656
+	line	655
 	colm	3
 	pret
 lab L2
@@ -7405,7 +7371,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	657
+	line	656
 	colm	1
 	pfail
 	end
@@ -7414,7 +7380,7 @@ proc one_modulo
 	local	1,000000,modulo
 	local	2,000000,one
 	declend
-	line	660
+	line	659
 	colm	11
 	mark	L1
 	mark	L2
@@ -7422,21 +7388,21 @@ proc one_modulo
 	var	2
 	pnull
 	var	0
-	line	661
+	line	660
 	colm	22
 	field	item
-	line	661
+	line	660
 	colm	20
 	invoke	1
 	pnull
 	var	0
-	line	661
+	line	660
 	colm	31
 	field	modulus
-	line	661
+	line	660
 	colm	16
 	invoke	2
-	line	661
+	line	660
 	colm	3
 	pret
 lab L2
@@ -7444,7 +7410,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	662
+	line	661
 	colm	1
 	pfail
 	end
@@ -7455,7 +7421,7 @@ proc plus_modulo
 	local	3,000000,modulo
 	local	4,000000,plus
 	declend
-	line	665
+	line	664
 	colm	11
 	mark	L1
 	mark	L2
@@ -7464,29 +7430,29 @@ proc plus_modulo
 	var	4
 	pnull
 	var	0
-	line	666
+	line	665
 	colm	40
 	field	item
 	pnull
 	var	1
-	line	666
+	line	665
 	colm	48
 	field	item
-	line	666
+	line	665
 	colm	38
 	invoke	2
 	pnull
 	var	0
-	line	666
+	line	665
 	colm	57
 	field	modulus
-	line	666
+	line	665
 	colm	33
 	invoke	2
-	line	666
+	line	665
 	colm	26
 	invoke	1
-	line	666
+	line	665
 	colm	3
 	pret
 lab L2
@@ -7494,7 +7460,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	667
+	line	666
 	colm	1
 	pfail
 	end
@@ -7503,7 +7469,7 @@ proc minus_modulo
 	local	1,000000,normalize_modulo
 	local	2,000000,modulo
 	declend
-	line	670
+	line	669
 	colm	11
 	mark	L1
 	mark	L2
@@ -7512,24 +7478,24 @@ proc minus_modulo
 	pnull
 	pnull
 	var	0
-	line	671
+	line	670
 	colm	37
 	field	item
-	line	671
+	line	670
 	colm	34
 	neg
 	pnull
 	var	0
-	line	671
+	line	670
 	colm	46
 	field	modulus
-	line	671
+	line	670
 	colm	33
 	invoke	2
-	line	671
+	line	670
 	colm	26
 	invoke	1
-	line	671
+	line	670
 	colm	3
 	pret
 lab L2
@@ -7537,7 +7503,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	672
+	line	671
 	colm	1
 	pfail
 	end
@@ -7548,7 +7514,7 @@ proc times_modulo
 	local	3,000000,modulo
 	local	4,000000,times
 	declend
-	line	675
+	line	674
 	colm	11
 	mark	L1
 	mark	L2
@@ -7557,29 +7523,29 @@ proc times_modulo
 	var	4
 	pnull
 	var	0
-	line	676
+	line	675
 	colm	41
 	field	item
 	pnull
 	var	1
-	line	676
+	line	675
 	colm	49
 	field	item
-	line	676
+	line	675
 	colm	39
 	invoke	2
 	pnull
 	var	0
-	line	676
+	line	675
 	colm	58
 	field	modulus
-	line	676
+	line	675
 	colm	33
 	invoke	2
-	line	676
+	line	675
 	colm	26
 	invoke	1
-	line	676
+	line	675
 	colm	3
 	pret
 lab L2
@@ -7587,7 +7553,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	677
+	line	676
 	colm	1
 	pfail
 	end
@@ -7599,7 +7565,7 @@ proc div_modulo
 	local	4,000000,times
 	local	5,000000,INVERSE
 	declend
-	line	680
+	line	679
 	colm	11
 	mark	L1
 	mark	L2
@@ -7608,38 +7574,38 @@ proc div_modulo
 	var	4
 	pnull
 	var	0
-	line	681
+	line	680
 	colm	41
 	field	item
 	var	5
 	pnull
 	var	1
-	line	681
+	line	680
 	colm	57
 	field	item
 	pnull
 	var	1
-	line	681
+	line	680
 	colm	65
 	field	modulus
-	line	681
+	line	680
 	colm	55
 	invoke	2
-	line	681
+	line	680
 	colm	39
 	invoke	2
 	pnull
 	var	0
-	line	681
+	line	680
 	colm	78
 	field	modulus
-	line	681
+	line	680
 	colm	33
 	invoke	2
-	line	681
+	line	680
 	colm	26
 	invoke	1
-	line	681
+	line	680
 	colm	3
 	pret
 lab L2
@@ -7647,7 +7613,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	682
+	line	681
 	colm	1
 	pfail
 	end
@@ -7656,7 +7622,7 @@ proc normalize_modulo
 	local	1,000000,modulo
 	local	2,000000,mod
 	declend
-	line	685
+	line	684
 	colm	11
 	mark	L1
 	mark	L2
@@ -7664,26 +7630,26 @@ proc normalize_modulo
 	var	2
 	pnull
 	var	0
-	line	686
+	line	685
 	colm	22
 	field	item
 	pnull
 	var	0
-	line	686
+	line	685
 	colm	30
 	field	modulus
-	line	686
+	line	685
 	colm	20
 	invoke	2
 	pnull
 	var	0
-	line	686
+	line	685
 	colm	42
 	field	modulus
-	line	686
+	line	685
 	colm	16
 	invoke	2
-	line	686
+	line	685
 	colm	3
 	pret
 lab L2
@@ -7691,7 +7657,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	687
+	line	686
 	colm	1
 	pfail
 	end
@@ -7699,25 +7665,25 @@ proc deg_modulo
 	local	0,001000,x
 	local	1,000000,mod
 	declend
-	line	690
+	line	689
 	colm	11
 	mark	L1
 	mark	L2
 	var	1
 	pnull
 	var	0
-	line	691
+	line	690
 	colm	15
 	field	item
 	pnull
 	var	0
-	line	691
+	line	690
 	colm	23
 	field	modulus
-	line	691
+	line	690
 	colm	13
 	invoke	2
-	line	691
+	line	690
 	colm	3
 	pret
 lab L2
@@ -7725,7 +7691,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	692
+	line	691
 	colm	1
 	pfail
 	end
@@ -7735,7 +7701,7 @@ proc equal_modulo
 	local	2,000000,equal
 	local	3,000000,mod
 	declend
-	line	695
+	line	694
 	colm	11
 	mark	L1
 	mark	L2
@@ -7743,35 +7709,35 @@ proc equal_modulo
 	var	3
 	pnull
 	var	0
-	line	696
+	line	695
 	colm	22
 	field	item
 	pnull
 	var	0
-	line	696
+	line	695
 	colm	30
 	field	modulus
-	line	696
+	line	695
 	colm	20
 	invoke	2
 	var	3
 	pnull
 	var	1
-	line	696
+	line	695
 	colm	46
 	field	item
 	pnull
 	var	1
-	line	696
+	line	695
 	colm	54
 	field	modulus
-	line	696
+	line	695
 	colm	44
 	invoke	2
-	line	696
+	line	695
 	colm	16
 	invoke	2
-	line	696
+	line	695
 	colm	3
 	pret
 lab L2
@@ -7779,7 +7745,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	697
+	line	696
 	colm	1
 	pfail
 	end
@@ -7788,7 +7754,7 @@ proc unit_modulo
 	local	1,000000,equal
 	con	0,002000,1,1
 	declend
-	line	700
+	line	699
 	colm	11
 	mark	L1
 	mark	L2
@@ -7796,22 +7762,22 @@ proc unit_modulo
 	pnull
 	pnull
 	var	0
-	line	701
+	line	700
 	colm	18
 	field	item
 	pnull
 	var	0
-	line	701
+	line	700
 	colm	27
 	field	modulus
-	line	701
+	line	700
 	colm	24
 	mod
 	int	0
-	line	701
+	line	700
 	colm	16
 	invoke	2
-	line	701
+	line	700
 	colm	3
 	pret
 lab L2
@@ -7819,23 +7785,23 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	702
+	line	701
 	colm	1
 	pfail
 	end
 proc negative_modulo
 	local	0,001000,a
 	declend
-	line	705
+	line	704
 	colm	11
 	mark	L1
-	line	706
+	line	705
 	colm	3
 	pfail
 	unmark
 lab L1
 	pnull
-	line	707
+	line	706
 	colm	1
 	pfail
 	end
@@ -7846,7 +7812,7 @@ proc print_modulo
 	con	1,010000,5,040,155,157,144,040
 	con	2,010000,1,051
 	declend
-	line	710
+	line	709
 	colm	11
 	mark	L1
 	var	1
@@ -7856,7 +7822,7 @@ lab L2
 	pop
 	mark	L3
 	str	0
-	line	711
+	line	710
 	colm	7
 	coret
 	efail
@@ -7871,10 +7837,10 @@ lab L5
 	mark	L6
 	pnull
 	var	0
-	line	711
+	line	710
 	colm	13
 	field	item
-	line	711
+	line	710
 	colm	10
 	coret
 	efail
@@ -7888,7 +7854,7 @@ lab L8
 	pop
 	mark	L9
 	str	1
-	line	711
+	line	710
 	colm	18
 	coret
 	efail
@@ -7903,10 +7869,10 @@ lab L11
 	mark	L12
 	pnull
 	var	0
-	line	711
+	line	710
 	colm	30
 	field	modulus
-	line	711
+	line	710
 	colm	27
 	coret
 	efail
@@ -7920,7 +7886,7 @@ lab L14
 	pop
 	mark	L15
 	str	2
-	line	711
+	line	710
 	colm	38
 	coret
 	efail
@@ -7929,14 +7895,14 @@ lab L15
 	goto	L15
 lab L16
 	create	L14
-	line	711
+	line	710
 	colm	6
 	llist	5
 	invoke	1
 	unmark
 lab L1
 	pnull
-	line	712
+	line	711
 	colm	1
 	pfail
 	end
@@ -7946,7 +7912,7 @@ proc poly_of
 	local	2,000000,term
 	con	0,002000,1,0
 	declend
-	line	720
+	line	719
 	colm	11
 	mark	L1
 	mark	L2
@@ -7955,16 +7921,16 @@ proc poly_of
 	var	2
 	var	0
 	int	0
-	line	721
+	line	720
 	colm	20
 	invoke	2
-	line	721
+	line	720
 	colm	15
 	llist	1
-	line	721
+	line	720
 	colm	14
 	invoke	1
-	line	721
+	line	720
 	colm	3
 	pret
 lab L2
@@ -7972,7 +7938,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	722
+	line	721
 	colm	1
 	pfail
 	end
@@ -7983,7 +7949,7 @@ proc zeroth_coef
 	con	0,002000,1,1
 	con	1,002000,1,0
 	declend
-	line	726
+	line	725
 	colm	11
 	mark	L1
 	pnull
@@ -7991,14 +7957,14 @@ proc zeroth_coef
 	pnull
 	pnull
 	var	0
-	line	728
+	line	727
 	colm	10
 	field	terms
 	int	0
-	line	728
+	line	727
 	colm	16
 	subsc
-	line	728
+	line	727
 	colm	5
 	asgn
 	unmark
@@ -8009,17 +7975,17 @@ lab L1
 	pnull
 	pnull
 	var	1
-	line	729
+	line	728
 	colm	15
 	field	power
 	int	1
-	line	729
+	line	728
 	colm	22
 	numeq
 	unmark
 	pnull
 	var	1
-	line	729
+	line	728
 	colm	32
 	field	coef
 	goto	L5
@@ -8027,14 +7993,14 @@ lab L4
 	var	2
 	pnull
 	var	1
-	line	729
+	line	728
 	colm	49
 	field	coef
-	line	729
+	line	728
 	colm	47
 	invoke	1
 lab L5
-	line	729
+	line	728
 	colm	3
 	pret
 lab L3
@@ -8042,14 +8008,14 @@ lab L3
 	unmark
 lab L2
 	pnull
-	line	730
+	line	729
 	colm	1
 	pfail
 	end
 proc lead_coef
 	local	0,001000,ax
 	declend
-	line	733
+	line	732
 	colm	11
 	mark	L1
 	mark	L2
@@ -8057,25 +8023,25 @@ proc lead_coef
 	pnull
 	pnull
 	var	0
-	line	734
+	line	733
 	colm	13
 	field	terms
 	pnull
 	pnull
 	var	0
-	line	734
+	line	733
 	colm	23
 	field	terms
-	line	734
+	line	733
 	colm	20
 	size
-	line	734
+	line	733
 	colm	19
 	subsc
-	line	734
+	line	733
 	colm	31
 	field	coef
-	line	734
+	line	733
 	colm	3
 	pret
 lab L2
@@ -8083,7 +8049,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	735
+	line	734
 	colm	1
 	pfail
 	end
@@ -8096,7 +8062,7 @@ proc zero_poly
 	con	0,002000,1,1
 	con	1,002000,1,0
 	declend
-	line	738
+	line	737
 	colm	11
 	mark	L1
 	pnull
@@ -8106,20 +8072,20 @@ proc zero_poly
 	pnull
 	pnull
 	var	0
-	line	740
+	line	739
 	colm	14
 	field	terms
 	int	0
-	line	740
+	line	739
 	colm	20
 	subsc
-	line	740
+	line	739
 	colm	23
 	field	coef
-	line	740
+	line	739
 	colm	12
 	invoke	1
-	line	740
+	line	739
 	colm	5
 	asgn
 	unmark
@@ -8131,16 +8097,16 @@ lab L1
 	var	4
 	var	1
 	int	1
-	line	741
+	line	740
 	colm	20
 	invoke	2
-	line	741
+	line	740
 	colm	15
 	llist	1
-	line	741
+	line	740
 	colm	14
 	invoke	1
-	line	741
+	line	740
 	colm	3
 	pret
 lab L3
@@ -8148,7 +8114,7 @@ lab L3
 	unmark
 lab L2
 	pnull
-	line	742
+	line	741
 	colm	1
 	pfail
 	end
@@ -8161,7 +8127,7 @@ proc one_poly
 	con	0,002000,1,1
 	con	1,002000,1,0
 	declend
-	line	745
+	line	744
 	colm	11
 	mark	L1
 	pnull
@@ -8171,20 +8137,20 @@ proc one_poly
 	pnull
 	pnull
 	var	0
-	line	747
+	line	746
 	colm	13
 	field	terms
 	int	0
-	line	747
+	line	746
 	colm	19
 	subsc
-	line	747
+	line	746
 	colm	22
 	field	coef
-	line	747
+	line	746
 	colm	11
 	invoke	1
-	line	747
+	line	746
 	colm	5
 	asgn
 	unmark
@@ -8196,16 +8162,16 @@ lab L1
 	var	4
 	var	1
 	int	1
-	line	748
+	line	747
 	colm	20
 	invoke	2
-	line	748
+	line	747
 	colm	15
 	llist	1
-	line	748
+	line	747
 	colm	14
 	invoke	1
-	line	748
+	line	747
 	colm	3
 	pret
 lab L3
@@ -8213,7 +8179,7 @@ lab L3
 	unmark
 lab L2
 	pnull
-	line	749
+	line	748
 	colm	1
 	pfail
 	end
@@ -8224,17 +8190,17 @@ proc k_Z_Q
 	local	3,000000,Q
 	local	4,000000,one_Z
 	declend
-	line	752
+	line	751
 	colm	11
 	mark	L1
 	pnull
 	var	1
 	var	2
 	var	0
-	line	753
+	line	752
 	colm	13
 	invoke	1
-	line	753
+	line	752
 	colm	7
 	asgn
 	unmark
@@ -8245,13 +8211,13 @@ lab L1
 	var	1
 	var	4
 	var	1
-	line	754
+	line	753
 	colm	22
 	invoke	1
-	line	754
+	line	753
 	colm	11
 	invoke	2
-	line	754
+	line	753
 	colm	3
 	pret
 lab L3
@@ -8259,7 +8225,7 @@ lab L3
 	unmark
 lab L2
 	pnull
-	line	755
+	line	754
 	colm	1
 	pfail
 	end
@@ -8269,21 +8235,21 @@ proc k_Z_Qx
 	local	2,000000,term
 	local	3,000000,k_Z_Q
 	declend
-	line	758
+	line	757
 	colm	11
 	mark	L1
 	mark	L2
 	var	2
 	var	3
 	var	0
-	line	759
+	line	758
 	colm	20
 	invoke	1
 	var	1
-	line	759
+	line	758
 	colm	14
 	invoke	2
-	line	759
+	line	758
 	colm	3
 	pret
 lab L2
@@ -8291,7 +8257,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	760
+	line	759
 	colm	1
 	pfail
 	end
@@ -8301,21 +8267,21 @@ proc k_Z_x
 	local	2,000000,term
 	local	3,000000,k_Z
 	declend
-	line	763
+	line	762
 	colm	11
 	mark	L1
 	mark	L2
 	var	2
 	var	3
 	var	0
-	line	764
+	line	763
 	colm	18
 	invoke	1
 	var	1
-	line	764
+	line	763
 	colm	14
 	invoke	2
-	line	764
+	line	763
 	colm	3
 	pret
 lab L2
@@ -8323,7 +8289,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	765
+	line	764
 	colm	1
 	pfail
 	end
@@ -8342,7 +8308,7 @@ proc plus_poly
 	con	0,002000,1,1
 	con	1,002000,1,0
 	declend
-	line	768
+	line	767
 	colm	11
 	mark	L1
 	pnull
@@ -8350,18 +8316,18 @@ proc plus_poly
 	var	5
 	pnull
 	var	0
-	line	770
+	line	769
 	colm	24
 	field	terms
 	pnull
 	var	1
-	line	770
+	line	769
 	colm	33
 	field	terms
-	line	770
+	line	769
 	colm	22
 	invoke	2
-	line	770
+	line	769
 	colm	9
 	asgn
 	unmark
@@ -8370,10 +8336,10 @@ lab L1
 	pnull
 	var	3
 	pnull
-	line	771
+	line	770
 	colm	8
 	llist	0
-	line	771
+	line	770
 	colm	5
 	asgn
 	unmark
@@ -8386,20 +8352,20 @@ lab L2
 	pnull
 	pnull
 	var	0
-	line	771
+	line	770
 	colm	23
 	field	terms
 	int	0
-	line	771
+	line	770
 	colm	29
 	subsc
-	line	771
+	line	770
 	colm	32
 	field	coef
-	line	771
+	line	770
 	colm	21
 	invoke	1
-	line	771
+	line	770
 	colm	14
 	asgn
 	unmark
@@ -8410,10 +8376,10 @@ lab L3
 	var	7
 	pnull
 	var	2
-	line	772
+	line	771
 	colm	14
 	bang
-	line	772
+	line	771
 	colm	11
 	asgn
 	pop
@@ -8423,11 +8389,11 @@ lab L3
 	var	8
 	pnull
 	var	7
-	line	772
+	line	771
 	colm	38
 	field	coef
 	var	4
-	line	772
+	line	771
 	colm	36
 	invoke	2
 	unmark
@@ -8441,13 +8407,13 @@ lab L7
 	var	3
 	pnull
 	var	7
-	line	772
+	line	771
 	colm	69
 	llist	1
-	line	772
+	line	771
 	colm	65
 	invoke	2
-	line	772
+	line	771
 	colm	55
 	asgn
 	unmark
@@ -8462,28 +8428,28 @@ lab L4
 	pnull
 	pnull
 	var	3
-	line	773
+	line	772
 	colm	14
 	size
 	int	1
-	line	773
+	line	772
 	colm	17
 	numgt
 	unmark
 	var	10
 	var	3
-	line	773
+	line	772
 	colm	30
 	invoke	1
 	goto	L11
 lab L10
 	var	6
 	var	0
-	line	773
+	line	772
 	colm	43
 	invoke	1
 lab L11
-	line	773
+	line	772
 	colm	3
 	pret
 lab L9
@@ -8491,7 +8457,7 @@ lab L9
 	unmark
 lab L8
 	pnull
-	line	774
+	line	773
 	colm	1
 	pfail
 	end
@@ -8516,7 +8482,7 @@ proc plus_terms
 	con	0,002000,1,0
 	con	1,002000,1,1
 	declend
-	line	777
+	line	776
 	colm	11
 	mark	L1
 	mark	L2
@@ -8524,11 +8490,11 @@ proc plus_terms
 	pnull
 	pnull
 	var	0
-	line	780
+	line	779
 	colm	6
 	size
 	int	0
-	line	780
+	line	779
 	colm	9
 	numeq
 	unmark
@@ -8539,11 +8505,11 @@ lab L3
 	pnull
 	pnull
 	var	1
-	line	781
+	line	780
 	colm	11
 	size
 	int	0
-	line	781
+	line	780
 	colm	14
 	numeq
 	unmark
@@ -8556,10 +8522,10 @@ lab L5
 	pnull
 	var	0
 	int	1
-	line	783
+	line	782
 	colm	10
 	subsc
-	line	783
+	line	782
 	colm	6
 	asgn
 	unmark
@@ -8569,10 +8535,10 @@ lab L7
 	var	4
 	pnull
 	var	3
-	line	783
+	line	782
 	colm	23
 	field	power
-	line	783
+	line	782
 	colm	18
 	asgn
 	unmark
@@ -8582,10 +8548,10 @@ lab L8
 	var	5
 	pnull
 	var	3
-	line	783
+	line	782
 	colm	39
 	field	coef
-	line	783
+	line	782
 	colm	34
 	asgn
 	unmark
@@ -8596,10 +8562,10 @@ lab L9
 	pnull
 	var	1
 	int	1
-	line	784
+	line	783
 	colm	10
 	subsc
-	line	784
+	line	783
 	colm	6
 	asgn
 	unmark
@@ -8609,10 +8575,10 @@ lab L10
 	var	7
 	pnull
 	var	6
-	line	784
+	line	783
 	colm	23
 	field	power
-	line	784
+	line	783
 	colm	18
 	asgn
 	unmark
@@ -8622,10 +8588,10 @@ lab L11
 	var	8
 	pnull
 	var	6
-	line	784
+	line	783
 	colm	39
 	field	coef
-	line	784
+	line	783
 	colm	34
 	asgn
 	unmark
@@ -8634,7 +8600,7 @@ lab L12
 	var	9
 	var	4
 	var	7
-	line	785
+	line	784
 	colm	10
 	invoke	2
 	unmark
@@ -8643,21 +8609,21 @@ lab L12
 	var	5
 	var	11
 	var	5
-	line	787
+	line	786
 	colm	20
 	invoke	1
-	line	787
+	line	786
 	colm	11
 	invoke	2
 	unmark
 	var	12
 	var	13
 	var	0
-	line	788
+	line	787
 	colm	23
 	invoke	1
 	var	1
-	line	788
+	line	787
 	colm	18
 	invoke	2
 	goto	L16
@@ -8665,20 +8631,20 @@ lab L15
 	var	14
 	pnull
 	var	3
-	line	789
+	line	788
 	colm	16
 	llist	1
 	var	12
 	var	13
 	var	0
-	line	789
+	line	788
 	colm	37
 	invoke	1
 	var	1
-	line	789
+	line	788
 	colm	32
 	invoke	2
-	line	789
+	line	788
 	colm	15
 	invoke	2
 lab L16
@@ -8688,7 +8654,7 @@ lab L13
 	var	10
 	var	4
 	var	7
-	line	790
+	line	789
 	colm	16
 	invoke	2
 	unmark
@@ -8698,10 +8664,10 @@ lab L13
 	var	15
 	var	5
 	var	8
-	line	792
+	line	791
 	colm	17
 	invoke	2
-	line	792
+	line	791
 	colm	10
 	asgn
 	unmark
@@ -8711,25 +8677,25 @@ lab L19
 	var	2
 	var	11
 	var	2
-	line	793
+	line	792
 	colm	24
 	invoke	1
-	line	793
+	line	792
 	colm	11
 	invoke	2
 	unmark
 	var	12
 	var	13
 	var	0
-	line	794
+	line	793
 	colm	23
 	invoke	1
 	var	13
 	var	1
-	line	794
+	line	793
 	colm	32
 	invoke	1
-	line	794
+	line	793
 	colm	18
 	invoke	2
 	goto	L21
@@ -8739,27 +8705,27 @@ lab L20
 	var	16
 	var	2
 	var	4
-	line	795
+	line	794
 	colm	21
 	invoke	2
-	line	795
+	line	794
 	colm	16
 	llist	1
 	var	12
 	var	13
 	var	0
-	line	795
+	line	794
 	colm	51
 	invoke	1
 	var	13
 	var	1
-	line	795
+	line	794
 	colm	60
 	invoke	1
-	line	795
+	line	794
 	colm	46
 	invoke	2
-	line	795
+	line	794
 	colm	15
 	invoke	2
 lab L21
@@ -8768,14 +8734,14 @@ lab L17
 	var	12
 	var	1
 	var	0
-	line	796
+	line	795
 	colm	18
 	invoke	2
 lab L18
 lab L14
 lab L6
 lab L4
-	line	779
+	line	778
 	colm	3
 	pret
 lab L2
@@ -8783,7 +8749,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	798
+	line	797
 	colm	1
 	pfail
 	end
@@ -8795,16 +8761,16 @@ proc minus_poly
 	local	4,000000,minus_term
 	local	5,000000,poly
 	declend
-	line	801
+	line	800
 	colm	11
 	mark	L1
 	pnull
 	var	1
 	pnull
-	line	803
+	line	802
 	colm	8
 	llist	0
-	line	803
+	line	802
 	colm	5
 	asgn
 	unmark
@@ -8816,13 +8782,13 @@ lab L1
 	pnull
 	pnull
 	var	0
-	line	804
+	line	803
 	colm	16
 	field	terms
-	line	804
+	line	803
 	colm	14
 	bang
-	line	804
+	line	803
 	colm	11
 	asgn
 	pop
@@ -8834,16 +8800,16 @@ lab L1
 	pnull
 	var	4
 	var	2
-	line	804
+	line	803
 	colm	53
 	invoke	1
-	line	804
+	line	803
 	colm	42
 	llist	1
-	line	804
+	line	803
 	colm	38
 	invoke	2
-	line	804
+	line	803
 	colm	28
 	asgn
 	unmark
@@ -8856,10 +8822,10 @@ lab L2
 	mark	L6
 	var	5
 	var	1
-	line	805
+	line	804
 	colm	14
 	invoke	1
-	line	805
+	line	804
 	colm	3
 	pret
 lab L6
@@ -8867,7 +8833,7 @@ lab L6
 	unmark
 lab L5
 	pnull
-	line	806
+	line	805
 	colm	1
 	pfail
 	end
@@ -8876,7 +8842,7 @@ proc minus_term
 	local	1,000000,term
 	local	2,000000,minus
 	declend
-	line	809
+	line	808
 	colm	11
 	mark	L1
 	mark	L2
@@ -8884,21 +8850,21 @@ proc minus_term
 	var	2
 	pnull
 	var	0
-	line	810
+	line	809
 	colm	22
 	field	coef
-	line	810
+	line	809
 	colm	20
 	invoke	1
 	pnull
 	var	0
-	line	810
+	line	809
 	colm	31
 	field	power
-	line	810
+	line	809
 	colm	14
 	invoke	2
-	line	810
+	line	809
 	colm	3
 	pret
 lab L2
@@ -8906,7 +8872,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	811
+	line	810
 	colm	1
 	pfail
 	end
@@ -8915,7 +8881,7 @@ proc times_poly
 	local	1,001000,b
 	local	2,000000,times_poly_terms
 	declend
-	line	814
+	line	813
 	colm	11
 	mark	L1
 	mark	L2
@@ -8923,13 +8889,13 @@ proc times_poly
 	var	0
 	pnull
 	var	1
-	line	815
+	line	814
 	colm	31
 	field	terms
-	line	815
+	line	814
 	colm	26
 	invoke	2
-	line	815
+	line	814
 	colm	3
 	pret
 lab L2
@@ -8937,7 +8903,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	816
+	line	815
 	colm	1
 	pfail
 	end
@@ -8952,7 +8918,7 @@ proc times_poly_terms
 	con	0,002000,1,0
 	con	1,002000,1,1
 	declend
-	line	819
+	line	818
 	colm	11
 	mark	L1
 	mark	L2
@@ -8960,17 +8926,17 @@ proc times_poly_terms
 	pnull
 	pnull
 	var	1
-	line	820
+	line	819
 	colm	14
 	size
 	int	0
-	line	820
+	line	819
 	colm	23
 	numeq
 	unmark
 	var	2
 	var	0
-	line	820
+	line	819
 	colm	36
 	invoke	1
 	goto	L4
@@ -8981,27 +8947,27 @@ lab L3
 	pnull
 	var	1
 	int	1
-	line	821
+	line	820
 	colm	44
 	subsc
-	line	821
+	line	820
 	colm	33
 	invoke	2
 	var	5
 	var	0
 	var	6
 	var	1
-	line	822
+	line	821
 	colm	27
 	invoke	1
-	line	822
+	line	821
 	colm	19
 	invoke	2
-	line	821
+	line	820
 	colm	17
 	invoke	2
 lab L4
-	line	820
+	line	819
 	colm	3
 	pret
 lab L2
@@ -9009,7 +8975,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	823
+	line	822
 	colm	1
 	pfail
 	end
@@ -9024,7 +8990,7 @@ proc times_poly_term
 	con	0,002000,1,2
 	con	1,002000,1,1
 	declend
-	line	826
+	line	825
 	colm	11
 	mark	L1
 	mark	L2
@@ -9033,14 +8999,14 @@ proc times_poly_term
 	pnull
 	pnull
 	var	0
-	line	827
+	line	826
 	colm	16
 	field	terms
-	line	827
+	line	826
 	colm	14
 	size
 	int	0
-	line	827
+	line	826
 	colm	23
 	numlt
 	unmark
@@ -9050,21 +9016,21 @@ proc times_poly_term
 	pnull
 	pnull
 	var	0
-	line	828
+	line	827
 	colm	31
 	field	terms
 	int	1
-	line	828
+	line	827
 	colm	37
 	subsc
 	var	1
-	line	828
+	line	827
 	colm	29
 	invoke	2
-	line	828
+	line	827
 	colm	13
 	llist	1
-	line	828
+	line	827
 	colm	12
 	invoke	1
 	goto	L4
@@ -9076,21 +9042,21 @@ lab L3
 	pnull
 	pnull
 	var	0
-	line	829
+	line	828
 	colm	41
 	field	terms
 	int	1
-	line	829
+	line	828
 	colm	47
 	subsc
 	var	1
-	line	829
+	line	828
 	colm	39
 	invoke	2
-	line	829
+	line	828
 	colm	23
 	llist	1
-	line	829
+	line	828
 	colm	22
 	invoke	1
 	var	5
@@ -9098,24 +9064,24 @@ lab L3
 	var	6
 	pnull
 	var	0
-	line	830
+	line	829
 	colm	30
 	field	terms
-	line	830
+	line	829
 	colm	28
 	invoke	1
-	line	830
+	line	829
 	colm	23
 	invoke	1
 	var	1
-	line	830
+	line	829
 	colm	18
 	invoke	2
-	line	829
+	line	828
 	colm	17
 	invoke	2
 lab L4
-	line	827
+	line	826
 	colm	3
 	pret
 lab L2
@@ -9123,7 +9089,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	831
+	line	830
 	colm	1
 	pfail
 	end
@@ -9133,7 +9099,7 @@ proc times_term_term
 	local	2,000000,term
 	local	3,000000,times
 	declend
-	line	834
+	line	833
 	colm	11
 	mark	L1
 	mark	L2
@@ -9141,35 +9107,35 @@ proc times_term_term
 	var	3
 	pnull
 	var	0
-	line	835
+	line	834
 	colm	27
 	field	coef
 	pnull
 	var	1
-	line	835
+	line	834
 	colm	40
 	field	coef
-	line	835
+	line	834
 	colm	20
 	invoke	2
 	pnull
 	pnull
 	var	0
-	line	835
+	line	834
 	colm	54
 	field	power
 	pnull
 	var	1
-	line	835
+	line	834
 	colm	69
 	field	power
-	line	835
+	line	834
 	colm	61
 	plus
-	line	835
+	line	834
 	colm	14
 	invoke	2
-	line	835
+	line	834
 	colm	3
 	pret
 lab L2
@@ -9177,7 +9143,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	836
+	line	835
 	colm	1
 	pfail
 	end
@@ -9203,17 +9169,17 @@ proc div_poly
 	local	18,000000,times_poly
 	con	0,002000,1,0
 	declend
-	line	839
+	line	838
 	colm	11
 	mark	L1
 	pnull
 	var	2
 	var	7
 	var	1
-	line	841
+	line	840
 	colm	16
 	invoke	1
-	line	841
+	line	840
 	colm	5
 	asgn
 	unmark
@@ -9223,10 +9189,10 @@ lab L1
 	var	4
 	var	8
 	var	0
-	line	842
+	line	841
 	colm	12
 	invoke	1
-	line	842
+	line	841
 	colm	5
 	asgn
 	unmark
@@ -9236,10 +9202,10 @@ lab L2
 	var	6
 	var	9
 	var	4
-	line	843
+	line	842
 	colm	24
 	invoke	1
-	line	843
+	line	842
 	colm	12
 	asgn
 	unmark
@@ -9252,10 +9218,10 @@ lab L5
 	var	3
 	var	7
 	var	4
-	line	845
+	line	844
 	colm	16
 	invoke	1
-	line	845
+	line	844
 	colm	5
 	asgn
 	unmark
@@ -9264,13 +9230,13 @@ lab L8
 	var	10
 	var	3
 	var	2
-	line	846
+	line	845
 	colm	17
 	invoke	2
 	unmark
 	mark	L11
 	var	6
-	line	847
+	line	846
 	colm	8
 	pret
 lab L11
@@ -9286,33 +9252,33 @@ lab L9
 	var	13
 	var	14
 	var	4
-	line	848
+	line	847
 	colm	39
 	invoke	1
 	var	14
 	var	1
-	line	848
+	line	847
 	colm	53
 	invoke	1
-	line	848
+	line	847
 	colm	29
 	invoke	2
 	pnull
 	var	3
 	var	2
-	line	848
+	line	847
 	colm	61
 	minus
-	line	848
+	line	847
 	colm	25
 	invoke	2
-	line	848
+	line	847
 	colm	20
 	llist	1
-	line	848
+	line	847
 	colm	19
 	invoke	1
-	line	848
+	line	847
 	colm	12
 	asgn
 	unmark
@@ -9321,7 +9287,7 @@ lab L12
 	pnull
 	var	3
 	int	0
-	line	849
+	line	848
 	colm	8
 	numeq
 	unmark
@@ -9329,10 +9295,10 @@ lab L12
 	var	15
 	var	6
 	var	5
-	line	850
+	line	849
 	colm	24
 	invoke	2
-	line	850
+	line	849
 	colm	8
 	pret
 lab L15
@@ -9346,13 +9312,13 @@ lab L13
 	var	18
 	var	5
 	var	1
-	line	851
+	line	850
 	colm	45
 	invoke	2
-	line	851
+	line	850
 	colm	34
 	invoke	1
-	line	851
+	line	850
 	colm	21
 	asgn
 	unmark
@@ -9363,10 +9329,10 @@ lab L16
 	var	15
 	var	4
 	var	16
-	line	852
+	line	851
 	colm	17
 	invoke	2
-	line	852
+	line	851
 	colm	5
 	asgn
 	unmark
@@ -9376,10 +9342,10 @@ lab L17
 	var	15
 	var	6
 	var	5
-	line	853
+	line	852
 	colm	24
 	invoke	2
-	line	853
+	line	852
 	colm	12
 	asgn
 lab L14
@@ -9391,7 +9357,7 @@ lab L7
 	unmark
 lab L4
 	pnull
-	line	854
+	line	853
 	colm	1
 	pfail
 	end
@@ -9402,7 +9368,7 @@ proc mod_poly
 	local	3,000000,times
 	local	4,000000,div
 	declend
-	line	857
+	line	856
 	colm	11
 	mark	L1
 	mark	L2
@@ -9413,16 +9379,16 @@ proc mod_poly
 	var	4
 	var	0
 	var	1
-	line	858
+	line	857
 	colm	32
 	invoke	2
-	line	858
+	line	857
 	colm	25
 	invoke	2
-	line	858
+	line	857
 	colm	16
 	invoke	2
-	line	858
+	line	857
 	colm	3
 	pret
 lab L2
@@ -9430,7 +9396,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	859
+	line	858
 	colm	1
 	pfail
 	end
@@ -9443,17 +9409,17 @@ proc eval_poly
 	local	5,000000,plus
 	local	6,000000,eval_term
 	declend
-	line	862
+	line	861
 	colm	11
 	mark	L1
 	pnull
 	var	2
 	var	3
 	var	1
-	line	864
+	line	863
 	colm	12
 	invoke	1
-	line	864
+	line	863
 	colm	5
 	asgn
 	unmark
@@ -9465,13 +9431,13 @@ lab L1
 	pnull
 	pnull
 	var	0
-	line	865
+	line	864
 	colm	17
 	field	terms
-	line	865
+	line	864
 	colm	14
 	bang
-	line	865
+	line	864
 	colm	11
 	asgn
 	pop
@@ -9483,13 +9449,13 @@ lab L1
 	var	6
 	var	4
 	var	1
-	line	865
+	line	864
 	colm	49
 	invoke	2
-	line	865
+	line	864
 	colm	36
 	invoke	2
-	line	865
+	line	864
 	colm	29
 	asgn
 	unmark
@@ -9501,7 +9467,7 @@ lab L2
 	mark	L5
 	mark	L6
 	var	2
-	line	866
+	line	865
 	colm	3
 	pret
 lab L6
@@ -9509,7 +9475,7 @@ lab L6
 	unmark
 lab L5
 	pnull
-	line	867
+	line	866
 	colm	1
 	pfail
 	end
@@ -9519,30 +9485,30 @@ proc eval_term
 	local	2,000000,times
 	local	3,000000,exp
 	declend
-	line	870
+	line	869
 	colm	11
 	mark	L1
 	mark	L2
 	var	2
 	pnull
 	var	0
-	line	871
+	line	870
 	colm	17
 	field	coef
 	var	3
 	var	1
 	pnull
 	var	0
-	line	871
+	line	870
 	colm	32
 	field	power
-	line	871
+	line	870
 	colm	27
 	invoke	2
-	line	871
+	line	870
 	colm	15
 	invoke	2
-	line	871
+	line	870
 	colm	3
 	pret
 lab L2
@@ -9550,7 +9516,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	872
+	line	871
 	colm	1
 	pfail
 	end
@@ -9560,7 +9526,7 @@ proc deg_poly
 	local	2,000000,zero_poly
 	con	0,010000,10,055,040,151,156,146,151,156,151,164,171
 	declend
-	line	875
+	line	874
 	colm	11
 	mark	L1
 	mark	L2
@@ -9568,16 +9534,16 @@ proc deg_poly
 	var	0
 	var	2
 	var	0
-	line	876
+	line	875
 	colm	29
 	invoke	1
-	line	876
+	line	875
 	colm	16
 	invoke	2
 	unmark
 	mark	L4
 	str	0
-	line	876
+	line	875
 	colm	39
 	pret
 lab L4
@@ -9589,25 +9555,25 @@ lab L2
 	pnull
 	pnull
 	var	0
-	line	877
+	line	876
 	colm	16
 	field	terms
 	pnull
 	pnull
 	var	0
-	line	877
+	line	876
 	colm	25
 	field	terms
-	line	877
+	line	876
 	colm	23
 	size
-	line	877
+	line	876
 	colm	22
 	subsc
-	line	877
+	line	876
 	colm	32
 	field	power
-	line	877
+	line	876
 	colm	8
 	pret
 lab L5
@@ -9616,7 +9582,7 @@ lab L3
 	unmark
 lab L1
 	pnull
-	line	878
+	line	877
 	colm	1
 	pfail
 	end
@@ -9626,7 +9592,7 @@ proc minus_deg
 	local	2,000000,type
 	con	0,010000,6,163,164,162,151,156,147
 	declend
-	line	881
+	line	880
 	colm	11
 	mark	L1
 	mark	L2
@@ -9634,11 +9600,11 @@ proc minus_deg
 	pnull
 	var	2
 	var	0
-	line	883
+	line	882
 	colm	10
 	invoke	1
 	str	0
-	line	883
+	line	882
 	colm	14
 	lexeq
 	unmark
@@ -9649,11 +9615,11 @@ lab L3
 	pnull
 	var	2
 	var	1
-	line	884
+	line	883
 	colm	15
 	invoke	1
 	str	0
-	line	884
+	line	883
 	colm	19
 	lexeq
 	unmark
@@ -9663,12 +9629,12 @@ lab L5
 	pnull
 	var	0
 	var	1
-	line	885
+	line	884
 	colm	10
 	minus
 lab L6
 lab L4
-	line	882
+	line	881
 	colm	3
 	pret
 lab L2
@@ -9676,7 +9642,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	886
+	line	885
 	colm	1
 	pfail
 	end
@@ -9686,7 +9652,7 @@ proc plus_deg
 	local	2,000000,type
 	con	0,010000,6,163,164,162,151,156,147
 	declend
-	line	889
+	line	888
 	colm	11
 	mark	L1
 	mark	L2
@@ -9694,11 +9660,11 @@ proc plus_deg
 	pnull
 	var	2
 	var	0
-	line	891
+	line	890
 	colm	10
 	invoke	1
 	str	0
-	line	891
+	line	890
 	colm	14
 	lexeq
 	unmark
@@ -9709,11 +9675,11 @@ lab L3
 	pnull
 	var	2
 	var	1
-	line	892
+	line	891
 	colm	15
 	invoke	1
 	str	0
-	line	892
+	line	891
 	colm	19
 	lexeq
 	unmark
@@ -9723,12 +9689,12 @@ lab L5
 	pnull
 	var	0
 	var	1
-	line	893
+	line	892
 	colm	10
 	plus
 lab L6
 lab L4
-	line	890
+	line	889
 	colm	3
 	pret
 lab L2
@@ -9736,7 +9702,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	894
+	line	893
 	colm	1
 	pfail
 	end
@@ -9749,16 +9715,16 @@ proc normalize_poly
 	local	5,000000,normalize
 	local	6,000000,poly
 	declend
-	line	897
+	line	896
 	colm	11
 	mark	L1
 	pnull
 	var	1
 	pnull
-	line	899
+	line	898
 	colm	9
 	llist	0
-	line	899
+	line	898
 	colm	6
 	asgn
 	unmark
@@ -9770,13 +9736,13 @@ lab L1
 	pnull
 	pnull
 	var	0
-	line	900
+	line	899
 	colm	16
 	field	terms
-	line	900
+	line	899
 	colm	14
 	bang
-	line	900
+	line	899
 	colm	11
 	asgn
 	pop
@@ -9790,27 +9756,27 @@ lab L1
 	var	5
 	pnull
 	var	2
-	line	900
+	line	899
 	colm	61
 	field	coef
-	line	900
+	line	899
 	colm	59
 	invoke	1
 	pnull
 	var	2
-	line	900
+	line	899
 	colm	70
 	field	power
-	line	900
+	line	899
 	colm	49
 	invoke	2
-	line	900
+	line	899
 	colm	44
 	llist	1
-	line	900
+	line	899
 	colm	39
 	invoke	2
-	line	900
+	line	899
 	colm	29
 	asgn
 	unmark
@@ -9823,10 +9789,10 @@ lab L2
 	mark	L6
 	var	6
 	var	1
-	line	901
+	line	900
 	colm	14
 	invoke	1
-	line	901
+	line	900
 	colm	3
 	pret
 lab L6
@@ -9834,7 +9800,7 @@ lab L6
 	unmark
 lab L5
 	pnull
-	line	902
+	line	901
 	colm	1
 	pfail
 	end
@@ -9844,18 +9810,18 @@ proc less_degree
 	local	2,000000,type
 	con	0,010000,6,163,164,162,151,156,147
 	declend
-	line	905
+	line	904
 	colm	11
 	mark	L1
 	mark	L2
 	pnull
 	var	2
 	var	0
-	line	906
+	line	905
 	colm	10
 	invoke	1
 	str	0
-	line	906
+	line	905
 	colm	14
 	lexeq
 	unmark
@@ -9864,18 +9830,18 @@ proc less_degree
 	pnull
 	var	2
 	var	1
-	line	907
+	line	906
 	colm	23
 	invoke	1
 	str	0
-	line	907
+	line	906
 	colm	27
 	lexeq
 	unmark
 	efail
 lab L5
 	pnull
-	line	907
+	line	906
 	colm	8
 	pret
 lab L4
@@ -9886,10 +9852,10 @@ lab L2
 	pnull
 	var	0
 	var	1
-	line	908
+	line	907
 	colm	17
 	numlt
-	line	908
+	line	907
 	colm	8
 	pret
 lab L6
@@ -9898,7 +9864,7 @@ lab L3
 	unmark
 lab L1
 	pnull
-	line	909
+	line	908
 	colm	1
 	pfail
 	end
@@ -9907,25 +9873,25 @@ proc equal_poly
 	local	1,001000,b
 	local	2,000000,equal_terms
 	declend
-	line	912
+	line	911
 	colm	11
 	mark	L1
 	mark	L2
 	var	2
 	pnull
 	var	0
-	line	913
+	line	912
 	colm	23
 	field	terms
 	pnull
 	var	1
-	line	913
+	line	912
 	colm	32
 	field	terms
-	line	913
+	line	912
 	colm	21
 	invoke	2
-	line	913
+	line	912
 	colm	3
 	pret
 lab L2
@@ -9933,7 +9899,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	914
+	line	913
 	colm	1
 	pfail
 	end
@@ -9946,26 +9912,26 @@ proc equal_terms
 	con	0,002000,1,0
 	con	1,002000,1,1
 	declend
-	line	917
+	line	916
 	colm	11
 	mark	L1
 	mark0
 	pnull
 	pnull
 	var	0
-	line	918
+	line	917
 	colm	6
 	size
 	pnull
 	var	1
-	line	918
+	line	917
 	colm	13
 	size
-	line	918
+	line	917
 	colm	9
 	lexne
 	unmark
-	line	918
+	line	917
 	colm	21
 	pfail
 	unmark
@@ -9975,17 +9941,17 @@ lab L1
 	pnull
 	pnull
 	var	0
-	line	919
+	line	918
 	colm	6
 	size
 	int	0
-	line	919
+	line	918
 	colm	9
 	numeq
 	unmark
 	mark	L3
 	pnull
-	line	919
+	line	918
 	colm	18
 	pret
 lab L3
@@ -9998,16 +9964,16 @@ lab L2
 	pnull
 	var	0
 	int	1
-	line	920
+	line	919
 	colm	18
 	subsc
 	pnull
 	var	1
 	int	1
-	line	920
+	line	919
 	colm	24
 	subsc
-	line	920
+	line	919
 	colm	16
 	invoke	2
 	unmark
@@ -10015,18 +9981,18 @@ lab L2
 	var	3
 	var	4
 	var	0
-	line	920
+	line	919
 	colm	57
 	invoke	1
 	var	4
 	var	1
-	line	920
+	line	919
 	colm	66
 	invoke	1
-	line	920
+	line	919
 	colm	52
 	invoke	2
-	line	920
+	line	919
 	colm	34
 	pret
 lab L5
@@ -10034,7 +10000,7 @@ lab L5
 	unmark
 lab L4
 	pnull
-	line	921
+	line	920
 	colm	1
 	pfail
 	end
@@ -10043,40 +10009,40 @@ proc equal_term
 	local	1,001000,b
 	local	2,000000,equal
 	declend
-	line	924
+	line	923
 	colm	11
 	mark	L1
 	mark	L2
 	var	2
 	pnull
 	var	0
-	line	925
+	line	924
 	colm	18
 	field	coef
 	pnull
 	var	1
-	line	925
+	line	924
 	colm	26
 	field	coef
-	line	925
+	line	924
 	colm	16
 	invoke	2
 	pop
 	var	2
 	pnull
 	var	0
-	line	925
+	line	924
 	colm	42
 	field	power
 	pnull
 	var	1
-	line	925
+	line	924
 	colm	51
 	field	power
-	line	925
+	line	924
 	colm	40
 	invoke	2
-	line	925
+	line	924
 	colm	3
 	pret
 lab L2
@@ -10084,7 +10050,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	926
+	line	925
 	colm	1
 	pfail
 	end
@@ -10094,7 +10060,7 @@ proc unit_poly
 	con	0,002000,1,1
 	con	1,002000,1,0
 	declend
-	line	929
+	line	928
 	colm	11
 	mark	L1
 	mark	L2
@@ -10102,14 +10068,14 @@ proc unit_poly
 	pnull
 	pnull
 	var	0
-	line	930
+	line	929
 	colm	14
 	field	terms
-	line	930
+	line	929
 	colm	12
 	size
 	int	0
-	line	930
+	line	929
 	colm	21
 	numeq
 	pop
@@ -10118,18 +10084,18 @@ proc unit_poly
 	pnull
 	pnull
 	var	0
-	line	930
+	line	929
 	colm	30
 	field	terms
 	int	0
-	line	930
+	line	929
 	colm	36
 	subsc
-	line	930
+	line	929
 	colm	39
 	field	power
 	int	1
-	line	930
+	line	929
 	colm	46
 	numeq
 	pop
@@ -10138,20 +10104,20 @@ proc unit_poly
 	pnull
 	pnull
 	var	0
-	line	930
+	line	929
 	colm	59
 	field	terms
 	int	0
-	line	930
+	line	929
 	colm	65
 	subsc
-	line	930
+	line	929
 	colm	68
 	field	coef
-	line	930
+	line	929
 	colm	57
 	invoke	1
-	line	930
+	line	929
 	colm	3
 	pret
 lab L2
@@ -10159,7 +10125,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	931
+	line	930
 	colm	1
 	pfail
 	end
@@ -10172,21 +10138,21 @@ proc print_poly
 	con	0,002000,1,1
 	con	1,010000,2,053,040
 	declend
-	line	934
+	line	933
 	colm	11
 	mark	L1
 	var	1
 	pnull
 	pnull
 	var	0
-	line	935
+	line	934
 	colm	15
 	field	terms
 	int	0
-	line	935
+	line	934
 	colm	21
 	subsc
-	line	935
+	line	934
 	colm	13
 	invoke	1
 	unmark
@@ -10199,16 +10165,16 @@ lab L1
 	var	3
 	pnull
 	var	0
-	line	936
+	line	935
 	colm	21
 	field	terms
-	line	936
+	line	935
 	colm	19
 	invoke	1
-	line	936
+	line	935
 	colm	14
 	bang
-	line	936
+	line	935
 	colm	11
 	asgn
 	pop
@@ -10216,14 +10182,14 @@ lab L1
 	mark	L5
 	var	4
 	str	1
-	line	936
+	line	935
 	colm	40
 	invoke	1
 	unmark
 lab L5
 	var	1
 	var	2
-	line	936
+	line	935
 	colm	58
 	invoke	1
 	unmark
@@ -10233,7 +10199,7 @@ lab L4
 	unmark
 lab L2
 	pnull
-	line	937
+	line	936
 	colm	1
 	pfail
 	end
@@ -10246,16 +10212,16 @@ proc print_term
 	con	1,010000,2,052,130
 	con	2,010000,3,052,130,136
 	declend
-	line	940
+	line	939
 	colm	11
 	mark	L1
 	var	1
 	pnull
 	var	0
-	line	941
+	line	940
 	colm	10
 	field	coef
-	line	941
+	line	940
 	colm	8
 	invoke	1
 	unmark
@@ -10265,17 +10231,17 @@ lab L1
 	pnull
 	pnull
 	var	0
-	line	942
+	line	941
 	colm	7
 	field	power
 	int	0
-	line	942
+	line	941
 	colm	14
 	numeq
 	unmark
 	var	2
 	str	1
-	line	942
+	line	941
 	colm	29
 	invoke	1
 	goto	L4
@@ -10284,11 +10250,11 @@ lab L3
 	pnull
 	pnull
 	var	0
-	line	943
+	line	942
 	colm	12
 	field	power
 	int	0
-	line	943
+	line	942
 	colm	19
 	numgt
 	unmark
@@ -10299,7 +10265,7 @@ lab L5
 	pop
 	mark	L6
 	str	2
-	line	943
+	line	942
 	colm	32
 	coret
 	efail
@@ -10314,10 +10280,10 @@ lab L8
 	mark	L9
 	pnull
 	var	0
-	line	943
+	line	942
 	colm	40
 	field	power
-	line	943
+	line	942
 	colm	37
 	coret
 	efail
@@ -10326,7 +10292,7 @@ lab L9
 	goto	L9
 lab L10
 	create	L8
-	line	943
+	line	942
 	colm	31
 	llist	2
 	invoke	1
@@ -10334,7 +10300,7 @@ lab L4
 	unmark
 lab L2
 	pnull
-	line	944
+	line	943
 	colm	1
 	pfail
 	end
@@ -10343,7 +10309,7 @@ proc zero_tpower
 	local	1,000000,tpower
 	local	2,000000,zero_poly
 	declend
-	line	949
+	line	948
 	colm	11
 	mark	L1
 	mark	L2
@@ -10351,21 +10317,21 @@ proc zero_tpower
 	var	2
 	pnull
 	var	0
-	line	950
+	line	949
 	colm	28
 	field	Poly
-	line	950
+	line	949
 	colm	26
 	invoke	1
 	pnull
 	var	0
-	line	950
+	line	949
 	colm	37
 	field	N
-	line	950
+	line	949
 	colm	16
 	invoke	2
-	line	950
+	line	949
 	colm	3
 	pret
 lab L2
@@ -10373,7 +10339,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	951
+	line	950
 	colm	1
 	pfail
 	end
@@ -10382,7 +10348,7 @@ proc one_tpower
 	local	1,000000,tpower
 	local	2,000000,one_poly
 	declend
-	line	954
+	line	953
 	colm	11
 	mark	L1
 	mark	L2
@@ -10390,21 +10356,21 @@ proc one_tpower
 	var	2
 	pnull
 	var	0
-	line	955
+	line	954
 	colm	27
 	field	Poly
-	line	955
+	line	954
 	colm	25
 	invoke	1
 	pnull
 	var	0
-	line	955
+	line	954
 	colm	36
 	field	N
-	line	955
+	line	954
 	colm	16
 	invoke	2
-	line	955
+	line	954
 	colm	3
 	pret
 lab L2
@@ -10412,7 +10378,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	956
+	line	955
 	colm	1
 	pfail
 	end
@@ -10422,7 +10388,7 @@ proc plus_tpower
 	local	2,000000,tpower
 	local	3,000000,plus_poly
 	declend
-	line	959
+	line	958
 	colm	11
 	mark	L1
 	mark	L2
@@ -10430,26 +10396,26 @@ proc plus_tpower
 	var	3
 	pnull
 	var	0
-	line	960
+	line	959
 	colm	28
 	field	Poly
 	pnull
 	var	1
-	line	960
+	line	959
 	colm	36
 	field	Poly
-	line	960
+	line	959
 	colm	26
 	invoke	2
 	pnull
 	var	0
-	line	960
+	line	959
 	colm	45
 	field	N
-	line	960
+	line	959
 	colm	16
 	invoke	2
-	line	960
+	line	959
 	colm	3
 	pret
 lab L2
@@ -10457,7 +10423,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	961
+	line	960
 	colm	1
 	pfail
 	end
@@ -10466,7 +10432,7 @@ proc minus_tpower
 	local	1,000000,tpower
 	local	2,000000,minus_poly
 	declend
-	line	964
+	line	963
 	colm	11
 	mark	L1
 	mark	L2
@@ -10474,21 +10440,21 @@ proc minus_tpower
 	var	2
 	pnull
 	var	0
-	line	965
+	line	964
 	colm	29
 	field	Poly
-	line	965
+	line	964
 	colm	27
 	invoke	1
 	pnull
 	var	0
-	line	965
+	line	964
 	colm	38
 	field	N
-	line	965
+	line	964
 	colm	16
 	invoke	2
-	line	965
+	line	964
 	colm	3
 	pret
 lab L2
@@ -10496,7 +10462,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	966
+	line	965
 	colm	1
 	pfail
 	end
@@ -10506,7 +10472,7 @@ proc truncate
 	local	2,000000,poly
 	con	0,002000,1,1
 	declend
-	line	969
+	line	968
 	colm	11
 	mark	L1
 	mark	L2
@@ -10514,23 +10480,23 @@ proc truncate
 	pnull
 	pnull
 	var	0
-	line	970
+	line	969
 	colm	16
 	field	terms
 	int	0
 	pnull
 	var	1
 	int	0
-	line	970
+	line	969
 	colm	26
 	plus
-	line	970
+	line	969
 	colm	24
 	sect
-	line	970
+	line	969
 	colm	14
 	invoke	1
-	line	970
+	line	969
 	colm	3
 	pret
 lab L2
@@ -10538,7 +10504,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	971
+	line	970
 	colm	1
 	pfail
 	end
@@ -10549,7 +10515,7 @@ proc times_tpower
 	local	3,000000,truncate
 	local	4,000000,times_poly
 	declend
-	line	974
+	line	973
 	colm	11
 	mark	L1
 	mark	L2
@@ -10558,34 +10524,34 @@ proc times_tpower
 	var	4
 	pnull
 	var	0
-	line	975
+	line	974
 	colm	38
 	field	Poly
 	pnull
 	var	1
-	line	975
+	line	974
 	colm	46
 	field	Poly
-	line	975
+	line	974
 	colm	36
 	invoke	2
 	pnull
 	var	0
-	line	975
+	line	974
 	colm	55
 	field	N
-	line	975
+	line	974
 	colm	25
 	invoke	2
 	pnull
 	var	0
-	line	975
+	line	974
 	colm	61
 	field	N
-	line	975
+	line	974
 	colm	16
 	invoke	2
-	line	975
+	line	974
 	colm	3
 	pret
 lab L2
@@ -10593,7 +10559,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	976
+	line	975
 	colm	1
 	pfail
 	end
@@ -10604,7 +10570,7 @@ proc div_tpower
 	local	3,000000,truncate
 	local	4,000000,div_poly
 	declend
-	line	979
+	line	978
 	colm	11
 	mark	L1
 	mark	L2
@@ -10613,34 +10579,34 @@ proc div_tpower
 	var	4
 	pnull
 	var	0
-	line	980
+	line	979
 	colm	36
 	field	Poly
 	pnull
 	var	1
-	line	980
+	line	979
 	colm	44
 	field	Poly
-	line	980
+	line	979
 	colm	34
 	invoke	2
 	pnull
 	var	0
-	line	980
+	line	979
 	colm	53
 	field	N
-	line	980
+	line	979
 	colm	25
 	invoke	2
 	pnull
 	var	0
-	line	980
+	line	979
 	colm	59
 	field	N
-	line	980
+	line	979
 	colm	16
 	invoke	2
-	line	980
+	line	979
 	colm	3
 	pret
 lab L2
@@ -10648,7 +10614,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	981
+	line	980
 	colm	1
 	pfail
 	end
@@ -10657,7 +10623,7 @@ proc normalize_tpower
 	local	1,000000,tpower
 	local	2,000000,normalize_poly
 	declend
-	line	984
+	line	983
 	colm	11
 	mark	L1
 	mark	L2
@@ -10665,21 +10631,21 @@ proc normalize_tpower
 	var	2
 	pnull
 	var	0
-	line	985
+	line	984
 	colm	33
 	field	Poly
-	line	985
+	line	984
 	colm	31
 	invoke	1
 	pnull
 	var	0
-	line	985
+	line	984
 	colm	42
 	field	N
-	line	985
+	line	984
 	colm	16
 	invoke	2
-	line	985
+	line	984
 	colm	3
 	pret
 lab L2
@@ -10687,7 +10653,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	986
+	line	985
 	colm	1
 	pfail
 	end
@@ -10696,40 +10662,40 @@ proc equal_tpower
 	local	1,001000,b
 	local	2,000000,equal_poly
 	declend
-	line	989
+	line	988
 	colm	11
 	mark	L1
 	mark	L2
 	pnull
 	pnull
 	var	0
-	line	990
+	line	989
 	colm	12
 	field	N
 	pnull
 	var	1
-	line	990
+	line	989
 	colm	18
 	field	N
-	line	990
+	line	989
 	colm	15
 	numeq
 	pop
 	var	2
 	pnull
 	var	0
-	line	990
+	line	989
 	colm	36
 	field	Poly
 	pnull
 	var	1
-	line	990
+	line	989
 	colm	44
 	field	Poly
-	line	990
+	line	989
 	colm	34
 	invoke	2
-	line	990
+	line	989
 	colm	3
 	pret
 lab L2
@@ -10737,7 +10703,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	991
+	line	990
 	colm	1
 	pfail
 	end
@@ -10745,20 +10711,20 @@ proc unit_tpower
 	local	0,001000,x
 	local	1,000000,unit_poly
 	declend
-	line	994
+	line	993
 	colm	11
 	mark	L1
 	mark	L2
 	var	1
 	pnull
 	var	0
-	line	995
+	line	994
 	colm	21
 	field	Poly
-	line	995
+	line	994
 	colm	19
 	invoke	1
-	line	995
+	line	994
 	colm	3
 	pret
 lab L2
@@ -10766,7 +10732,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	996
+	line	995
 	colm	1
 	pfail
 	end
@@ -10774,22 +10740,22 @@ proc print_tpower
 	local	0,001000,x
 	local	1,000000,print_poly
 	declend
-	line	999
+	line	998
 	colm	11
 	mark	L1
 	var	1
 	pnull
 	var	0
-	line	1000
+	line	999
 	colm	15
 	field	Poly
-	line	1000
+	line	999
 	colm	13
 	invoke	1
 	unmark
 lab L1
 	pnull
-	line	1001
+	line	1000
 	colm	1
 	pfail
 	end
@@ -10802,7 +10768,7 @@ proc GCD
 	local	5,000000,GCD
 	local	6,000000,mod
 	declend
-	line	1004
+	line	1003
 	colm	11
 	mark	L1
 	mark	L2
@@ -10811,16 +10777,16 @@ proc GCD
 	var	1
 	var	3
 	var	1
-	line	1005
+	line	1004
 	colm	27
 	invoke	1
-	line	1005
+	line	1004
 	colm	19
 	invoke	2
 	unmark
 	var	4
 	var	0
-	line	1005
+	line	1004
 	colm	46
 	invoke	1
 	goto	L4
@@ -10830,14 +10796,14 @@ lab L3
 	var	6
 	var	0
 	var	1
-	line	1006
+	line	1005
 	colm	18
 	invoke	2
-	line	1006
+	line	1005
 	colm	11
 	invoke	2
 lab L4
-	line	1005
+	line	1004
 	colm	3
 	pret
 lab L2
@@ -10845,7 +10811,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	1007
+	line	1006
 	colm	1
 	pfail
 	end
@@ -10867,7 +10833,7 @@ proc EUCLID
 	con	0,002000,1,2
 	con	1,002000,1,1
 	declend
-	line	1010
+	line	1009
 	colm	11
 	mark	L1
 	pnull
@@ -10875,18 +10841,18 @@ proc EUCLID
 	pnull
 	var	6
 	var	0
-	line	1012
+	line	1011
 	colm	13
 	invoke	1
 	var	6
 	var	1
-	line	1012
+	line	1011
 	colm	22
 	invoke	1
-	line	1012
+	line	1011
 	colm	8
 	llist	2
-	line	1012
+	line	1011
 	colm	5
 	asgn
 	unmark
@@ -10897,18 +10863,18 @@ lab L1
 	pnull
 	var	7
 	var	0
-	line	1013
+	line	1012
 	colm	12
 	invoke	1
 	var	8
 	var	0
-	line	1013
+	line	1012
 	colm	21
 	invoke	1
-	line	1013
+	line	1012
 	colm	8
 	llist	2
-	line	1013
+	line	1012
 	colm	5
 	asgn
 	unmark
@@ -10919,18 +10885,18 @@ lab L2
 	pnull
 	var	8
 	var	0
-	line	1014
+	line	1013
 	colm	13
 	invoke	1
 	var	7
 	var	0
-	line	1014
+	line	1013
 	colm	21
 	invoke	1
-	line	1014
+	line	1013
 	colm	8
 	llist	2
-	line	1014
+	line	1013
 	colm	5
 	asgn
 	unmark
@@ -10943,15 +10909,15 @@ lab L5
 	pnull
 	var	3
 	int	0
-	line	1015
+	line	1014
 	colm	20
 	subsc
 	var	8
 	var	0
-	line	1015
+	line	1014
 	colm	29
 	invoke	1
-	line	1015
+	line	1014
 	colm	18
 	invoke	2
 	unmark
@@ -10967,19 +10933,19 @@ lab L8
 	pnull
 	var	3
 	int	1
-	line	1016
+	line	1015
 	colm	13
 	subsc
 	pnull
 	var	3
 	int	0
-	line	1016
+	line	1015
 	colm	19
 	subsc
-	line	1016
+	line	1015
 	colm	11
 	invoke	2
-	line	1016
+	line	1015
 	colm	5
 	asgn
 	unmark
@@ -10991,34 +10957,34 @@ lab L9
 	pnull
 	var	3
 	int	0
-	line	1017
+	line	1016
 	colm	10
 	subsc
 	var	11
 	pnull
 	var	3
 	int	1
-	line	1017
+	line	1016
 	colm	23
 	subsc
 	var	12
 	pnull
 	var	3
 	int	0
-	line	1017
+	line	1016
 	colm	35
 	subsc
 	var	2
-	line	1017
+	line	1016
 	colm	33
 	invoke	2
-	line	1017
+	line	1016
 	colm	21
 	invoke	2
-	line	1017
+	line	1016
 	colm	8
 	llist	2
-	line	1017
+	line	1016
 	colm	5
 	asgn
 	unmark
@@ -11030,34 +10996,34 @@ lab L10
 	pnull
 	var	4
 	int	0
-	line	1018
+	line	1017
 	colm	10
 	subsc
 	var	11
 	pnull
 	var	4
 	int	1
-	line	1018
+	line	1017
 	colm	23
 	subsc
 	var	12
 	pnull
 	var	4
 	int	0
-	line	1018
+	line	1017
 	colm	35
 	subsc
 	var	2
-	line	1018
+	line	1017
 	colm	33
 	invoke	2
-	line	1018
+	line	1017
 	colm	21
 	invoke	2
-	line	1018
+	line	1017
 	colm	8
 	llist	2
-	line	1018
+	line	1017
 	colm	5
 	asgn
 	unmark
@@ -11068,34 +11034,34 @@ lab L11
 	pnull
 	var	5
 	int	0
-	line	1019
+	line	1018
 	colm	10
 	subsc
 	var	11
 	pnull
 	var	5
 	int	1
-	line	1019
+	line	1018
 	colm	23
 	subsc
 	var	12
 	pnull
 	var	5
 	int	0
-	line	1019
+	line	1018
 	colm	35
 	subsc
 	var	2
-	line	1019
+	line	1018
 	colm	33
 	invoke	2
-	line	1019
+	line	1018
 	colm	21
 	invoke	2
-	line	1019
+	line	1018
 	colm	8
 	llist	2
-	line	1019
+	line	1018
 	colm	5
 	asgn
 lab L6
@@ -11111,36 +11077,36 @@ lab L4
 	pnull
 	var	3
 	int	1
-	line	1020
+	line	1019
 	colm	22
 	subsc
-	line	1020
+	line	1019
 	colm	20
 	invoke	1
 	var	13
 	pnull
 	var	4
 	int	1
-	line	1020
+	line	1019
 	colm	39
 	subsc
-	line	1020
+	line	1019
 	colm	37
 	invoke	1
 	var	13
 	pnull
 	var	5
 	int	1
-	line	1020
+	line	1019
 	colm	56
 	subsc
-	line	1020
+	line	1019
 	colm	54
 	invoke	1
-	line	1020
+	line	1019
 	colm	10
 	llist	3
-	line	1020
+	line	1019
 	colm	3
 	pret
 lab L13
@@ -11148,7 +11114,7 @@ lab L13
 	unmark
 lab L12
 	pnull
-	line	1021
+	line	1020
 	colm	1
 	pfail
 	end
@@ -11167,7 +11133,7 @@ proc INVERSE
 	con	3,010000,13,040,151,156,166,145,162,163,145,040,155,157,144,040
 	con	4,010000,15,040,144,157,145,163,040,156,157,164,040,145,170,151,163,164
 	declend
-	line	1024
+	line	1023
 	colm	11
 	mark	L1
 	pnull
@@ -11175,10 +11141,10 @@ proc INVERSE
 	var	3
 	var	1
 	var	0
-	line	1026
+	line	1025
 	colm	16
 	invoke	2
-	line	1026
+	line	1025
 	colm	7
 	asgn
 	unmark
@@ -11189,10 +11155,10 @@ lab L1
 	pnull
 	var	2
 	int	0
-	line	1027
+	line	1026
 	colm	14
 	subsc
-	line	1027
+	line	1026
 	colm	10
 	invoke	1
 	unmark
@@ -11202,23 +11168,23 @@ lab L1
 	pnull
 	var	2
 	int	1
-	line	1027
+	line	1026
 	colm	42
 	subsc
 	pnull
 	var	2
 	int	0
-	line	1027
+	line	1026
 	colm	50
 	subsc
-	line	1027
+	line	1026
 	colm	38
 	invoke	2
 	var	1
-	line	1027
+	line	1026
 	colm	34
 	invoke	2
-	line	1027
+	line	1026
 	colm	24
 	pret
 lab L5
@@ -11232,7 +11198,7 @@ lab L6
 	pop
 	mark	L7
 	str	2
-	line	1028
+	line	1027
 	colm	11
 	coret
 	efail
@@ -11246,7 +11212,7 @@ lab L9
 	pop
 	mark	L10
 	var	0
-	line	1028
+	line	1027
 	colm	20
 	coret
 	efail
@@ -11260,7 +11226,7 @@ lab L12
 	pop
 	mark	L13
 	str	3
-	line	1028
+	line	1027
 	colm	23
 	coret
 	efail
@@ -11274,7 +11240,7 @@ lab L15
 	pop
 	mark	L16
 	var	1
-	line	1028
+	line	1027
 	colm	40
 	coret
 	efail
@@ -11288,7 +11254,7 @@ lab L18
 	pop
 	mark	L19
 	str	4
-	line	1028
+	line	1027
 	colm	43
 	coret
 	efail
@@ -11297,7 +11263,7 @@ lab L19
 	goto	L19
 lab L20
 	create	L18
-	line	1028
+	line	1027
 	colm	10
 	llist	5
 	invoke	1
@@ -11305,7 +11271,7 @@ lab L4
 	unmark
 lab L2
 	pnull
-	line	1029
+	line	1028
 	colm	1
 	pfail
 	end
@@ -11329,7 +11295,7 @@ proc CRA1
 	local	16,000000,CRA1
 	con	0,010000,39,105,122,122,117,122,072,040,156,157,040,163,157,154,165,164,151,157,156,040,164,157,040,154,151,156,145,141,162,040,143,157,156,147,162,165,145,156,143,145
 	declend
-	line	1032
+	line	1031
 	colm	11
 	mark	L1
 	pnull
@@ -11337,10 +11303,10 @@ proc CRA1
 	var	6
 	var	0
 	var	2
-	line	1034
+	line	1033
 	colm	11
 	invoke	2
-	line	1034
+	line	1033
 	colm	5
 	asgn
 	unmark
@@ -11351,7 +11317,7 @@ lab L1
 	var	7
 	var	5
 	var	1
-	line	1035
+	line	1034
 	colm	17
 	invoke	2
 	unmark
@@ -11366,7 +11332,7 @@ lab L6
 	pop
 	mark	L7
 	str	0
-	line	1035
+	line	1034
 	colm	33
 	coret
 	efail
@@ -11375,7 +11341,7 @@ lab L7
 	goto	L7
 lab L8
 	create	L6
-	line	1035
+	line	1034
 	colm	32
 	llist	1
 	invoke	1
@@ -11387,10 +11353,10 @@ lab L3
 	var	9
 	var	0
 	var	2
-	line	1036
+	line	1035
 	colm	18
 	invoke	2
-	line	1036
+	line	1035
 	colm	12
 	asgn
 	unmark
@@ -11401,10 +11367,10 @@ lab L9
 	var	9
 	var	1
 	var	2
-	line	1036
+	line	1035
 	colm	35
 	invoke	2
-	line	1036
+	line	1035
 	colm	29
 	asgn
 	unmark
@@ -11414,16 +11380,16 @@ lab L10
 	var	3
 	var	11
 	var	3
-	line	1037
+	line	1036
 	colm	18
 	invoke	1
-	line	1037
+	line	1036
 	colm	11
 	invoke	2
 	unmark
 	mark	L13
 	var	4
-	line	1037
+	line	1036
 	colm	28
 	pret
 lab L13
@@ -11435,20 +11401,20 @@ lab L11
 	var	4
 	var	12
 	var	4
-	line	1038
+	line	1037
 	colm	24
 	invoke	1
-	line	1038
+	line	1037
 	colm	16
 	invoke	2
 	unmark
 	mark	L16
 	var	12
 	var	4
-	line	1038
+	line	1037
 	colm	45
 	invoke	1
-	line	1038
+	line	1037
 	colm	34
 	pret
 lab L16
@@ -11459,17 +11425,17 @@ lab L14
 	var	10
 	var	3
 	var	4
-	line	1039
+	line	1038
 	colm	16
 	invoke	2
 	unmark
 	mark	L19
 	var	11
 	var	4
-	line	1039
+	line	1038
 	colm	38
 	invoke	1
-	line	1039
+	line	1038
 	colm	28
 	pret
 lab L19
@@ -11485,25 +11451,25 @@ lab L17
 	var	2
 	pnull
 	var	4
-	line	1040
+	line	1039
 	colm	41
 	neg
 	var	3
-	line	1040
+	line	1039
 	colm	37
 	invoke	3
-	line	1040
+	line	1039
 	colm	29
 	invoke	2
 	var	4
-	line	1040
+	line	1039
 	colm	23
 	invoke	2
 	var	3
-	line	1040
+	line	1039
 	colm	18
 	invoke	2
-	line	1040
+	line	1039
 	colm	8
 	pret
 lab L20
@@ -11515,7 +11481,7 @@ lab L4
 	unmark
 lab L2
 	pnull
-	line	1041
+	line	1040
 	colm	1
 	pfail
 	end
@@ -11533,7 +11499,7 @@ proc CRA2
 	local	10,000000,ominus
 	local	11,000000,plus
 	declend
-	line	1044
+	line	1043
 	colm	11
 	mark	L1
 	pnull
@@ -11541,10 +11507,10 @@ proc CRA2
 	var	7
 	var	1
 	var	3
-	line	1046
+	line	1045
 	colm	15
 	invoke	2
-	line	1046
+	line	1045
 	colm	5
 	asgn
 	unmark
@@ -11557,18 +11523,18 @@ lab L1
 	var	10
 	var	2
 	var	0
-	line	1047
+	line	1046
 	colm	28
 	invoke	2
 	var	4
-	line	1047
+	line	1046
 	colm	21
 	invoke	2
 	var	3
-	line	1047
+	line	1046
 	colm	15
 	invoke	2
-	line	1047
+	line	1046
 	colm	9
 	asgn
 	unmark
@@ -11581,13 +11547,13 @@ lab L2
 	var	9
 	var	5
 	var	1
-	line	1048
+	line	1047
 	colm	21
 	invoke	2
-	line	1048
+	line	1047
 	colm	12
 	invoke	2
-	line	1048
+	line	1047
 	colm	5
 	asgn
 	unmark
@@ -11595,7 +11561,7 @@ lab L3
 	mark	L4
 	mark	L5
 	var	6
-	line	1049
+	line	1048
 	colm	3
 	pret
 lab L5
@@ -11603,7 +11569,7 @@ lab L5
 	unmark
 lab L4
 	pnull
-	line	1050
+	line	1049
 	colm	1
 	pfail
 	end
@@ -11629,17 +11595,17 @@ proc CRA
 	con	0,002000,1,1
 	con	1,002000,1,2
 	declend
-	line	1053
+	line	1052
 	colm	11
 	mark	L1
 	pnull
 	var	1
 	var	9
 	var	0
-	line	1055
+	line	1054
 	colm	14
 	invoke	1
-	line	1055
+	line	1054
 	colm	7
 	asgn
 	unmark
@@ -11649,10 +11615,10 @@ lab L1
 	var	2
 	var	10
 	var	1
-	line	1056
+	line	1055
 	colm	12
 	invoke	1
-	line	1056
+	line	1055
 	colm	6
 	asgn
 	unmark
@@ -11663,10 +11629,10 @@ lab L2
 	pnull
 	var	2
 	int	0
-	line	1056
+	line	1055
 	colm	26
 	subsc
-	line	1056
+	line	1055
 	colm	21
 	asgn
 	unmark
@@ -11677,10 +11643,10 @@ lab L3
 	pnull
 	var	2
 	int	1
-	line	1056
+	line	1055
 	colm	38
 	subsc
-	line	1056
+	line	1055
 	colm	33
 	asgn
 	unmark
@@ -11690,10 +11656,10 @@ lab L4
 	var	3
 	var	11
 	var	8
-	line	1057
+	line	1056
 	colm	11
 	invoke	1
-	line	1057
+	line	1056
 	colm	5
 	asgn
 	unmark
@@ -11704,10 +11670,10 @@ lab L5
 	var	12
 	var	7
 	var	8
-	line	1058
+	line	1057
 	colm	11
 	invoke	2
-	line	1058
+	line	1057
 	colm	5
 	asgn
 	unmark
@@ -11720,14 +11686,14 @@ lab L6
 	int	0
 	pnull
 	var	1
-	line	1059
+	line	1058
 	colm	19
 	size
 	push1
-	line	1059
+	line	1058
 	colm	16
 	toby
-	line	1059
+	line	1058
 	colm	11
 	asgn
 	pop
@@ -11738,10 +11704,10 @@ lab L6
 	var	14
 	var	3
 	var	8
-	line	1060
+	line	1059
 	colm	13
 	invoke	2
-	line	1060
+	line	1059
 	colm	5
 	asgn
 	unmark
@@ -11751,10 +11717,10 @@ lab L10
 	var	2
 	var	10
 	var	1
-	line	1061
+	line	1060
 	colm	12
 	invoke	1
-	line	1061
+	line	1060
 	colm	6
 	asgn
 	unmark
@@ -11765,10 +11731,10 @@ lab L11
 	pnull
 	var	2
 	int	0
-	line	1061
+	line	1060
 	colm	26
 	subsc
-	line	1061
+	line	1060
 	colm	21
 	asgn
 	unmark
@@ -11779,10 +11745,10 @@ lab L12
 	pnull
 	var	2
 	int	1
-	line	1061
+	line	1060
 	colm	38
 	subsc
-	line	1061
+	line	1060
 	colm	33
 	asgn
 	unmark
@@ -11793,10 +11759,10 @@ lab L13
 	var	15
 	var	3
 	var	8
-	line	1062
+	line	1061
 	colm	15
 	invoke	2
-	line	1062
+	line	1061
 	colm	5
 	asgn
 	unmark
@@ -11811,21 +11777,21 @@ lab L14
 	var	12
 	var	4
 	var	8
-	line	1063
+	line	1062
 	colm	35
 	invoke	2
-	line	1063
+	line	1062
 	colm	28
 	invoke	2
 	var	5
-	line	1063
+	line	1062
 	colm	21
 	invoke	2
 	var	8
-	line	1063
+	line	1062
 	colm	15
 	invoke	2
-	line	1063
+	line	1062
 	colm	9
 	asgn
 	unmark
@@ -11837,13 +11803,13 @@ lab L15
 	var	14
 	var	6
 	var	3
-	line	1064
+	line	1063
 	colm	21
 	invoke	2
-	line	1064
+	line	1063
 	colm	12
 	invoke	2
-	line	1064
+	line	1063
 	colm	5
 	asgn
 	unmark
@@ -11855,7 +11821,7 @@ lab L7
 	mark	L16
 	mark	L17
 	var	4
-	line	1065
+	line	1064
 	colm	3
 	pret
 lab L17
@@ -11863,7 +11829,7 @@ lab L17
 	unmark
 lab L16
 	pnull
-	line	1066
+	line	1065
 	colm	1
 	pfail
 	end
@@ -11889,7 +11855,7 @@ proc DIOPHANTINE
 	con	1,002000,1,3
 	con	2,010000,39,105,122,122,117,122,072,040,104,151,157,160,150,141,156,164,151,156,145,040,163,157,154,165,164,151,157,156,040,156,157,156,145,170,151,163,164,145,156,164
 	declend
-	line	1069
+	line	1068
 	colm	11
 	mark	L1
 	pnull
@@ -11897,10 +11863,10 @@ proc DIOPHANTINE
 	var	7
 	var	0
 	var	1
-	line	1071
+	line	1070
 	colm	16
 	invoke	2
-	line	1071
+	line	1070
 	colm	7
 	asgn
 	unmark
@@ -11911,10 +11877,10 @@ lab L1
 	pnull
 	var	3
 	int	0
-	line	1072
+	line	1071
 	colm	11
 	subsc
-	line	1072
+	line	1071
 	colm	5
 	asgn
 	unmark
@@ -11925,10 +11891,10 @@ lab L2
 	pnull
 	var	3
 	int	1
-	line	1072
+	line	1071
 	colm	24
 	subsc
-	line	1072
+	line	1071
 	colm	18
 	asgn
 	unmark
@@ -11939,7 +11905,7 @@ lab L3
 	var	9
 	var	4
 	var	2
-	line	1073
+	line	1072
 	colm	17
 	invoke	2
 	unmark
@@ -11954,7 +11920,7 @@ lab L8
 	pop
 	mark	L9
 	str	2
-	line	1073
+	line	1072
 	colm	32
 	coret
 	efail
@@ -11963,7 +11929,7 @@ lab L9
 	goto	L9
 lab L10
 	create	L8
-	line	1073
+	line	1072
 	colm	31
 	llist	1
 	invoke	1
@@ -11974,15 +11940,15 @@ lab L5
 	var	11
 	var	12
 	var	1
-	line	1074
+	line	1073
 	colm	21
 	invoke	1
 	var	12
 	var	0
-	line	1074
+	line	1073
 	colm	29
 	invoke	1
-	line	1074
+	line	1073
 	colm	17
 	invoke	2
 	unmark
@@ -11994,13 +11960,13 @@ lab L5
 	var	2
 	var	12
 	var	1
-	line	1075
+	line	1074
 	colm	31
 	invoke	1
-	line	1075
+	line	1074
 	colm	21
 	invoke	3
-	line	1075
+	line	1074
 	colm	14
 	asgn
 	unmark
@@ -12013,17 +11979,17 @@ lab L14
 	var	16
 	var	0
 	var	5
-	line	1076
+	line	1075
 	colm	29
 	invoke	2
-	line	1076
+	line	1075
 	colm	20
 	invoke	2
 	var	1
-	line	1076
+	line	1075
 	colm	13
 	invoke	2
-	line	1076
+	line	1075
 	colm	7
 	asgn
 	goto	L13
@@ -12036,13 +12002,13 @@ lab L12
 	var	2
 	var	12
 	var	0
-	line	1077
+	line	1076
 	colm	31
 	invoke	1
-	line	1077
+	line	1076
 	colm	21
 	invoke	3
-	line	1077
+	line	1076
 	colm	14
 	asgn
 	unmark
@@ -12055,17 +12021,17 @@ lab L15
 	var	16
 	var	1
 	var	6
-	line	1078
+	line	1077
 	colm	29
 	invoke	2
-	line	1078
+	line	1077
 	colm	20
 	invoke	2
 	var	0
-	line	1078
+	line	1077
 	colm	13
 	invoke	2
-	line	1078
+	line	1077
 	colm	7
 	asgn
 lab L13
@@ -12076,10 +12042,10 @@ lab L11
 	var	4
 	var	5
 	var	6
-	line	1079
+	line	1078
 	colm	10
 	llist	3
-	line	1079
+	line	1078
 	colm	3
 	pret
 lab L16
@@ -12088,7 +12054,7 @@ lab L6
 	unmark
 lab L4
 	pnull
-	line	1080
+	line	1079
 	colm	1
 	pfail
 	end
@@ -12101,14 +12067,14 @@ proc MOD_RS
 	local	5,000000,MOD_RS
 	local	6,000000,mod
 	declend
-	line	1083
+	line	1082
 	colm	11
 	mark	L1
 	mark	L2
 	var	2
 	pnull
 	var	0
-	line	1084
+	line	1083
 	colm	18
 	llist	1
 	mark	L3
@@ -12116,16 +12082,16 @@ proc MOD_RS
 	var	1
 	var	4
 	var	1
-	line	1084
+	line	1083
 	colm	39
 	invoke	1
-	line	1084
+	line	1083
 	colm	31
 	invoke	2
 	unmark
 	pnull
 	var	1
-	line	1084
+	line	1083
 	colm	49
 	llist	1
 	goto	L4
@@ -12135,17 +12101,17 @@ lab L3
 	var	6
 	var	0
 	var	1
-	line	1084
+	line	1083
 	colm	71
 	invoke	2
-	line	1084
+	line	1083
 	colm	64
 	invoke	2
 lab L4
-	line	1084
+	line	1083
 	colm	17
 	invoke	2
-	line	1084
+	line	1083
 	colm	3
 	pret
 lab L2
@@ -12153,7 +12119,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	1085
+	line	1084
 	colm	1
 	pfail
 	end
@@ -12171,7 +12137,7 @@ proc PREM
 	local	10,000000,exp
 	con	0,002000,1,1
 	declend
-	line	1088
+	line	1087
 	colm	11
 	mark	L1
 	pnull
@@ -12179,18 +12145,18 @@ proc PREM
 	var	4
 	var	5
 	var	0
-	line	1090
+	line	1089
 	colm	26
 	invoke	1
 	var	5
 	var	1
-	line	1090
+	line	1089
 	colm	40
 	invoke	1
-	line	1090
+	line	1089
 	colm	17
 	invoke	2
-	line	1090
+	line	1089
 	colm	5
 	asgn
 	unmark
@@ -12201,13 +12167,13 @@ lab L1
 	var	6
 	var	7
 	var	1
-	line	1091
+	line	1090
 	colm	25
 	invoke	1
-	line	1091
+	line	1090
 	colm	15
 	invoke	1
-	line	1091
+	line	1090
 	colm	5
 	asgn
 	unmark
@@ -12221,21 +12187,21 @@ lab L2
 	pnull
 	var	2
 	int	0
-	line	1092
+	line	1091
 	colm	34
 	plus
-	line	1092
+	line	1091
 	colm	28
 	invoke	2
 	var	0
-	line	1092
+	line	1091
 	colm	24
 	invoke	2
 	var	1
-	line	1092
+	line	1091
 	colm	13
 	invoke	2
-	line	1092
+	line	1091
 	colm	3
 	pret
 lab L4
@@ -12243,7 +12209,7 @@ lab L4
 	unmark
 lab L3
 	pnull
-	line	1093
+	line	1092
 	colm	1
 	pfail
 	end
@@ -12256,14 +12222,14 @@ proc E_PRS
 	local	5,000000,E_PRS
 	local	6,000000,PREM
 	declend
-	line	1096
+	line	1095
 	colm	11
 	mark	L1
 	mark	L2
 	var	2
 	pnull
 	var	0
-	line	1097
+	line	1096
 	colm	18
 	llist	1
 	mark	L3
@@ -12271,16 +12237,16 @@ proc E_PRS
 	var	1
 	var	4
 	var	1
-	line	1097
+	line	1096
 	colm	39
 	invoke	1
-	line	1097
+	line	1096
 	colm	31
 	invoke	2
 	unmark
 	pnull
 	var	1
-	line	1097
+	line	1096
 	colm	49
 	llist	1
 	goto	L4
@@ -12290,17 +12256,17 @@ lab L3
 	var	6
 	var	0
 	var	1
-	line	1097
+	line	1096
 	colm	71
 	invoke	2
-	line	1097
+	line	1096
 	colm	63
 	invoke	2
 lab L4
-	line	1097
+	line	1096
 	colm	17
 	invoke	2
-	line	1097
+	line	1096
 	colm	3
 	pret
 lab L2
@@ -12308,7 +12274,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	1098
+	line	1097
 	colm	1
 	pfail
 	end
@@ -12344,7 +12310,7 @@ proc S_PRS
 	con	0,002000,1,1
 	con	1,002000,1,3
 	declend
-	line	1101
+	line	1100
 	colm	11
 	mark	L1
 	pnull
@@ -12352,10 +12318,10 @@ proc S_PRS
 	var	17
 	var	0
 	var	1
-	line	1104
+	line	1103
 	colm	21
 	invoke	2
-	line	1104
+	line	1103
 	colm	11
 	asgn
 	unmark
@@ -12365,10 +12331,10 @@ lab L1
 	var	18
 	var	19
 	var	0
-	line	1105
+	line	1104
 	colm	13
 	invoke	1
-	line	1105
+	line	1104
 	colm	7
 	asgn
 	unmark
@@ -12381,25 +12347,25 @@ lab L2
 	pnull
 	var	22
 	var	18
-	line	1106
+	line	1105
 	colm	30
 	invoke	1
-	line	1106
+	line	1105
 	colm	25
 	neg
 	pnull
 	var	2
 	int	0
-	line	1106
+	line	1105
 	colm	46
 	plus
-	line	1106
+	line	1105
 	colm	24
 	invoke	2
-	line	1106
+	line	1105
 	colm	20
 	invoke	1
-	line	1106
+	line	1105
 	colm	10
 	asgn
 	unmark
@@ -12411,10 +12377,10 @@ lab L3
 	var	0
 	var	1
 	var	3
-	line	1107
+	line	1106
 	colm	13
 	invoke	3
-	line	1107
+	line	1106
 	colm	7
 	asgn
 	unmark
@@ -12424,10 +12390,10 @@ lab L4
 	var	16
 	var	24
 	var	4
-	line	1107
+	line	1106
 	colm	42
 	invoke	1
-	line	1107
+	line	1106
 	colm	35
 	asgn
 	unmark
@@ -12437,7 +12403,7 @@ lab L5
 	var	25
 	var	4
 	var	16
-	line	1108
+	line	1107
 	colm	11
 	invoke	2
 	unmark
@@ -12445,10 +12411,10 @@ lab L5
 	pnull
 	var	0
 	var	1
-	line	1108
+	line	1107
 	colm	32
 	llist	2
-	line	1108
+	line	1107
 	colm	25
 	pret
 lab L7
@@ -12462,10 +12428,10 @@ lab L6
 	var	0
 	var	1
 	var	4
-	line	1109
+	line	1108
 	colm	8
 	llist	3
-	line	1109
+	line	1108
 	colm	5
 	asgn
 	unmark
@@ -12476,14 +12442,14 @@ lab L8
 	var	21
 	var	19
 	var	1
-	line	1110
+	line	1109
 	colm	17
 	invoke	1
 	var	2
-	line	1110
+	line	1109
 	colm	13
 	invoke	2
-	line	1110
+	line	1109
 	colm	7
 	asgn
 	unmark
@@ -12494,10 +12460,10 @@ lab L9
 	var	17
 	var	1
 	var	4
-	line	1111
+	line	1110
 	colm	29
 	invoke	2
-	line	1111
+	line	1110
 	colm	19
 	asgn
 	unmark
@@ -12507,10 +12473,10 @@ lab L10
 	var	9
 	var	19
 	var	1
-	line	1112
+	line	1111
 	colm	21
 	invoke	1
-	line	1112
+	line	1111
 	colm	15
 	asgn
 	unmark
@@ -12519,7 +12485,7 @@ lab L11
 	pnull
 	var	10
 	var	7
-	line	1113
+	line	1112
 	colm	15
 	asgn
 	unmark
@@ -12528,7 +12494,7 @@ lab L12
 	pnull
 	var	11
 	var	1
-	line	1114
+	line	1113
 	colm	15
 	asgn
 	unmark
@@ -12537,7 +12503,7 @@ lab L13
 	pnull
 	var	12
 	var	4
-	line	1115
+	line	1114
 	colm	15
 	asgn
 	unmark
@@ -12546,7 +12512,7 @@ lab L14
 	pnull
 	var	15
 	int	1
-	line	1116
+	line	1115
 	colm	5
 	asgn
 	unmark
@@ -12561,10 +12527,10 @@ lab L17
 	var	8
 	var	9
 	var	10
-	line	1118
+	line	1117
 	colm	19
 	invoke	3
-	line	1118
+	line	1117
 	colm	10
 	asgn
 	unmark
@@ -12576,10 +12542,10 @@ lab L20
 	var	11
 	var	12
 	var	13
-	line	1119
+	line	1118
 	colm	13
 	invoke	3
-	line	1119
+	line	1118
 	colm	7
 	asgn
 	unmark
@@ -12589,13 +12555,13 @@ lab L21
 	var	25
 	var	14
 	var	16
-	line	1120
+	line	1119
 	colm	11
 	invoke	2
 	unmark
 	mark	L25
 	var	6
-	line	1120
+	line	1119
 	colm	25
 	pret
 lab L25
@@ -12605,7 +12571,7 @@ lab L23
 	var	26
 	var	6
 	var	14
-	line	1121
+	line	1120
 	colm	12
 	invoke	2
 lab L24
@@ -12615,7 +12581,7 @@ lab L22
 	pnull
 	var	11
 	var	12
-	line	1122
+	line	1121
 	colm	15
 	asgn
 	unmark
@@ -12624,7 +12590,7 @@ lab L26
 	pnull
 	var	12
 	var	14
-	line	1123
+	line	1122
 	colm	15
 	asgn
 	unmark
@@ -12634,10 +12600,10 @@ lab L27
 	var	9
 	var	19
 	var	11
-	line	1124
+	line	1123
 	colm	21
 	invoke	1
-	line	1124
+	line	1123
 	colm	15
 	asgn
 	unmark
@@ -12649,10 +12615,10 @@ lab L28
 	var	9
 	var	8
 	var	10
-	line	1125
+	line	1124
 	colm	21
 	invoke	3
-	line	1125
+	line	1124
 	colm	15
 	asgn
 	unmark
@@ -12662,10 +12628,10 @@ lab L29
 	var	17
 	var	11
 	var	12
-	line	1126
+	line	1125
 	colm	29
 	invoke	2
-	line	1126
+	line	1125
 	colm	19
 	asgn
 lab L18
@@ -12675,7 +12641,7 @@ lab L19
 	unmark
 lab L16
 	pnull
-	line	1127
+	line	1126
 	colm	1
 	pfail
 	end
@@ -12685,25 +12651,25 @@ proc delta_i
 	local	2,000000,minus_deg
 	local	3,000000,deg_poly
 	declend
-	line	1130
+	line	1129
 	colm	11
 	mark	L1
 	mark	L2
 	var	2
 	var	3
 	var	0
-	line	1131
+	line	1130
 	colm	28
 	invoke	1
 	var	3
 	var	1
-	line	1131
+	line	1130
 	colm	43
 	invoke	1
-	line	1131
+	line	1130
 	colm	19
 	invoke	2
-	line	1131
+	line	1130
 	colm	3
 	pret
 lab L2
@@ -12711,7 +12677,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	1132
+	line	1131
 	colm	1
 	pfail
 	end
@@ -12719,16 +12685,16 @@ proc c_i
 	local	0,001000,p_i
 	local	1,000000,lead_coef
 	declend
-	line	1135
+	line	1134
 	colm	11
 	mark	L1
 	mark	L2
 	var	1
 	var	0
-	line	1136
+	line	1135
 	colm	19
 	invoke	1
-	line	1136
+	line	1135
 	colm	3
 	pret
 lab L2
@@ -12736,7 +12702,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	1137
+	line	1136
 	colm	1
 	pfail
 	end
@@ -12749,7 +12715,7 @@ proc R_i
 	local	5,000000,minus_deg
 	con	0,002000,1,1
 	declend
-	line	1140
+	line	1139
 	colm	11
 	mark	L1
 	mark	L2
@@ -12757,7 +12723,7 @@ proc R_i
 	var	4
 	var	0
 	var	1
-	line	1141
+	line	1140
 	colm	19
 	invoke	2
 	var	4
@@ -12765,16 +12731,16 @@ proc R_i
 	var	5
 	var	1
 	int	0
-	line	1141
+	line	1140
 	colm	69
 	invoke	2
-	line	1141
+	line	1140
 	colm	46
 	invoke	2
-	line	1141
+	line	1140
 	colm	15
 	invoke	2
-	line	1141
+	line	1140
 	colm	3
 	pret
 lab L2
@@ -12782,7 +12748,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	1142
+	line	1141
 	colm	1
 	pfail
 	end
@@ -12796,7 +12762,7 @@ proc beta_i
 	local	6,000000,one
 	con	0,002000,1,1
 	declend
-	line	1145
+	line	1144
 	colm	11
 	mark	L1
 	mark	L2
@@ -12807,37 +12773,37 @@ proc beta_i
 	pnull
 	var	6
 	var	1
-	line	1146
+	line	1145
 	colm	39
 	invoke	1
-	line	1146
+	line	1145
 	colm	34
 	neg
 	pnull
 	int	0
 	var	0
-	line	1146
+	line	1145
 	colm	57
 	plus
-	line	1146
+	line	1145
 	colm	33
 	invoke	2
 	var	5
 	var	2
 	var	0
-	line	1146
+	line	1145
 	colm	80
 	invoke	2
-	line	1146
+	line	1145
 	colm	29
 	invoke	2
-	line	1146
+	line	1145
 	colm	23
 	invoke	1
-	line	1146
+	line	1145
 	colm	17
 	invoke	1
-	line	1146
+	line	1145
 	colm	3
 	pret
 lab L2
@@ -12845,7 +12811,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	1147
+	line	1146
 	colm	1
 	pfail
 	end
@@ -12856,7 +12822,7 @@ proc P_i
 	local	3,000000,div
 	local	4,000000,PREM
 	declend
-	line	1150
+	line	1149
 	colm	11
 	mark	L1
 	mark	L2
@@ -12864,14 +12830,14 @@ proc P_i
 	var	4
 	var	0
 	var	1
-	line	1151
+	line	1150
 	colm	18
 	invoke	2
 	var	2
-	line	1151
+	line	1150
 	colm	13
 	invoke	2
-	line	1151
+	line	1150
 	colm	3
 	pret
 lab L2
@@ -12879,7 +12845,7 @@ lab L2
 	unmark
 lab L1
 	pnull
-	line	1152
+	line	1151
 	colm	1
 	pfail
 	end
@@ -12908,17 +12874,17 @@ proc NIA
 	con	0,002000,1,1
 	con	1,002000,1,2
 	declend
-	line	1155
+	line	1154
 	colm	11
 	mark	L1
 	pnull
 	var	1
 	var	9
 	var	0
-	line	1157
+	line	1156
 	colm	15
 	invoke	1
-	line	1157
+	line	1156
 	colm	8
 	asgn
 	unmark
@@ -12928,10 +12894,10 @@ lab L1
 	var	2
 	var	10
 	var	1
-	line	1158
+	line	1157
 	colm	12
 	invoke	1
-	line	1158
+	line	1157
 	colm	6
 	asgn
 	unmark
@@ -12942,10 +12908,10 @@ lab L2
 	pnull
 	var	2
 	int	0
-	line	1158
+	line	1157
 	colm	27
 	subsc
-	line	1158
+	line	1157
 	colm	22
 	asgn
 	unmark
@@ -12956,10 +12922,10 @@ lab L3
 	pnull
 	var	2
 	int	1
-	line	1158
+	line	1157
 	colm	39
 	subsc
-	line	1158
+	line	1157
 	colm	34
 	asgn
 	unmark
@@ -12969,10 +12935,10 @@ lab L4
 	var	5
 	var	11
 	var	4
-	line	1159
+	line	1158
 	colm	16
 	invoke	1
-	line	1159
+	line	1158
 	colm	6
 	asgn
 	unmark
@@ -12982,10 +12948,10 @@ lab L5
 	var	6
 	var	12
 	var	5
-	line	1160
+	line	1159
 	colm	12
 	invoke	1
-	line	1160
+	line	1159
 	colm	6
 	asgn
 	unmark
@@ -12998,14 +12964,14 @@ lab L6
 	int	0
 	pnull
 	var	1
-	line	1161
+	line	1160
 	colm	19
 	size
 	push1
-	line	1161
+	line	1160
 	colm	16
 	toby
-	line	1161
+	line	1160
 	colm	11
 	asgn
 	pop
@@ -13021,31 +12987,31 @@ lab L6
 	var	17
 	var	12
 	var	4
-	line	1162
+	line	1161
 	colm	40
 	invoke	1
 	int	0
-	line	1162
+	line	1161
 	colm	36
 	invoke	2
-	line	1162
+	line	1161
 	colm	31
 	llist	1
-	line	1162
+	line	1161
 	colm	30
 	invoke	1
 	var	11
 	var	3
-	line	1162
+	line	1161
 	colm	58
 	invoke	1
-	line	1162
+	line	1161
 	colm	25
 	invoke	2
-	line	1162
+	line	1161
 	colm	14
 	invoke	2
-	line	1162
+	line	1161
 	colm	6
 	asgn
 	unmark
@@ -13055,10 +13021,10 @@ lab L10
 	var	2
 	var	10
 	var	1
-	line	1163
+	line	1162
 	colm	12
 	invoke	1
-	line	1163
+	line	1162
 	colm	6
 	asgn
 	unmark
@@ -13069,10 +13035,10 @@ lab L11
 	pnull
 	var	2
 	int	0
-	line	1163
+	line	1162
 	colm	27
 	subsc
-	line	1163
+	line	1162
 	colm	22
 	asgn
 	unmark
@@ -13083,10 +13049,10 @@ lab L12
 	pnull
 	var	2
 	int	1
-	line	1163
+	line	1162
 	colm	39
 	subsc
-	line	1163
+	line	1162
 	colm	34
 	asgn
 	unmark
@@ -13097,19 +13063,19 @@ lab L13
 	var	18
 	var	12
 	var	3
-	line	1164
+	line	1163
 	colm	15
 	invoke	1
 	var	19
 	var	6
 	var	3
-	line	1164
+	line	1163
 	colm	29
 	invoke	2
-	line	1164
+	line	1163
 	colm	11
 	invoke	2
-	line	1164
+	line	1163
 	colm	5
 	asgn
 	unmark
@@ -13121,31 +13087,31 @@ lab L14
 	var	15
 	var	11
 	var	4
-	line	1165
+	line	1164
 	colm	30
 	invoke	1
 	var	11
 	var	19
 	var	5
 	var	3
-	line	1165
+	line	1164
 	colm	52
 	invoke	2
-	line	1165
+	line	1164
 	colm	42
 	invoke	1
-	line	1165
+	line	1164
 	colm	22
 	invoke	2
 	var	11
 	var	7
-	line	1165
+	line	1164
 	colm	70
 	invoke	1
-	line	1165
+	line	1164
 	colm	15
 	invoke	2
-	line	1165
+	line	1164
 	colm	9
 	asgn
 	unmark
@@ -13157,13 +13123,13 @@ lab L15
 	var	14
 	var	8
 	var	6
-	line	1166
+	line	1165
 	colm	23
 	invoke	2
-	line	1166
+	line	1165
 	colm	13
 	invoke	2
-	line	1166
+	line	1165
 	colm	6
 	asgn
 	unmark
@@ -13175,7 +13141,7 @@ lab L7
 	mark	L16
 	mark	L17
 	var	5
-	line	1167
+	line	1166
 	colm	3
 	pret
 lab L17
@@ -13183,7 +13149,7 @@ lab L17
 	unmark
 lab L16
 	pnull
-	line	1168
+	line	1167
 	colm	1
 	pfail
 	end
@@ -13212,7 +13178,7 @@ proc FFT
 	con	0,002000,1,1
 	con	1,002000,1,2
 	declend
-	line	1171
+	line	1170
 	colm	11
 	mark	L1
 	pnull
@@ -13220,13 +13186,13 @@ proc FFT
 	var	11
 	var	0
 	pnull
-	line	1173
+	line	1172
 	colm	16
 	llist	0
-	line	1173
+	line	1172
 	colm	12
 	invoke	2
-	line	1173
+	line	1172
 	colm	5
 	asgn
 	unmark
@@ -13236,7 +13202,7 @@ lab L1
 	pnull
 	var	0
 	int	0
-	line	1174
+	line	1173
 	colm	8
 	numeq
 	unmark
@@ -13245,22 +13211,22 @@ lab L1
 	pnull
 	var	3
 	int	0
-	line	1175
+	line	1174
 	colm	4
 	subsc
 	var	12
 	var	1
-	line	1175
+	line	1174
 	colm	22
 	invoke	1
-	line	1175
+	line	1174
 	colm	8
 	asgn
 	unmark
 lab L5
 	mark	L6
 	var	3
-	line	1176
+	line	1175
 	colm	3
 	pret
 lab L6
@@ -13273,10 +13239,10 @@ lab L3
 	pnull
 	var	0
 	int	1
-	line	1178
+	line	1177
 	colm	9
 	div
-	line	1178
+	line	1177
 	colm	5
 	asgn
 	unmark
@@ -13286,10 +13252,10 @@ lab L7
 	var	5
 	var	13
 	var	1
-	line	1179
+	line	1178
 	colm	35
 	invoke	1
-	line	1179
+	line	1178
 	colm	6
 	asgn
 	unmark
@@ -13299,10 +13265,10 @@ lab L8
 	var	6
 	var	14
 	var	1
-	line	1180
+	line	1179
 	colm	34
 	invoke	1
-	line	1180
+	line	1179
 	colm	6
 	asgn
 	unmark
@@ -13313,10 +13279,10 @@ lab L9
 	var	15
 	var	2
 	int	1
-	line	1181
+	line	1180
 	colm	16
 	invoke	2
-	line	1181
+	line	1180
 	colm	10
 	asgn
 	unmark
@@ -13328,10 +13294,10 @@ lab L10
 	var	4
 	var	5
 	var	7
-	line	1182
+	line	1181
 	colm	11
 	invoke	3
-	line	1182
+	line	1181
 	colm	5
 	asgn
 	unmark
@@ -13343,10 +13309,10 @@ lab L11
 	var	4
 	var	6
 	var	7
-	line	1183
+	line	1182
 	colm	11
 	invoke	3
-	line	1183
+	line	1182
 	colm	5
 	asgn
 	unmark
@@ -13359,10 +13325,10 @@ lab L12
 	int	0
 	var	4
 	push1
-	line	1184
+	line	1183
 	colm	16
 	toby
-	line	1184
+	line	1183
 	colm	11
 	asgn
 	pop
@@ -13375,13 +13341,13 @@ lab L12
 	pnull
 	var	17
 	int	0
-	line	1185
+	line	1184
 	colm	27
 	minus
-	line	1185
+	line	1184
 	colm	17
 	invoke	2
-	line	1185
+	line	1184
 	colm	11
 	asgn
 	unmark
@@ -13391,14 +13357,14 @@ lab L16
 	pnull
 	var	3
 	var	17
-	line	1186
+	line	1185
 	colm	4
 	subsc
 	var	18
 	pnull
 	var	8
 	var	17
-	line	1186
+	line	1185
 	colm	17
 	subsc
 	var	19
@@ -13406,16 +13372,16 @@ lab L16
 	pnull
 	var	9
 	var	17
-	line	1186
+	line	1185
 	colm	38
 	subsc
-	line	1186
+	line	1185
 	colm	27
 	invoke	2
-	line	1186
+	line	1185
 	colm	15
 	invoke	2
-	line	1186
+	line	1185
 	colm	8
 	asgn
 	unmark
@@ -13426,17 +13392,17 @@ lab L17
 	pnull
 	var	17
 	var	4
-	line	1187
+	line	1186
 	colm	6
 	plus
-	line	1187
+	line	1186
 	colm	4
 	subsc
 	var	20
 	pnull
 	var	8
 	var	17
-	line	1187
+	line	1186
 	colm	21
 	subsc
 	var	19
@@ -13444,16 +13410,16 @@ lab L17
 	pnull
 	var	9
 	var	17
-	line	1187
+	line	1186
 	colm	42
 	subsc
-	line	1187
+	line	1186
 	colm	31
 	invoke	2
-	line	1187
+	line	1186
 	colm	19
 	invoke	2
-	line	1187
+	line	1186
 	colm	10
 	asgn
 	unmark
@@ -13464,7 +13430,7 @@ lab L15
 lab L13
 	mark	L18
 	var	3
-	line	1189
+	line	1188
 	colm	3
 	pret
 lab L18
@@ -13473,7 +13439,7 @@ lab L4
 	unmark
 lab L2
 	pnull
-	line	1191
+	line	1190
 	colm	1
 	pfail
 	end
@@ -13488,16 +13454,16 @@ proc poly_of_even_powered_terms
 	con	0,002000,1,2
 	con	1,002000,1,0
 	declend
-	line	1194
+	line	1193
 	colm	11
 	mark	L1
 	pnull
 	var	1
 	pnull
-	line	1196
+	line	1195
 	colm	8
 	llist	0
-	line	1196
+	line	1195
 	colm	5
 	asgn
 	unmark
@@ -13509,13 +13475,13 @@ lab L1
 	pnull
 	pnull
 	var	0
-	line	1197
+	line	1196
 	colm	17
 	field	terms
-	line	1197
+	line	1196
 	colm	14
 	bang
-	line	1197
+	line	1196
 	colm	11
 	asgn
 	pop
@@ -13525,15 +13491,15 @@ lab L1
 	var	3
 	pnull
 	var	2
-	line	1198
+	line	1197
 	colm	22
 	field	power
 	int	0
-	line	1198
+	line	1197
 	colm	20
 	invoke	2
 	int	1
-	line	1198
+	line	1197
 	colm	33
 	numeq
 	unmark
@@ -13542,23 +13508,23 @@ lab L1
 	var	5
 	pnull
 	var	2
-	line	1198
+	line	1197
 	colm	56
 	field	coef
 	pnull
 	pnull
 	var	2
-	line	1198
+	line	1197
 	colm	64
 	field	power
 	int	0
-	line	1198
+	line	1197
 	colm	70
 	div
-	line	1198
+	line	1197
 	colm	54
 	invoke	2
-	line	1198
+	line	1197
 	colm	46
 	invoke	2
 	unmark
@@ -13571,10 +13537,10 @@ lab L2
 	mark	L6
 	var	6
 	var	1
-	line	1199
+	line	1198
 	colm	14
 	invoke	1
-	line	1199
+	line	1198
 	colm	3
 	pret
 lab L6
@@ -13582,7 +13548,7 @@ lab L6
 	unmark
 lab L5
 	pnull
-	line	1200
+	line	1199
 	colm	1
 	pfail
 	end
@@ -13599,16 +13565,16 @@ proc poly_of_odd_powered_terms
 	con	1,002000,1,1
 	con	2,002000,1,0
 	declend
-	line	1203
+	line	1202
 	colm	11
 	mark	L1
 	pnull
 	var	1
 	pnull
-	line	1205
+	line	1204
 	colm	8
 	llist	0
-	line	1205
+	line	1204
 	colm	5
 	asgn
 	unmark
@@ -13620,13 +13586,13 @@ lab L1
 	pnull
 	pnull
 	var	0
-	line	1206
+	line	1205
 	colm	17
 	field	terms
-	line	1206
+	line	1205
 	colm	14
 	bang
-	line	1206
+	line	1205
 	colm	11
 	asgn
 	pop
@@ -13636,15 +13602,15 @@ lab L1
 	var	3
 	pnull
 	var	2
-	line	1207
+	line	1206
 	colm	22
 	field	power
 	int	0
-	line	1207
+	line	1206
 	colm	20
 	invoke	2
 	int	1
-	line	1207
+	line	1206
 	colm	33
 	numeq
 	unmark
@@ -13653,28 +13619,28 @@ lab L1
 	var	5
 	pnull
 	var	2
-	line	1207
+	line	1206
 	colm	56
 	field	coef
 	pnull
 	pnull
 	pnull
 	var	2
-	line	1207
+	line	1206
 	colm	65
 	field	power
 	int	1
-	line	1207
+	line	1206
 	colm	72
 	minus
 	int	0
-	line	1207
+	line	1206
 	colm	76
 	div
-	line	1207
+	line	1206
 	colm	54
 	invoke	2
-	line	1207
+	line	1206
 	colm	46
 	invoke	2
 	unmark
@@ -13688,21 +13654,21 @@ lab L2
 	pnull
 	pnull
 	var	1
-	line	1208
+	line	1207
 	colm	6
 	size
 	int	2
-	line	1208
+	line	1207
 	colm	9
 	numgt
 	unmark
 	mark	L8
 	var	6
 	var	1
-	line	1208
+	line	1207
 	colm	29
 	invoke	1
-	line	1208
+	line	1207
 	colm	18
 	pret
 lab L8
@@ -13714,17 +13680,17 @@ lab L6
 	pnull
 	pnull
 	var	0
-	line	1208
+	line	1207
 	colm	52
 	field	terms
 	int	1
-	line	1208
+	line	1207
 	colm	58
 	subsc
-	line	1208
+	line	1207
 	colm	49
 	invoke	1
-	line	1208
+	line	1207
 	colm	38
 	pret
 lab L9
@@ -13733,7 +13699,7 @@ lab L7
 	unmark
 lab L5
 	pnull
-	line	1209
+	line	1208
 	colm	1
 	pfail
 	end
@@ -13750,17 +13716,17 @@ proc FFI
 	local	9,000000,one
 	local	10,000000,times_vector_scalar
 	declend
-	line	1212
+	line	1211
 	colm	11
 	mark	L1
 	pnull
 	var	3
 	var	6
 	var	1
-	line	1214
+	line	1213
 	colm	22
 	invoke	1
-	line	1214
+	line	1213
 	colm	6
 	asgn
 	unmark
@@ -13774,17 +13740,17 @@ lab L1
 	var	8
 	var	9
 	var	2
-	line	1215
+	line	1214
 	colm	26
 	invoke	1
 	var	2
-	line	1215
+	line	1214
 	colm	22
 	invoke	2
-	line	1215
+	line	1214
 	colm	11
 	invoke	3
-	line	1215
+	line	1214
 	colm	5
 	asgn
 	unmark
@@ -13798,20 +13764,20 @@ lab L2
 	var	8
 	var	9
 	var	0
-	line	1216
+	line	1215
 	colm	53
 	invoke	1
 	var	0
-	line	1216
+	line	1215
 	colm	49
 	invoke	2
-	line	1216
+	line	1215
 	colm	42
 	invoke	2
-	line	1216
+	line	1215
 	colm	22
 	invoke	1
-	line	1216
+	line	1215
 	colm	6
 	asgn
 	unmark
@@ -13819,7 +13785,7 @@ lab L3
 	mark	L4
 	mark	L5
 	var	5
-	line	1217
+	line	1216
 	colm	3
 	pret
 lab L5
@@ -13827,7 +13793,7 @@ lab L5
 	unmark
 lab L4
 	pnull
-	line	1218
+	line	1217
 	colm	1
 	pfail
 	end
@@ -13844,16 +13810,16 @@ proc polynomialize
 	con	0,002000,1,0
 	con	1,002000,1,1
 	declend
-	line	1221
+	line	1220
 	colm	11
 	mark	L1
 	pnull
 	var	1
 	pnull
-	line	1223
+	line	1222
 	colm	8
 	llist	0
-	line	1223
+	line	1222
 	colm	5
 	asgn
 	unmark
@@ -13862,7 +13828,7 @@ lab L1
 	pnull
 	var	2
 	int	0
-	line	1223
+	line	1222
 	colm	14
 	asgn
 	unmark
@@ -13873,10 +13839,10 @@ lab L2
 	var	3
 	pnull
 	var	0
-	line	1224
+	line	1223
 	colm	14
 	bang
-	line	1224
+	line	1223
 	colm	11
 	asgn
 	pop
@@ -13888,10 +13854,10 @@ lab L2
 	var	3
 	var	5
 	var	3
-	line	1225
+	line	1224
 	colm	23
 	invoke	1
-	line	1225
+	line	1224
 	colm	15
 	invoke	2
 	unmark
@@ -13904,10 +13870,10 @@ lab L7
 	var	7
 	var	3
 	var	2
-	line	1225
+	line	1224
 	colm	46
 	invoke	2
-	line	1225
+	line	1224
 	colm	38
 	invoke	2
 	unmark
@@ -13916,7 +13882,7 @@ lab L6
 	var	2
 	dup
 	int	1
-	line	1226
+	line	1225
 	colm	5
 	plus
 	asgn
@@ -13930,10 +13896,10 @@ lab L3
 	mark	L9
 	var	8
 	var	1
-	line	1227
+	line	1226
 	colm	14
 	invoke	1
-	line	1227
+	line	1226
 	colm	3
 	pret
 lab L9
@@ -13941,7 +13907,7 @@ lab L9
 	unmark
 lab L8
 	pnull
-	line	1228
+	line	1227
 	colm	1
 	pfail
 	end
@@ -13955,7 +13921,7 @@ proc times_vector_scalar
 	local	6,000000,times
 	con	0,002000,1,1
 	declend
-	line	1231
+	line	1230
 	colm	11
 	mark	L1
 	pnull
@@ -13963,13 +13929,13 @@ proc times_vector_scalar
 	var	4
 	pnull
 	var	0
-	line	1233
+	line	1232
 	colm	13
 	size
-	line	1233
+	line	1232
 	colm	12
 	invoke	1
-	line	1233
+	line	1232
 	colm	5
 	asgn
 	unmark
@@ -13978,7 +13944,7 @@ lab L1
 	pnull
 	var	3
 	int	0
-	line	1233
+	line	1232
 	colm	20
 	asgn
 	unmark
@@ -13989,10 +13955,10 @@ lab L2
 	var	5
 	pnull
 	var	0
-	line	1234
+	line	1233
 	colm	14
 	bang
-	line	1234
+	line	1233
 	colm	11
 	asgn
 	pop
@@ -14002,21 +13968,21 @@ lab L2
 	pnull
 	var	2
 	var	3
-	line	1234
+	line	1233
 	colm	23
 	subsc
 	var	6
 	pnull
 	var	0
 	var	3
-	line	1234
+	line	1233
 	colm	37
 	subsc
 	var	1
-	line	1234
+	line	1233
 	colm	35
 	invoke	2
-	line	1234
+	line	1233
 	colm	27
 	asgn
 	unmark
@@ -14025,7 +13991,7 @@ lab L6
 	var	3
 	dup
 	int	0
-	line	1234
+	line	1233
 	colm	48
 	plus
 	asgn
@@ -14038,7 +14004,7 @@ lab L3
 	mark	L7
 	mark	L8
 	var	2
-	line	1235
+	line	1234
 	colm	3
 	pret
 lab L8
@@ -14046,7 +14012,7 @@ lab L8
 	unmark
 lab L7
 	pnull
-	line	1236
+	line	1235
 	colm	1
 	pfail
 	end
@@ -14068,17 +14034,17 @@ proc NPSI
 	con	1,002000,1,1
 	con	2,002000,1,2
 	declend
-	line	1239
+	line	1238
 	colm	11
 	mark	L1
 	pnull
 	var	1
 	pnull
 	var	0
-	line	1241
+	line	1240
 	colm	11
 	field	Poly
-	line	1241
+	line	1240
 	colm	6
 	asgn
 	unmark
@@ -14089,13 +14055,13 @@ lab L1
 	var	4
 	var	5
 	var	1
-	line	1242
+	line	1241
 	colm	28
 	invoke	1
-	line	1242
+	line	1241
 	colm	16
 	invoke	1
-	line	1242
+	line	1241
 	colm	6
 	asgn
 	unmark
@@ -14107,16 +14073,16 @@ lab L2
 	pnull
 	pnull
 	var	1
-	line	1243
+	line	1242
 	colm	16
 	field	terms
-	line	1243
+	line	1242
 	colm	13
 	size
-	line	1243
+	line	1242
 	colm	12
 	invoke	1
-	line	1243
+	line	1242
 	colm	5
 	asgn
 	unmark
@@ -14130,14 +14096,14 @@ lab L3
 	pnull
 	var	3
 	int	1
-	line	1244
+	line	1243
 	colm	20
 	minus
 	push1
-	line	1244
+	line	1243
 	colm	16
 	toby
-	line	1244
+	line	1243
 	colm	11
 	asgn
 	pop
@@ -14148,7 +14114,7 @@ lab L3
 	var	8
 	var	2
 	var	2
-	line	1245
+	line	1244
 	colm	21
 	invoke	2
 	pnull
@@ -14160,31 +14126,31 @@ lab L3
 	pnull
 	var	7
 	int	1
-	line	1246
+	line	1245
 	colm	36
 	plus
-	line	1246
+	line	1245
 	colm	31
 	power
-	line	1246
+	line	1245
 	colm	24
 	invoke	2
 	var	11
 	var	2
 	var	2
-	line	1246
+	line	1245
 	colm	48
 	invoke	2
-	line	1246
+	line	1245
 	colm	15
 	invoke	2
-	line	1246
+	line	1245
 	colm	3
 	neg
-	line	1245
+	line	1244
 	colm	16
 	invoke	2
-	line	1245
+	line	1244
 	colm	9
 	asgn
 	unmark
@@ -14200,21 +14166,21 @@ lab L4
 	var	2
 	pnull
 	var	0
-	line	1247
+	line	1246
 	colm	32
 	field	N
-	line	1247
+	line	1246
 	colm	25
 	invoke	2
 	pnull
 	var	0
-	line	1247
+	line	1246
 	colm	39
 	field	N
-	line	1247
+	line	1246
 	colm	16
 	invoke	2
-	line	1247
+	line	1246
 	colm	3
 	pret
 lab L8
@@ -14222,7 +14188,7 @@ lab L8
 	unmark
 lab L7
 	pnull
-	line	1248
+	line	1247
 	colm	1
 	pfail
 	end
@@ -14233,13 +14199,13 @@ proc log2
 	con	1,002000,1,1
 	con	2,002000,1,2
 	declend
-	line	1251
+	line	1250
 	colm	11
 	mark	L1
 	pnull
 	var	1
 	int	0
-	line	1253
+	line	1252
 	colm	5
 	asgn
 	unmark
@@ -14250,7 +14216,7 @@ lab L3
 	pnull
 	var	0
 	int	1
-	line	1254
+	line	1253
 	colm	11
 	numgt
 	unmark
@@ -14261,10 +14227,10 @@ lab L3
 	pnull
 	var	0
 	int	2
-	line	1254
+	line	1253
 	colm	26
 	div
-	line	1254
+	line	1253
 	colm	22
 	asgn
 	unmark
@@ -14274,10 +14240,10 @@ lab L6
 	pnull
 	var	1
 	int	1
-	line	1254
+	line	1253
 	colm	37
 	plus
-	line	1254
+	line	1253
 	colm	32
 	asgn
 lab L4
@@ -14289,7 +14255,7 @@ lab L2
 	mark	L7
 	mark	L8
 	var	1
-	line	1255
+	line	1254
 	colm	3
 	pret
 lab L8
@@ -14297,7 +14263,7 @@ lab L8
 	unmark
 lab L7
 	pnull
-	line	1256
+	line	1255
 	colm	1
 	pfail
 	end

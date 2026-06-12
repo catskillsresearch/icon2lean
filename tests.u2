@@ -1,7 +1,7 @@
 version	U9.0.00
 impl	local
 link	code.u1
-global	20
+global	21
 	0,000001,timer,0
 	1,000005,settime,0
 	2,000005,showtime,0
@@ -21,4 +21,5 @@ global	20
 	16,000005,test_CRA,0
 	17,000005,test_DIOPHANTINE,0
 	18,000005,test_MOD_RS,0
-	19,000005,main,0
+	19,000005,test_PREM,0
+	20,000005,main,0

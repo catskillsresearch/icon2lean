@@ -1665,7 +1665,7 @@ z := 0(p.terms[1].coef)
 
 
 pr{"Q: 0 = ", 0_poly(poly([term(Q(-2,1), 0)]))}
-pr{"QZ: 0 = ", 0_poly(poly([term(k_Z_Qx(-2, 0)]))}
+pr{"QZ: 0 = ", 0_poly(poly([term(k Z Qx(-2, 0)]))}
 ```
 
 
@@ -2598,10 +2598,43 @@ b := poly_of(lead_coef(qx))
 
 </div>
 
-**Example.** The following table lists values and their pseudo-remainders. 
+**Example.** The following table lists values and their pseudo-remainders.
+
+| Domain | `p(x)` | `q(x)` | `prem(p, q)` |
+|:--|:--|:--|:--|
+| QZ[x] | `2042542724z + 17851334z·X` | `5851259279846738252460z` | `-5851259279846738252460000000000z` |
+| QZ[x] | `21z + (-9z)·X + (-4z)·X^2 + 5z·X^4 + 3z·X^6` | `(-9z) + 3z·X^2 + (-15z)·X^4` | `(-59535z) + 30375z·X + 15795z·X^2` |
+| QZ[x] | `2zq + (-1z)q·X + 3zq·X^2 + 2zq·X^4 + 1zq·X^6` | `2zq + (-1z)q·X + 3zq·X^3` | `198zq + (-225z)q·X + 306zq·X^2` |
+| QZ[x] | `198zq + (-225z)q·X + 306zq·X^3` | `18zq + 369zq·X` | `10497862440zq` |
+| integers[x] | `(-245z) + 125z·X + 65z·X^2` | `(-12300z) + 9326z·X` | `2863877380z` |
+
+<div class="math-left">
+
+```icon
 
 
-Algorithm! for Tarions problems over Enclidean domains Domain prem(p, q) QZlx] 2DO5427Uz+1785a34z*X StSX2Simi6tST3l82S2MOz -S8S12S9Z798467382S246000000000000Z QZlx] 21z+(.9z)*X+(.4i)’r2+5z*X‘4+3z*X‘6 (-39S35z)+3Q375zTC+15795z*X:2 QZlxl 22q+(-lz)q’X+3zq*X^+22q’X’4+lxq*X‘6 2xq+(-li)q*X+3zq*y3 198zq+(-225z)q*X+306zq’X^ QZlx] 198zq+(-2252)q*X+306zq*X3 iauj+369zq*X iniegen[x] 
+set_base(10000, 4)
+p := poly([k_Z_Qx(2042542724, 0), k_Z_Qx(17851334, 1)])
+q := poly([k_Z_Qx(5851259279846738252460, 0)])
+pr{"QZ[x] prem row1 = ", PREM(p, q)}
+p := poly([k_Z_Qx(21, 0), k_Z_Qx(-9, 1), k_Z_Qx(-4, 2), k_Z_Qx(5, 4), k_Z_Qx(3, 6)])
+q := poly([k_Z_Qx(-9, 0), k_Z_Qx(3, 2), k_Z_Qx(-15, 4)])
+pr{"QZ[x] prem row2 = ", PREM(p, q)}
+p := poly([k_Z_Qx(2, 0), k_Z_Qx(-1, 1), k_Z_Qx(3, 2), k_Z_Qx(2, 4), k_Z_Qx(1, 6)])
+q := poly([k_Z_Qx(2, 0), k_Z_Qx(-1, 1), k_Z_Qx(3, 3)])
+pr{"QZ[x] prem row3 = ", PREM(p, q)}
+p := poly([k_Z_Qx(198, 0), k_Z_Qx(-225, 1), k_Z_Qx(306, 3)])
+q := poly([k_Z_Qx(18, 0), k_Z_Qx(369, 1)])
+pr{"QZ[x] prem row4 = ", PREM(p, q)}
+p := poly([k_Z_x(-245, 0), k_Z_x(125, 1), k_Z_x(65, 2)])
+q := poly([k_Z_x(-12300, 0), k_Z_x(9326, 1)])
+pr{"integers[x] prem row5 = ", PREM(p, q)}
+```
+
+Rows 2–5 match the table when run with `code.icn` (`set_base(10000, 4)`). Row 1 prints `0zq`: with `d = \deg(p)-\deg(q) = 1`, `rem(lc(q)^2\cdot p, q)` vanishes because `lc(q)^2` clears the constant divisor. The table’s first `prem` entry (`-5851259279846738252460000000000z`) does not follow that identity and is treated here as a misprint in the printed report.
+
+
+</div>
 
 #### 3.2.3 PREM-based PRS
 
