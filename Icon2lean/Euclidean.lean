@@ -30,15 +30,15 @@ noncomputable section Generic
 variable {α : Type*} [EuclideanDomain α] [DecidableEq α]
 
 /-- Greatest common divisor (report §3.1.1 `GCD`). -/
-noncomputable def gcd (a b : α) : α :=
+noncomputable def euclideanGcd (a b : α) : α :=
   EuclideanDomain.gcd a b
 
 /-- Extended Euclidean algorithm (report §3.1.1 `EUCLID`): `(g, s, t)` with `g = s * a + t * b`. -/
 noncomputable def euclid (a b : α) : α × α × α :=
-  (gcd a b, EuclideanDomain.gcdA a b, EuclideanDomain.gcdB a b)
+  (euclideanGcd a b, EuclideanDomain.gcdA a b, EuclideanDomain.gcdB a b)
 
 theorem euclid_bezout (a b : α) :
-    gcd a b = a * EuclideanDomain.gcdA a b + b * EuclideanDomain.gcdB a b :=
+    euclideanGcd a b = a * EuclideanDomain.gcdA a b + b * EuclideanDomain.gcdB a b :=
   EuclideanDomain.gcd_eq_gcd_ab a b
 
 end Generic

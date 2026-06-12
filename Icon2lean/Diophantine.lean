@@ -13,6 +13,7 @@ structure DiophantineSolution where
   g : Nat
   x0 : Int
   y0 : Int
+deriving Repr
 
 /-- Particular solution to `a * x + b * y = c` (report §3.1.4 `DIOPHANTINE`). -/
 def diophantine (a b c : Int) : Option DiophantineSolution :=
