@@ -14,7 +14,8 @@ This repository contains a **1:1 Lean 4 translation** of the report’s domain t
 
 | Report | Lean module | Definitions |
 |--------|-------------|-------------|
-| `base_b`, `tpower` | [`Icon2lean/Types.lean`](Icon2lean/Types.lean) | `BaseB`, `TPower`, `truncateTo`, `tpowerMk` |
+| §2 domain types | [`Icon2lean/Types.lean`](Icon2lean/Types.lean) | `ModularDomain`, `ModularInt`, `PolyDomain`, `TruncPowerSeries`, `truncatePoly`, `truncMk` |
+| §2 instances | [`Icon2lean/Domains.lean`](Icon2lean/Domains.lean) | `EuclideanDomain` on `ℤ`, `ℚ`, `ℤ/(p)`, `F[x]`; `CommRing` on quotients and power series |
 | `GCD`, `EUCLID`, `INVERSE` | [`Icon2lean/Gcd.lean`](Icon2lean/Gcd.lean) | `gcdInt`, `euclidInt`, `modularInverse` |
 | `CRA1`, `CRA2`, `CRA` | [`Icon2lean/Congruence.lean`](Icon2lean/Congruence.lean) | `cra1`, `cra2`, `cra` |
 | `DIOPHANTINE` | [`Icon2lean/Diophantine.lean`](Icon2lean/Diophantine.lean) | `diophantine` |
@@ -22,7 +23,7 @@ This repository contains a **1:1 Lean 4 translation** of the report’s domain t
 | §3.2 test layer | [`Icon2lean/ComputablePoly.lean`](Icon2lean/ComputablePoly.lean) | `CompPoly`, `CRat`, `modRS`, `prem` |
 | `NIA` | [`Icon2lean/Interpolation.lean`](Icon2lean/Interpolation.lean) | `newtonInterpolation` |
 | `FFT`, `FFI` | [`Icon2lean/Fft.lean`](Icon2lean/Fft.lean) | `evenTerms`, `oddTerms`, `fftCoeffs`, `ffi` |
-| `NPSI` | [`Icon2lean/PowerSeries.lean`](Icon2lean/PowerSeries.lean) | `npsiStep`, `npsi`, `npsiTpower` |
+| `NPSI` | [`Icon2lean/PowerSeries.lean`](Icon2lean/PowerSeries.lean) | `npsiStep`, `npsi`, `npsiTrunc`, `npsiTruncQuotient` |
 
 Build and reproduce examples:
 
@@ -55,61 +56,26 @@ Automated checks for **§3.1 integer examples** and **§3.2 polynomial examples*
 
 ## Part 1: Domain types (Section 2)
 
-The 1986 package implements primitive domains and constructors listed in Table 1 of [1]. In Lean we use native Mathlib types where they match the report exactly, and small structures where they do not.
+The report's **quotient Euclidean domain** is a **Euclidean domain** in Mathlib (`EuclideanDomain`).
+Primitive domains are `ℤ` and `ℚ`. Three constructors build new domains:
 
-### `Z` — arbitrary-precision integers
+| Constructor | Report | Lean type |
+|-------------|--------|-----------|
+| modular `D/(e)` | `modulo(item, modulus)` | `ModularDomain R I` or `ModularInt n` (= `ZMod n`) |
+| polynomial `D[x]` | `poly(terms)` | `PolyDomain R` (= `Polynomial R`) |
+| truncated series `T(D[[x]])ₙ` | `tpower(poly, N)` | `TruncPowerSeries R n` (= `R[x]/(Xⁿ)`) |
 
-* **Icon:** `record Z (sign, mantissa)` with constructor `kz`.
-* **Lean:** `Int` (Mathlib). No separate record needed.
+Formal power series `D[[x]]` use `PowerSeries R` (for `NPSI` inversion); they are not Euclidean domains.
 
-### `base_b` — unsigned base-`B` integers
+* **`ℤ`:** `Int` / notation `ℤ`. `EuclideanDomain ℤ`.
+* **`ℚ`:** `Rat` / notation `ℚ`. `Field ℚ` → `EuclideanDomain ℚ`.
+* **Modular:** `Ideal.Quotient.mk` for general quotients; `ZMod.unitOfCoprime` for units. No `LinearOrder` on `ZMod n` (matches the report's `<0_modulo` always false).
+* **Polynomial:** `Polynomial.degree : WithBot ℕ` (`⊥` = report's `"-∞"` for zero). `EuclideanDomain (Polynomial F)` when `F` is a field; `IsDomain (Polynomial ℤ)` only when coefficients are not a field.
+* **Truncated series:** `truncatePoly n p` = multiply-then-truncate in `R[x]/(Xⁿ)`. `PowerSeries.invOfUnit` for formal-series inversion.
 
-* **Icon:**
-  ```icon
-  record base_b (base, digits)
-  ```
-* **Lean:** [`Icon2lean/Types.lean`](Icon2lean/Types.lean)
-  ```lean
-  structure BaseB (B : Nat) where
-    digits : List Nat
-    h_digits : ∀ d ∈ digits, d < B
-    h_base : 1 < B
+Integer literals use base 10 by convention; the report's `base_b` digit lists are not modeled separately.
 
-  def base10_5335 : BaseB 10 := { digits := [5, 3, 3, 5], ... }
-  ```
-  Report example: `baseB(10, [5, 3, 3, 5])` (§2.2.2).
-
-### `Q` — quotient domain
-
-* **Icon:** `record Q (dividend, divisor)`.
-* **Lean:** `Rat` for `QZ`, or `FractionRing R` for general `R`.
-
-### `modulo` — modular elements
-
-* **Icon:** `record modulo (item, modulus)`.
-* **Lean:** `ZMod n` for integer moduli.
-
-### `poly` / `term` — polynomials
-
-* **Icon:** `record poly (terms)`, `record term (coef, power)`.
-* **Lean:** `Polynomial R` (Mathlib). Report example $x^3 - 2$ over `Q`: `X ^ 3 - C 2`.
-
-### `tpower` — truncated power series
-
-* **Icon:**
-  ```icon
-  record tpower (poly, N)
-  ```
-* **Lean:** [`Icon2lean/Types.lean`](Icon2lean/Types.lean)
-  ```lean
-  structure TPower (R : Type*) [CommRing R] where
-    poly : Polynomial R
-    N : Nat
-
-  def truncateTo (N : Nat) (p : Polynomial R) : Polynomial R := p %ₘ (X ^ N)
-  ```
-
-*(Full domain arithmetic — `baseB` add/mul/div, `Q` normalization, etc. — is in the Icon source but not re-ported here; this Lean project covers the Section 3 application algorithms and the two supporting record types above.)*
+*(Full §2 domain arithmetic — `baseB` add/mul/div, etc. — is in the Icon source but not re-ported; this Lean project covers §3 algorithms on the types above.)*
 
 ---
 
@@ -306,7 +272,7 @@ Fourteen algorithms from Section 1.2 of [1]. Each subsection gives the **Icon de
 ### §3.3.3 — `NPSI`
 
 * **Icon:** Newton truncated power-series inversion (`NPSI (at)` — listing in [1], §3.3.3).
-* **Lean:** [`Icon2lean/PowerSeries.lean`](Icon2lean/PowerSeries.lean) — `npsi`, `npsiTpower`
+* **Lean:** [`Icon2lean/PowerSeries.lean`](Icon2lean/PowerSeries.lean) — `npsi`, `npsiTrunc`, `npsiTruncQuotient`
 
 ---
 
@@ -316,7 +282,7 @@ Per the report itself, we omit utilities that are not mathematical core:
 
 * Runtime **dispatch** (`div`, `mod`, … by domain type) — replaced by Lean typeclasses and fixed modules.
 * **Timer** (`settime` / `showtime`, §3.4) and **pretty-printer** pipeline (§4).
-* Full **base-B long arithmetic** (§2.2) — only the `BaseB` type is ported.
+* Full **base-B long arithmetic** (§2.2) — not ported; integers use `ℤ` directly.
 
 ---
 

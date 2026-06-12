@@ -26,9 +26,14 @@ noncomputable def npsi {R : Type*} [CommRing R] [DecidableEq R]
     else go (fuel - 1) (k + 1) (npsiStep a x (2 ^ (k + 1)))
   go steps 0 (C (a.coeff 0))
 
-/-- `NPSI` on a truncated power series package value. -/
-noncomputable def npsiTpower {R : Type*} [CommRing R] [DecidableEq R]
-    (ts : TPower R) (steps : Nat) : TPower R :=
-  { poly := npsi ts.poly ts.N steps, N := ts.N }
+/-- `NPSI` on a polynomial representative at truncation degree `N`. -/
+noncomputable def npsiTrunc {R : Type*} [CommRing R] [DecidableEq R]
+    (p : Polynomial R) (N steps : Nat) : Polynomial R :=
+  npsi p N steps
+
+/-- `NPSI` as an element of `TruncPowerSeries R N`. -/
+noncomputable def npsiTruncQuotient {R : Type*} [CommRing R] [DecidableEq R]
+    (p : Polynomial R) (N steps : Nat) : TruncPowerSeries R N :=
+  truncMk N (npsi p N steps)
 
 end Icon2lean

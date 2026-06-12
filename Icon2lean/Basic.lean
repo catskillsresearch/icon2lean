@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Lars Warren Ericson, Catskills Research Company
 -/
 
+import Icon2lean.Domains
 import Icon2lean.Types
 import Icon2lean.Gcd
 import Icon2lean.Congruence

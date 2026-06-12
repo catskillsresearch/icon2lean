@@ -175,7 +175,7 @@ No Poetry or virtualenv is required unless you add Python dependencies later.
 | PREM, MOD_RS, E_PRS, S_PRS | `Icon2lean/Polynomial.lean` | `prem`, `modRS`, `ePRS`, `sPRS` |
 | NIA | `Icon2lean/Interpolation.lean` | `newtonInterpolation` |
 | FFT, FFI | `Icon2lean/Fft.lean` | `fftCoeffs`, `ffi` |
-| NPSI | `Icon2lean/PowerSeries.lean` | `npsi`, `npsiTpower` |
+| NPSI | `Icon2lean/PowerSeries.lean` | `npsi`, `npsiTrunc`, `npsiTruncQuotient` |
 
 ---
 
