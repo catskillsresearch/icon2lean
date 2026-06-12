@@ -1,6 +1,6 @@
 {
   "source": "Courant_Ericson_1986.md",
-  "procedure_count": 165,
+  "procedure_count": 166,
   "procedures": [
     "div",
     "zero",
@@ -85,6 +85,7 @@
     "div_Q",
     "mod_Q",
     "normalize_Q",
+    "deg_Q",
     "equal_Q",
     "unit_Q",
     "print_Q",

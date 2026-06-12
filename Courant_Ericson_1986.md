@@ -706,9 +706,9 @@ This is by far the most difficult of the four basic operations. This is because 
 
 ⨸_base_B(a, b) ← ↑ normalize_base_B(base_B(a.base, ⨸_digits(a.digits, b.digits, a.base))) ■
 ⨸_digits(a, b, B) ←
-# # # If the divisor is 0, then fail.
+# # # # If the divisor is 0, then fail.
 if (*b = 1) & (b[1] = 0) then { pr{"ERROR: divide by 0 in base_B"}; ⊥ }
-# # # If a is shorter than b, return 0.
+# # # # If a is shorter than b, return 0.
 if *a < *b then ↑ [0]
 ```
 
@@ -1415,12 +1415,15 @@ else Q(top, bottom)) ■
 
 </div>
 
+<div class="math-left">
+
 ```icon
 
 
-
-d8g_Q (X) 4= it X ■
+deg_Q (x) ← ↑ x ■
 ```
+
+</div>
 
 **Predicates.**
 
@@ -3107,9 +3110,10 @@ Example paragraphs are left-justified and preceded by an appropriately numbered 
 ```icon
 
 
-do_example(arg) ←
-writes("textbackslash fB Example.textbackslash fR ")
-process("example") ■
+do_example (arg) ←
+  writes("\fB Example.\fR ")
+  process("example")
+■
 ```
 
 </div>

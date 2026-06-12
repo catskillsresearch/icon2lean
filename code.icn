@@ -55,6 +55,8 @@ end
 
 # --- mod (md line 213) ---
 procedure mod(a, b)
+  local x
+  if type(a) == "modulo" then return modulo(mod(a.item, a.modulus), a.modulus)
   if (x := proc("mod_" || type(a), 2)(a, b)) then return x
   if less(b, zero(b)) then return mod(a, -(b))
   return normalize(
@@ -631,7 +633,12 @@ procedure normalize_Q(x)
   else Q(top, bottom))
 end
 
-# --- equal_Q (md line 1432) ---
+# --- deg_Q (md line 1423) ---
+procedure deg_Q(x)
+  return x
+end
+
+# --- equal_Q (md line 1434) ---
 procedure equal_Q(a, b)
   return (equal(times(a.divisor, b.dividend), times(b.divisor, a.dividend)))
 end
@@ -678,6 +685,11 @@ end
 # --- div_modulo (md line 1516) ---
 procedure div_modulo(a, b)
   return normalize_modulo(modulo(times(a.item, INVERSE(b.item, b.modulus)), a.modulus))
+end
+
+# --- mod_modulo (Euclidean remainder in D/(m)) ---
+procedure mod_modulo(a, b)
+  return normalize_modulo(modulo(mod(a.item, a.modulus), a.modulus))
 end
 
 # --- normalize_modulo (md line 1516) ---
@@ -1212,7 +1224,7 @@ procedure FFI(N, B, omega)
   local bx, C, ax
   bx := polynomialize(B)
   C := FFT(N, bx, div(one(omega), omega))
-  ax := polynomialize(times_vector_scalar(C, div(one(N), N)))
+  ax := polynomialize(times_vector_scalar(C, Q(1, N)))
   return ax
 end
 
@@ -1241,8 +1253,8 @@ procedure NPSI(at)
   xt := poly_of(zeroth_coef(ax))
   n := log2(*ax.terms)
   every k := 0 to n-1
-  do xt := plus(plus(xt, xt),
-  -(times_poly(truncate(ax, 2 ^ (k + 1)), times(xt, xt))))
+  do xt := ominus(plus(xt, xt),
+  times_poly(truncate(ax, 2 ^ (k + 1)), times_poly(xt, xt)))
   return tpower(truncate(xt, at.N), at.N)
 end
 
