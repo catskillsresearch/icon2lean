@@ -3123,13 +3123,14 @@ Code is unjustified and Helveticized. Uncommented lines are processed as code. C
 ```icon
 
 
-do_code(arg) ←
-local line
-write(".nf0fH")
-while line := get_line()
-do if line[1:6] == "##■" then break
-else pretty_print_line(line[2:*line + 1])
-write(".fi0fR") ■
+do_code (arg) ←
+  local line
+  write(".nf0fH")
+  while line := get_line()
+  do if line[1:6] == "##■" then break
+    else pretty_print_line(line[2:*line + 1])
+  write(".fi0fR")
+■
 ```
 
 </div>
