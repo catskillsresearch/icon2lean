@@ -1,8 +1,0 @@
-version	U9.0.00
-impl	local
-link	code.u1
-global	4
-	0,000001,timer,0
-	1,000005,settime,0
-	2,000005,showtime,0
-	3,000005,main,0
