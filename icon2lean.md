@@ -16,7 +16,10 @@ This repository contains a **1:1 Lean 4 translation** of the report’s domain t
 |--------|-------------|-------------|
 | §2 domain types | [`Icon2lean/Types.lean`](Icon2lean/Types.lean) | `ModularDomain`, `ModularInt`, `PolyDomain`, `TruncPowerSeries`, `truncatePoly`, `truncMk` |
 | §2 instances | [`Icon2lean/Domains.lean`](Icon2lean/Domains.lean) | `EuclideanDomain` on `ℤ`, `ℚ`, `ℤ/(p)`, `F[x]`; `CommRing` on quotients and power series |
-| `GCD`, `EUCLID`, `INVERSE` | [`Icon2lean/Gcd.lean`](Icon2lean/Gcd.lean) | `gcdInt`, `euclidInt`, `modularInverse` |
+| `GCD`, `EUCLID`, `INVERSE` | [`Icon2lean/Euclidean.lean`](Icon2lean/Euclidean.lean) | `gcd`, `euclid`, `euclidZ`, `euclidInt`, `modularInverse` |
+| Computability split | [`Icon2lean/Computability.lean`](Icon2lean/Computability.lean) | architecture doc + imports |
+| `ℚ[x]` eval layer | [`Icon2lean/ComputablePoly.lean`](Icon2lean/ComputablePoly.lean) | `CompPoly`, `toMathlib`, `gcd` |
+| `T(ℚ[[x]])ₙ` eval layer | [`Icon2lean/ComputableTPS.lean`](Icon2lean/ComputableTPS.lean) | `CompTPS`, `toMathlib`, `npsi` |
 | `CRA1`, `CRA2`, `CRA` | [`Icon2lean/Congruence.lean`](Icon2lean/Congruence.lean) | `cra1`, `cra2`, `cra` |
 | `DIOPHANTINE` | [`Icon2lean/Diophantine.lean`](Icon2lean/Diophantine.lean) | `diophantine` |
 | `MOD_RS`, `PREM`, `E_PRS`, `S_PRS` | [`Icon2lean/Polynomial.lean`](Icon2lean/Polynomial.lean) | `modRS`, `prem`, `ePRS`, `sPRS` |

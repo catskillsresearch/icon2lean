@@ -4,12 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Lars Warren Ericson, Catskills Research Company
 -/
 
+import Mathlib.Algebra.Polynomial.Basic
+import Mathlib.Data.Rat.Defs
 import Mathlib.Data.Int.GCD
 
 /-!
-Computable dense polynomials over normalized rationals, for `native_decide`
-checks of the report §3.2 examples. Mirrors `PREM` and `MOD_RS` from
-`Icon2lean/Polynomial.lean` on a computable representation.
+Computable dense polynomials over `ℚ` for `native_decide` / `#eval`.
+
+Canonical (proof) type: `Polynomial ℚ` with `EuclideanDomain` / operations in `Polynomial.lean`.
+Coherence: `CompPoly.toMathlib` is the sole boundary map; prove ring-homomorphism lemmas there only.
 -/
 
 namespace Icon2lean
@@ -55,6 +58,10 @@ def pow (x : CRat) (n : Nat) : CRat :=
   match n with
   | 0 => one
   | n + 1 => mul x (pow x n)
+
+/-- Computable embedding into Mathlib `ℚ`. -/
+def toRat (r : CRat) : ℚ :=
+  (r.num : ℚ) / r.den
 
 end CRat
 
@@ -146,6 +153,26 @@ def modRS (a b : CompPoly) : List CompPoly :=
     else if isZero b then [b]
     else a :: go (fuel - 1) b (mod a b)
   go (degree a + degree b + 10) a b
+
+/-- Euclidean gcd in the computable layer (report §3.1.1 on `ℚ[x]`). -/
+def gcd (p q : CompPoly) : CompPoly :=
+  let rec loop (fuel : Nat) (a b : CompPoly) : CompPoly :=
+    if fuel = 0 then a.trim
+    else if isZero b then a.trim
+    else loop (fuel - 1) b (mod a b)
+  loop (degree p + degree q + 10) (trim p) (trim q)
+
+/-- Boundary map into canonical `Polynomial ℚ`. -/
+noncomputable def toMathlib (p : CompPoly) : Polynomial ℚ :=
+  (List.range p.coeffs.length).foldl (fun acc i =>
+    acc + Polynomial.C (CRat.toRat (p.coeffs.getD i CRat.zero)) * Polynomial.X ^ i) 0
+
+/-!
+### Coherence targets (to prove)
+
+* `toMathlib (add p q) = toMathlib p + toMathlib q` (and likewise for `mul`, `mod`, `gcd`)
+* `EuclideanDomain.gcd (toMathlib p) (toMathlib q) = toMathlib (gcd p q)`
+-/
 
 end CompPoly
 

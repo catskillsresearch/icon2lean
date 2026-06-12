@@ -6,13 +6,15 @@ Authors: Lars Warren Ericson, Catskills Research Company
 
 import Icon2lean.Congruence
 import Icon2lean.ComputablePoly
+import Icon2lean.ComputableTPS
 import Icon2lean.Diophantine
-import Icon2lean.Gcd
+import Icon2lean.Euclidean
 
 /-!
-Report §3 worked examples. Integer algorithms (§3.1) use `native_decide`.
-Polynomial sequences (§3.2) use the computable `CompPoly` layer because
-Mathlib's `Polynomial Rat` is noncomputable for `#eval` / `native_decide`.
+Report §3 worked examples.
+
+* §3.1 (`ℤ`, congruence, Diophantine): `native_decide` on canonical computable types.
+* §3.2 (`ℚ[x]`): `CompPoly` computable mirror — see `Computability.lean`.
 -/
 
 set_option linter.style.nativeDecide false
@@ -23,8 +25,11 @@ namespace Icon2lean.Tests
 
 section Gcd
 
-/-- Report §3.1.1 extended gcd table (machine integers). -/
+/-- Report §3.1.1 — kernel `Int.gcd` (computable, no mirror). -/
 example : euclidInt 84 54 = (6, 2, -3) := by native_decide
+
+/-- Generic `euclid` on `ℤ` via computable specialization `euclidZ`. -/
+example : euclidZ 84 54 = (6, 2, -3) := by native_decide
 
 end Gcd
 
