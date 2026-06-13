@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Lars Warren Ericson, Catskills Research Company
 -/
 
+import Icon2lean.BaseB
 import Icon2lean.ComputableAlg
 import Icon2lean.ComputableTPS
 import Icon2lean.Diophantine
@@ -38,6 +39,8 @@ def qRat (r : CRat) : String :=
   if r.num = 0 then "0q"
   else if r.den = 1 then
     if r.num < 0 then s!"({r.num})q" else s!"{r.num}q"
+  else if r.num < 0 then
+    s!"(({r.num})/{r.den})q"
   else s!"({r.num}/{r.den})q"
 
 /-- `print_Q` on `QZ` (rational whose dividend/divisor are Icon `Z`). -/
@@ -105,6 +108,30 @@ def compPoly (style : CoefStyle) (p : CompPoly) : String :=
     let head := printTerm style i c
     rest.foldl (fun acc (j, d) => acc ++ "+ " ++ printTerm style j d) head
 
+/-- Wrap multi-term polynomials in parentheses (Icon `pr` on operands). -/
+def compPolyParen (style : CoefStyle) (p : CompPoly) : String :=
+  let s := compPoly style p
+  if s.contains "+ " then s!"({s})" else s
+
+/-- Descending term order (Icon `FFI` output). -/
+def compPolyDesc (style : CoefStyle) (p : CompPoly) : String :=
+  match nonZeroTerms p with
+  | [] => compPoly style p
+  | terms =>
+    let terms' := terms.reverse
+    match terms' with
+    | (i, c) :: rest =>
+      let head := printTerm style i c
+      rest.foldl (fun acc (j, d) => acc ++ "+ " ++ printTerm style j d) head
+    | [] => compPoly style p
+
+def intPolyRemScalar (p : CompPoly) (m : Int) : CompPoly :=
+  let norm (x : Int) : Int := Int.emod x m
+  { coeffs := p.coeffs.map fun r => CRat.ofInt (norm r.num) }
+
+def remPoly (style : CoefStyle) (p q : CompPoly) : String :=
+  compPoly style (CompPoly.mod p q)
+
 private def nonZeroModTerms (p : Nat) (cs : List Nat) : List (Nat × Nat) :=
   let cs := ModPoly.trim p cs
   (List.range cs.length).filterMap fun i =>
@@ -147,14 +174,31 @@ def euclidModTriple (p : Nat) (a b : List Nat) : String :=
   let (g, s, t) := ModPoly.euclid p a b
   listOf (modPoly p) [g, s, t]
 
+def signedGcd (A B : ℤ) : ℤ :=
+  let g := (Int.gcd A B : ℤ)
+  if g = 0 then 0 else if B < 0 then -g else g
+
 def diophantineLine (a b c : Int) : String :=
   match diophantine a b c with
   | none => s!"DIOPHANTINE({a}, {b}, {c}) = ERROR"
   | some s =>
-    s!"DIOPHANTINE({a}, {b}, {c}) = [{integer (s.g : Int)}, {integer s.x0}, {integer s.y0}]"
+    s!"DIOPHANTINE({a}, {b}, {c}) = [{integer (signedGcd a b)}, {integer s.x0}, {integer s.y0}]"
 
 def fftList (style : CoefStyle) (cs : List CRat) : String :=
   listOf (printCoef style) cs
+
+/-! ### `base_B` (Icon `print_base_B`) -/
+
+def baseB (b : BaseB) : String :=
+  let w := BaseB.width b.base
+  let fmt (d : Nat) : String :=
+    let s := toString d
+    if s.length ≥ w then s
+    else String.mk (List.replicate (w - s.length) '0' ++ s.toList)
+  match b.digits with
+  | [] => s!"0 #{b.base}#"
+  | h :: t =>
+    s!"{fmt h}{t.foldl (fun acc d => acc ++ " " ++ fmt d) ""} #{b.base}#"
 
 end IconPrint
 
