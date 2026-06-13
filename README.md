@@ -1,6 +1,6 @@
 # icon2lean
 
-Translation of a 1986 Icon package (Courant Institute technical report CS-TR #232) into Lean 4 with Mathlib. The source report is [`Courant_Ericson_1986.pdf`](Courant_Ericson_1986.pdf); the article-style walkthrough is [`icon2lean.md`](icon2lean.md); the formal paper-style treatment is [`arxiv.md`](arxiv.md).
+Translation of a 1986 Icon package (Courant Institute technical report CS-TR #232) into Lean 4 with Mathlib. The source report is [`Courant_Ericson_1986.pdf`](Courant_Ericson_1986.pdf); the paper-style treatment is [`arxiv.md`](arxiv.md).
 
 ---
 
