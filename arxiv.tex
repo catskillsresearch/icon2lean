@@ -109,7 +109,9 @@
   \small
   \textbf{ORCID:} 0000-0001-8299-9361 \\
   \textbf{Primary Category:} cs.LO (Logic in Computer Science) \\
-  \textbf{Secondary Category:} cs.SC (Symbolic Computation)
+  \textbf{Secondary Category:} cs.SC (Symbolic Computation) \\[0.5em]
+  \textbf{Original report:} \url{https://zenodo.org/records/20561267} \\
+  \textbf{Lean 4 formalization:} \url{https://github.com/catskillsresearch/icon2lean}
 \end{center}
 
 \begin{abstract}
@@ -119,7 +121,7 @@ We describe a Lean 4 formalization of the algorithms and domain types from NYU C
 \section{Introduction}
 In August 1986, at New York University's Courant Institute of Mathematical Sciences, Lars Warren Ericson authored Technical Report \#232 with the aim of implementing algebraic algorithms over multiple mathematical structures---integers, quotient rings, polynomials, and power series---following John Lipson's \emph{Elements of Algebra and Algebraic Computing}. Icon was chosen as the implementation language for its symbolic computation idioms. Lacking native typeclasses, parameter inheritance, or object-oriented dispatch, the 1986 package realized generic division and arithmetic across distinct domains through a custom runtime dispatch system based on string reflection on procedure names (e.g., invoking \texttt{proc("div\_" || type(a), 2)}).
 
-Forty years later, we present a Lean 4 port of the report's domain types (Section 2) and application algorithms (Section 3). The port is complete in the sense that every algorithm listed in the report's application suite is defined and typecheck; no proof obligation is deferred via \texttt{sorry}. Source Icon listings and an OCR'd copy of the report are preserved alongside the formalization.
+Forty years later, we present a Lean 4 port of the report's domain types (Section 2) and application algorithms (Section 3). The port is complete in the sense that every algorithm listed in the report's application suite is defined and typecheck; no proof obligation is deferred via \texttt{sorry}. Source Icon listings and an OCR'd copy of the report are preserved alongside the formalization at \url{https://github.com/catskillsresearch/icon2lean}; the original 1986 technical report is archived at \url{https://zenodo.org/records/20561267}.
 
 The central methodological challenge of this port is not merely translation but \emph{stratification}. Mathlib provides canonical mathematical objects---\lstinline[style=leanbox]{Polynomial Q}, \lstinline[style=leanbox]{PowerSeries R}, and \lstinline[style=leanbox]{EuclideanDomain.gcd}---but many key definitions are marked \lstinline[style=leanbox]{noncomputable} in Lean. This noncomputability arises because Mathlib constructs rely on classical axioms (such as the law of the excluded middle or classical choice) to define properties like polynomial degree or division, meaning they cannot be reduced by \texttt{\#eval} or \texttt{native\_decide}. The 1986 package, by contrast, was an \emph{experimental, executable} system whose correctness was validated by evaluating and printing tables of results for selected inputs. 
 
@@ -408,7 +410,10 @@ The 1986 Icon package validated algorithms on selected inputs by printing tables
 
 \begin{thebibliography}{99}
 \bibitem{ericson1986}
-L. W. Ericson, \emph{An ICON Package for Experimenting with Euclidean Domains}, NYU Computer Science Technical Report \#232, August 1986.
+L. W. Ericson, \emph{An ICON Package for Experimenting with Euclidean Domains}, NYU Computer Science Technical Report \#232, August 1986. \url{https://zenodo.org/records/20561267} (DOI: \url{https://doi.org/10.5281/zenodo.20561267}).
+
+\bibitem{icon2lean}
+\emph{icon2lean}: Lean 4 formalization of the 1986 Icon package. \url{https://github.com/catskillsresearch/icon2lean}.
 
 \bibitem{lipson1981}
 J. Lipson, \emph{Elements of Algebra and Algebraic Computing}, Benjamin/Cummings, 1981.
