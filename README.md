@@ -1,4 +1,4 @@
-[![CI](https://github.com/catskillsresearch/icon2lean/actions/workflows/build.yml/badge.svg)](https://github.com/catskillsresearch/icon2lean/actions/workflows/build.yml)
+[![Lean 4](https://img.shields.io/github/actions/workflow/status/catskillsresearch/hybrid_logic_lean_revisited/build.yml?label=Lean%204)](https://github.com/catskillsresearch/icon2lean/actions/workflows/build.yml)
 # icon2lean
 
 Translation of a 1986 Icon package (Courant Institute technical report CS-TR #232) into Lean 4 with Mathlib. The source report is [`Courant_Ericson_1986.pdf`](Courant_Ericson_1986.pdf); the paper-style treatment is [`arxiv.md`](arxiv.md).
